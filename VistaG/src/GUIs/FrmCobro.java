@@ -6,10 +6,11 @@ package GUIs;
 
 
 import fachada.FachadaControl;
-import interfaces.IFachadaControl;
+import interfaces.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 /**
  *
@@ -18,6 +19,7 @@ import javax.swing.JFrame;
 public class FrmCobro extends javax.swing.JFrame {
 
 IFachadaControl logica= new FachadaControl();
+VentasForm ventasFrm=null;
 
 
     /**
@@ -26,6 +28,8 @@ IFachadaControl logica= new FachadaControl();
     public FrmCobro() {
         initComponents();
    this.setLocationRelativeTo(null);
+ instanciaVentasForm();
+  
     }
 
     /**
@@ -126,13 +130,16 @@ IFachadaControl logica= new FachadaControl();
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         cerrarFormulario();
-VentasForm formularioVentas=new VentasForm();
+         ventasFrm.registrarVenta();
+         ventasFrm.limpiarCampos();
+         ventasFrm.desbloquearCampos();
+         
 
-         formularioVentas.registrarVenta();
     }//GEN-LAST:event_btnContinuarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         cerrarFormulario();
+       ventasFrm.desbloquearCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
 public void mostrarFormulario() {
@@ -143,6 +150,13 @@ public void mostrarFormulario() {
 public void cerrarFormulario() {
         this.dispose();
     }
+
+public VentasForm instanciaVentasForm(){
+ if(ventasFrm==null){
+     ventasFrm=new VentasForm();
+}
+return ventasFrm;
+}
 
  /**
      * @param args the command line arguments

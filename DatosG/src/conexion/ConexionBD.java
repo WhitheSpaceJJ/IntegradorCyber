@@ -14,7 +14,7 @@ public class ConexionBD implements IConexionBD {
     @Override
     public EntityManager crearConexion() throws IllegalStateException {
         if (em == null) {
-            EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("PapeleriaPU");
+            EntityManagerFactory emFactory = Persistence.createEntityManagerFactory("CyberPapeleriaDatosPU");
             em = emFactory.createEntityManager();
         }
 

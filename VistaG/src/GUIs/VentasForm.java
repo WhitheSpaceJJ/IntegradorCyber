@@ -2,18 +2,22 @@ package GUIs;
 
 
 
+import interfaces.*;
 import entidades.*;
 import enumeradores.Estado;
-import enumeradores.Rol;
+
 import fachada.FachadaControl;
-import interfaces.IFachadaControl;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import java.util.Date;
+import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JFrame;
 
 
 /**
@@ -24,8 +28,10 @@ public class VentasForm extends javax.swing.JPanel {
 
     private DefaultComboBoxModel listaClientes;
 
-   IFachadaControl logica= new FachadaControl();
+private static FrmCobro frmCobro= null; 
+private static VentasForm frmVentas= null; 
 
+     IFachadaControl logica=new FachadaControl();
     /**
      * Creates new form VentasForm
      */
@@ -34,8 +40,19 @@ public class VentasForm extends javax.swing.JPanel {
 
         initComponents();
 
-      
+     
         llenarCBoxClientes();
+        llenarCampos();
+       this.txtImporte.setEditable(false);
+       this.txtTotalProducto.setEditable(false);
+       this.txtDisponibilidad.setEditable(false);
+       this.txtDescripcion.setEditable(false);
+
+
+
+
+
+
 
     }
 
@@ -67,7 +84,7 @@ public class VentasForm extends javax.swing.JPanel {
         lblNumTicket = new javax.swing.JLabel();
         lblOperador = new javax.swing.JLabel();
         txtNumTicket = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnBuscarProducto = new javax.swing.JButton();
         txtOperador = new javax.swing.JTextField();
         lblCliente1 = new javax.swing.JLabel();
         lblCliente2 = new javax.swing.JLabel();
@@ -77,22 +94,22 @@ public class VentasForm extends javax.swing.JPanel {
         lblCliente6 = new javax.swing.JLabel();
         lblCliente8 = new javax.swing.JLabel();
         btnCobrar = new javax.swing.JButton();
-        txtOperador1 = new javax.swing.JTextField();
-        txtOperador2 = new javax.swing.JTextField();
-        txtOperador3 = new javax.swing.JTextField();
-        txtOperador4 = new javax.swing.JTextField();
-        txtOperador6 = new javax.swing.JTextField();
-        txtOperador7 = new javax.swing.JTextField();
-        txtOperador8 = new javax.swing.JTextField();
-        txtOperador9 = new javax.swing.JTextField();
+        txtDisponibilidad = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
+        txtCategoria = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
+        txtObservaciones = new javax.swing.JTextField();
+        txtTotalProducto = new javax.swing.JTextField();
+        txtImporte = new javax.swing.JTextField();
+        txtCodigoArticulo = new javax.swing.JTextField();
         lblCliente9 = new javax.swing.JLabel();
         lblCliente11 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnQuitar = new javax.swing.JButton();
+        btnAgregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         lblRectangulo4 = new javax.swing.JLabel();
-        txtTotal = new javax.swing.JTextField();
+        txtTotalCobrar = new javax.swing.JTextField();
         clientesC = new javax.swing.JComboBox<>();
 
         tblVenta.setBackground(new java.awt.Color(255, 255, 255));
@@ -140,16 +157,16 @@ public class VentasForm extends javax.swing.JPanel {
         txtNumTicket.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblVenta.add(txtNumTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 60, 150, -1));
 
-        jButton1.setBackground(new java.awt.Color(0, 0, 255));
-        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarProducto.setBackground(new java.awt.Color(0, 0, 255));
+        btnBuscarProducto.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnBuscarProducto.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscarProducto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
+        btnBuscarProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscarProductoActionPerformed(evt);
             }
         });
-        tblVenta.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 204, 40, 30));
+        tblVenta.add(btnBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(395, 204, 40, 30));
 
         txtOperador.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblVenta.add(txtOperador, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 110, 150, -1));
@@ -200,29 +217,34 @@ public class VentasForm extends javax.swing.JPanel {
         });
         tblVenta.add(btnCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 620, 160, 50));
 
-        txtOperador1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtOperador1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 205, 50, -1));
+        txtDisponibilidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtDisponibilidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 205, 50, -1));
 
-        txtOperador2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtOperador2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 245, 410, -1));
+        txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 245, 410, -1));
 
-        txtOperador3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtOperador3, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 205, 180, -1));
+        txtCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 205, 180, -1));
 
-        txtOperador4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtOperador4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 285, 40, -1));
+        txtCantidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyTyped(evt);
+            }
+        });
+        tblVenta.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 285, 40, -1));
 
-        txtOperador6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtOperador6, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 325, 710, -1));
+        txtObservaciones.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtObservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 325, 710, -1));
 
-        txtOperador7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtOperador7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 285, 100, -1));
+        txtTotalProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtTotalProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 285, 100, -1));
 
-        txtOperador8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtOperador8, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 285, 100, -1));
+        txtImporte.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtImporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 285, 100, -1));
 
-        txtOperador9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtOperador9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 205, 180, -1));
+        txtCodigoArticulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtCodigoArticulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 205, 180, -1));
 
         lblCliente9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCliente9.setForeground(new java.awt.Color(0, 0, 0));
@@ -234,17 +256,17 @@ public class VentasForm extends javax.swing.JPanel {
         lblCliente11.setText("Total a Cobrar");
         tblVenta.add(lblCliente11, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 640, -1, -1));
 
-        jButton4.setBackground(new java.awt.Color(0, 0, 255));
-        jButton4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText("Quitar");
-        tblVenta.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 260, 110, 30));
+        btnQuitar.setBackground(new java.awt.Color(0, 0, 255));
+        btnQuitar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnQuitar.setForeground(new java.awt.Color(255, 255, 255));
+        btnQuitar.setText("Quitar");
+        tblVenta.add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 260, 110, 30));
 
-        jButton5.setBackground(new java.awt.Color(0, 0, 255));
-        jButton5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("Agregar");
-        tblVenta.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 110, 30));
+        btnAgregar.setBackground(new java.awt.Color(0, 0, 255));
+        btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgregar.setText("Agregar");
+        tblVenta.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 110, 30));
 
         jScrollPane1.setBackground(new java.awt.Color(204, 204, 255));
         jScrollPane1.setBorder(null);
@@ -281,8 +303,8 @@ public class VentasForm extends javax.swing.JPanel {
         lblRectangulo4.setOpaque(true);
         tblVenta.add(lblRectangulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 900, 180));
 
-        txtTotal.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tblVenta.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 635, 150, -1));
+        txtTotalCobrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 635, 150, -1));
 
         clientesC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         clientesC.addActionListener(new java.awt.event.ActionListener() {
@@ -318,44 +340,173 @@ public class VentasForm extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtFechaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void clientesCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesCActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_clientesCActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
-FrmCobro frmCobro= new FrmCobro();       
- frmCobro.mostrarFormulario();
+
+ bloquearCampos();
+ 
+
+ instanciaFrmCobro().mostrarFormulario();
 
     }//GEN-LAST:event_btnCobrarActionPerformed
+
+    private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
+         adminitirSoloNumeros(evt);
+    }//GEN-LAST:event_txtCantidadKeyTyped
 
 public void registrarVenta()
 {
 
- Cliente cliente= new Cliente();
+ //Cliente cliente= new Cliente();
         Venta venta = new Venta();
-Calendar fecha = Calendar.getInstance();
+ 
 
-// Establecer el año, mes y día
+  String fecha = frmVentas.txtFecha.getText() ;
+ SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+Calendar fechaCalendar=Calendar.getInstance();
 
 
-    cliente= (Cliente) clientesC.getSelectedItem();
-    venta.setTotalventa(20);
-   Calendar fechaActual = Calendar.getInstance();
-venta.setCaja(new Caja(fechaActual,123,567,23,54,Estado.ABIERTA,new Usuario("Jose","contra",Rol.VENDEDOR)));
-
-  logica.agregarVenta(venta);
+try {
+    fechaCalendar.setTime(formatoFecha.parse(fecha)); 
+} catch (ParseException e) {
+    e.printStackTrace();
 }
 
+
+    //cliente= (Cliente) clientesC.getSelectedItem();
+Cliente c=new Cliente();
+Integer id=1;
+c.setId(id);
+c.setRfc("HSHGDGS6A77");
+c.setNombre("Jose");
+
+    venta.setTotalventa(20);
+   Calendar fechaActual = Calendar.getInstance();
+Caja caja=new Caja();
+caja.setId(2);
+caja.setEstado(Estado.ABIERTA);
+List<Gasto> gastos = new ArrayList<>();
+Gasto gasto= new Gasto();
+gasto.setCosto(0);
+
+gasto.setCaja(caja);
+gasto.setAutoriza("luis");
+
+gastos.add(gasto);
+
+
+caja.setGastos(gastos);
+venta.setCaja(caja);
+venta.setCliente(c);
+
+
+  logica.agregarVenta(venta);
+
+}
+
+public void llenarCampos()
+{
+      Calendar fechaC= Calendar.getInstance();
+
+       Date fecha = fechaC.getTime();
+
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+        
+        
+        String fechaFormateada = formatoFecha.format(fecha);
+
+this.txtFecha.setText(fechaFormateada);
+}
+
+
+public void bloquearCampos()
+{
+
+   frmVentas.btnCobrar.setEnabled(false);
+   frmVentas.clientesC.setEnabled(false);
+   frmVentas.btnAgregar.setEnabled(false);
+   frmVentas.btnBuscarProducto.setEnabled(false);
+   frmVentas.btnQuitar.setEnabled(false);
+
+}
+
+public void desbloquearCampos()
+{
+    instanciaFrmVentas();
+
+   frmVentas.btnCobrar.setEnabled(true);
+   frmVentas.clientesC.setEnabled(true);
+   frmVentas.btnAgregar.setEnabled(true);
+   frmVentas.btnBuscarProducto.setEnabled(true);
+   frmVentas.btnQuitar.setEnabled(true);
+
+}
+
+public void limpiarCampos(){
+ frmVentas.txtCantidad.setText("");
+ frmVentas.txtCategoria.setText("");
+ frmVentas.txtCodigoArticulo.setText("");
+ frmVentas.txtDescripcion.setText("");
+ frmVentas.txtDisponibilidad.setText("");
+ frmVentas.txtImporte.setText("");
+ frmVentas.txtObservaciones.setText("");
+ frmVentas.txtTotalCobrar.setText("");
+ frmVentas.txtTotalProducto.setText("");
+ frmVentas.txtNumTicket.setText("");
+ frmVentas.txtOperador.setText("");
+
+
+
+}
+
+public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if (Character.isDigit(car)) {
+
+        } else {
+            evt.consume();
+            getToolkit().beep();
+        }
+    }
+
+public void admitirSoloTexto(java.awt.event.KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if (Character.isLetter(car) || car == ' ') {
+
+        } else {
+            evt.consume();
+            getToolkit().beep();
+        }
+    }
+
+public static FrmCobro instanciaFrmCobro()
+{
+if (frmCobro == null) {
+    frmCobro = new FrmCobro(); 
+}
+  return frmCobro;
+}
+
+public static  VentasForm instanciaFrmVentas()
+{
+if (frmVentas == null) {
+    frmVentas = new VentasForm(); 
+}
+  return frmVentas;
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscarProducto;
     private javax.swing.JButton btnCobrar;
+    private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> clientesC;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCargaDeArticulos;
@@ -375,17 +526,17 @@ venta.setCaja(new Caja(fechaActual,123,567,23,54,Estado.ABIERTA,new Usuario("Jos
     private javax.swing.JLabel lblOperador;
     private javax.swing.JLabel lblRectangulo4;
     private javax.swing.JPanel tblVenta;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtCategoria;
+    private javax.swing.JTextField txtCodigoArticulo;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtDisponibilidad;
     private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtImporte;
     private javax.swing.JTextField txtNumTicket;
+    private javax.swing.JTextField txtObservaciones;
     private javax.swing.JTextField txtOperador;
-    private javax.swing.JTextField txtOperador1;
-    private javax.swing.JTextField txtOperador2;
-    private javax.swing.JTextField txtOperador3;
-    private javax.swing.JTextField txtOperador4;
-    private javax.swing.JTextField txtOperador6;
-    private javax.swing.JTextField txtOperador7;
-    private javax.swing.JTextField txtOperador8;
-    private javax.swing.JTextField txtOperador9;
-    private javax.swing.JTextField txtTotal;
+    private javax.swing.JTextField txtTotalCobrar;
+    private javax.swing.JTextField txtTotalProducto;
     // End of variables declaration//GEN-END:variables
 }
