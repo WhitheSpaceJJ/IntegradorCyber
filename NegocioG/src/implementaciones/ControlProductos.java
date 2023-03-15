@@ -6,13 +6,14 @@ import fachada.FachadaDAO;
 import interfaces.IConexionBD;
 import java.util.List;
 import interfaces.IControlProductos;
+import interfaces.IFachadaDAO;
 
 
 public class ControlProductos implements IControlProductos{
 
-    private final FachadaDAO fachadaDAO;
+    private final IFachadaDAO fachadaDAO;
 
-    public ControlProductos(FachadaDAO fachadaDAO) {
+    public ControlProductos(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
     

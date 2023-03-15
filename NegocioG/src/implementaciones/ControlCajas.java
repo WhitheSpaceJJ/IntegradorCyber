@@ -7,13 +7,13 @@ import interfaces.IConexionBD;
 import java.util.List;
 import interfaces.IControlCajas;
 import interfaces.IControlUsuarios;
+import interfaces.IFachadaDAO;
 
 public class ControlCajas implements IControlCajas {
 
    
-    private final FachadaDAO fachadaDAO;
-
-    public ControlCajas(FachadaDAO fachadaDAO) {
+ private final IFachadaDAO fachadaDAO;
+    public ControlCajas(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
     @Override

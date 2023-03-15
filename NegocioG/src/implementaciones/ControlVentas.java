@@ -12,13 +12,14 @@ import java.util.List;
 import interfaces.IControlCajas;
 import interfaces.IControlClientes;
 import interfaces.IControlVentas;
+import interfaces.IFachadaDAO;
 
 public class ControlVentas implements IControlVentas{
     
     
-    private final FachadaDAO fachadaDAO;
+    private final IFachadaDAO fachadaDAO;
 
-    public ControlVentas(FachadaDAO fachadaDAO) {
+    public ControlVentas(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
     

@@ -8,6 +8,7 @@ import implementaciones.*;
 import conexion.ConexionBD;
 import fachada.FachadaControl;
 import fachada.FachadaDAO;
+import interfaces.IFachadaDAO;
 
 public class FabricaControl {
 
@@ -22,7 +23,7 @@ public class FabricaControl {
     private ControlCompra instanceDetalleCompraDAO;
     private ControlCajas instanceCajaDAO;
 private ControlGastos instanceGastosDAO;
-private FachadaDAO fachadaDAO;
+private IFachadaDAO fachadaDAO;
     private FabricaControl() {
         fachadaDAO=new FachadaDAO();
     }

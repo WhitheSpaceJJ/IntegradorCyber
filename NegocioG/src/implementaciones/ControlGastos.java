@@ -9,14 +9,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import interfaces.IControlGastos;
+import interfaces.IFachadaDAO;
 
 
 public class ControlGastos implements IControlGastos {
 
     
-    private final FachadaDAO fachadaDAO;
+    private final IFachadaDAO fachadaDAO;
 
-    public ControlGastos(FachadaDAO fachadaDAO) {
+    public ControlGastos(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
 

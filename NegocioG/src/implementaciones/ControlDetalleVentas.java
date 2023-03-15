@@ -7,13 +7,14 @@ import fachada.FachadaDAO;
 import interfaces.IConexionBD;
 import interfaces.IControlDetalleVentas;
 import interfaces.IControlProductos;
+import interfaces.IFachadaDAO;
 
 public class ControlDetalleVentas implements IControlDetalleVentas {
 
 
-    private final FachadaDAO fachadaDAO;
+    private final IFachadaDAO fachadaDAO;
 
-    public ControlDetalleVentas(FachadaDAO fachadaDAO) {
+    public ControlDetalleVentas(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
     

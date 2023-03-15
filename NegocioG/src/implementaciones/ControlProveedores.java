@@ -5,6 +5,7 @@ import fachada.FachadaDAO;
 import interfaces.IConexionBD;
 import java.util.List;
 import interfaces.IControlProveedores;
+import interfaces.IFachadaDAO;
 
 /**
  *
@@ -13,9 +14,9 @@ import interfaces.IControlProveedores;
 public class ControlProveedores implements IControlProveedores {
 
  
-    private final FachadaDAO fachadaDAO;
+    private final IFachadaDAO fachadaDAO;
 
-    public ControlProveedores(FachadaDAO fachadaDAO) {
+    public ControlProveedores(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
 

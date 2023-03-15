@@ -6,12 +6,13 @@ import fachada.FachadaDAO;
 import interfaces.IConexionBD;
 import java.util.List;
 import interfaces.IControlCategorias;
+import interfaces.IFachadaDAO;
 
 public class CategoriasDAO implements IControlCategorias {
 
-    private final FachadaDAO fachadaDAO;
+    private final IFachadaDAO fachadaDAO;
 
-    public CategoriasDAO(FachadaDAO fachadaDAO) {
+    public CategoriasDAO(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
 

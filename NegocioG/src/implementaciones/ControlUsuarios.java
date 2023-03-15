@@ -6,14 +6,15 @@ import interfaces.IConexionBD;
 import java.util.List;
 
 import interfaces.IControlUsuarios;
+import interfaces.IFachadaDAO;
 
 
 public class ControlUsuarios implements IControlUsuarios{
 
   
-    private final FachadaDAO fachadaDAO;
+    private final IFachadaDAO fachadaDAO;
 
-    public ControlUsuarios(FachadaDAO fachadaDAO) {
+    public ControlUsuarios(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
 

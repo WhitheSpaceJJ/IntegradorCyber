@@ -5,13 +5,14 @@ import fachada.FachadaDAO;
 import interfaces.IConexionBD;
 import java.util.List;
 import interfaces.IControlClientes;
+import interfaces.IFachadaDAO;
 
 
 public class ControlClientes implements IControlClientes {
 
-    private final FachadaDAO fachadaDAO;
+    private final IFachadaDAO fachadaDAO;
 
-    public ControlClientes(FachadaDAO fachadaDAO) {
+    public ControlClientes(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
     @Override
