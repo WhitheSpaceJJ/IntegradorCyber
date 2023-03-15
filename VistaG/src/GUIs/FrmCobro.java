@@ -4,8 +4,9 @@
  */
 package GUIs;
 
-import Controles.Logica;
-import Interfaces.ILogica;
+
+import fachada.FachadaControl;
+import interfaces.IFachadaControl;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.JFrame;
@@ -16,7 +17,7 @@ import javax.swing.JFrame;
  */
 public class FrmCobro extends javax.swing.JFrame {
 
-ILogica logica= new Logica();
+IFachadaControl logica= new FachadaControl();
 
 
     /**

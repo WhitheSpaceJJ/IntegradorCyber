@@ -10,7 +10,7 @@ import java.util.List;
 public interface IControlCajas {
     
     boolean agregar(Caja caja);
-    
+   
     boolean actualizar(Caja caja);
     
     boolean eliminar(int id);

@@ -1,16 +1,18 @@
 package GUIs;
 
-import Controles.*;
-import Interfaces.*;
+
+
 import entidades.*;
 import enumeradores.Estado;
 import enumeradores.Rol;
-import java.util.Calendar;
+import fachada.FachadaControl;
+import interfaces.IFachadaControl;
+
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
-import javax.swing.ComboBoxModel;
+
 import javax.swing.DefaultComboBoxModel;
 
 
@@ -22,7 +24,7 @@ public class VentasForm extends javax.swing.JPanel {
 
     private DefaultComboBoxModel listaClientes;
 
-    private ILogica logica=new Logica();
+   IFachadaControl logica= new FachadaControl();
 
     /**
      * Creates new form VentasForm
@@ -41,7 +43,7 @@ public class VentasForm extends javax.swing.JPanel {
 
         //listaClientes = new DefaultComboBoxModel();
         List<Cliente> clientes = new ArrayList<Cliente>();
-        clientes = logica.consultarClientes();
+        clientes = logica.consultarTodosClientes();
         Object[] objetos = clientes.toArray();
         clientesC.setModel(new DefaultComboBoxModel(objetos));
 
@@ -345,7 +347,7 @@ Calendar fecha = Calendar.getInstance();
    Calendar fechaActual = Calendar.getInstance();
 venta.setCaja(new Caja(fechaActual,123,567,23,54,Estado.ABIERTA,new Usuario("Jose","contra",Rol.VENDEDOR)));
 
-  logica.registrarVenta(venta);
+  logica.agregarVenta(venta);
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

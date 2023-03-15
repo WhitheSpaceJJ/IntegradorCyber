@@ -16,6 +16,7 @@ import interfaces.ICategoriasDAO;
 import interfaces.IClientesDAO;
 import interfaces.ICompraDAO;
 import interfaces.IDetalleVentasDAO;
+import interfaces.IFachadaDAO;
 import interfaces.IGastosDAO;
 import interfaces.IProductosDAO;
 import interfaces.IProveedoresDAO;
@@ -28,11 +29,12 @@ import java.util.Calendar;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-public class FachadaDAO {
+public class FachadaDAO  implements IFachadaDAO{
 
     private final FabricaDAO fabrica = FabricaDAO.getInstancia();
 
     //Cajas
+    @Override
     public boolean agregarCaja(Caja caja) {
         try {
             ICajasDAO cajasDAO = fabrica.getCajasDAO();
@@ -43,6 +45,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean actualizarCaja(Caja caja) {
         try {
             ICajasDAO cajasDAO = fabrica.getCajasDAO();
@@ -63,6 +66,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public Caja consultarCaja(int id) {
         try {
             ICajasDAO cajasDAO = fabrica.getCajasDAO();
@@ -73,6 +77,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Caja> consultarCajas() {
         try {
             ICajasDAO cajasDAO = fabrica.getCajasDAO();
@@ -84,6 +89,7 @@ public class FachadaDAO {
     }
 
     //Gastos
+    @Override
     public int agregarGasto(Gasto gasto) {
         try {
             IGastosDAO gastosDAO = fabrica.getGastosDAO();
@@ -94,6 +100,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public Gasto consultar(int id) {
         try {
             IGastosDAO gastosDAO = fabrica.getGastosDAO();
@@ -104,6 +111,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Gasto> consultarTodas() {
         try {
             IGastosDAO gastosDAO = fabrica.getGastosDAO();
@@ -114,6 +122,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Gasto> buscarGastosEntreFechas(Calendar inicio, Calendar fin) {
         try {
             IGastosDAO gastosDAO = fabrica.getGastosDAO();
@@ -125,6 +134,7 @@ public class FachadaDAO {
     }
 
     //Categorias
+    @Override
     public boolean agregarCategoria(Categoria categoria) {
         try {
             ICategoriasDAO categoriasDAO = fabrica.getCategoriasDAO();
@@ -135,6 +145,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean actualizarCategoria(Categoria categoria) {
         try {
             ICategoriasDAO categoriasDAO = fabrica.getCategoriasDAO();
@@ -145,6 +156,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean eliminarCategoria(int id) {
         try {
             ICategoriasDAO categoriasDAO = fabrica.getCategoriasDAO();
@@ -155,6 +167,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public Categoria consultarCategoria(int id) {
         try {
             ICategoriasDAO categoriasDAO = fabrica.getCategoriasDAO();
@@ -165,6 +178,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Categoria> consultarTodasCategorias() {
         try {
             ICategoriasDAO categoriasDAO = fabrica.getCategoriasDAO();
@@ -176,6 +190,7 @@ public class FachadaDAO {
     }
 
     //Clientes
+    @Override
     public boolean agregarCliente(Cliente cliente) {
         try {
             IClientesDAO clientesDAO = fabrica.getClientesDAO();
@@ -186,6 +201,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean actualizarCliente(Cliente cliente) {
         try {
             IClientesDAO clientesDAO = fabrica.getClientesDAO();
@@ -196,6 +212,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean eliminarCliente(int id) {
         try {
             IClientesDAO clientesDAO = fabrica.getClientesDAO();
@@ -206,6 +223,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public Cliente consultarCliente(int id) {
         try {
             IClientesDAO clientesDAO = fabrica.getClientesDAO();
@@ -216,6 +234,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Cliente> consultarTodosClientes() {
         try {
             IClientesDAO clientesDAO = fabrica.getClientesDAO();
@@ -227,6 +246,7 @@ public class FachadaDAO {
     }
 
     //Proveedores
+    @Override
     public boolean agregarProveedor(Proveedor proveedor) {
         try {
             IProveedoresDAO proveedoresDAO = fabrica.getProveedoresDAO();
@@ -237,6 +257,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean actualizarProveedor(Proveedor proveedor) {
         try {
             IProveedoresDAO proveedoresDAO = fabrica.getProveedoresDAO();
@@ -247,6 +268,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean eliminarProveedor(int id) {
         try {
             IProveedoresDAO proveedoresDAO = fabrica.getProveedoresDAO();
@@ -257,6 +279,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public Proveedor consultarProveedor(int id) {
         try {
             IProveedoresDAO proveedoresDAO = fabrica.getProveedoresDAO();
@@ -267,6 +290,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Proveedor> consultarTodosProveedores() {
         try {
             IProveedoresDAO proveedoresDAO = fabrica.getProveedoresDAO();
@@ -278,6 +302,7 @@ public class FachadaDAO {
     }
 
     // Venta
+    @Override
     public List<Venta> buscarVentasEntreFechas(Calendar inicio, Calendar fin) {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
@@ -288,6 +313,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Venta> buscarVentasEntreFechasPorCliente(Calendar inicio, Calendar fin, Cliente cliente) {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
@@ -297,7 +323,7 @@ public class FachadaDAO {
             return null;
         }
     }
-
+@Override
     public Venta consultarVenta(int id) {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
@@ -308,6 +334,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Venta> consultarVentas() {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
@@ -318,6 +345,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public int agregarVenta(Venta venta) {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
@@ -329,6 +357,7 @@ public class FachadaDAO {
     }
 
     //Detalle Venta
+    @Override
     public boolean agregarDetalleVenta(DetalleVenta detalleVenta) {
         try {
             IDetalleVentasDAO detalleVentasDAO = fabrica.getDetalleVentasDAO();
@@ -340,6 +369,7 @@ public class FachadaDAO {
     }
 
     //compra Detalle
+    @Override
     public boolean agregarDetalleCompra(Compra entradaAlmacen) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -350,6 +380,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public Compra consultarDetalleCompra(int id) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -360,6 +391,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Compra> consultarTodasEntradasAlmacen() {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -370,6 +402,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Compra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -380,6 +413,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Compra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -390,6 +424,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Compra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -401,6 +436,7 @@ public class FachadaDAO {
     }
 
 //Producto
+    @Override
     public Producto consultarProducto(int id) {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -411,6 +447,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean agregarProducto(Producto producto) {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -421,6 +458,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean actualizarProducto(Producto producto) {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -431,6 +469,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean eliminarProducto(int id) {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -441,6 +480,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean quitarStockProducto(Producto producto, int stock) {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -451,6 +491,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean agregarStockProducto(Producto producto, int stock) {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -461,6 +502,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Producto> buscarProductosPorNombre(String nombre) {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -471,6 +513,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Producto> consultarTodosProductos() {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -482,6 +525,7 @@ public class FachadaDAO {
     }
 
     //Usuario
+    @Override
     public boolean agregarUsuario(Usuario usuario) {
         try {
             IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
@@ -492,6 +536,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean actualizarUsuario(Usuario usuario) {
         try {
             IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
@@ -502,6 +547,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public boolean eliminarUsuario(int id) {
         try {
             IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
@@ -512,6 +558,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public Usuario consultarUsuario(int id) {
         try {
             IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
@@ -522,6 +569,7 @@ public class FachadaDAO {
         }
     }
 
+    @Override
     public List<Usuario> consultarTodosUsuarios() {
         try {
             IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
