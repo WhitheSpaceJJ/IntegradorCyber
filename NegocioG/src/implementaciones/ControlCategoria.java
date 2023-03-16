@@ -8,11 +8,11 @@ import java.util.List;
 import interfaces.IControlCategorias;
 import interfaces.IFachadaDAO;
 
-public class CategoriasDAO implements IControlCategorias {
+public class ControlCategoria implements IControlCategorias {
 
     private final IFachadaDAO fachadaDAO;
 
-    public CategoriasDAO(IFachadaDAO fachadaDAO) {
+    public ControlCategoria(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
 
