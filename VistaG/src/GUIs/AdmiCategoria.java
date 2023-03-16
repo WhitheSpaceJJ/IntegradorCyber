@@ -1,5 +1,18 @@
-
 package GUIs;
+
+import GUIs.utils.JButtonCellEditor;
+import GUIs.utils.JButtonRenderer;
+import GUIs.utils.JTextFieldLimit;
+import entidades.Categoria;
+import fachada.FachadaDAO;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -10,8 +23,122 @@ public class AdmiCategoria extends javax.swing.JFrame {
     /**
      * Creates new form AdmiClienteForm
      */
+    // Numero de columna - 1 , dónde se encontrarán los botones
+    private final int COLEDITAR = 2;
+    private final int COLELIMINAR = 3;
+
+    FachadaDAO fachada;
+
+    // Especifica un ID de producto que se está editando.
+    private int idCategoria;
+
     public AdmiCategoria() {
         initComponents();
+        fachada = new FachadaDAO();
+
+        llenarTabla();
+        initBotonesTabla();
+
+        // Limita los caracteres de los text fields y deshabilita el poder mover la tabla.
+        tblCategorias.getTableHeader().setReorderingAllowed(false);
+        txtNombre.setDocument(new JTextFieldLimit(50));
+
+    }
+
+    private void initBotonesTabla() {
+        ActionListener onEditarClickListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                idCategoria = (int) tblCategorias.getValueAt(tblCategorias.getSelectedRow(), 0);
+
+                int indexColumna = tblCategorias.getSelectedColumn();
+
+                if (indexColumna == COLEDITAR) {
+                    llenarFormulario(fachada.consultarCategoria(idCategoria));
+                    //Evita que se modifique el nombre del producto al editarse.
+                    txtNombre.setEditable(false);
+                } else {
+                    eliminar();
+                }
+            }
+        };
+
+        int indiceColumnaEditar = COLEDITAR;
+
+        TableColumnModel modeloColumnas = this.tblCategorias.getColumnModel();
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellRenderer(new JButtonRenderer("Editar"));
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
+
+        indiceColumnaEditar = COLELIMINAR;
+
+        modeloColumnas = this.tblCategorias.getColumnModel();
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellRenderer(new JButtonRenderer("Eliminar"));
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
+    }
+
+    private void llenarTabla() {
+
+        List<Categoria> categorias = this.fachada.consultarTodasCategorias();
+
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
+
+        modeloTabla.setRowCount(0);
+
+        categorias.forEach(categoria -> {
+            Object[] fila = new Object[4];
+            fila[0] = categoria.getId();
+            fila[1] = categoria.getNombre();
+            fila[2] = "Editar";
+            fila[3] = "Eliminar";
+            modeloTabla.addRow(fila);
+        });
+
+    }
+
+    private void llenarFormulario(Categoria categoria) {
+        txtNombre.setText(categoria.getNombre());
+    }
+
+    private void eliminar() {
+
+        //Establece que por defecto que se seleccionó la opción "NO".
+        int opcionSeleccionada = -1;
+
+        opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar la categoria seleccionada?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (opcionSeleccionada != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        opcionSeleccionada = JOptionPane.showConfirmDialog(this, "Eliminar esta categoria eliminará también los productos en las que se encuentre\n ¿Está seguro que desea eliminar la categoria?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (opcionSeleccionada != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        boolean seElimino = fachada.eliminarCategoria(idCategoria);
+
+        if (seElimino) {
+            JOptionPane.showMessageDialog(this, "Se eliminó la categoria", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.llenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible eliminar la categoria", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+
+        limpiarId();
+    }
+    
+        private void limpiarId(){
+        idCategoria = 0;
     }
 
     /**
@@ -32,11 +159,11 @@ public class AdmiCategoria extends javax.swing.JFrame {
         txtNombre = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         splnRegistros = new javax.swing.JScrollPane();
-        tblRegistros = new javax.swing.JTable();
+        tblCategorias = new javax.swing.JTable();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         pnlCategorias.setPreferredSize(new java.awt.Dimension(1100, 650));
@@ -55,7 +182,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
         txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        tblRegistros.setModel(new javax.swing.table.DefaultTableModel(
+        tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -81,7 +208,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        splnRegistros.setViewportView(tblRegistros);
+        splnRegistros.setViewportView(tblCategorias);
 
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnGuardar.setText("Guardar");
@@ -178,52 +305,52 @@ public class AdmiCategoria extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AdmiCategoria().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+////        java.awt.EventQueue.invokeLater(new Runnable() {
+////            public void run() {
+////                new AdmiCategoria().setVisible(true);
+////            }
+////        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -236,7 +363,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
     private javax.swing.JLabel lblRegistros;
     private javax.swing.JPanel pnlCategorias;
     private javax.swing.JScrollPane splnRegistros;
-    private javax.swing.JTable tblRegistros;
+    private javax.swing.JTable tblCategorias;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

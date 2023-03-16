@@ -73,6 +73,11 @@ private  VentasForm ventasForm= new VentasForm();
         MenuAdmin.setText("Administrar");
 
         MenuAdminCategoria.setText("Categorias");
+        MenuAdminCategoria.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminCategoriaActionPerformed(evt);
+            }
+        });
         MenuAdmin.add(MenuAdminCategoria);
 
         MenuAdminClientes.setText("Clientes");
@@ -135,6 +140,14 @@ private  VentasForm ventasForm= new VentasForm();
     private void MenuAdminUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuAdminUsuarioActionPerformed
+
+    private void MenuAdminCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaActionPerformed
+                java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new AdmiCategoria().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_MenuAdminCategoriaActionPerformed
 
     /**
      * @param args the command line arguments
