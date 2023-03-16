@@ -2,7 +2,7 @@ package fachada;
 
 import entidades.Caja;
 import entidades.Categoria;
-import entidades.Cliente;
+import entidades.*;
 import entidades.Compra;
 import entidades.DetalleVenta;
 import entidades.Gasto;
@@ -10,6 +10,7 @@ import entidades.Producto;
 import entidades.Proveedor;
 import entidades.Usuario;
 import entidades.Venta;
+import enumeradores.Estado;
 import fabrica.FabricaControl;
 import java.util.List;
 import java.util.Calendar;
@@ -24,6 +25,7 @@ import interfaces.IControlProveedores;
 import interfaces.IControlUsuarios;
 import interfaces.IControlVentas;
 import interfaces.IFachadaControl;
+import java.util.ArrayList;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -32,6 +34,7 @@ import interfaces.IFachadaControl;
 public class FachadaControl implements IFachadaControl {
 
     private final FabricaControl fabrica = FabricaControl.getInstancia();
+   
 
     public FachadaControl() {
     }
@@ -70,6 +73,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
+    
      @Override
     public Caja consultarCaja(int id) {
         try {
@@ -80,9 +84,31 @@ public class FachadaControl implements IFachadaControl {
             return null;
         }
     }
+    
+    @Override
+     public Caja consultarCajaAbierta(){
+         List<Caja> cajasObtenidas= new ArrayList();
+       
+         try {
+            IControlCajas cajasDAO = fabrica.getCajasDAO();
+            cajasObtenidas=cajasDAO.consultarTodos();
+            for(int i=0;i<cajasObtenidas.size();i++){
+                if(cajasObtenidas.get(i).getEstado()== Estado.ABIERTA){
+                    return cajasObtenidas.get(i);
+                    
+                }
+           
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+         
+     }
 
      @Override
-    public List<Caja> consultarCajas(int id) {
+    public List<Caja> consultarCajas() {
         try {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
             return cajasDAO.consultarTodos();

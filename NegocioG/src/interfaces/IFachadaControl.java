@@ -22,7 +22,8 @@ public interface IFachadaControl {
     public Caja consultarCaja(int id);
         
 
-    public List<Caja> consultarCajas(int id);
+    public List<Caja> consultarCajas();
+    public Caja consultarCajaAbierta();
 
 
     public int agregarGasto(Gasto gasto);

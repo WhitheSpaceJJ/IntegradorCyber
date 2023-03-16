@@ -1,5 +1,9 @@
 package GUIs;
 
+import entidades.Caja;
+import fachada.FachadaControl;
+import interfaces.IFachadaControl;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -9,12 +13,16 @@ import javax.swing.JPanel;
 public class PrincipalForm extends javax.swing.JFrame {
 
 private  VentasForm ventasForm= new VentasForm();
+ IFachadaControl logica=new FachadaControl();
+ AbrirCajaForm abrirCaja= new AbrirCajaForm();
+ public static PrincipalForm principalFrm=null;
 
     /**
      * Creates new form PrincipalForm
      */
     public PrincipalForm() {
         initComponents();
+       
 
        
 
@@ -93,8 +101,16 @@ private  VentasForm ventasForm= new VentasForm();
 
     private void menuCajaNuevoTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaNuevoTicketActionPerformed
         // TODO add your handling code here:
-         
-        mostrarPanel(ventasForm.instanciaFrmVentas());
+         Caja caja = new Caja();
+         caja= logica.consultarCajaAbierta();
+         if(caja==null){
+             abrirCaja.instanciaAbrirCaja().mostrarFormulario();
+            
+         }else{
+             ventasForm=ventasForm.instanciaFrmVentas();
+             ventasForm.setCaja(caja);
+        mostrarPanel(ventasForm);
+         }
 
 
 
@@ -133,22 +149,33 @@ private  VentasForm ventasForm= new VentasForm();
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PrincipalForm().setVisible(true);
+                instanciaFrmPrincipal().setVisible(true);
+                
             }
         });
 
     }
 
     public void mostrarPanel(JPanel panelActual) {
-        pnlPrincipal.removeAll();
-        pnlPrincipal.add(panelActual);
-        pnlPrincipal.repaint();
-        pnlPrincipal.revalidate();
+        
+         instanciaFrmPrincipal();
+        principalFrm.pnlPrincipal.removeAll();
+       principalFrm.pnlPrincipal.add(panelActual);
+        principalFrm.pnlPrincipal.repaint();
+        principalFrm.pnlPrincipal.revalidate();
 
 
 
 
     }
+
+    public static PrincipalForm instanciaFrmPrincipal()
+{
+if (principalFrm == null) {
+    principalFrm = new PrincipalForm(); 
+}
+  return principalFrm;
+}
 
 
 

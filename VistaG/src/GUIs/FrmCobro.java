@@ -20,6 +20,7 @@ public class FrmCobro extends javax.swing.JFrame {
 
 IFachadaControl logica= new FachadaControl();
 VentasForm ventasFrm=null;
+FrmCobro frmCobro=null;
 
 
     /**
@@ -143,8 +144,9 @@ VentasForm ventasFrm=null;
     }//GEN-LAST:event_btnCancelarActionPerformed
 
 public void mostrarFormulario() {
-  this.setLocationRelativeTo(null);
-        this.setVisible(true);
+    instanciaFrmCobro();
+  frmCobro.setLocationRelativeTo(null);
+        frmCobro.setVisible(true);
 
     }
 public void cerrarFormulario() {
@@ -156,6 +158,12 @@ public VentasForm instanciaVentasForm(){
      ventasFrm=new VentasForm();
 }
 return ventasFrm;
+}
+public FrmCobro instanciaFrmCobro(){
+ if(frmCobro==null){
+     frmCobro=new FrmCobro();
+}
+return frmCobro;
 }
 
  /**

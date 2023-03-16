@@ -29,7 +29,8 @@ public class VentasForm extends javax.swing.JPanel {
     private DefaultComboBoxModel listaClientes;
 
 private static FrmCobro frmCobro= null; 
-private static VentasForm frmVentas= null; 
+public static  VentasForm frmVentas= null; 
+private static Caja caja= null; 
 
      IFachadaControl logica=new FachadaControl();
     /**
@@ -47,11 +48,6 @@ private static VentasForm frmVentas= null;
        this.txtTotalProducto.setEditable(false);
        this.txtDisponibilidad.setEditable(false);
        this.txtDescripcion.setEditable(false);
-
-
-
-
-
 
 
     }
@@ -111,6 +107,7 @@ private static VentasForm frmVentas= null;
         lblRectangulo4 = new javax.swing.JLabel();
         txtTotalCobrar = new javax.swing.JTextField();
         clientesC = new javax.swing.JComboBox<>();
+        txtCaja = new javax.swing.JLabel();
 
         tblVenta.setBackground(new java.awt.Color(255, 255, 255));
         tblVenta.setPreferredSize(new java.awt.Dimension(1000, 750));
@@ -314,6 +311,12 @@ private static VentasForm frmVentas= null;
         });
         tblVenta.add(clientesC, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 60, 200, -1));
 
+        txtCaja.setBackground(new java.awt.Color(204, 204, 204));
+        txtCaja.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        txtCaja.setForeground(new java.awt.Color(204, 204, 204));
+        txtCaja.setText("Caja");
+        tblVenta.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -341,7 +344,7 @@ private static VentasForm frmVentas= null;
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void clientesCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesCActionPerformed
@@ -349,8 +352,8 @@ private static VentasForm frmVentas= null;
     }//GEN-LAST:event_clientesCActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
-
- bloquearCampos();
+        instanciaFrmVentas();
+        bloquearCampos();
  
 
  instanciaFrmCobro().mostrarFormulario();
@@ -466,6 +469,7 @@ public void limpiarCampos(){
 
 }
 
+
 public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
         if (Character.isDigit(car)) {
@@ -501,6 +505,28 @@ if (frmVentas == null) {
 }
   return frmVentas;
 }
+
+public void mostrarFormulario() {
+    instanciaFrmVentas();
+    PrincipalForm principal = new PrincipalForm();
+       
+ 
+    principal.mostrarPanel(frmVentas);
+        
+
+    }
+
+
+public void establecerCaja(Caja caja)
+{
+    instanciaFrmVentas();
+   frmVentas.txtCaja.setText("Caja id: "+caja.getId()+ " Usuario: "+caja.getUsuario());
+}
+public void setCaja(Caja caja){
+      instanciaFrmVentas();
+    this.caja=caja;
+    establecerCaja(caja);
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscarProducto;
@@ -526,6 +552,7 @@ if (frmVentas == null) {
     private javax.swing.JLabel lblOperador;
     private javax.swing.JLabel lblRectangulo4;
     private javax.swing.JPanel tblVenta;
+    private javax.swing.JLabel txtCaja;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtCodigoArticulo;
