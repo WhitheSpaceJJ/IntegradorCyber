@@ -140,6 +140,11 @@ public class DetalleVenta implements Serializable {
         final DetalleVenta other = (DetalleVenta) obj;
         return Objects.equals(this.id, other.id);
     }
+
+    @Override
+    public String toString() {
+        return "DetalleVenta{" + "id=" + id + ", cantidad=" + cantidad + ", precioVendido=" + precioVendido + ", importe=" + importe + ", venta=" + venta + ", producto=" + producto + '}';
+    }
     
     
     

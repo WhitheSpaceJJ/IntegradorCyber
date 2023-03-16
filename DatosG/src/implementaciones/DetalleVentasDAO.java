@@ -12,11 +12,9 @@ public class DetalleVentasDAO implements IDetalleVentasDAO {
 
    private final IConexionBD conexion;
     
-    private IProductosDAO productosDAO;
     
-    public DetalleVentasDAO(IConexionBD conexion, IProductosDAO productosDAO){
+    public DetalleVentasDAO(IConexionBD conexion){
         this.conexion = conexion;
-        this.productosDAO = productosDAO;
     }
     
     @Override
@@ -26,17 +24,10 @@ public class DetalleVentasDAO implements IDetalleVentasDAO {
            EntityManager em = this.conexion.crearConexion();
            em.getTransaction().begin();
            
-           Producto productoBD = em.find(Producto.class, venta.getProducto().getId());
-           
-           venta.setProducto(productoBD);
-           
-           Venta ventaBD = em.find(Venta.class, venta.getVenta().getId());
-           
-           venta.setVenta(ventaBD);
+      
            
            em.persist(venta);
            
-           productosDAO.quitarStock(productoBD, venta.getCantidad());
            
            
            em.getTransaction().commit();

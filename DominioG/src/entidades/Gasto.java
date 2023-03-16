@@ -159,9 +159,9 @@ public class Gasto implements Serializable{
 
     @Override
     public String toString() {
-        return concepto;
+        return "Gasto{" + "id=" + id + ", fechaGasto=" + fechaGasto + ", concepto=" + concepto + ", costo=" + costo + ", autoriza=" + autoriza + ", caja=" + caja + '}';
     }
-    
+
     
     
 

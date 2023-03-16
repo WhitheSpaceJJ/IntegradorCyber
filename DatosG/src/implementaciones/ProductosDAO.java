@@ -103,9 +103,10 @@ public class ProductosDAO implements IProductosDAO{
     public boolean agregarStock(Producto producto, int stock) {
         try{
         EntityManager em = this.conexion.crearConexion();
-        Producto productoBD = em.find(Producto.class, producto.getId());
+                        Producto productoBD = em.find(Producto.class, producto.getId());
         em.getTransaction().begin();
         productoBD.setStock(productoBD.getStock() + stock);
+        em.merge(producto);
         em.getTransaction().commit();
         return true;
         
