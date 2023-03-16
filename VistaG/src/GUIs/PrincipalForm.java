@@ -12,19 +12,16 @@ import javax.swing.JPanel;
  */
 public class PrincipalForm extends javax.swing.JFrame {
 
-private  VentasForm ventasForm= new VentasForm();
- IFachadaControl logica=new FachadaControl();
- AbrirCajaForm abrirCaja= new AbrirCajaForm();
- public static PrincipalForm principalFrm=null;
+    private VentasForm ventasForm = new VentasForm();
+    IFachadaControl logica = new FachadaControl();
+    AbrirCajaForm abrirCaja = new AbrirCajaForm();
+    public static PrincipalForm principalFrm = null;
 
     /**
      * Creates new form PrincipalForm
      */
     public PrincipalForm() {
         initComponents();
-       
-
-       
 
     }
 
@@ -53,7 +50,6 @@ private  VentasForm ventasForm= new VentasForm();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(1000, 750));
         pnlPrincipal.setLayout(new java.awt.CardLayout());
 
@@ -136,19 +132,16 @@ private  VentasForm ventasForm= new VentasForm();
 
     private void menuCajaNuevoTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaNuevoTicketActionPerformed
         // TODO add your handling code here:
-         Caja caja = new Caja();
-         caja= logica.consultarCajaAbierta();
-         if(caja==null){
-             abrirCaja.instanciaAbrirCaja().mostrarFormulario();
-            
-         }else{
-             ventasForm=ventasForm.instanciaFrmVentas();
-             ventasForm.setCaja(caja);
-        mostrarPanel(ventasForm);
-         }
+        Caja caja = new Caja();
+        caja = logica.consultarCajaAbierta();
+        if (caja == null) {
+            abrirCaja.instanciaAbrirCaja().mostrarFormulario();
 
-
-
+        } else {
+            ventasForm = ventasForm.instanciaFrmVentas();
+            ventasForm.setCaja(caja);
+            mostrarPanel(ventasForm);
+        }
 
 
     }//GEN-LAST:event_menuCajaNuevoTicketActionPerformed
@@ -197,33 +190,28 @@ private  VentasForm ventasForm= new VentasForm();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 instanciaFrmPrincipal().setVisible(true);
-                
+
             }
         });
 
     }
 
     public void mostrarPanel(JPanel panelActual) {
-        
-         instanciaFrmPrincipal();
+
+        instanciaFrmPrincipal();
         principalFrm.pnlPrincipal.removeAll();
-       principalFrm.pnlPrincipal.add(panelActual);
+        principalFrm.pnlPrincipal.add(panelActual);
         principalFrm.pnlPrincipal.repaint();
         principalFrm.pnlPrincipal.revalidate();
 
-
-
-
     }
 
-    public static PrincipalForm instanciaFrmPrincipal()
-{
-if (principalFrm == null) {
-    principalFrm = new PrincipalForm(); 
-}
-  return principalFrm;
-}
-
+    public static PrincipalForm instanciaFrmPrincipal() {
+        if (principalFrm == null) {
+            principalFrm = new PrincipalForm();
+        }
+        return principalFrm;
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

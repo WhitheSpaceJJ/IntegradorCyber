@@ -1,7 +1,5 @@
 package GUIs;
 
-
-
 import interfaces.*;
 import entidades.*;
 import enumeradores.Estado;
@@ -10,7 +8,6 @@ import fachada.FachadaControl;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,7 +15,8 @@ import java.util.Date;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFrame;
-
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -27,28 +25,30 @@ import javax.swing.JFrame;
 public class VentasForm extends javax.swing.JPanel {
 
     private DefaultComboBoxModel listaClientes;
+    List<Producto> productos = new ArrayList<>();
 
-private static FrmCobro frmCobro= null; 
-public static  VentasForm frmVentas= null; 
-private static Caja caja= null; 
+    private float precio = (float) 0.00;
+    private static FrmCobro frmCobro = null;
+    public static VentasForm frmVentas = null;
+    public BusquedaArticuloForm frmBusArt = null;
+    private static Caja caja = null;
 
-     IFachadaControl logica=new FachadaControl();
+    IFachadaControl logica = new FachadaControl();
+
     /**
      * Creates new form VentasForm
      */
     public VentasForm() {
 
-
         initComponents();
 
-     
         llenarCBoxClientes();
         llenarCampos();
-       this.txtImporte.setEditable(false);
-       this.txtTotalProducto.setEditable(false);
-       this.txtDisponibilidad.setEditable(false);
-       this.txtDescripcion.setEditable(false);
-
+        this.txtImporte.setEditable(false);
+        this.txtTotalProducto.setEditable(false);
+        this.txtDisponibilidad.setEditable(false);
+        this.txtDescripcion.setEditable(false);
+        this.txtTotalCobrar.setEditable(false);
 
     }
 
@@ -103,7 +103,7 @@ private static Caja caja= null;
         btnQuitar = new javax.swing.JButton();
         btnAgregar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProductos = new javax.swing.JTable();
         lblRectangulo4 = new javax.swing.JLabel();
         txtTotalCobrar = new javax.swing.JTextField();
         clientesC = new javax.swing.JComboBox<>();
@@ -114,7 +114,6 @@ private static Caja caja= null;
         tblVenta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente.setText("Cliente:");
         tblVenta.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 60, -1, -1));
 
@@ -129,7 +128,6 @@ private static Caja caja= null;
         tblVenta.add(lblCargaDeArticulos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 160, -1));
 
         lblFecha.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblFecha.setForeground(new java.awt.Color(0, 0, 0));
         lblFecha.setText("Fecha:");
         tblVenta.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 110, -1, -1));
 
@@ -142,12 +140,10 @@ private static Caja caja= null;
         tblVenta.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 200, -1));
 
         lblNumTicket.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblNumTicket.setForeground(new java.awt.Color(0, 0, 0));
         lblNumTicket.setText("No. Ticket:");
         tblVenta.add(lblNumTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 60, -1, -1));
 
         lblOperador.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblOperador.setForeground(new java.awt.Color(0, 0, 0));
         lblOperador.setText("Operador:");
         tblVenta.add(lblOperador, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 110, -1, -1));
 
@@ -169,37 +165,30 @@ private static Caja caja= null;
         tblVenta.add(txtOperador, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 110, 150, -1));
 
         lblCliente1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente1.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente1.setText("Descripción:");
         tblVenta.add(lblCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, -1, -1));
 
         lblCliente2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente2.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente2.setText("Cantidad:");
         tblVenta.add(lblCliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, -1, -1));
 
         lblCliente3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente3.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente3.setText("Disponible:");
         tblVenta.add(lblCliente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 210, -1, -1));
 
         lblCliente4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente4.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente4.setText("Categoria");
         tblVenta.add(lblCliente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 210, -1, -1));
 
         lblCliente5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente5.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente5.setText("Total: ");
         tblVenta.add(lblCliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 290, -1, -1));
 
         lblCliente6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente6.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente6.setText("importe:");
         tblVenta.add(lblCliente6, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 290, -1, -1));
 
         lblCliente8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente8.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente8.setText("Código Artículo: ");
         tblVenta.add(lblCliente8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 210, -1, -1));
 
@@ -244,12 +233,10 @@ private static Caja caja= null;
         tblVenta.add(txtCodigoArticulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 205, 180, -1));
 
         lblCliente9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente9.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente9.setText("Observaciones:");
         tblVenta.add(lblCliente9, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 330, -1, -1));
 
         lblCliente11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente11.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente11.setText("Total a Cobrar");
         tblVenta.add(lblCliente11, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 640, -1, -1));
 
@@ -257,19 +244,29 @@ private static Caja caja= null;
         btnQuitar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnQuitar.setForeground(new java.awt.Color(255, 255, 255));
         btnQuitar.setText("Quitar");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
         tblVenta.add(btnQuitar, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 260, 110, 30));
 
         btnAgregar.setBackground(new java.awt.Color(0, 0, 255));
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(255, 255, 255));
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
         tblVenta.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 260, 110, 30));
 
         jScrollPane1.setBackground(new java.awt.Color(204, 204, 255));
         jScrollPane1.setBorder(null);
 
-        jTable1.setBackground(new java.awt.Color(204, 204, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProductos.setBackground(new java.awt.Color(204, 204, 255));
+        tblProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -292,7 +289,7 @@ private static Caja caja= null;
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProductos);
 
         tblVenta.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 390, 900, 220));
 
@@ -344,7 +341,20 @@ private static Caja caja= null;
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-       
+        if (txtCodigoArticulo.getText().equals("")) {
+            bloquearCampos();
+
+            instanciaFrmBusArt().mostrarFormulario();
+        } else {
+            Producto productoBuscado = logica.consultarProducto(Integer.parseInt(txtCodigoArticulo.getText()));
+            if (productoBuscado != null) {
+                productos.add(productoBuscado);
+                cargarCampos(productoBuscado);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
+            }
+
+        }
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void clientesCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientesCActionPerformed
@@ -354,123 +364,124 @@ private static Caja caja= null;
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
         instanciaFrmVentas();
         bloquearCampos();
- 
 
- instanciaFrmCobro().mostrarFormulario();
+        instanciaFrmCobro().mostrarFormulario();
 
     }//GEN-LAST:event_btnCobrarActionPerformed
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
-         adminitirSoloNumeros(evt);
+        adminitirSoloNumeros(evt);
     }//GEN-LAST:event_txtCantidadKeyTyped
 
-public void registrarVenta()
-{
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+        Producto productoAgregar = agregarProducto();
+        productos.add(productoAgregar);
+        actualizarPrecioTotal();
+        cargarTabla();
+        limpiarCampos();
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
- //Cliente cliente= new Cliente();
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        // TODO add your handling code here:
+        Producto productoQuitar = getProductoSeleccionado();
+        productos.remove(productoQuitar);
+        cargarTabla();
+    }//GEN-LAST:event_btnQuitarActionPerformed
+
+    public void registrarVenta() {
+
+        //Cliente cliente= new Cliente();
         Venta venta = new Venta();
- 
 
-  String fecha = frmVentas.txtFecha.getText() ;
- SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-Calendar fechaCalendar=Calendar.getInstance();
+        String fecha = frmVentas.txtFecha.getText();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+        Calendar fechaCalendar = Calendar.getInstance();
 
+        try {
+            fechaCalendar.setTime(formatoFecha.parse(fecha));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-try {
-    fechaCalendar.setTime(formatoFecha.parse(fecha)); 
-} catch (ParseException e) {
-    e.printStackTrace();
-}
+        //cliente= (Cliente) clientesC.getSelectedItem();
+        Cliente c = new Cliente();
+        Integer id = 1;
+        c.setId(id);
+        c.setRfc("HSHGDGS6A77");
+        c.setNombre("Jose");
 
+        venta.setTotalventa(20);
+        Calendar fechaActual = Calendar.getInstance();
+        Caja caja = new Caja();
+        caja.setId(2);
+        caja.setEstado(Estado.ABIERTA);
+        List<Gasto> gastos = new ArrayList<>();
+        Gasto gasto = new Gasto();
+        gasto.setCosto(0);
 
-    //cliente= (Cliente) clientesC.getSelectedItem();
-Cliente c=new Cliente();
-Integer id=1;
-c.setId(id);
-c.setRfc("HSHGDGS6A77");
-c.setNombre("Jose");
+        gasto.setCaja(caja);
+        gasto.setAutoriza("luis");
 
-    venta.setTotalventa(20);
-   Calendar fechaActual = Calendar.getInstance();
-Caja caja=new Caja();
-caja.setId(2);
-caja.setEstado(Estado.ABIERTA);
-List<Gasto> gastos = new ArrayList<>();
-Gasto gasto= new Gasto();
-gasto.setCosto(0);
+        gastos.add(gasto);
 
-gasto.setCaja(caja);
-gasto.setAutoriza("luis");
+        caja.setGastos(gastos);
+        venta.setCaja(caja);
+        venta.setCliente(c);
 
-gastos.add(gasto);
+        logica.agregarVenta(venta);
 
+    }
 
-caja.setGastos(gastos);
-venta.setCaja(caja);
-venta.setCliente(c);
+    public void llenarCampos() {
+        Calendar fechaC = Calendar.getInstance();
 
-
-  logica.agregarVenta(venta);
-
-}
-
-public void llenarCampos()
-{
-      Calendar fechaC= Calendar.getInstance();
-
-       Date fecha = fechaC.getTime();
+        Date fecha = fechaC.getTime();
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-        
-        
+
         String fechaFormateada = formatoFecha.format(fecha);
 
-this.txtFecha.setText(fechaFormateada);
-}
+        this.txtFecha.setText(fechaFormateada);
+    }
 
+    public void bloquearCampos() {
 
-public void bloquearCampos()
-{
+        frmVentas.btnCobrar.setEnabled(false);
+        frmVentas.clientesC.setEnabled(false);
+        frmVentas.btnAgregar.setEnabled(false);
+        frmVentas.btnBuscarProducto.setEnabled(false);
+        frmVentas.btnQuitar.setEnabled(false);
 
-   frmVentas.btnCobrar.setEnabled(false);
-   frmVentas.clientesC.setEnabled(false);
-   frmVentas.btnAgregar.setEnabled(false);
-   frmVentas.btnBuscarProducto.setEnabled(false);
-   frmVentas.btnQuitar.setEnabled(false);
+    }
 
-}
+    public void desbloquearCampos() {
+        instanciaFrmVentas();
 
-public void desbloquearCampos()
-{
-    instanciaFrmVentas();
+        frmVentas.btnCobrar.setEnabled(true);
+        frmVentas.clientesC.setEnabled(true);
+        frmVentas.btnAgregar.setEnabled(true);
+        frmVentas.btnBuscarProducto.setEnabled(true);
+        frmVentas.btnQuitar.setEnabled(true);
 
-   frmVentas.btnCobrar.setEnabled(true);
-   frmVentas.clientesC.setEnabled(true);
-   frmVentas.btnAgregar.setEnabled(true);
-   frmVentas.btnBuscarProducto.setEnabled(true);
-   frmVentas.btnQuitar.setEnabled(true);
+    }
 
-}
+    public void limpiarCampos() {
+        frmVentas.txtCantidad.setText("");
+        frmVentas.txtCategoria.setText("");
+        frmVentas.txtCodigoArticulo.setText("");
+        frmVentas.txtDescripcion.setText("");
+        frmVentas.txtDisponibilidad.setText("");
+        frmVentas.txtImporte.setText("");
+        frmVentas.txtObservaciones.setText("");
+        frmVentas.txtTotalCobrar.setText("");
+        frmVentas.txtTotalProducto.setText("");
+        frmVentas.txtNumTicket.setText("");
+        frmVentas.txtOperador.setText("");
 
-public void limpiarCampos(){
- frmVentas.txtCantidad.setText("");
- frmVentas.txtCategoria.setText("");
- frmVentas.txtCodigoArticulo.setText("");
- frmVentas.txtDescripcion.setText("");
- frmVentas.txtDisponibilidad.setText("");
- frmVentas.txtImporte.setText("");
- frmVentas.txtObservaciones.setText("");
- frmVentas.txtTotalCobrar.setText("");
- frmVentas.txtTotalProducto.setText("");
- frmVentas.txtNumTicket.setText("");
- frmVentas.txtOperador.setText("");
+    }
 
-
-
-}
-
-
-public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
+    public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
         if (Character.isDigit(car)) {
 
@@ -480,7 +491,7 @@ public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
         }
     }
 
-public void admitirSoloTexto(java.awt.event.KeyEvent evt) {
+    public void admitirSoloTexto(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
         if (Character.isLetter(car) || car == ' ') {
 
@@ -490,43 +501,110 @@ public void admitirSoloTexto(java.awt.event.KeyEvent evt) {
         }
     }
 
-public static FrmCobro instanciaFrmCobro()
-{
-if (frmCobro == null) {
-    frmCobro = new FrmCobro(); 
-}
-  return frmCobro;
-}
+    public static FrmCobro instanciaFrmCobro() {
+        if (frmCobro == null) {
+            frmCobro = new FrmCobro();
+        }
+        return frmCobro;
+    }
 
-public static  VentasForm instanciaFrmVentas()
-{
-if (frmVentas == null) {
-    frmVentas = new VentasForm(); 
-}
-  return frmVentas;
-}
+    public static VentasForm instanciaFrmVentas() {
+        if (frmVentas == null) {
+            frmVentas = new VentasForm();
+        }
+        return frmVentas;
+    }
 
-public void mostrarFormulario() {
-    instanciaFrmVentas();
-    PrincipalForm principal = new PrincipalForm();
-       
- 
-    principal.mostrarPanel(frmVentas);
-        
+    public void mostrarFormulario() {
+        instanciaFrmVentas();
+        PrincipalForm principal = new PrincipalForm();
+
+        principal.mostrarPanel(frmVentas);
 
     }
 
+    public void establecerCaja(Caja caja) {
+        instanciaFrmVentas();
+        frmVentas.txtCaja.setText("Caja id: " + caja.getId() + " Usuario: " + caja.getUsuario());
+    }
 
-public void establecerCaja(Caja caja)
-{
-    instanciaFrmVentas();
-   frmVentas.txtCaja.setText("Caja id: "+caja.getId()+ " Usuario: "+caja.getUsuario());
-}
-public void setCaja(Caja caja){
-      instanciaFrmVentas();
-    this.caja=caja;
-    establecerCaja(caja);
-}
+    public void setCaja(Caja caja) {
+        instanciaFrmVentas();
+        this.caja = caja;
+        establecerCaja(caja);
+    }
+    
+    public void agregarArtBuscado(Producto productoS) {
+        productos.add(productoS);
+        if (!productos.isEmpty()) {
+            cargarCampos(productoS);
+        }
+    }
+    
+    private Producto getProductoSeleccionado() {
+        int indiceFilaSeleccionada = this.tblProductos.getSelectedRow();
+        if (indiceFilaSeleccionada != -1) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
+            int indiceColumnaNombre = 0;
+            String nombreSeleccionado = (String) modeloTabla.getValueAt(indiceFilaSeleccionada, indiceColumnaNombre);
+            List<Producto> productoSelec = logica.buscarProductosPorNombre(nombreSeleccionado);
+            return productoSelec.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    private Producto agregarProducto() {
+        if (txtCodigoArticulo.getText() != "") {
+            Producto productoAgregar = logica.consultarProducto(Integer.parseInt(txtCodigoArticulo.getText()));
+            return productoAgregar;
+        } else {
+            return null;
+        }
+    }
+    
+    public void cargarCampos(Producto productoCargado) {
+        txtCodigoArticulo.setText(productoCargado.getId() + "");
+        txtDescripcion.setText(productoCargado.getDescripcion());
+        txtCategoria.setText(productoCargado.getCategoria().getNombre());
+        txtDisponibilidad.setText(productoCargado.getStock() + "");
+        txtImporte.setText(productoCargado.getPrecioVenta() + "");
+        txtTotalProducto.setText(productoCargado.getPrecioVenta() + "");
+    }
+    
+    public void cargarTabla() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
+        modeloTabla.setRowCount(0);
+        productos.forEach(producto -> {
+            Object[] fila = new Object[5];
+            fila[0] = producto.getNombre();
+            fila[2] = producto.getStock();
+            fila[1] = producto.getDescripcion();
+            fila[3] = producto.getPrecioVenta();
+            fila[4] = (Float.parseFloat(txtTotalProducto.getText())*Integer.parseInt(txtCantidad.getText()));
+            modeloTabla.addRow(fila);
+        });
+        
+    }
+    
+    public BusquedaArticuloForm instanciaFrmBusArt() {
+        if (frmBusArt == null) {
+            frmBusArt = new BusquedaArticuloForm(this);
+        }
+        return frmBusArt;
+    }
+    
+    private void actualizarPrecioTotal(){
+        
+        precio = precio + (Float.parseFloat(txtTotalProducto.getText())*Integer.parseInt(txtCantidad.getText()));
+        System.out.println("En el metodo para actualizar");
+        txtTotalCobrar.setText(precio + "");
+        System.out.println(precio);
+    }
+    
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnBuscarProducto;
@@ -534,7 +612,6 @@ public void setCaja(Caja caja){
     private javax.swing.JButton btnQuitar;
     private javax.swing.JComboBox<String> clientesC;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCargaDeArticulos;
     private javax.swing.JLabel lblCliente;
     private javax.swing.JLabel lblCliente1;
@@ -551,6 +628,7 @@ public void setCaja(Caja caja){
     private javax.swing.JLabel lblNumTicket;
     private javax.swing.JLabel lblOperador;
     private javax.swing.JLabel lblRectangulo4;
+    private javax.swing.JTable tblProductos;
     private javax.swing.JPanel tblVenta;
     private javax.swing.JLabel txtCaja;
     private javax.swing.JTextField txtCantidad;
