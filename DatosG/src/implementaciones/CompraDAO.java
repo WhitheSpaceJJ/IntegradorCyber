@@ -25,8 +25,8 @@ public class CompraDAO implements ICompraDAO {
 
     public CompraDAO(IConexionBD conexion,IProveedoresDAO proveedoresDAO,IProductosDAO productosDAO) {
         this.conexion = conexion;
-        proveedoresDAO =proveedoresDAO;
-        productosDAO = productosDAO;
+        this.proveedoresDAO =proveedoresDAO;
+        this.productosDAO = productosDAO;
 
     }
 
