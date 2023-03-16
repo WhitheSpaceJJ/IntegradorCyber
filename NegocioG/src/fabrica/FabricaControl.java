@@ -13,7 +13,7 @@ import interfaces.IFachadaDAO;
 public class FabricaControl {
 
     private static FabricaControl instancia;
-    private CategoriasDAO instanceCategoriasDAO;
+    private ControlCategoria instanceCategoriasDAO;
     private ControlClientes instanceClientesDAO;
     private ControlProductos instancePRoductosDAO;
     private ControlProveedores instanceProveedoresDAO;
@@ -60,9 +60,9 @@ private IFachadaDAO fachadaDAO;
         return instanceDetalleCompraDAO;
     }
 
-    public CategoriasDAO getCategoriasDAO() {
+    public ControlCategoria getCategoriasDAO() {
         if (instanceCategoriasDAO == null) {
-            instanceCategoriasDAO = new CategoriasDAO(fachadaDAO);
+            instanceCategoriasDAO = new ControlCategoria(fachadaDAO);
         }
         return instanceCategoriasDAO;
     }
