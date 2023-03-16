@@ -36,6 +36,12 @@ private  VentasForm ventasForm= new VentasForm();
         menuCajaNuevoTicket = new javax.swing.JMenuItem();
         menuCajaAbrirCaja = new javax.swing.JMenuItem();
         menuCajaCierreCaja = new javax.swing.JMenuItem();
+        MenuAdmin = new javax.swing.JMenu();
+        MenuAdminCategoria = new javax.swing.JMenuItem();
+        MenuAdminClientes = new javax.swing.JMenuItem();
+        MenuAdminProductos = new javax.swing.JMenuItem();
+        MenuAdminProveedores = new javax.swing.JMenuItem();
+        MenuAdminUsuario = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -63,6 +69,30 @@ private  VentasForm ventasForm= new VentasForm();
         MenuCaja.add(menuCajaCierreCaja);
 
         jMenuBar1.add(MenuCaja);
+
+        MenuAdmin.setText("Administrar");
+
+        MenuAdminCategoria.setText("Categorias");
+        MenuAdmin.add(MenuAdminCategoria);
+
+        MenuAdminClientes.setText("Clientes");
+        MenuAdmin.add(MenuAdminClientes);
+
+        MenuAdminProductos.setText("Productos");
+        MenuAdmin.add(MenuAdminProductos);
+
+        MenuAdminProveedores.setText("Proveedores");
+        MenuAdmin.add(MenuAdminProveedores);
+
+        MenuAdminUsuario.setText("Usuario");
+        MenuAdminUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminUsuarioActionPerformed(evt);
+            }
+        });
+        MenuAdmin.add(MenuAdminUsuario);
+
+        jMenuBar1.add(MenuAdmin);
 
         setJMenuBar(jMenuBar1);
 
@@ -101,6 +131,10 @@ private  VentasForm ventasForm= new VentasForm();
 
 
     }//GEN-LAST:event_menuCajaNuevoTicketActionPerformed
+
+    private void MenuAdminUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminUsuarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -153,6 +187,12 @@ private  VentasForm ventasForm= new VentasForm();
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu MenuAdmin;
+    private javax.swing.JMenuItem MenuAdminCategoria;
+    private javax.swing.JMenuItem MenuAdminClientes;
+    private javax.swing.JMenuItem MenuAdminProductos;
+    private javax.swing.JMenuItem MenuAdminProveedores;
+    private javax.swing.JMenuItem MenuAdminUsuario;
     private javax.swing.JMenu MenuCaja;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
