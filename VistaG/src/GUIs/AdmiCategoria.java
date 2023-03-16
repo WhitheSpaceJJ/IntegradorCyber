@@ -4,7 +4,9 @@ import GUIs.utils.JButtonCellEditor;
 import GUIs.utils.JButtonRenderer;
 import GUIs.utils.JTextFieldLimit;
 import entidades.Categoria;
+import fachada.FachadaControl;
 import fachada.FachadaDAO;
+import interfaces.IFachadaControl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -27,15 +29,16 @@ public class AdmiCategoria extends javax.swing.JFrame {
     private final int COLEDITAR = 2;
     private final int COLELIMINAR = 3;
 
-    FachadaDAO fachada;
+    //FachadaDAO fachada;
+    IFachadaControl logica;
 
     // Especifica un ID de producto que se está editando.
     private int idCategoria;
 
     public AdmiCategoria() {
         initComponents();
-        fachada = new FachadaDAO();
-
+        //fachada = new FachadaDAO();
+        logica = new FachadaControl();
         llenarTabla();
         initBotonesTabla();
 
@@ -55,9 +58,9 @@ public class AdmiCategoria extends javax.swing.JFrame {
                 int indexColumna = tblCategorias.getSelectedColumn();
 
                 if (indexColumna == COLEDITAR) {
-                    llenarFormulario(fachada.consultarCategoria(idCategoria));
+                    llenarFormulario(logica.consultarCategoria(idCategoria));
                     //Evita que se modifique el nombre del producto al editarse.
-                    txtNombre.setEditable(false);
+                    //txtNombre.setEditable(false);
                 } else {
                     eliminar();
                 }
@@ -87,7 +90,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
     private void llenarTabla() {
 
-        List<Categoria> categorias = this.fachada.consultarTodasCategorias();
+        List<Categoria> categorias = this.logica.consultarTodasCategorias();
 
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
 
@@ -125,7 +128,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
             return;
         }
 
-        boolean seElimino = fachada.eliminarCategoria(idCategoria);
+        boolean seElimino = logica.eliminarCategoria(idCategoria);
 
         if (seElimino) {
             JOptionPane.showMessageDialog(this, "Se eliminó la categoria", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -136,9 +139,17 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
         limpiarId();
     }
-    
-        private void limpiarId(){
+
+    private void limpiarId() {
         idCategoria = 0;
+    }
+
+    private boolean validarCamposLlenos() {
+
+        if (txtNombre.getText().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -212,6 +223,11 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -246,9 +262,8 @@ public class AdmiCategoria extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCategoriasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlCategoriasLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblRegistros)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap())
                             .addComponent(splnRegistros, javax.swing.GroupLayout.DEFAULT_SIZE, 564, Short.MAX_VALUE)))))
             .addComponent(jSeparator1)
         );
@@ -301,6 +316,10 @@ public class AdmiCategoria extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        this.guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -366,4 +385,65 @@ public class AdmiCategoria extends javax.swing.JFrame {
     private javax.swing.JTable tblCategorias;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
+
+    private void guardar() {
+        if (validarCamposLlenos()) {
+
+            if (idCategoria == 0) {
+                agregar();
+            } else {
+                actualizar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void agregar() {
+//        if(validarFormulario() == false){
+//            return;
+//        }
+
+        String nombre = this.txtNombre.getText();
+
+        Categoria categoria = new Categoria(nombre);
+
+        boolean seAgregoProdcuto = logica.agregarCategoria(categoria);
+
+        if (seAgregoProdcuto) {
+            JOptionPane.showMessageDialog(this, "Se agregó la nueva categoria", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.limpiarFormulario();
+            this.llenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible agregar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void actualizar() {
+//        if(validarFormulario() == false){
+//            return;
+//        }
+
+        String nombre = txtNombre.getText();
+
+        Categoria categoria = new Categoria(idCategoria, nombre);
+
+        boolean seActualizo = logica.actualizarCategoria(categoria);
+
+        if (seActualizo) {
+            JOptionPane.showMessageDialog(this, "Se actualizó la categoria", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.limpiarFormulario();
+            this.llenarTabla();
+            limpiarId();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible actualizar la categoria", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void limpiarFormulario() {
+        txtNombre.setText("");
+        limpiarId();
+        txtNombre.setEditable(true);
+    }
+
 }
