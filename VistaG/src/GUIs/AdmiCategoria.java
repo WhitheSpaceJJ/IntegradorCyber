@@ -22,14 +22,14 @@ import javax.swing.table.TableColumnModel;
  */
 public class AdmiCategoria extends javax.swing.JFrame {
 
-    /**
-     * Creates new form AdmiClienteForm
-     */
     // Numero de columna - 1 , dónde se encontrarán los botones
     private final int COLEDITAR = 2;
     private final int COLELIMINAR = 3;
 
-    //FachadaDAO fachada;
+    /**
+     * Creates new form AdmiClienteForm
+     */
+
     IFachadaControl logica;
 
     // Especifica un ID de producto que se está editando.
@@ -37,7 +37,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
     public AdmiCategoria() {
         initComponents();
-        //fachada = new FachadaDAO();
         logica = new FachadaControl();
         llenarTabla();
         initBotonesTabla();
@@ -231,6 +230,11 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlCategoriasLayout = new javax.swing.GroupLayout(pnlCategorias);
         pnlCategorias.setLayout(pnlCategoriasLayout);
@@ -320,6 +324,10 @@ public class AdmiCategoria extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         this.guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.limpiarFormulario();
+    }//GEN-LAST:event_btnCancelarActionPerformed
 
     /**
      * @param args the command line arguments
