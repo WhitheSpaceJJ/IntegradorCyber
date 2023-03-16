@@ -167,11 +167,8 @@ public class Venta implements Serializable {
 
     @Override
     public String toString() {
-        return numTicket.toString();
+        return "Venta{" + "id=" + id + ", numTicket=" + numTicket + ", fecha=" + fecha + ", totalventa=" + totalventa + ", cliente=" + cliente + ", detalleVentas=" + detalleVentas + ", caja=" + caja + '}';
     }
 
-
-
-    
 
 }

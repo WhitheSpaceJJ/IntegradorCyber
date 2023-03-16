@@ -1,14 +1,17 @@
-
 package prueba;
 
 import conexion.ConexionBD;
+import entidades.Caja;
 import entidades.Categoria;
 import entidades.Cliente;
 import entidades.Compra;
+import entidades.DetalleVenta;
+import entidades.Gasto;
 import entidades.Producto;
 import entidades.Proveedor;
 import entidades.Usuario;
 import entidades.Venta;
+import enumeradores.Estado;
 import enumeradores.Rol;
 import fachada.FachadaDAO;
 import implementaciones.ClientesDAO;
@@ -20,6 +23,8 @@ import interfaces.IVentasDAO;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
+import java.util.RandomAccess;
 
 public class Prueba {
 
@@ -76,7 +81,6 @@ public class Prueba {
 //        FachadaDAO fachada = new FachadaDAO();
 //        //Crea Usuario
 
-
 //        for (int i = 0; i < proveedores.size(); i++) {
 //            Proveedor get = proveedores.get(i);
 //            fachada.agregarProveedor(get);
@@ -85,39 +89,111 @@ public class Prueba {
 //            Categoria get = categorias.get(i);
 //            fachada.agregarCategoria(get);
 //        }
-
 //        for (DetalleCompra detalle : detallesCompra) {
 //            fachada.agregarDetalleCompra(detalle);
 //        }
-
-
 //Prueba 1 Llenado
-//        for (int i = 0; i < usuarios.size(); i++) {
-//            Usuario get = usuarios.get(0);
-//            fachada.agregarUsuario(get);
-//        }
-// System.out.println("Usuarios se han insertado correctamente");
-//        System.out.println("------------------------");
-//        for (int i = 0; i < productos.size(); i++) {
-//            Producto get = productos.get(i);
-//            fachada.agregarProducto(get);
-//        }
-//System.out.println("Productos se han insertado correctamente");
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario get = usuarios.get(i);
+            fachada.agregarUsuario(get);
+        }
+        System.out.println("Usuarios se han insertado correctamente");
+        System.out.println("------------------------");
+        for (int i = 0; i < productos.size(); i++) {
+            Producto get = productos.get(i);
+            fachada.agregarProducto(get);
+        }
+        System.out.println("Productos se han insertado correctamente");
+        System.out.println("Las cayegorias igualmente fueron agregadas exitosamente");
 
+        for (int i = 0; i < proveedores.size(); i++) {
+            Proveedor get = proveedores.get(i);
+            fachada.agregarProveedor(get);
+        }
+        System.out.println("Los proevedores se han agregado corectamente");
 //Prueba 2 Obtencion
- List<Usuario> usuariosO=fachada.consultarTodosUsuarios();
+        List<Usuario> usuariosO = fachada.consultarTodosUsuarios();
         System.out.println("Usuarios Obtenidos");
         for (int i = 0; i < usuariosO.size(); i++) {
             Usuario get = usuariosO.get(i);
             System.out.println(get.toString());
         }
         System.out.println("------------------------");
-        System.out.println("PRoductos obtenidos");
-        List<Producto> productosO=fachada.consultarTodosProductos();
+        System.out.println("Productos obtenidos");
+        List<Producto> productosO = fachada.consultarTodosProductos();
         for (int i = 0; i < productosO.size(); i++) {
             Producto get = productosO.get(i);
             System.out.println(get.toString());
         }
+        System.out.println("------------------------");
+        System.out.println("Categorias obtenidos");
+        List<Categoria> categoriasO = fachada.consultarTodasCategorias();
+        for (int i = 0; i < categoriasO.size(); i++) {
+            Categoria get = categoriasO.get(i);
+            System.out.println(get.toString());
+        }
+
+        System.out.println("------------------------");
+        System.out.println("Provedores Obtenidos");
+        List<Proveedor> proveedoresO = fachada.consultarTodosProveedores();
+        for (int i = 0; i < proveedoresO.size(); i++) {
+            Proveedor get = proveedoresO.get(i);
+            System.out.println(get.toString());
+        }
+       System.out.println("------------------------");
+        System.out.println("Cliente Creacion");
+        Cliente cliente =new Cliente("Jose", "OOHJ020110UU$", "jose.orozco@gmail.com", "6442138093");
+        fachada.agregarCliente(cliente);
+        System.out.println("Caja abierta");
+        Caja caja = new Caja(Calendar.getInstance(), 1900, 0, 0, 0, Estado.ABIERTA, usuariosO.get(0));
+        fachada.agregarCaja(caja);
+        System.out.println("Caja Agregada estatus; " + fachada.consultarCajas().get(fachada.consultarCajas().size() - 1).getEstado());
+    
+        System.out.println("Cliente y caja obtenidos sera con id ya que solo es un unico elemento");
+        Cliente clienteO=fachada.consultarCliente(1);
+        System.out.println(clienteO.toString());
+        Caja caja1=fachada.consultarCaja(1);
+        System.out.println(caja1.toString());
+        System.out.println("------------------------");
+        Producto obtenido2 = productos.get(0);
+        Compra compra = new Compra(
+                Calendar.getInstance(), 400, obtenido2.getPrecioCompra(),
+                proveedoresO.get(
+                        new Random().nextInt(proveedoresO.size() - 1)),
+                obtenido2);
+        fachada.agregarDetalleCompra(compra);
+        fachada.agregarStockProducto(compra.getProducto(), compra.getCantidadComprada());
+        System.out.println("Compra agregada yy el stock del producto se ha aumentado");
+        System.out.println("Compras");
+        List<Compra> compras = fachada.consultarTodasEntradasAlmacen();
+        for (int i = 0; i < compras.size(); i++) {
+            Compra get = compras.get(i);
+            System.out.println(get.toString());
+        }
+        System.out.println("Productos obtenidos");
+        productosO = fachada.consultarTodosProductos();
+        for (int i = 0; i < productosO.size(); i++) {
+            Producto get = productosO.get(i);
+            System.out.println(get.toString());
+        }
+ 
+        System.out.println("Venta agregada");
+        Venta venta=new Venta(100, Calendar.getInstance(), 400, cliente, caja);
+        fachada.agregarVenta(venta);
+        fachada.quitarStockProducto(productosO.get(0), 40);
+        System.out.println("Venta; "+fachada.consultarVentas().toString());
+        System.out.println("Producto Venta; "+fachada.consultarProducto(1));
+       
+        DetalleVenta detalleVenta=new DetalleVenta(40, 10, 400, venta, productosO.get(0));
+        fachada.agregarDetalleVenta(detalleVenta);
+        System.out.println("Ahora a consultar la base pero antes, realizamos un gasto");
+        Gasto gasto=new Gasto(Calendar.getInstance(), "nomina empleado", 400, "Jose", caja);
+        fachada.agregarGasto(gasto);
+        System.out.println("Gastos, "+fachada.consultarTodas().toString());
+        Caja caja2=fachada.consultarCaja(1);
+        caja2.setTotalIngresos(venta.getTotalventa());
+        caja2.setTotalGastos(gasto.getCosto());
+        fachada.actualizarCaja(caja);
     }
 
 }

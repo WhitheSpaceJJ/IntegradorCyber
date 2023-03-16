@@ -141,6 +141,11 @@ public class Compra implements Serializable{
         final Compra other = (Compra) obj;
         return Objects.equals(this.id, other.id);
     }
+
+    @Override
+    public String toString() {
+        return "Compra{" + "id=" + id + ", fechaEntrada=" + fechaEntrada + ", cantidadComprada=" + cantidadComprada + ", precioCompra=" + precioCompra + ", proveedor=" + proveedor + ", producto=" + producto + '}';
+    }
    
     
     

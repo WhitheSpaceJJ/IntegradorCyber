@@ -302,9 +302,8 @@ public Caja( Estado estado,Calendar fechaApertura, Calendar fechaCierre, float s
 
     @Override
     public String toString() {
-        return id.toString();
+        return "Caja{" + "id=" + id + ", fechaApertura=" + fechaApertura + ", fechaCierre=" + fechaCierre + ", saldoInicial=" + saldoInicial + ", saldoCierre=" + saldoCierre + ", totalIngresos=" + totalIngresos + ", totalGastos=" + totalGastos + ", estado=" + estado + ", gastos=" + gastos + ", ventas=" + ventas + ", usuario=" + usuario + '}';
     }
-    
-    
+
     
 }

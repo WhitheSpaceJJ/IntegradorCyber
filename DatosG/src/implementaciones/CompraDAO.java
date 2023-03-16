@@ -20,14 +20,9 @@ import javax.persistence.criteria.CriteriaQuery;
 public class CompraDAO implements ICompraDAO {
 
     private final IConexionBD conexion;
-    private IProveedoresDAO proveedoresDAO;
-    private IProductosDAO productosDAO;
 
-    public CompraDAO(IConexionBD conexion,IProveedoresDAO proveedoresDAO,IProductosDAO productosDAO) {
+    public CompraDAO(IConexionBD conexion) {
         this.conexion = conexion;
-        proveedoresDAO =proveedoresDAO;
-        productosDAO = productosDAO;
-
     }
 
     @Override
@@ -37,12 +32,7 @@ public class CompraDAO implements ICompraDAO {
             EntityManager em = this.conexion.crearConexion();
             em.getTransaction().begin();
 
-            Proveedor proveedorBD = em.find(Proveedor.class, entradaAlmacen.getProveedor().getId());
-            Producto productoBD = em.find(Producto.class, entradaAlmacen.getProducto().getId());
-            entradaAlmacen.setProveedor(proveedorBD);
-
             em.persist(entradaAlmacen);
-            productosDAO.agregarStock(productoBD, entradaAlmacen.getCantidadComprada());
 
             em.flush();
 

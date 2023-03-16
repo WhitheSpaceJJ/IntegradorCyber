@@ -44,14 +44,14 @@ private GastosDAO instanceGastosDAO;
 
     public DetalleVentasDAO getDetalleVentasDAO() {
         if (instanceDetalleVentasDAO == null) {
-            instanceDetalleVentasDAO = new DetalleVentasDAO(instanceConexionBD, getProductosDAO());
+            instanceDetalleVentasDAO = new DetalleVentasDAO(instanceConexionBD);
         }
         return instanceDetalleVentasDAO;
     }
 
     public CompraDAO getDetalleCompraDAO() {
         if (instanceDetalleCompraDAO == null) {
-            instanceDetalleCompraDAO = new CompraDAO(instanceConexionBD,getProveedoresDAO(),getProductosDAO());
+            instanceDetalleCompraDAO = new CompraDAO(instanceConexionBD);
         }
         return instanceDetalleCompraDAO;
     }

@@ -49,7 +49,7 @@ public class UsuariosDAO implements IUsuariosDAO{
             usuarioBD.setNombre(usuario.getNombre());
             usuarioBD.setPassword(usuario.getPassword());
             usuarioBD.setRol(usuario.getRol());
-
+            em.merge(usuarioBD);
             em.getTransaction().commit();
             return true;
 
