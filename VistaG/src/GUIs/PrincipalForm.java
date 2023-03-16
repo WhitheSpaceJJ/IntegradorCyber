@@ -6,10 +6,7 @@ import interfaces.IFachadaControl;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-/**
- *
- * @author giova
- */
+
 public class PrincipalForm extends javax.swing.JFrame {
 
     private VentasForm ventasForm = new VentasForm();

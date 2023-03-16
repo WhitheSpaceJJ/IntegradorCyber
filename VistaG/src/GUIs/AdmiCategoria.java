@@ -16,10 +16,6 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-/**
- *
- * @author Giovanni Garrido
- */
 public class AdmiCategoria extends javax.swing.JFrame {
 
     // Numero de columna - 1 , dónde se encontrarán los botones

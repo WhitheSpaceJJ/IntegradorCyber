@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package GUIs;
 
 import entidades.*;
@@ -16,10 +13,6 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 
-/**
- *
- * @author Jarol
- */
 public class AbrirCajaForm extends javax.swing.JFrame {
 
    public static AbrirCajaForm abrirCaja=null;

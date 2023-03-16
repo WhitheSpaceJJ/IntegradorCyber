@@ -25,10 +25,6 @@ import interfaces.IVentasDAO;
 import java.util.List;
 import java.util.Calendar;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 public class FachadaDAO  implements IFachadaDAO{
 
     private final FabricaDAO fabrica = FabricaDAO.getInstancia();

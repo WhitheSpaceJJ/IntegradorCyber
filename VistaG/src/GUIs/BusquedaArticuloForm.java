@@ -9,10 +9,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Giovanni Garrido
- */
+
 public class BusquedaArticuloForm extends javax.swing.JFrame {
 
     private Producto productoSelect = new Producto();

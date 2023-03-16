@@ -6,10 +6,7 @@ package interfaces;
 import entidades.*;
 import java.util.Calendar;
 import java.util.List;
-/**
- *
- * @author Jarol
- */
+
 public interface IFachadaControl {
     
     public boolean agregarCaja(Caja caja);

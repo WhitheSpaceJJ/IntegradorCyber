@@ -27,308 +27,17 @@ import interfaces.IControlVentas;
 import interfaces.IFachadaControl;
 import java.util.ArrayList;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 public class FachadaControl implements IFachadaControl {
 
-    private final FabricaControl fabrica = FabricaControl.getInstancia();
+    private final FabricaControl fabrica;
    
 
     public FachadaControl() {
-    }
-
-    //Cajas
-    @Override
-    public boolean agregarCaja(Caja caja) {
-        try {
-            IControlCajas cajasDAO = fabrica.getCajasDAO();
-            return cajasDAO.agregar(caja);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    @Override
-    public boolean actualizarCaja(Caja caja) {
-        try {
-            IControlCajas cajasDAO = fabrica.getCajasDAO();
-            return cajasDAO.actualizar(caja);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public boolean eliminarCaja(int id) {
-        try {
-            IControlCajas cajasDAO = fabrica.getCajasDAO();
-            return cajasDAO.eliminar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        this.fabrica=FabricaControl.getInstancia();
     }
 
     
-     @Override
-    public Caja consultarCaja(int id) {
-        try {
-            IControlCajas cajasDAO = fabrica.getCajasDAO();
-            return cajasDAO.consultar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
-    @Override
-     public Caja consultarCajaAbierta(){
-         List<Caja> cajasObtenidas= new ArrayList();
-       
-         try {
-            IControlCajas cajasDAO = fabrica.getCajasDAO();
-            cajasObtenidas=cajasDAO.consultarTodos();
-            for(int i=0;i<cajasObtenidas.size();i++){
-                if(cajasObtenidas.get(i).getEstado()== Estado.ABIERTA){
-                    return cajasObtenidas.get(i);
-                    
-                }
-           
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-        return null;
-         
-     }
-
-     @Override
-    public List<Caja> consultarCajas() {
-        try {
-            IControlCajas cajasDAO = fabrica.getCajasDAO();
-            return cajasDAO.consultarTodos();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    //Gastos
-     @Override
-    public int agregarGasto(Gasto gasto) {
-        try {
-            IControlGastos gastosDAO = fabrica.getGastosDAO();
-            return gastosDAO.agregar(gasto);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return -1;
-        }
-    }
-
-     @Override
-    public Gasto consultar(int id) {
-        try {
-            IControlGastos gastosDAO = fabrica.getGastosDAO();
-            return gastosDAO.consultar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-     @Override
-    public List<Gasto> consultarTodas() {
-        try {
-            IControlGastos gastosDAO = fabrica.getGastosDAO();
-            return gastosDAO.consultarTodas();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-     @Override
-    public List<Gasto> buscarGastosEntreFechas(Calendar inicio, Calendar fin) {
-        try {
-            IControlGastos gastosDAO = fabrica.getGastosDAO();
-            return gastosDAO.buscarEntre(inicio, fin);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    //Categorias
-     @Override
-    public boolean agregarCategoria(Categoria categoria) {
-        try {
-            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
-            return categoriasDAO.agregar(categoria);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public boolean actualizarCategoria(Categoria categoria) {
-        try {
-            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
-            return categoriasDAO.actualizar(categoria);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public boolean eliminarCategoria(int id) {
-        try {
-            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
-            return categoriasDAO.eliminar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public Categoria consultarCategoria(int id) {
-        try {
-            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
-            return categoriasDAO.consultar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-     @Override
-    public List<Categoria> consultarTodasCategorias() {
-        try {
-            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
-            return categoriasDAO.consultarTodos();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    //Clientes
-     @Override
-    public boolean agregarCliente(Cliente cliente) {
-        try {
-            IControlClientes clientesDAO = fabrica.getClientesDAO();
-            return clientesDAO.agregar(cliente);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public boolean actualizarCliente(Cliente cliente) {
-        try {
-            IControlClientes clientesDAO = fabrica.getClientesDAO();
-            return clientesDAO.actualizar(cliente);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public boolean eliminarCliente(int id) {
-        try {
-            IControlClientes clientesDAO = fabrica.getClientesDAO();
-            return clientesDAO.eliminar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public Cliente consultarCliente(int id) {
-        try {
-            IControlClientes clientesDAO = fabrica.getClientesDAO();
-            return clientesDAO.consultar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-     @Override
-    public List<Cliente> consultarTodosClientes() {
-        try {
-            IControlClientes clientesDAO = fabrica.getClientesDAO();
-            return clientesDAO.consultarTodos();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    //Proveedores
-     @Override
-    public boolean agregarProveedor(Proveedor proveedor) {
-        try {
-            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
-            return proveedoresDAO.agregar(proveedor);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
- @Override
-    public boolean actualizarProveedor(Proveedor proveedor) {
-        try {
-            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
-            return proveedoresDAO.actualizar(proveedor);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public boolean eliminarProveedor(int id) {
-        try {
-            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
-            return proveedoresDAO.eliminar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-     @Override
-    public Proveedor consultarProveedor(int id) {
-        try {
-            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
-            return proveedoresDAO.consultar(id);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-     @Override
-    public List<Proveedor> consultarTodosProveedores() {
-        try {
-            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
-            return proveedoresDAO.consultarTodos();
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 
     // Venta
      @Override
@@ -564,8 +273,8 @@ public class FachadaControl implements IFachadaControl {
             return null;
         }
     }
-
-    //Usuario
+//Clases  que sean de agregar,actualizar eliminar, consultar ID, consultar todos
+    //Usuarios
      @Override
     public boolean agregarUsuario(Usuario usuario) {
         try {
@@ -615,6 +324,297 @@ public class FachadaControl implements IFachadaControl {
         try {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
             return usuariosDAO.consultarTodos();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Proveedores
+     @Override
+    public boolean agregarProveedor(Proveedor proveedor) {
+        try {
+            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
+            return proveedoresDAO.agregar(proveedor);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+ @Override
+    public boolean actualizarProveedor(Proveedor proveedor) {
+        try {
+            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
+            return proveedoresDAO.actualizar(proveedor);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public boolean eliminarProveedor(int id) {
+        try {
+            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
+            return proveedoresDAO.eliminar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public Proveedor consultarProveedor(int id) {
+        try {
+            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
+            return proveedoresDAO.consultar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+     @Override
+    public List<Proveedor> consultarTodosProveedores() {
+        try {
+            IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
+            return proveedoresDAO.consultarTodos();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Categorias
+     @Override
+    public boolean agregarCategoria(Categoria categoria) {
+        try {
+            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
+            return categoriasDAO.agregar(categoria);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public boolean actualizarCategoria(Categoria categoria) {
+        try {
+            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
+            return categoriasDAO.actualizar(categoria);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public boolean eliminarCategoria(int id) {
+        try {
+            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
+            return categoriasDAO.eliminar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public Categoria consultarCategoria(int id) {
+        try {
+            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
+            return categoriasDAO.consultar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+     @Override
+    public List<Categoria> consultarTodasCategorias() {
+        try {
+            IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
+            return categoriasDAO.consultarTodos();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Clientes
+     @Override
+    public boolean agregarCliente(Cliente cliente) {
+        try {
+            IControlClientes clientesDAO = fabrica.getClientesDAO();
+            return clientesDAO.agregar(cliente);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public boolean actualizarCliente(Cliente cliente) {
+        try {
+            IControlClientes clientesDAO = fabrica.getClientesDAO();
+            return clientesDAO.actualizar(cliente);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public boolean eliminarCliente(int id) {
+        try {
+            IControlClientes clientesDAO = fabrica.getClientesDAO();
+            return clientesDAO.eliminar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public Cliente consultarCliente(int id) {
+        try {
+            IControlClientes clientesDAO = fabrica.getClientesDAO();
+            return clientesDAO.consultar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+     @Override
+    public List<Cliente> consultarTodosClientes() {
+        try {
+            IControlClientes clientesDAO = fabrica.getClientesDAO();
+            return clientesDAO.consultarTodos();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    //Cajas
+    @Override
+    public boolean agregarCaja(Caja caja) {
+        try {
+            IControlCajas cajasDAO = fabrica.getCajasDAO();
+            return cajasDAO.agregar(caja);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean actualizarCaja(Caja caja) {
+        try {
+            IControlCajas cajasDAO = fabrica.getCajasDAO();
+            return cajasDAO.actualizar(caja);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+     @Override
+    public boolean eliminarCaja(int id) {
+        try {
+            IControlCajas cajasDAO = fabrica.getCajasDAO();
+            return cajasDAO.eliminar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    
+     @Override
+    public Caja consultarCaja(int id) {
+        try {
+            IControlCajas cajasDAO = fabrica.getCajasDAO();
+            return cajasDAO.consultar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+     public Caja consultarCajaAbierta(){
+         List<Caja> cajasObtenidas= new ArrayList();
+       
+         try {
+            IControlCajas cajasDAO = fabrica.getCajasDAO();
+            cajasObtenidas=cajasDAO.consultarTodos();
+            for(int i=0;i<cajasObtenidas.size();i++){
+                if(cajasObtenidas.get(i).getEstado()== Estado.ABIERTA){
+                    return cajasObtenidas.get(i);
+                    
+                }
+           
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return null;
+         
+     }
+
+     @Override
+    public List<Caja> consultarCajas() {
+        try {
+            IControlCajas cajasDAO = fabrica.getCajasDAO();
+            return cajasDAO.consultarTodos();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    //Gastos
+     @Override
+    public int agregarGasto(Gasto gasto) {
+        try {
+            IControlGastos gastosDAO = fabrica.getGastosDAO();
+            return gastosDAO.agregar(gasto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+     @Override
+    public Gasto consultar(int id) {
+        try {
+            IControlGastos gastosDAO = fabrica.getGastosDAO();
+            return gastosDAO.consultar(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+     @Override
+    public List<Gasto> consultarTodas() {
+        try {
+            IControlGastos gastosDAO = fabrica.getGastosDAO();
+            return gastosDAO.consultarTodas();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+     @Override
+    public List<Gasto> buscarGastosEntreFechas(Calendar inicio, Calendar fin) {
+        try {
+            IControlGastos gastosDAO = fabrica.getGastosDAO();
+            return gastosDAO.buscarEntre(inicio, fin);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

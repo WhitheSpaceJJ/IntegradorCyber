@@ -4,10 +4,7 @@
  */
 package GUIs;
 
-/**
- *
- * @author giova
- */
+
 public class AdmiClienteForm extends javax.swing.JFrame {
 
     /**

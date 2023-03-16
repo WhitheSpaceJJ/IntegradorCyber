@@ -12,10 +12,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-/**
- *
- * @author Jarol
- */
+
 public class FrmCobro extends javax.swing.JFrame {
 
 IFachadaControl logica= new FachadaControl();

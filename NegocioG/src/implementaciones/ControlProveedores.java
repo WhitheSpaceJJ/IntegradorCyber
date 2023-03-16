@@ -7,10 +7,7 @@ import java.util.List;
 import interfaces.IControlProveedores;
 import interfaces.IFachadaDAO;
 
-/**
- *
- * @author Giovanni Garrido
- */
+
 public class ControlProveedores implements IControlProveedores {
 
  

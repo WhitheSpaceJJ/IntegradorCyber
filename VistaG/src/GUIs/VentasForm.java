@@ -18,10 +18,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Giovanni Garrido
- */
 public class VentasForm extends javax.swing.JPanel {
 
     private DefaultComboBoxModel listaClientes;

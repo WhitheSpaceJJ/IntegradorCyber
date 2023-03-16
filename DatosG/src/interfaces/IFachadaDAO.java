@@ -5,10 +5,6 @@
 package interfaces;
 import entidades.*;
 
-/**
- *
- * @author Jarol
- */
 import java.util.Calendar;
 import java.util.List;
 public interface IFachadaDAO {

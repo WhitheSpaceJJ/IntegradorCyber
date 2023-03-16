@@ -1,10 +1,7 @@
 
 package GUIs;
 
-/**
- *
- * @author Giovanni Garrido
- */
+
 public class AdmiProductoForm extends javax.swing.JFrame {
 
     /**
