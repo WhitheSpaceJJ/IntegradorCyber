@@ -3,74 +3,105 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
+
+
 @Entity
 @Table(name = "compras")
+public class Compra implements Serializable {
+/*
+    public class Compra {
+   private int id;
+    private Calendar fechaCompra;
 
-public class Compra implements Serializable{
+    private float totalCompra;
     
+    private List<DetalleCompra> detalles;
+    
+       private Usuario cliente;
+}
+    */
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-   
     
-    @Column(name = "fechaEntrada", nullable = false)
+    @Column (name = "numTicket", nullable = false)
+    private Integer numTicket;
+
+    @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
-    private Calendar fechaEntrada;
-    
-    @Column(name = "cantidadComprada", nullable = false)
-    private int cantidadComprada;
-    
-    @Column(name = "precioCompra", nullable = false)
-    private float precioCompra;
-    
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "idProvedor", nullable = false)
-    private Proveedor proveedor;
-    
-    
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "idProducto", nullable = false)
-    private Producto producto;
+    private Calendar fecha;
 
-    public Compra() {
+    @Column(name = "totalventa", nullable = false)
+    private float totalventa;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "idCliente", nullable = false)
+    private Cliente cliente;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "venta")
+    private List<DetalleVenta> detalleVentas;
+    
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinColumn(name = "idCaja", nullable = false)
+    private Caja caja;
+
+   /*
+     public Venta() {
     }
 
-    public Compra(int id) {
+    public Venta(Integer id) {
         this.id = id;
     }
 
-    public Compra(Calendar fechaEntrada, int cantidadComprada, float precioCompra, Proveedor proveedor, Producto producto) {
-        this.fechaEntrada = fechaEntrada;
-        this.cantidadComprada = cantidadComprada;
-        this.precioCompra = precioCompra;
-        this.proveedor = proveedor;
-        this.producto = producto;
+    public Venta(Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, Caja caja) {
+        this.numTicket = numTicket;
+        this.fecha = fecha;
+        this.totalventa = totalventa;
+        this.cliente = cliente;
+        this.caja = caja;
+    }
+    
+
+    public Venta(Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
+        this.numTicket = numTicket;
+        this.fecha = fecha;
+        this.totalventa = totalventa;
+        this.cliente = cliente;
+        this.detalleVentas = detalleVentas;
+        this.caja = caja;
     }
 
-    public Compra(Integer id, Calendar fechaEntrada, int cantidadComprada, float precioCompra, Proveedor proveedor, Producto producto) {
+    public Venta(Integer id, Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
         this.id = id;
-        this.fechaEntrada = fechaEntrada;
-        this.cantidadComprada = cantidadComprada;
-        this.precioCompra = precioCompra;
-        this.proveedor = proveedor;
-        this.producto = producto;
+        this.numTicket = numTicket;
+        this.fecha = fecha;
+        this.totalventa = totalventa;
+        this.cliente = cliente;
+        this.detalleVentas = detalleVentas;
+        this.caja = caja;
     }
+
+    */
 
     public Integer getId() {
         return id;
@@ -80,54 +111,63 @@ public class Compra implements Serializable{
         this.id = id;
     }
 
-    public Calendar getFechaEntrada() {
-        return fechaEntrada;
+    public Integer getNumTicket() {
+        return numTicket;
     }
 
-    public void setFechaEntrada(Calendar fechaEntrada) {
-        this.fechaEntrada = fechaEntrada;
+    public void setNumTicket(Integer numTicket) {
+        this.numTicket = numTicket;
     }
 
-    public int getCantidadComprada() {
-        return cantidadComprada;
+    public Calendar getFecha() {
+        return fecha;
     }
 
-    public void setCantidadComprada(int cantidadComprada) {
-        this.cantidadComprada = cantidadComprada;
+    public void setFecha(Calendar fecha) {
+        this.fecha = fecha;
     }
 
-    public float getPrecioCompra() {
-        return precioCompra;
+    public float getTotalventa() {
+        return totalventa;
     }
 
-    public void setPrecioCompra(float precioCompra) {
-        this.precioCompra = precioCompra;
+    public void setTotalventa(float totalventa) {
+        this.totalventa = totalventa;
     }
 
-    public Proveedor getProveedor() {
-        return proveedor;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setProveedor(Proveedor proveedor) {
-        this.proveedor = proveedor;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public List<DetalleVenta> getDetalleVentas() {
+        return detalleVentas;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setDetalleVentas(List<DetalleVenta> detalleVentas) {
+        this.detalleVentas = detalleVentas;
+    }
+
+    public Caja getCaja() {
+        return caja;
+    }
+
+    public void setCaja(Caja caja) {
+        this.caja = caja;
     }
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 23 * hash + Objects.hashCode(this.id);
+        int hash = 3;
+        hash = 71 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
-    @Override
+   /*
+     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -138,15 +178,15 @@ public class Compra implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Compra other = (Compra) obj;
+        final Venta other = (Venta) obj;
         return Objects.equals(this.id, other.id);
     }
+    */
 
     @Override
     public String toString() {
-        return "Compra{" + "id=" + id + ", fechaEntrada=" + fechaEntrada + ", cantidadComprada=" + cantidadComprada + ", precioCompra=" + precioCompra + ", proveedor=" + proveedor + ", producto=" + producto + '}';
+        return "Venta{" + "id=" + id + ", numTicket=" + numTicket + ", fecha=" + fecha + ", totalventa=" + totalventa + ", cliente=" + cliente + ", detalleVentas=" + detalleVentas + ", caja=" + caja + '}';
     }
-   
-    
-    
-}//end class
+
+
+}

@@ -1,6 +1,6 @@
 package implementaciones;
 
-import entidades.Compra;
+import entidades.DetalleCompra;
 import entidades.Producto;
 import entidades.Proveedor;
 
@@ -26,7 +26,7 @@ public class CompraDAO implements ICompraDAO {
     }
 
     @Override
-    public boolean agregar(Compra entradaAlmacen) {
+    public boolean agregar(DetalleCompra entradaAlmacen) {
 
         try {
             EntityManager em = this.conexion.crearConexion();
@@ -47,11 +47,11 @@ public class CompraDAO implements ICompraDAO {
     }
 
     @Override
-    public Compra consultar(int id) {
+    public DetalleCompra consultar(int id) {
         try {
             EntityManager em = this.conexion.crearConexion();
 
-            Compra entradaAlmacen = em.find(Compra.class, id);
+            DetalleCompra entradaAlmacen = em.find(DetalleCompra.class, id);
 
             return entradaAlmacen;
         } catch (IllegalStateException ise) {
@@ -61,8 +61,8 @@ public class CompraDAO implements ICompraDAO {
     }
 
     @Override
-    public List<Compra> consultarTodos() {
-        List<Compra> entradasAlmacen = null;
+    public List<DetalleCompra> consultarTodos() {
+        List<DetalleCompra> entradasAlmacen = null;
 
         try {
 
@@ -71,8 +71,8 @@ public class CompraDAO implements ICompraDAO {
             em.getTransaction().begin();
 
             CriteriaBuilder builder = em.getCriteriaBuilder();
-            CriteriaQuery<Compra> criteria = builder.createQuery(Compra.class);
-            TypedQuery<Compra> query = em.createQuery(criteria);
+            CriteriaQuery<DetalleCompra> criteria = builder.createQuery(DetalleCompra.class);
+            TypedQuery<DetalleCompra> query = em.createQuery(criteria);
 
             entradasAlmacen = query.getResultList();
 
@@ -86,9 +86,9 @@ public class CompraDAO implements ICompraDAO {
     }
 
     @Override
-    public List<Compra> buscarEntre(Calendar inicio, Calendar fin) {
+    public List<DetalleCompra> buscarEntre(Calendar inicio, Calendar fin) {
 
-        List<Compra> entradasAlmacen = null;
+        List<DetalleCompra> entradasAlmacen = null;
 
         try {
 
@@ -110,8 +110,8 @@ public class CompraDAO implements ICompraDAO {
     }
 
     @Override
-    public List<Compra> buscarEntreProveedores(Calendar inicio, Calendar fin, Proveedor proveedor) {
-        List<Compra> entradasAlmacen = null;
+    public List<DetalleCompra> buscarEntreProveedores(Calendar inicio, Calendar fin, Proveedor proveedor) {
+        List<DetalleCompra> entradasAlmacen = null;
 
         try {
 
@@ -132,8 +132,8 @@ public class CompraDAO implements ICompraDAO {
     }
 
     @Override
-    public List<Compra> buscarEntreProductos(Calendar inicio, Calendar fin, Producto producto) {
-        List<Compra> entradasAlmacen = null;
+    public List<DetalleCompra> buscarEntreProductos(Calendar inicio, Calendar fin, Producto producto) {
+        List<DetalleCompra> entradasAlmacen = null;
 
         try {
 

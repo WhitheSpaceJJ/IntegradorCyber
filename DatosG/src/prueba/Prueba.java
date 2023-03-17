@@ -4,7 +4,7 @@ import conexion.ConexionBD;
 import entidades.Caja;
 import entidades.Categoria;
 import entidades.Cliente;
-import entidades.Compra;
+import entidades.DetalleCompra;
 import entidades.DetalleVenta;
 import entidades.Gasto;
 import entidades.Producto;
@@ -156,7 +156,7 @@ public class Prueba {
         System.out.println(caja1.toString());
         System.out.println("------------------------");
         Producto obtenido2 = productos.get(0);
-        Compra compra = new Compra(
+        DetalleCompra compra = new DetalleCompra(
                 Calendar.getInstance(), 400, obtenido2.getPrecioCompra(),
                 proveedoresO.get(
                         new Random().nextInt(proveedoresO.size() - 1)),
@@ -165,9 +165,9 @@ public class Prueba {
         fachada.agregarStockProducto(compra.getProducto(), compra.getCantidadComprada());
         System.out.println("Compra agregada yy el stock del producto se ha aumentado");
         System.out.println("Compras");
-        List<Compra> compras = fachada.consultarTodasEntradasAlmacen();
+        List<DetalleCompra> compras = fachada.consultarTodasEntradasAlmacen();
         for (int i = 0; i < compras.size(); i++) {
-            Compra get = compras.get(i);
+            DetalleCompra get = compras.get(i);
             System.out.println(get.toString());
         }
         System.out.println("Productos obtenidos");

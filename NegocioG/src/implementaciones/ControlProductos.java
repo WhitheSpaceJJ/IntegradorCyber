@@ -31,16 +31,6 @@ return this.fachadaDAO.agregarProducto(producto);
     public boolean eliminar(int id) {
     return this.fachadaDAO.eliminarProducto(id);
     }
-
-    @Override
-    public boolean quitarStock(Producto producto, int stock) {
-        return this.fachadaDAO.quitarStockProducto(producto, stock);
-    }
-    
-    @Override
-    public boolean agregarStock(Producto producto, int stock) {
-       return this.fachadaDAO.agregarStockProducto(producto, stock);
-    }
     
     @Override
     public Producto consultar(int id) {

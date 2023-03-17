@@ -32,23 +32,28 @@ public class Producto implements Serializable {
     @Column(name = "descripcion", nullable = false, length = 200)
     private String descripcion;
 
+    @Column(name = "marca", nullable = false, length = 20)
+    private String marca;
+
+    @Column(name = "codigp", nullable = false, length = 15)
+    private long codigo;
+
     @Column(name = "precioCompra", nullable = false)
     private float precioCompra;
-    
-    @Column (name = "stock",nullable = false)
-    private float stock;
-    
-    @Column (name = "precioVenta", nullable = false)
-    private float precioVenta;
 
+    @Column(name = "stock", nullable = false)
+    private float stock;
+
+    @Column(name = "precioVenta", nullable = false)
+    private float precioVenta;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "producto")
-    private List<Compra> entradasAlmacens;
-    
+    private List<DetalleCompra> entradasAlmacens;
+
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "producto")
     private List<DetalleVenta> detalleVentas;
 
@@ -62,6 +67,16 @@ public class Producto implements Serializable {
         this.stock = stock;
         this.precioVenta = precioVenta;
         this.categoria = categoria;
+    }
+ public Producto(String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria,String marca,long codigo) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.precioCompra = precioCompra;
+        this.stock = stock;
+        this.precioVenta = precioVenta;
+        this.categoria = categoria;
+        this.marca=marca;
+        this.codigo=codigo;
     }
 
     public Producto(Integer id, String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria) {
@@ -95,7 +110,7 @@ public class Producto implements Serializable {
         this.detalleVentas = detalleVentas;
     }
 
-    public Producto(String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria, List<Compra> entradasAlmacens, List<DetalleVenta> detalleVentas) {
+    public Producto(String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria, List<DetalleCompra> entradasAlmacens, List<DetalleVenta> detalleVentas) {
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioCompra = precioCompra;
@@ -106,7 +121,7 @@ public class Producto implements Serializable {
         this.detalleVentas = detalleVentas;
     }
 
-    public Producto(Integer id, String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria, List<Compra> entradasAlmacens, List<DetalleVenta> detalleVentas) {
+    public Producto(Integer id, String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria, List<DetalleCompra> entradasAlmacens, List<DetalleVenta> detalleVentas) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -174,11 +189,11 @@ public class Producto implements Serializable {
         this.categoria = categoria;
     }
 
-    public List<Compra> getEntradasAlmacens() {
+    public List<DetalleCompra> getEntradasAlmacens() {
         return entradasAlmacens;
     }
 
-    public void setEntradasAlmacens(List<Compra> entradasAlmacens) {
+    public void setEntradasAlmacens(List<DetalleCompra> entradasAlmacens) {
         this.entradasAlmacens = entradasAlmacens;
     }
 
@@ -217,6 +232,4 @@ public class Producto implements Serializable {
         return "Producto{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioCompra=" + precioCompra + ", stock=" + stock + ", precioVenta=" + precioVenta + ", categoria=" + categoria + ", entradasAlmacens=" + entradasAlmacens + ", detalleVentas=" + detalleVentas + '}';
     }
 
-    
-    
 }//end class

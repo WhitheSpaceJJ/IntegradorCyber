@@ -43,7 +43,7 @@ public class Proveedor implements Serializable {
     private String contacto;
 
     @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "proveedor")
-    private List<Compra> entradasAlmacen;
+    private List<DetalleCompra> entradasAlmacen;
 
     public Proveedor() {
     }
@@ -69,7 +69,7 @@ public class Proveedor implements Serializable {
         this.contacto = contacto;
     }
 
-    public Proveedor(String nombre, String direccion, String telefono, String email, String contacto, List<Compra> entradasAlmacen) {
+    public Proveedor(String nombre, String direccion, String telefono, String email, String contacto, List<DetalleCompra> entradasAlmacen) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -78,7 +78,7 @@ public class Proveedor implements Serializable {
         this.entradasAlmacen = entradasAlmacen;
     }
 
-    public Proveedor(Integer id, String nombre, String direccion, String telefono, String email, String contacto, List<Compra> entradasAlmacen) {
+    public Proveedor(Integer id, String nombre, String direccion, String telefono, String email, String contacto, List<DetalleCompra> entradasAlmacen) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -88,7 +88,7 @@ public class Proveedor implements Serializable {
         this.entradasAlmacen = entradasAlmacen;
     }
 
-    public Proveedor(String nombre, String direccion, String telefono, String email, String website, String contacto, List<Compra> entradasAlmacen) {
+    public Proveedor(String nombre, String direccion, String telefono, String email, String website, String contacto, List<DetalleCompra> entradasAlmacen) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
@@ -98,7 +98,7 @@ public class Proveedor implements Serializable {
         this.entradasAlmacen = entradasAlmacen;
     }
 
-    public Proveedor(Integer id, String nombre, String direccion, String telefono, String email, String website, String contacto, List<Compra> entradasAlmacen) {
+    public Proveedor(Integer id, String nombre, String direccion, String telefono, String email, String website, String contacto, List<DetalleCompra> entradasAlmacen) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -165,11 +165,11 @@ public class Proveedor implements Serializable {
         this.contacto = contacto;
     }
 
-    public List<Compra> getEntradasAlmacen() {
+    public List<DetalleCompra> getEntradasAlmacen() {
         return entradasAlmacen;
     }
 
-    public void setEntradasAlmacen(List<Compra> entradasAlmacen) {
+    public void setEntradasAlmacen(List<DetalleCompra> entradasAlmacen) {
         this.entradasAlmacen = entradasAlmacen;
     }
 

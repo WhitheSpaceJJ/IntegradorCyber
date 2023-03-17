@@ -1,6 +1,6 @@
 package interfaces;
 
-import entidades.Compra;
+import entidades.DetalleCompra;
 import entidades.Producto;
 import entidades.Proveedor;
 import java.util.Calendar;
@@ -8,16 +8,16 @@ import java.util.List;
 
 public interface IControlCompra {
 
-    boolean agregar(Compra entradaAlmacen);
+    boolean agregar(DetalleCompra entradaAlmacen);
 
-    Compra consultar(int id);
+    DetalleCompra consultar(int id);
 
-    List<Compra> consultarTodos();
+    List<DetalleCompra> consultarTodos();
     
-    List<Compra> buscarEntre (Calendar inicio, Calendar fin);
+    List<DetalleCompra> buscarEntre (Calendar inicio, Calendar fin);
     
-    List<Compra> buscarEntreProveedores (Calendar inicio, Calendar fin, Proveedor proveedor);
+    List<DetalleCompra> buscarEntreProveedores (Calendar inicio, Calendar fin, Proveedor proveedor);
     
-    List<Compra> buscarEntreProductos (Calendar inicio, Calendar fin, Producto producto);
+    List<DetalleCompra> buscarEntreProductos (Calendar inicio, Calendar fin, Producto producto);
     
 }

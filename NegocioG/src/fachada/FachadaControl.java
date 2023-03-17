@@ -3,7 +3,7 @@ package fachada;
 import entidades.Caja;
 import entidades.Categoria;
 import entidades.*;
-import entidades.Compra;
+import entidades.DetalleCompra;
 import entidades.DetalleVenta;
 import entidades.Gasto;
 import entidades.Producto;
@@ -113,7 +113,7 @@ public class FachadaControl implements IFachadaControl {
 
     //compra Detalle
      @Override
-    public boolean agregarDetalleCompra(Compra entradaAlmacen) {
+    public boolean agregarDetalleCompra(DetalleCompra entradaAlmacen) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.agregar(entradaAlmacen);
@@ -123,7 +123,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
      @Override
-    public Compra consultarDetalleCompra(int id) {
+    public DetalleCompra consultarDetalleCompra(int id) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.consultar(id);
@@ -134,7 +134,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
      @Override
-    public List<Compra> consultarTodasEntradasAlmacen() {
+    public List<DetalleCompra> consultarTodasEntradasAlmacen() {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.consultarTodos();
@@ -144,7 +144,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
      @Override
-    public List<Compra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin) {
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntre(inicio, fin);
@@ -154,7 +154,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
      @Override
-    public List<Compra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor) {
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntreProveedores(inicio, fin, proveedor);
@@ -164,7 +164,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
      @Override
-    public List<Compra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto) {
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntreProductos(inicio, fin, producto);
@@ -214,25 +214,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
-    public boolean quitarStockProducto(Producto producto, int stock) {
-        try {
-            IControlProductos productosDAO = fabrica.getProductosDAO();
-            return productosDAO.quitarStock(producto, stock);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-     @Override
-    public boolean agregarStockProducto(Producto producto, int stock) {
-        try {
-            IControlProductos productosDAO = fabrica.getProductosDAO();
-            return productosDAO.agregarStock(producto, stock);
-        } catch (Exception e) {
-            return false;
-        }
-    }
 
      @Override
     public List<Producto> buscarProductosPorNombre(String nombre) {

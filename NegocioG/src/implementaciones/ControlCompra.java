@@ -1,6 +1,6 @@
 package implementaciones;
 
-import entidades.Compra;
+import entidades.DetalleCompra;
 import entidades.Producto;
 import entidades.Proveedor;
 import fachada.FachadaDAO;
@@ -23,32 +23,32 @@ public class ControlCompra implements IControlCompra {
     }
 
     @Override
-    public boolean agregar(Compra entradaAlmacen) {
+    public boolean agregar(DetalleCompra entradaAlmacen) {
 return this.fachadaDAO.agregarDetalleCompra(entradaAlmacen);
     }
 
     @Override
-    public Compra consultar(int id) {
+    public DetalleCompra consultar(int id) {
 return this.fachadaDAO.consultarDetalleCompra(id);
     }
 
     @Override
-    public List<Compra> consultarTodos() {
+    public List<DetalleCompra> consultarTodos() {
 return this.fachadaDAO.consultarTodasEntradasAlmacen();
     }
 
     @Override
-    public List<Compra> buscarEntre(Calendar inicio, Calendar fin) {
+    public List<DetalleCompra> buscarEntre(Calendar inicio, Calendar fin) {
 return this.fachadaDAO.buscarEntradasAlmacenEntreFechas(inicio, fin);
     }
 
     @Override
-    public List<Compra> buscarEntreProveedores(Calendar inicio, Calendar fin, Proveedor proveedor) {
+    public List<DetalleCompra> buscarEntreProveedores(Calendar inicio, Calendar fin, Proveedor proveedor) {
 return this.fachadaDAO.buscarEntradasAlmacenEntreFechasYProveedor(inicio, fin, proveedor);
     }
 
     @Override
-    public List<Compra> buscarEntreProductos(Calendar inicio, Calendar fin, Producto producto) {
+    public List<DetalleCompra> buscarEntreProductos(Calendar inicio, Calendar fin, Producto producto) {
         return this.fachadaDAO.buscarEntradasAlmacenEntreFechasYProducto(inicio, fin, producto);
     }
 

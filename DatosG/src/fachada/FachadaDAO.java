@@ -3,7 +3,7 @@ package fachada;
 import entidades.Caja;
 import entidades.Categoria;
 import entidades.Cliente;
-import entidades.Compra;
+import entidades.DetalleCompra;
 import entidades.DetalleVenta;
 import entidades.Gasto;
 import entidades.Producto;
@@ -336,7 +336,7 @@ public class FachadaDAO  implements IFachadaDAO{
 
     //compra Detalle
     @Override
-    public boolean agregarDetalleCompra(Compra entradaAlmacen) {
+    public boolean agregarDetalleCompra(DetalleCompra entradaAlmacen) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.agregar(entradaAlmacen);
@@ -346,7 +346,7 @@ public class FachadaDAO  implements IFachadaDAO{
     }
 
     @Override
-    public Compra consultarDetalleCompra(int id) {
+    public DetalleCompra consultarDetalleCompra(int id) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.consultar(id);
@@ -356,7 +356,7 @@ public class FachadaDAO  implements IFachadaDAO{
     }
 
     @Override
-    public List<Compra> consultarTodasEntradasAlmacen() {
+    public List<DetalleCompra> consultarTodasEntradasAlmacen() {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.consultarTodos();
@@ -366,7 +366,7 @@ public class FachadaDAO  implements IFachadaDAO{
     }
 
     @Override
-    public List<Compra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin) {
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntre(inicio, fin);
@@ -376,7 +376,7 @@ public class FachadaDAO  implements IFachadaDAO{
     }
 
     @Override
-    public List<Compra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor) {
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntreProveedores(inicio, fin, proveedor);
@@ -386,7 +386,7 @@ public class FachadaDAO  implements IFachadaDAO{
     }
 
     @Override
-    public List<Compra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto) {
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto) {
         try {
             ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntreProductos(inicio, fin, producto);

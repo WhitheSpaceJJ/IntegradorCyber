@@ -82,17 +82,17 @@ public interface IFachadaControl {
     public boolean agregarDetalleVenta(DetalleVenta detalleVenta);
 
 
-    public boolean agregarDetalleCompra(Compra entradaAlmacen);
+    public boolean agregarDetalleCompra(DetalleCompra entradaAlmacen);
 
-    public Compra consultarDetalleCompra(int id);
+    public DetalleCompra consultarDetalleCompra(int id);
 
-    public List<Compra> consultarTodasEntradasAlmacen();
+    public List<DetalleCompra> consultarTodasEntradasAlmacen();
 
-    public List<Compra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin);
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin);
 
-    public List<Compra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor);
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor);
 
-    public List<Compra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto);
+    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto);
 
 
     public Producto consultarProducto(int id);
@@ -103,10 +103,7 @@ public interface IFachadaControl {
 
     public boolean eliminarProducto(int id);
 
-    public boolean quitarStockProducto(Producto producto, int stock);
-
-    public boolean agregarStockProducto(Producto producto, int stock);
-
+  
     public List<Producto> buscarProductosPorNombre(String nombre);
 
     public List<Producto> consultarTodosProductos();
