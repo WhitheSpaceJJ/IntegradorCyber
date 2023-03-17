@@ -564,8 +564,8 @@ public class VentasForm extends javax.swing.JFrame {
         txtDescripcion.setText(productoCargado.getDescripcion());
         txtCategoria.setText(productoCargado.getCategoria().getNombre());
         txtDisponibilidad.setText(productoCargado.getStock() + "");
-        txtImporte.setText(productoCargado.getPrecioVenta() + "");
-        txtTotalProducto.setText(productoCargado.getPrecioVenta() + "");
+        txtImporte.setText(productoCargado.getPrecio() + "");
+        txtTotalProducto.setText(productoCargado.getPrecio() + "");
     }
     
     public void cargarTabla() {
@@ -576,7 +576,7 @@ public class VentasForm extends javax.swing.JFrame {
             fila[0] = producto.getNombre();
             fila[2] = producto.getStock();
             fila[1] = producto.getDescripcion();
-            fila[3] = producto.getPrecioVenta();
+            fila[3] = producto.getPrecio();
             fila[4] = (Float.parseFloat(txtTotalProducto.getText())*Integer.parseInt(txtCantidad.getText()));
             modeloTabla.addRow(fila);
         });

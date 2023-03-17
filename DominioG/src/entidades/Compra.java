@@ -1,4 +1,3 @@
-
 package entidades;
 
 import java.io.Serializable;
@@ -19,89 +18,81 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
-
-
 @Entity
 @Table(name = "compras")
 public class Compra implements Serializable {
-/*
-    public class Compra {
-   private int id;
-    private Calendar fechaCompra;
 
-    private float totalCompra;
-    
-    private List<DetalleCompra> detalles;
-    
-       private Usuario cliente;
-}
-    */
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column (name = "numTicket", nullable = false)
-    private Integer numTicket;
+
+    @Column(name = "numFactura", nullable = false)
+    private Integer numFactura;
 
     @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar fecha;
 
-    @Column(name = "totalventa", nullable = false)
-    private float totalventa;
+    @Column(name = "totalCompra", nullable = false)
+    private float totalCompra;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "idCliente", nullable = false)
-    private Cliente cliente;
+    @JoinColumn(name = "idProveedor", nullable = false)
+    private Proveedor proveedor;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "venta")
-    private List<DetalleVenta> detalleVentas;
-    
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "idCaja", nullable = false)
-    private Caja caja;
+    private List<DetalleCompra> detalleCompras;
 
-   /*
-     public Venta() {
+    public Compra() {
     }
 
-    public Venta(Integer id) {
+    public Compra(Integer numFactura, Calendar fecha, float totalCompra) {
+        this.numFactura = numFactura;
+        this.fecha = fecha;
+        this.totalCompra = totalCompra;
+    }
+
+    public Compra(Integer id, Integer numFactura, Calendar fecha, float totalCompra) {
         this.id = id;
-    }
-
-    public Venta(Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, Caja caja) {
-        this.numTicket = numTicket;
+        this.numFactura = numFactura;
         this.fecha = fecha;
-        this.totalventa = totalventa;
-        this.cliente = cliente;
-        this.caja = caja;
+        this.totalCompra = totalCompra;
     }
-    
 
-    public Venta(Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
-        this.numTicket = numTicket;
+    public Compra(Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor) {
+        this.numFactura = numFactura;
         this.fecha = fecha;
-        this.totalventa = totalventa;
-        this.cliente = cliente;
-        this.detalleVentas = detalleVentas;
-        this.caja = caja;
+        this.totalCompra = totalCompra;
+        this.proveedor = proveedor;
     }
 
-    public Venta(Integer id, Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
+    public Compra(Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor, List<DetalleCompra> detalleCompras) {
+        this.numFactura = numFactura;
+        this.fecha = fecha;
+        this.totalCompra = totalCompra;
+        this.proveedor = proveedor;
+        this.detalleCompras = detalleCompras;
+    }
+
+    public Compra(Integer id, Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor) {
         this.id = id;
-        this.numTicket = numTicket;
+        this.numFactura = numFactura;
         this.fecha = fecha;
-        this.totalventa = totalventa;
-        this.cliente = cliente;
-        this.detalleVentas = detalleVentas;
-        this.caja = caja;
+        this.totalCompra = totalCompra;
+        this.proveedor = proveedor;
     }
 
-    */
+    public Compra(Integer id, Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor, List<DetalleCompra> detalleCompras) {
+        this.id = id;
+        this.numFactura = numFactura;
+        this.fecha = fecha;
+        this.totalCompra = totalCompra;
+        this.proveedor = proveedor;
+        this.detalleCompras = detalleCompras;
+    }
 
     public Integer getId() {
         return id;
@@ -111,12 +102,12 @@ public class Compra implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumTicket() {
-        return numTicket;
+    public Integer getNumFactura() {
+        return numFactura;
     }
 
-    public void setNumTicket(Integer numTicket) {
-        this.numTicket = numTicket;
+    public void setNumFactura(Integer numFactura) {
+        this.numFactura = numFactura;
     }
 
     public Calendar getFecha() {
@@ -127,47 +118,38 @@ public class Compra implements Serializable {
         this.fecha = fecha;
     }
 
-    public float getTotalventa() {
-        return totalventa;
+    public float getTotalCompra() {
+        return totalCompra;
     }
 
-    public void setTotalventa(float totalventa) {
-        this.totalventa = totalventa;
+    public void setTotalCompra(float totalCompra) {
+        this.totalCompra = totalCompra;
     }
 
-    public Cliente getCliente() {
-        return cliente;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
-    public List<DetalleVenta> getDetalleVentas() {
-        return detalleVentas;
+    public List<DetalleCompra> getDetalleCompras() {
+        return detalleCompras;
     }
 
-    public void setDetalleVentas(List<DetalleVenta> detalleVentas) {
-        this.detalleVentas = detalleVentas;
-    }
-
-    public Caja getCaja() {
-        return caja;
-    }
-
-    public void setCaja(Caja caja) {
-        this.caja = caja;
+    public void setDetalleCompras(List<DetalleCompra> detalleCompras) {
+        this.detalleCompras = detalleCompras;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 71 * hash + Objects.hashCode(this.id);
+        hash = 41 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
-   /*
-     @Override
+    @Override
     public boolean equals(Object obj) {
         if (this == obj) {
             return true;
@@ -178,15 +160,14 @@ public class Compra implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Venta other = (Venta) obj;
+        final Compra other = (Compra) obj;
         return Objects.equals(this.id, other.id);
     }
-    */
 
     @Override
     public String toString() {
-        return "Venta{" + "id=" + id + ", numTicket=" + numTicket + ", fecha=" + fecha + ", totalventa=" + totalventa + ", cliente=" + cliente + ", detalleVentas=" + detalleVentas + ", caja=" + caja + '}';
+        return "Compra{" + "id=" + id + ", numFactura=" + numFactura + ", fecha=" + fecha + ", totalCompra=" + totalCompra + ", proveedor=" + proveedor + ", detalleCompras=" + detalleCompras + '}';
     }
 
-
+        
 }

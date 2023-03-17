@@ -41,6 +41,10 @@ public class Usuario implements Serializable {
     
     @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "usuario")
     private List<Caja> cajas;
+    
+        
+    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "usuario")
+    private List<Merma> mermas;
 
     public Usuario() {
     }
@@ -77,6 +81,33 @@ public class Usuario implements Serializable {
         this.rol = rol;
         this.cajas = cajas;
     }
+
+    public Usuario(String nombre, String password, Rol rol, List<Caja> cajas, List<Merma> mermas) {
+        this.nombre = nombre;
+        this.password = password;
+        this.rol = rol;
+        this.cajas = cajas;
+        this.mermas = mermas;
+    }
+
+    public Usuario(Integer id, String nombre, String password, Rol rol, List<Caja> cajas, List<Merma> mermas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.password = password;
+        this.rol = rol;
+        this.cajas = cajas;
+        this.mermas = mermas;
+    }
+
+    public List<Merma> getMermas() {
+        return mermas;
+    }
+
+    public void setMermas(List<Merma> mermas) {
+        this.mermas = mermas;
+    }
+    
+    
 
     public Integer getId() {
         return id;
@@ -142,8 +173,10 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "Usuario{" + "id=" + id + ", nombre=" + nombre + ", password=" + password + ", rol=" + rol + ", cajas=" + cajas + '}';
+        return nombre;
     }
+
+
 
   
         

@@ -3,7 +3,6 @@ package entidades;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,101 +34,136 @@ public class Producto implements Serializable {
     @Column(name = "marca", nullable = false, length = 20)
     private String marca;
 
-    @Column(name = "codigp", nullable = false, length = 15)
+    @Column(name = "codigo", nullable = false, length = 15)
     private long codigo;
-
-    @Column(name = "precioCompra", nullable = false)
-    private float precioCompra;
 
     @Column(name = "stock", nullable = false)
     private float stock;
 
-    @Column(name = "precioVenta", nullable = false)
-    private float precioVenta;
+    @Column(name = "precio", nullable = false)
+    private float precio;
+
+    @Column(name = "costo", nullable = false)
+    private float costo;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "producto")
-    private List<DetalleCompra> entradasAlmacens;
+    private List<DetalleCompra> detalleCompras;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "producto")
     private List<DetalleVenta> detalleVentas;
 
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "producto")
+    private List<DetalleMerma> detalleMerma;
+    
+    
     public Producto() {
     }
 
-    public Producto(String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precioCompra = precioCompra;
-        this.stock = stock;
-        this.precioVenta = precioVenta;
-        this.categoria = categoria;
-    }
- public Producto(String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria,String marca,long codigo) {
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precioCompra = precioCompra;
-        this.stock = stock;
-        this.precioVenta = precioVenta;
-        this.categoria = categoria;
-        this.marca=marca;
-        this.codigo=codigo;
-    }
-
-    public Producto(Integer id, String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria) {
+    public Producto(Integer id, String nombre, String descripcion, String marca, long codigo, float stock, float precio, float costo, Categoria categoria, List<DetalleCompra> detalleCompras, List<DetalleVenta> detalleVentas, List<DetalleMerma> detalleMerma) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioCompra = precioCompra;
+        this.marca = marca;
+        this.codigo = codigo;
         this.stock = stock;
-        this.precioVenta = precioVenta;
+        this.precio = precio;
+        this.costo = costo;
         this.categoria = categoria;
+        this.detalleCompras = detalleCompras;
+        this.detalleVentas = detalleVentas;
+        this.detalleMerma = detalleMerma;
     }
 
-    public Producto(String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria, List<DetalleVenta> detalleVentas) {
+    public Producto(String nombre, String descripcion, String marca, long codigo, float stock, float precio, float costo, Categoria categoria, List<DetalleCompra> detalleCompras, List<DetalleVenta> detalleVentas, List<DetalleMerma> detalleMerma) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioCompra = precioCompra;
+        this.marca = marca;
+        this.codigo = codigo;
         this.stock = stock;
-        this.precioVenta = precioVenta;
+        this.precio = precio;
+        this.costo = costo;
         this.categoria = categoria;
+        this.detalleCompras = detalleCompras;
         this.detalleVentas = detalleVentas;
+        this.detalleMerma = detalleMerma;
     }
 
-    public Producto(Integer id, String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria, List<DetalleVenta> detalleVentas) {
+    public Producto(String nombre, String descripcion, String marca, long codigo, float stock, float precio, float costo, Categoria categoria) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.marca = marca;
+        this.codigo = codigo;
+        this.stock = stock;
+        this.precio = precio;
+        this.costo = costo;
+        this.categoria = categoria;
+    }
+
+    public Producto(Integer id, String nombre, String descripcion, String marca, long codigo, float stock, float precio, float costo, Categoria categoria) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioCompra = precioCompra;
+        this.marca = marca;
+        this.codigo = codigo;
         this.stock = stock;
-        this.precioVenta = precioVenta;
+        this.precio = precio;
+        this.costo = costo;
         this.categoria = categoria;
-        this.detalleVentas = detalleVentas;
     }
 
-    public Producto(String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria, List<DetalleCompra> entradasAlmacens, List<DetalleVenta> detalleVentas) {
+    public Producto(String nombre, String descripcion, String marca, long codigo, float stock, float precio, float costo, Categoria categoria, List<DetalleCompra> detalleCompras) {
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioCompra = precioCompra;
+        this.marca = marca;
+        this.codigo = codigo;
         this.stock = stock;
-        this.precioVenta = precioVenta;
+        this.precio = precio;
+        this.costo = costo;
         this.categoria = categoria;
-        this.entradasAlmacens = entradasAlmacens;
-        this.detalleVentas = detalleVentas;
+        this.detalleCompras = detalleCompras;
     }
 
-    public Producto(Integer id, String nombre, String descripcion, float precioCompra, float stock, float precioVenta, Categoria categoria, List<DetalleCompra> entradasAlmacens, List<DetalleVenta> detalleVentas) {
+    public Producto(Integer id, String nombre, String descripcion, String marca, long codigo, float stock, float precio, float costo, Categoria categoria, List<DetalleCompra> detalleCompras) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
-        this.precioCompra = precioCompra;
+        this.marca = marca;
+        this.codigo = codigo;
         this.stock = stock;
-        this.precioVenta = precioVenta;
+        this.precio = precio;
+        this.costo = costo;
         this.categoria = categoria;
-        this.entradasAlmacens = entradasAlmacens;
+        this.detalleCompras = detalleCompras;
+    }
+
+    public Producto(Integer id, String nombre, String descripcion, String marca, long codigo, float stock, float precio, float costo, Categoria categoria, List<DetalleCompra> detalleCompras, List<DetalleVenta> detalleVentas) {
+        this.id = id;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.marca = marca;
+        this.codigo = codigo;
+        this.stock = stock;
+        this.precio = precio;
+        this.costo = costo;
+        this.categoria = categoria;
+        this.detalleCompras = detalleCompras;
+        this.detalleVentas = detalleVentas;
+    }
+
+    public Producto(String nombre, String descripcion, String marca, long codigo, float stock, float precio, float costo, Categoria categoria, List<DetalleCompra> detalleCompras, List<DetalleVenta> detalleVentas) {
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.marca = marca;
+        this.codigo = codigo;
+        this.stock = stock;
+        this.precio = precio;
+        this.costo = costo;
+        this.categoria = categoria;
+        this.detalleCompras = detalleCompras;
         this.detalleVentas = detalleVentas;
     }
 
@@ -157,12 +191,20 @@ public class Producto implements Serializable {
         this.descripcion = descripcion;
     }
 
-    public float getPrecioCompra() {
-        return precioCompra;
+    public String getMarca() {
+        return marca;
     }
 
-    public void setPrecioCompra(float precioCompra) {
-        this.precioCompra = precioCompra;
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    public long getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(long codigo) {
+        this.codigo = codigo;
     }
 
     public float getStock() {
@@ -173,12 +215,20 @@ public class Producto implements Serializable {
         this.stock = stock;
     }
 
-    public float getPrecioVenta() {
-        return precioVenta;
+    public float getPrecio() {
+        return precio;
     }
 
-    public void setPrecioVenta(float precioVenta) {
-        this.precioVenta = precioVenta;
+    public void setPrecio(float precio) {
+        this.precio = precio;
+    }
+
+    public float getCosto() {
+        return costo;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
     }
 
     public Categoria getCategoria() {
@@ -189,12 +239,12 @@ public class Producto implements Serializable {
         this.categoria = categoria;
     }
 
-    public List<DetalleCompra> getEntradasAlmacens() {
-        return entradasAlmacens;
+    public List<DetalleCompra> getDetalleCompras() {
+        return detalleCompras;
     }
 
-    public void setEntradasAlmacens(List<DetalleCompra> entradasAlmacens) {
-        this.entradasAlmacens = entradasAlmacens;
+    public void setDetalleCompras(List<DetalleCompra> detalleCompras) {
+        this.detalleCompras = detalleCompras;
     }
 
     public List<DetalleVenta> getDetalleVentas() {
@@ -205,10 +255,18 @@ public class Producto implements Serializable {
         this.detalleVentas = detalleVentas;
     }
 
+    public List<DetalleMerma> getDetalleMerma() {
+        return detalleMerma;
+    }
+
+    public void setDetalleMerma(List<DetalleMerma> detalleMerma) {
+        this.detalleMerma = detalleMerma;
+    }
+
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 97 * hash + Objects.hashCode(this.id);
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -229,7 +287,9 @@ public class Producto implements Serializable {
 
     @Override
     public String toString() {
-        return "Producto{" + "id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", precioCompra=" + precioCompra + ", stock=" + stock + ", precioVenta=" + precioVenta + ", categoria=" + categoria + ", entradasAlmacens=" + entradasAlmacens + ", detalleVentas=" + detalleVentas + '}';
+        return nombre;
     }
+    
+    
 
 }//end class

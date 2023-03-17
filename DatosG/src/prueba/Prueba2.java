@@ -355,7 +355,7 @@ public class Prueba2 {
                     String direccionProveedor = scanner.next();
                     System.out.println("Ingrese el número de teléfono del proveedor:");
                     String telefonoProveedor = scanner.next();
-                    Proveedor proveedor = new Proveedor(nombreProveedor, direccionProveedor, telefonoProveedor, nombreProveedor, nombreProveedor);
+                    Proveedor proveedor = new Proveedor(nombreProveedor, direccionProveedor, telefonoProveedor);
                     proveedoresDAO.agregar(proveedor);
                     System.out.println("Proveedor agregado exitosamente.");
                     break;

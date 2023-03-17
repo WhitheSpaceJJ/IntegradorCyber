@@ -45,25 +45,25 @@ public class Prueba {
         categorias.add(new Categoria("Reglas"));
         categorias.add(new Categoria("Gomas"));
         List<Producto> productos = new ArrayList<>();
-        productos.add(new Producto("Libreta tamaño carta", "Libreta tamaño carta de 80 hojas", 10.0f, 50, 4.5f, categorias.get(0)));
-        productos.add(new Producto("Cuaderno universitario", "Cuaderno universitario de 100 hojas", 12.5f, 40, 4.0f, categorias.get(1)));
-        productos.add(new Producto("Lápiz HB", "Lápiz con mina HB para escritura", 1.0f, 500, 4.2f, categorias.get(2)));
-        productos.add(new Producto("Lapicero azul", "Lapicero de tinta azul para escritura", 2.0f, 300, 4.3f, categorias.get(3)));
-        productos.add(new Producto("Regla de plástico", "Regla de 30 cm de largo hecha de plástico resistente", 5.0f, 100, 4.1f, categorias.get(4)));
-        productos.add(new Producto("Goma de borrar blanca", "Goma de borrar blanca para lápices y carboncillos", 0.5f, 1000, 4.6f, categorias.get(5)));
-        productos.add(new Producto("Libreta tamaño media carta", "Libreta tamaño media carta de 50 hojas", 6.0f, 80, 4.4f, categorias.get(0)));
-        productos.add(new Producto("Cuaderno profesional", "Cuaderno profesional de 200 hojas", 20.0f, 30, 4.7f, categorias.get(1)));
-        productos.add(new Producto("Lápiz 2B", "Lápiz con mina 2B para dibujo y sombreado", 1.2f, 400, 4.3f, categorias.get(2)));
-        productos.add(new Producto("Lapicero rojo", "Lapicero de tinta roja para escritura y corrección", 2.2f, 250, 4.2f, categorias.get(3)));
-        productos.add(new Producto("Regla de metal", "Regla de 20 cm de largo hecha de metal resistente", 8.0f, 50, 4.5f, categorias.get(4)));
-        productos.add(new Producto("Goma de borrar para tinta", "Goma de borrar para tinta de bolígrafo y pluma", 1.0f, 800, 4.8f, categorias.get(5)));
+//        productos.add(new Producto("Libreta tamaño carta", "Libreta tamaño carta de 80 hojas", 10.0f, 50, 4.5f, categorias.get(0)));
+//        productos.add(new Producto("Cuaderno universitario", "Cuaderno universitario de 100 hojas", 12.5f, 40, 4.0f, categorias.get(1)));
+//        productos.add(new Producto("Lápiz HB", "Lápiz con mina HB para escritura", 1.0f, 500, 4.2f, categorias.get(2)));
+//        productos.add(new Producto("Lapicero azul", "Lapicero de tinta azul para escritura", 2.0f, 300, 4.3f, categorias.get(3)));
+//        productos.add(new Producto("Regla de plástico", "Regla de 30 cm de largo hecha de plástico resistente", 5.0f, 100, 4.1f, categorias.get(4)));
+//        productos.add(new Producto("Goma de borrar blanca", "Goma de borrar blanca para lápices y carboncillos", 0.5f, 1000, 4.6f, categorias.get(5)));
+//        productos.add(new Producto("Libreta tamaño media carta", "Libreta tamaño media carta de 50 hojas", 6.0f, 80, 4.4f, categorias.get(0)));
+//        productos.add(new Producto("Cuaderno profesional", "Cuaderno profesional de 200 hojas", 20.0f, 30, 4.7f, categorias.get(1)));
+//        productos.add(new Producto("Lápiz 2B", "Lápiz con mina 2B para dibujo y sombreado", 1.2f, 400, 4.3f, categorias.get(2)));
+//        productos.add(new Producto("Lapicero rojo", "Lapicero de tinta roja para escritura y corrección", 2.2f, 250, 4.2f, categorias.get(3)));
+//        productos.add(new Producto("Regla de metal", "Regla de 20 cm de largo hecha de metal resistente", 8.0f, 50, 4.5f, categorias.get(4)));
+//        productos.add(new Producto("Goma de borrar para tinta", "Goma de borrar para tinta de bolígrafo y pluma", 1.0f, 800, 4.8f, categorias.get(5)));
         List<Proveedor> proveedores = new ArrayList<>();
-        proveedores.add(new Proveedor("Proveedor 1", "Dirección 1", "11111111", "proveedor1@example.com", "Contacto 1"));
-        proveedores.add(new Proveedor("Proveedor 2", "Dirección 2", "22222222", "proveedor2@example.com", "Contacto 2"));
-        proveedores.add(new Proveedor("Proveedor 3", "Dirección 3", "33333333", "proveedor3@example.com", "Contacto 3"));
-        proveedores.add(new Proveedor("Proveedor 4", "Dirección 4", "44444444", "proveedor4@example.com", "Contacto 4"));
-        proveedores.add(new Proveedor("Proveedor 5", "Dirección 5", "55555555", "proveedor5@example.com", "Contacto 5"));
-        proveedores.add(new Proveedor("Proveedor 6", "Dirección 6", "66666666", "proveedor6@example.com", "Contacto 6"));
+//        proveedores.add(new Proveedor("Proveedor 1", "Dirección 1", "11111111", "proveedor1@example.com", "Contacto 1"));
+//        proveedores.add(new Proveedor("Proveedor 2", "Dirección 2", "22222222", "proveedor2@example.com", "Contacto 2"));
+//        proveedores.add(new Proveedor("Proveedor 3", "Dirección 3", "33333333", "proveedor3@example.com", "Contacto 3"));
+//        proveedores.add(new Proveedor("Proveedor 4", "Dirección 4", "44444444", "proveedor4@example.com", "Contacto 4"));
+//        proveedores.add(new Proveedor("Proveedor 5", "Dirección 5", "55555555", "proveedor5@example.com", "Contacto 5"));
+//        proveedores.add(new Proveedor("Proveedor 6", "Dirección 6", "66666666", "proveedor6@example.com", "Contacto 6"));
 //        List<DetalleCompra> detallesCompra = new ArrayList<>();
 //        detallesCompra.add(new DetalleCompra(Calendar.getInstance(), 100, 8.0f, proveedores.get(0), productos.get(0)));
 //        detallesCompra.add(new DetalleCompra(Calendar.getInstance(), 80, 10.0f, proveedores.get(1), productos.get(1)));
@@ -156,13 +156,13 @@ public class Prueba {
         System.out.println(caja1.toString());
         System.out.println("------------------------");
         Producto obtenido2 = productos.get(0);
-        DetalleCompra compra = new DetalleCompra(
-                Calendar.getInstance(), 400, obtenido2.getPrecioCompra(),
-                proveedoresO.get(
-                        new Random().nextInt(proveedoresO.size() - 1)),
-                obtenido2);
-        fachada.agregarDetalleCompra(compra);
-        fachada.agregarStockProducto(compra.getProducto(), compra.getCantidadComprada());
+        //DetalleCompra compra = new DetalleCompra(
+               // Calendar.getInstance(), 400, obtenido2.getPrecioCompra(),
+//                proveedoresO.get(
+//                        new Random().nextInt(proveedoresO.size() - 1)),
+//                obtenido2);
+//        fachada.agregarDetalleCompra(compra);
+//        fachada.agregarStockProducto(compra.getProducto(), compra.getCantidadComprada());
         System.out.println("Compra agregada yy el stock del producto se ha aumentado");
         System.out.println("Compras");
         List<DetalleCompra> compras = fachada.consultarTodasEntradasAlmacen();

@@ -283,7 +283,7 @@ private static BusquedaArticuloForm busquedaArticuloForm;
             Object[] fila = new Object[5];
             fila[0] = producto.getNombre();
             fila[1] = producto.getDescripcion();
-            fila[2] = producto.getPrecioVenta();
+            fila[2] = producto.getPrecio();
             fila[3] = producto.getStock();
             fila[4] = producto.getCategoria().getNombre();
             modeloTabla.addRow(fila);

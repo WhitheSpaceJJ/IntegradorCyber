@@ -15,9 +15,11 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name = "detallecompras")
+@Table(name = "detallemermas")
 
-public class DetalleCompra implements Serializable{
+
+public class DetalleMerma implements Serializable{
+    
     
     private static final long serialVersionUID = 1L;
     
@@ -30,8 +32,8 @@ public class DetalleCompra implements Serializable{
     @Column(name = "cantidad", nullable = false)
     private int cantidad;
     
-    @Column(name = "precioCompra", nullable = false)
-    private float precioCompra;
+    @Column(name = "costo", nullable = false)
+    private float costo;
     
     @Column(name = "importe", nullable = false)
     private float importe;
@@ -42,53 +44,46 @@ public class DetalleCompra implements Serializable{
     private Producto producto;
     
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "idCompra", nullable = false)
-    private Compra compra;
+    @JoinColumn(name = "idMerma", nullable = false)
+    private Merma merma;
 
-    public DetalleCompra() {
+    public DetalleMerma() {
     }
 
-    public DetalleCompra(int cantidad, float precioCompra, float importe) {
+    public DetalleMerma(int cantidad, float costo, float importe, Producto producto, Merma merma) {
         this.cantidad = cantidad;
-        this.precioCompra = precioCompra;
-        this.importe = importe;
-    }
-
-    public DetalleCompra(Integer id, int cantidad, float precioCompra, float importe) {
-        this.id = id;
-        this.cantidad = cantidad;
-        this.precioCompra = precioCompra;
-        this.importe = importe;
-    }
-
-    public DetalleCompra(int cantidad, float precioCompra, float importe, Producto producto) {
-        this.cantidad = cantidad;
-        this.precioCompra = precioCompra;
+        this.costo = costo;
         this.importe = importe;
         this.producto = producto;
+        this.merma = merma;
     }
 
-    public DetalleCompra(int cantidad, float precioCompra, float importe, Producto producto, Compra compra) {
-        this.cantidad = cantidad;
-        this.precioCompra = precioCompra;
-        this.importe = importe;
-        this.producto = producto;
-        this.compra = compra;
-    }
-
-    public DetalleCompra(Integer id, int cantidad, float precioCompra, float importe, Producto producto, Compra compra) {
+    public DetalleMerma(Integer id, int cantidad, float costo, float importe, Producto producto, Merma merma) {
         this.id = id;
         this.cantidad = cantidad;
-        this.precioCompra = precioCompra;
+        this.costo = costo;
         this.importe = importe;
         this.producto = producto;
-        this.compra = compra;
+        this.merma = merma;
     }
 
-    public DetalleCompra(Integer id, int cantidad, float precioCompra, float importe, Producto producto) {
+    public DetalleMerma(int cantidad, float costo, float importe) {
+        this.cantidad = cantidad;
+        this.costo = costo;
+        this.importe = importe;
+    }
+
+    public DetalleMerma(Integer id, int cantidad, float costo, float importe) {
         this.id = id;
         this.cantidad = cantidad;
-        this.precioCompra = precioCompra;
+        this.costo = costo;
+        this.importe = importe;
+    }
+
+    public DetalleMerma(Integer id, int cantidad, float costo, float importe, Producto producto) {
+        this.id = id;
+        this.cantidad = cantidad;
+        this.costo = costo;
         this.importe = importe;
         this.producto = producto;
     }
@@ -109,12 +104,12 @@ public class DetalleCompra implements Serializable{
         this.cantidad = cantidad;
     }
 
-    public float getPrecioCompra() {
-        return precioCompra;
+    public float getCosto() {
+        return costo;
     }
 
-    public void setPrecioCompra(float precioCompra) {
-        this.precioCompra = precioCompra;
+    public void setCosto(float costo) {
+        this.costo = costo;
     }
 
     public float getImporte() {
@@ -133,18 +128,18 @@ public class DetalleCompra implements Serializable{
         this.producto = producto;
     }
 
-    public Compra getCompra() {
-        return compra;
+    public Merma getMerma() {
+        return merma;
     }
 
-    public void setCompra(Compra compra) {
-        this.compra = compra;
+    public void setMerma(Merma merma) {
+        this.merma = merma;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 37 * hash + Objects.hashCode(this.id);
+        hash = 79 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -159,19 +154,17 @@ public class DetalleCompra implements Serializable{
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final DetalleCompra other = (DetalleCompra) obj;
+        final DetalleMerma other = (DetalleMerma) obj;
         return Objects.equals(this.id, other.id);
     }
 
+    
+    
     @Override
     public String toString() {
-        return id.toString();
+        return "DetalleMerma{" + "id=" + id + ", cantidad=" + cantidad + ", costo=" + costo + ", importe=" + importe + ", producto=" + producto + ", merma=" + merma + '}';
     }
-
-
-
-
-       
     
     
-}//end class
+    
+}

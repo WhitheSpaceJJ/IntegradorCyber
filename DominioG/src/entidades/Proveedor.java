@@ -43,7 +43,8 @@ public class Proveedor implements Serializable {
     private String contacto;
 
     @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "proveedor")
-    private List<DetalleCompra> entradasAlmacen;
+    private List<Compra> compras;
+    
 
     public Proveedor() {
     }
@@ -52,53 +53,22 @@ public class Proveedor implements Serializable {
         this.id = id;
     }
 
-    public Proveedor(String nombre, String direccion, String telefono, String email, String contacto) {
+    public Proveedor(String nombre, String direccion, String telefono) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
-        this.email = email;
-        this.contacto = contacto;
     }
 
-    public Proveedor(Integer id, String nombre, String direccion, String telefono, String email, String contacto) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
-        this.contacto = contacto;
-    }
-
-    public Proveedor(String nombre, String direccion, String telefono, String email, String contacto, List<DetalleCompra> entradasAlmacen) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
-        this.contacto = contacto;
-        this.entradasAlmacen = entradasAlmacen;
-    }
-
-    public Proveedor(Integer id, String nombre, String direccion, String telefono, String email, String contacto, List<DetalleCompra> entradasAlmacen) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.email = email;
-        this.contacto = contacto;
-        this.entradasAlmacen = entradasAlmacen;
-    }
-
-    public Proveedor(String nombre, String direccion, String telefono, String email, String website, String contacto, List<DetalleCompra> entradasAlmacen) {
+    public Proveedor(String nombre, String direccion, String telefono, String email, String website, String contacto) {
         this.nombre = nombre;
         this.direccion = direccion;
         this.telefono = telefono;
         this.email = email;
         this.website = website;
         this.contacto = contacto;
-        this.entradasAlmacen = entradasAlmacen;
     }
 
-    public Proveedor(Integer id, String nombre, String direccion, String telefono, String email, String website, String contacto, List<DetalleCompra> entradasAlmacen) {
+    public Proveedor(Integer id, String nombre, String direccion, String telefono, String email, String website, String contacto, List<Compra> compras) {
         this.id = id;
         this.nombre = nombre;
         this.direccion = direccion;
@@ -106,7 +76,17 @@ public class Proveedor implements Serializable {
         this.email = email;
         this.website = website;
         this.contacto = contacto;
-        this.entradasAlmacen = entradasAlmacen;
+        this.compras = compras;
+    }
+
+    public Proveedor(String nombre, String direccion, String telefono, String email, String website, String contacto, List<Compra> compras) {
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.telefono = telefono;
+        this.email = email;
+        this.website = website;
+        this.contacto = contacto;
+        this.compras = compras;
     }
 
     public Integer getId() {
@@ -165,18 +145,18 @@ public class Proveedor implements Serializable {
         this.contacto = contacto;
     }
 
-    public List<DetalleCompra> getEntradasAlmacen() {
-        return entradasAlmacen;
+    public List<Compra> getCompras() {
+        return compras;
     }
 
-    public void setEntradasAlmacen(List<DetalleCompra> entradasAlmacen) {
-        this.entradasAlmacen = entradasAlmacen;
+    public void setCompras(List<Compra> compras) {
+        this.compras = compras;
     }
 
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 79 * hash + Objects.hashCode(this.id);
+        hash = 17 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -197,10 +177,10 @@ public class Proveedor implements Serializable {
 
     @Override
     public String toString() {
-        return "Proveedor{" + "id=" + id + ", nombre=" + nombre + ", direccion=" + direccion + ", telefono=" + telefono + ", email=" + email + ", website=" + website + ", contacto=" + contacto + ", entradasAlmacen=" + entradasAlmacen + '}';
+        return nombre;
     }
-
-   
+    
+      
     
     
     
