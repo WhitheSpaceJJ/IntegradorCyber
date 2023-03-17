@@ -42,16 +42,15 @@ public class Producto implements Serializable {
     private float precioVenta;
 
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idCategoria", nullable = false)
     private Categoria categoria;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "producto")
     private List<Compra> entradasAlmacens;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "producto")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "producto")
     private List<DetalleVenta> detalleVentas;
-    private static final Logger LOG = Logger.getLogger(Producto.class.getName());
 
     public Producto() {
     }

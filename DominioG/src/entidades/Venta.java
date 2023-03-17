@@ -40,14 +40,14 @@ public class Venta implements Serializable {
     @Column(name = "totalventa", nullable = false)
     private float totalventa;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "venta")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "venta")
     private List<DetalleVenta> detalleVentas;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idCaja", nullable = false)
     private Caja caja;
 

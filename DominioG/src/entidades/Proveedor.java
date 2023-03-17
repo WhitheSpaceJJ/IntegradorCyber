@@ -42,7 +42,7 @@ public class Proveedor implements Serializable {
     @Column(name = "contacto", nullable = false, length = 100)
     private String contacto;
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "proveedor")
+    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "proveedor")
     private List<Compra> entradasAlmacen;
 
     public Proveedor() {

@@ -39,12 +39,12 @@ public class Compra implements Serializable{
     @Column(name = "precioCompra", nullable = false)
     private float precioCompra;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idProvedor", nullable = false)
     private Proveedor proveedor;
     
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 

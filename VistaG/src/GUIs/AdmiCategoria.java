@@ -25,7 +25,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
     /**
      * Creates new form AdmiClienteForm
      */
-    IFachadaControl logica;
+    private IFachadaControl logica;
 
     // Especifica un ID de producto que se está editando.
     private int idCategoria;
@@ -33,13 +33,14 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
     private AdmiCategoria() {
         initComponents();
-        logica = new FachadaControl();
-        llenarTabla();
-        initBotonesTabla();
-
         // Limita los caracteres de los text fields y deshabilita el poder mover la tabla.
         tblCategorias.getTableHeader().setReorderingAllowed(false);
         txtNombre.setDocument(new JTextFieldLimit(50));
+        logica = new FachadaControl();
+
+        llenarTabla();
+        initBotonesTabla();
+
     }
 
     public static AdmiCategoria getInstance() {
@@ -52,16 +53,13 @@ public class AdmiCategoria extends javax.swing.JFrame {
     private void initBotonesTabla() {
         ActionListener onEditarClickListener = (ActionEvent e) -> {
             idCategoria = (int) tblCategorias.getValueAt(tblCategorias.getSelectedRow(), 0);
-            
-            int indexColumna = tblCategorias.getSelectedColumn();
-            
-            if (indexColumna == COLEDITAR) {
-                llenarFormulario(logica.consultarCategoria(idCategoria));
-                //Evita que se modifique el nombre del producto al editarse.
-                //txtNombre.setEditable(false);
-            } else {
-                eliminar();
-            }
+            llenarFormulario(logica.consultarCategoria(idCategoria));
+
+        };
+
+        ActionListener onEliminarListener = (ActionEvent e) -> {
+            idCategoria = (int) tblCategorias.getValueAt(tblCategorias.getSelectedRow(), 0);
+            eliminar(idCategoria);
         };
 
         int indiceColumnaEditar = COLEDITAR;
@@ -82,54 +80,28 @@ public class AdmiCategoria extends javax.swing.JFrame {
                 .setCellRenderer(new JButtonRenderer("Eliminar"));
 
         modeloColumnas.getColumn(indiceColumnaEditar)
-                .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
-    }
-
-    private void llenarTabla() {
-
-        List<Categoria> categorias = this.logica.consultarTodasCategorias();
-
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
-
-        modeloTabla.setRowCount(0);
-
-        categorias.forEach(categoria -> {
-            Object[] fila = new Object[4];
-            fila[0] = categoria.getId();
-            fila[1] = categoria.getNombre();
-            fila[2] = "Editar";
-            fila[3] = "Eliminar";
-            modeloTabla.addRow(fila);
-        });
-
+                .setCellEditor(new JButtonCellEditor(new JTextField(), onEliminarListener));
     }
 
     private void llenarFormulario(Categoria categoria) {
         txtNombre.setText(categoria.getNombre());
     }
 
-    private void eliminar() {
+    private void eliminar(int idElimninar) {
 
         //Establece que por defecto que se seleccionó la opción "NO".
-        int opcionSeleccionada = -1;
+        int opcionSeleccionada = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar la categoria seleccionada?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
-        opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar la categoria seleccionada?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
-        if (opcionSeleccionada != JOptionPane.YES_OPTION) {
-            return;
+        if (opcionSeleccionada == JOptionPane.YES_OPTION) {
+            boolean seElimino = logica.eliminarCategoria(idElimninar);
+            if (seElimino) {
+                JOptionPane.showMessageDialog(null, "Se eliminó la categoria", "Información", JOptionPane.INFORMATION_MESSAGE);
+                this.llenarTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "No fue posible eliminar la categoria", "Información", JOptionPane.ERROR_MESSAGE);
+            }
+            limpiarId();
         }
-
-
-        boolean seElimino = logica.eliminarCategoria(idCategoria);
-
-        if (seElimino) {
-            JOptionPane.showMessageDialog(this, "Se eliminó la categoria", "Información", JOptionPane.INFORMATION_MESSAGE);
-            this.llenarTabla();
-        } else {
-            JOptionPane.showMessageDialog(this, "No fue posible eliminar la categoria", "Información", JOptionPane.ERROR_MESSAGE);
-        }
-
-        limpiarId();
     }
 
     private void limpiarId() {
@@ -324,7 +296,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
         this.limpiarFormulario();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -343,7 +314,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
     private void guardar() {
         if (validarCamposLlenos()) {
-
             if (idCategoria == 0) {
                 agregar();
             } else {
@@ -367,7 +337,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
             this.limpiarFormulario();
             this.llenarTabla();
         } else {
-            JOptionPane.showMessageDialog(this, "No fue posible agregar el producto", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No fue posible agregar la categoria", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -387,6 +357,21 @@ public class AdmiCategoria extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "No fue posible actualizar la categoria", "Información", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    //Bien
+    private void llenarTabla() {
+        List<Categoria> categorias = this.logica.consultarTodasCategorias();
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
+        modeloTabla.setRowCount(0);
+        categorias.forEach(categoria -> {
+            Object[] fila = new Object[4];
+            fila[0] = categoria.getId();
+            fila[1] = categoria.getNombre();
+            fila[2] = "Editar";
+            fila[3] = "Eliminar";
+            modeloTabla.addRow(fila);
+        });
     }
 
     private void limpiarFormulario() {

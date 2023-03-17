@@ -33,11 +33,11 @@ public class DetalleVenta implements Serializable {
     @Column(name = "importe")
     private float importe;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idVenta", nullable = false)
     private Venta venta;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
 

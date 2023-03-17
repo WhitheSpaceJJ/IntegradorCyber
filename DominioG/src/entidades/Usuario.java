@@ -39,7 +39,7 @@ public class Usuario implements Serializable {
     @Enumerated (EnumType.STRING)
     private Rol rol;
     
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "usuario")
+    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "usuario")
     private List<Caja> cajas;
 
     public Usuario() {

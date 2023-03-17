@@ -42,7 +42,7 @@ public class Gasto implements Serializable{
     private String autoriza;
     
    
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idCaja", nullable = false)
     private Caja caja;
 

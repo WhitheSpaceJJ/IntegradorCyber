@@ -36,7 +36,7 @@ public class Cliente implements Serializable {
     @Column(name = "telefono", nullable = false, length = 15)
     private String telefono;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "cliente")
     private List<Venta> ventas;
 
     public Cliente() {
