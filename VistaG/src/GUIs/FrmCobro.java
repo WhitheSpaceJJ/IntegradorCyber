@@ -18,18 +18,22 @@ public class FrmCobro extends javax.swing.JFrame {
 IFachadaControl logica= new FachadaControl();
 VentasForm ventasFrm=null;
 FrmCobro frmCobro=null;
-
+public static FrmCobro frmCobro1;
 
     /**
      * Creates new form FrmCobro
      */
-    public FrmCobro() {
+    private FrmCobro() {
         initComponents();
    this.setLocationRelativeTo(null);
  instanciaVentasForm();
-  
     }
-
+public static FrmCobro getInstance(){
+if(frmCobro1==null){
+    frmCobro1=new FrmCobro();
+}
+return frmCobro1;
+} 
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -47,7 +51,8 @@ FrmCobro frmCobro=null;
         btnContinuar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cobro");
 
         jLabel1.setText("Realizar Cobro");
 

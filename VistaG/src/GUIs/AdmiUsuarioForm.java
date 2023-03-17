@@ -19,9 +19,9 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 
-
 public class AdmiUsuarioForm extends javax.swing.JFrame {
 
+    private static AdmiUsuarioForm admiUsuarioForm;
     // Numero de columna - 1 , dónde se encontrarán los botones
     private final int COLEDITAR = 4;
     private final int COLELIMINAR = 5;
@@ -34,7 +34,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     /**
      * Creates new form AdmiClienteForm
      */
-    public AdmiUsuarioForm() {
+    private AdmiUsuarioForm() {
         initComponents();
         logica = new FachadaControl();
         llenarTabla();
@@ -46,6 +46,13 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         txtNombre.setDocument(new JTextFieldLimit(45));
         txtPassword.setDocument(new JTextFieldLimit(20));
 
+    }
+
+    public static AdmiUsuarioForm getInstance() {
+        if (admiUsuarioForm == null) {
+            admiUsuarioForm = new AdmiUsuarioForm();
+        }
+        return admiUsuarioForm;
     }
 
     /**
@@ -74,7 +81,8 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
         cmbRoles = new javax.swing.JComboBox<>();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administracion Usuario");
         setResizable(false);
 
         spdH.setPreferredSize(new java.awt.Dimension(1100, 650));
@@ -197,7 +205,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
                         .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(spdV)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, spdHLayout.createSequentialGroup()
-                                .addComponent(spnlTablaUsuarios)
+                                .addComponent(spnlTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
                                 .addContainerGap())))))
         );
         spdHLayout.setVerticalGroup(
@@ -447,8 +455,8 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         String nombre = this.txtNombre.getText();
         String password = this.txtPassword.getText();
         Rol rol = Rol.valueOf(cmbRoles.getSelectedItem().toString());
-   
-        Usuario usuario = new Usuario(nombre, password,rol);
+
+        Usuario usuario = new Usuario(nombre, password, rol);
 
         boolean seAgregoProdcuto = logica.agregarUsuario(usuario);
 

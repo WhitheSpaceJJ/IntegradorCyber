@@ -1,4 +1,3 @@
-
 package GUIs;
 
 import entidades.*;
@@ -15,37 +14,38 @@ import javax.swing.DefaultComboBoxModel;
 
 public class AbrirCajaForm extends javax.swing.JFrame {
 
-   public static AbrirCajaForm abrirCaja=null;
-   VentasForm ventasForm=null;
-    IFachadaControl logica=new FachadaControl();
+    public static AbrirCajaForm abrirCaja = null;
+    VentasForm ventasForm = null;
+    IFachadaControl logica = new FachadaControl();
+
     /**
      * Creates new form AbrirCaja
      */
     public AbrirCajaForm() {
         initComponents();
-       
-       
+
         llenarCampos();
-         llenarCBoxUsuarios();
+        llenarCBoxUsuarios();
     }
-public void mostrarFormulario() {
-    instanciaAbrirCaja();
-  abrirCaja.setLocationRelativeTo(null);
+
+    public void mostrarFormulario() {
+        instanciaAbrirCaja();
+        abrirCaja.setLocationRelativeTo(null);
         abrirCaja.setVisible(true);
 
     }
- public void cerrarCajaForm()
-    {
+
+    public void cerrarCajaForm() {
         abrirCaja.dispose();
     }
-    
-    public static AbrirCajaForm instanciaAbrirCaja()
-{
-if (abrirCaja == null) {
-    abrirCaja = new AbrirCajaForm(); 
-}
-  return abrirCaja;
-}
+
+    public static AbrirCajaForm instanciaAbrirCaja() {
+        if (abrirCaja == null) {
+            abrirCaja = new AbrirCajaForm();
+        }
+        return abrirCaja;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,7 +72,8 @@ if (abrirCaja == null) {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administración Caja");
         setResizable(false);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -142,29 +143,29 @@ if (abrirCaja == null) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-         limpiarCampos();
+        limpiarCampos();
         abrirCaja.dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAbrir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrir1ActionPerformed
-     //   ventasForm=ventasForm.instanciaFrmVentas();
-     ventasForm= new VentasForm();
-        Caja c=new Caja();
+        //   ventasForm=ventasForm.instanciaFrmVentas();
+        ventasForm = new VentasForm();
+        Caja c = new Caja();
         c.setEstado(Estado.ABIERTA);
         c.setFechaApertura(Calendar.getInstance());
         c.setSaldoInicial(Float.parseFloat(this.txtSaldoInicial.getText()));
-       String usuarioSeleccionado=comboBoxUsuarios.getSelectedItem().toString();
-       String[] partes = usuarioSeleccionado.split(",");
+        String usuarioSeleccionado = comboBoxUsuarios.getSelectedItem().toString();
+        String[] partes = usuarioSeleccionado.split(",");
         c.setUsuario(logica.consultarUsuario(Integer.parseInt(partes[0])));
-     
-        if(logica.consultarCajaAbierta()==null){
-            
-         logica.agregarCaja(c);
-        ventasForm.setCaja(logica.consultarCajaAbierta());
-        this.cerrarCajaForm();
-        //ventasForm.instanciaFrmVentas();
-        ventasForm.mostrarFormulario();
-        ventasForm.setCaja(c);
+
+        if (logica.consultarCajaAbierta() == null) {
+
+            logica.agregarCaja(c);
+            ventasForm.setCaja(logica.consultarCajaAbierta());
+            this.cerrarCajaForm();
+            //ventasForm.instanciaFrmVentas();
+            ventasForm.mostrarFormulario();
+            ventasForm.setCaja(c);
         }
     }//GEN-LAST:event_btnAbrir1ActionPerformed
 
@@ -172,40 +173,33 @@ if (abrirCaja == null) {
         numeroDecimal(evt);
     }//GEN-LAST:event_txtSaldoInicialKeyTyped
 
-    
     private void llenarCBoxUsuarios() {
 
         List<Usuario> usuarios = new ArrayList<Usuario>();
         usuarios = logica.consultarTodosUsuarios();
-      //  System.out.println("Usuario ID"+usuarios.get(0).getId());
+        //  System.out.println("Usuario ID"+usuarios.get(0).getId());
         Object[] objetos = usuarios.toArray();
         comboBoxUsuarios.setModel(new DefaultComboBoxModel(objetos));
-       
-        
-    }
-    
-   
-    public void llenarCampos()
-    {
-        Calendar fechaC= Calendar.getInstance();
 
-       Date fecha = fechaC.getTime();
+    }
+
+    public void llenarCampos() {
+        Calendar fechaC = Calendar.getInstance();
+
+        Date fecha = fechaC.getTime();
 
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-        
-        
+
         String fechaFormateada = formatoFecha.format(fecha);
         this.txtFecha.setText(fechaFormateada);
     }
-    
-    public void limpiarCampos()
-    {
-         abrirCaja.txtSaldoInicial.setText("");
-         comboBoxUsuarios.setSelectedIndex(0);
-         
-       
+
+    public void limpiarCampos() {
+        abrirCaja.txtSaldoInicial.setText("");
+        comboBoxUsuarios.setSelectedIndex(0);
+
     }
-    
+
     public void numeroDecimal(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
 
@@ -216,9 +210,7 @@ if (abrirCaja == null) {
             getToolkit().beep();
         }
     }
-    
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAbrir1;

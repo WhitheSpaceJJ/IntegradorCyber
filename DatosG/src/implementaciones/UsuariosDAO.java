@@ -31,7 +31,6 @@ public class UsuariosDAO implements IUsuariosDAO{
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo agregar al usuario");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -55,7 +54,6 @@ public class UsuariosDAO implements IUsuariosDAO{
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo actualizar al usuario");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -77,7 +75,6 @@ public class UsuariosDAO implements IUsuariosDAO{
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo eliminar al usuario");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -99,7 +96,6 @@ public class UsuariosDAO implements IUsuariosDAO{
             
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo consultar al cliente");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -123,7 +119,6 @@ public class UsuariosDAO implements IUsuariosDAO{
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar todos los usuarios");
-            ex.printStackTrace();
             return null;
         }
 

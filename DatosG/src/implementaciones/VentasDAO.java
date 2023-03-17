@@ -51,7 +51,6 @@ public class VentasDAO implements IVentasDAO{
            return idVenta;
        }catch (IllegalStateException ise){
            System.err.println("No fue posible guardar la venta");
-           ise.printStackTrace();
            return idVenta;
        }
     }
@@ -67,7 +66,6 @@ public class VentasDAO implements IVentasDAO{
             return venta;
         } catch (IllegalStateException ise) {
             System.err.println("No fue posible consultar la venta");
-            ise.printStackTrace();
             return null;
         }
     }
@@ -91,7 +89,6 @@ public class VentasDAO implements IVentasDAO{
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar todas las ventas");
-            ex.printStackTrace();
             return null;
         }
 
@@ -116,7 +113,6 @@ public class VentasDAO implements IVentasDAO{
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar las ventas entre las fechas dadas");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -139,7 +135,6 @@ public class VentasDAO implements IVentasDAO{
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar las ventas del cliente en la fecha dada");
-            ex.printStackTrace();
             return null;
         }
     }

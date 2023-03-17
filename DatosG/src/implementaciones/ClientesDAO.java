@@ -31,7 +31,6 @@ public class ClientesDAO implements IClientesDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo agregar al cliente");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -56,7 +55,6 @@ public class ClientesDAO implements IClientesDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo actualizar al cliente");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -78,7 +76,6 @@ public class ClientesDAO implements IClientesDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo eliminar al cliente");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -100,7 +97,6 @@ public class ClientesDAO implements IClientesDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo consultar al cliente");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -122,7 +118,6 @@ public class ClientesDAO implements IClientesDAO {
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar todos los clientes");
-            ex.printStackTrace();
             return null;
         }
 

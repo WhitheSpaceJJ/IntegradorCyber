@@ -30,7 +30,6 @@ public class ProveedoresDAO implements IProveedoresDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible agregar al proveedor");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -59,7 +58,6 @@ public class ProveedoresDAO implements IProveedoresDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo actualizar al proveedor");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -81,7 +79,6 @@ public class ProveedoresDAO implements IProveedoresDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo eliminar al proveedor");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -103,7 +100,6 @@ public class ProveedoresDAO implements IProveedoresDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo consultar al cliente");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -127,7 +123,6 @@ public class ProveedoresDAO implements IProveedoresDAO {
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible consultar todos los proveedores");
-            ex.printStackTrace();
             return null;
         }
 

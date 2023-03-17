@@ -34,7 +34,6 @@ public class DetalleVentasDAO implements IDetalleVentasDAO {
            return true;
        }catch (IllegalStateException ise){
            System.err.println("No fue posible guardar la venta");
-           ise.printStackTrace();
            return false;
        }
     }

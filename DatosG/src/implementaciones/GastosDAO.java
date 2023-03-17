@@ -44,7 +44,6 @@ public class GastosDAO implements IGastosDAO {
             return idGasto;
         } catch (IllegalStateException ise) {
             System.err.println("No fue posible guardar el gasto");
-            ise.printStackTrace();
             return idGasto;
         }
     }
@@ -59,7 +58,6 @@ public class GastosDAO implements IGastosDAO {
             return gasto;
         } catch (IllegalStateException ise) {
             System.err.println("No fue posible consultar el gasto");
-            ise.printStackTrace();
             return null;
         }
     }
@@ -83,7 +81,6 @@ public class GastosDAO implements IGastosDAO {
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar todos los gastos");
-            ex.printStackTrace();
             return null;
         }
 
@@ -108,7 +105,6 @@ public class GastosDAO implements IGastosDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los gastos entre las fechas dadas");
-            ex.printStackTrace();
             return null;
         }
     }

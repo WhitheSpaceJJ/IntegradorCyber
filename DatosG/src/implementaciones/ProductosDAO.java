@@ -31,7 +31,6 @@ public class ProductosDAO implements IProductosDAO{
            return true;
        }catch (IllegalStateException ise){
            System.err.println("No fue posible agregar el producto");
-           ise.printStackTrace();
            return false;
        }
         
@@ -57,7 +56,6 @@ public class ProductosDAO implements IProductosDAO{
             return true;
         }catch (IllegalStateException ise){
             System.err.println("No fue posible actualizar el producto");
-            ise.printStackTrace();
             return false;
         }
     
@@ -76,7 +74,6 @@ public class ProductosDAO implements IProductosDAO{
         
         }catch (IllegalStateException ise){
             System.err.println("No fue posible eliminar el producto");
-            ise.printStackTrace();
             return false;
         }
     
@@ -94,7 +91,6 @@ public class ProductosDAO implements IProductosDAO{
         
         }catch (IllegalStateException ise){
             System.err.println("No fue posible eliminar el producto");
-            ise.printStackTrace();
             return false;
         }
     }
@@ -112,7 +108,6 @@ public class ProductosDAO implements IProductosDAO{
         
         }catch (IllegalStateException ise){
             System.err.println("No fue posible agregar el producto");
-            ise.printStackTrace();
             return false;
         }
     }
@@ -130,7 +125,6 @@ public class ProductosDAO implements IProductosDAO{
             return productoBD;
         }catch (IllegalStateException ise){
             System.err.println("No se pudo consultar el producto");
-            ise.printStackTrace();
             return null;
         }
         
@@ -156,7 +150,6 @@ public class ProductosDAO implements IProductosDAO{
             
         }catch(IllegalStateException ise){
             System.err.println("No se pudo consultar los productos por nombre");
-            ise.printStackTrace();
             return null;
         }
                 
@@ -177,7 +170,6 @@ public class ProductosDAO implements IProductosDAO{
             return query.getResultList();
         }catch(IllegalStateException ise){
             System.err.println("No se pudierón consultar los Productos");
-            ise.printStackTrace();
             return null;
         }
 

@@ -31,7 +31,6 @@ public class CategoriasDAO implements ICategoriasDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible agregar la categoria");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -52,7 +51,6 @@ public class CategoriasDAO implements ICategoriasDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible actualizar la categoria");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -73,7 +71,6 @@ public class CategoriasDAO implements ICategoriasDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible eliminar la categoria");
-            ex.printStackTrace();
             return false;
         }
 
@@ -95,7 +92,6 @@ public class CategoriasDAO implements ICategoriasDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible consultar la categoria");
-            ex.printStackTrace();
             return null;
         }
 
@@ -118,7 +114,6 @@ public class CategoriasDAO implements ICategoriasDAO {
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible consultar todas las categorias");
-            ex.printStackTrace();
             return null;
         }
 

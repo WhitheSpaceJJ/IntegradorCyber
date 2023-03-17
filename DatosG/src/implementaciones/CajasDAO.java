@@ -41,7 +41,6 @@ public class CajasDAO implements ICajasDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fe posible agregar la caja");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -68,7 +67,6 @@ public class CajasDAO implements ICajasDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible actualizar la caja");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -89,7 +87,6 @@ public class CajasDAO implements ICajasDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible eliminar la caja");
-            ex.printStackTrace();
             return false;
         }
     }
@@ -110,7 +107,6 @@ public class CajasDAO implements ICajasDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible consultar la caja");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -132,7 +128,6 @@ public class CajasDAO implements ICajasDAO {
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible consultar todas las cajas");
-            ex.printStackTrace();
             return null;
         }
 

@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class VentasForm extends javax.swing.JPanel {
+public class VentasForm extends javax.swing.JFrame {
 
     private DefaultComboBoxModel listaClientes;
     List<Producto> productos = new ArrayList<>();
@@ -104,6 +104,9 @@ public class VentasForm extends javax.swing.JPanel {
         txtTotalCobrar = new javax.swing.JTextField();
         clientesC = new javax.swing.JComboBox<>();
         txtCaja = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Ventas");
 
         tblVenta.setBackground(new java.awt.Color(255, 255, 255));
         tblVenta.setPreferredSize(new java.awt.Dimension(1000, 750));
@@ -310,8 +313,8 @@ public class VentasForm extends javax.swing.JPanel {
         txtCaja.setText("Caja");
         tblVenta.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1115, Short.MAX_VALUE)
@@ -499,7 +502,7 @@ public class VentasForm extends javax.swing.JPanel {
 
     public static FrmCobro instanciaFrmCobro() {
         if (frmCobro == null) {
-            frmCobro = new FrmCobro();
+            frmCobro =FrmCobro.getInstance();
         }
         return frmCobro;
     }
@@ -513,9 +516,6 @@ public class VentasForm extends javax.swing.JPanel {
 
     public void mostrarFormulario() {
         instanciaFrmVentas();
-        PrincipalForm principal = new PrincipalForm();
-
-        principal.mostrarPanel(frmVentas);
 
     }
 
@@ -585,7 +585,7 @@ public class VentasForm extends javax.swing.JPanel {
     
     public BusquedaArticuloForm instanciaFrmBusArt() {
         if (frmBusArt == null) {
-            frmBusArt = new BusquedaArticuloForm(this);
+            frmBusArt =BusquedaArticuloForm.getInstance();
         }
         return frmBusArt;
     }

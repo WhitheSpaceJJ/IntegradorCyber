@@ -6,20 +6,31 @@ import interfaces.IFachadaControl;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
 public class PrincipalForm extends javax.swing.JFrame {
 
-    private VentasForm ventasForm = new VentasForm();
-    IFachadaControl logica = new FachadaControl();
-    AbrirCajaForm abrirCaja = new AbrirCajaForm();
-    public static PrincipalForm principalFrm = null;
+    private AbrirCajaForm abricCajaForm;
+    private AdmiCategoria admiCategoria;
+    private AdmiClienteForm admiClienteForm;
+    private AdmiProductoForm admiProductoForm;
+    private AdmiUsuarioForm admiUsuarioForm;
+    private BusquedaArticuloForm busquedaArticuloForm;
+    private FrmCobro frmCobro;
+    private VentasForm ventasForm;
+    private IFachadaControl fachadaControl;
+    private static PrincipalForm principalForm;
 
     /**
      * Creates new form PrincipalForm
      */
-    public PrincipalForm() {
+    private PrincipalForm() {
         initComponents();
+    }
 
+    public static PrincipalForm getInstance() {
+        if (principalForm == null) {
+            principalForm = new PrincipalForm();
+        }
+        return principalForm;
     }
 
     /**
@@ -33,7 +44,6 @@ public class PrincipalForm extends javax.swing.JFrame {
 
         pnlPrincipal = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
         MenuCaja = new javax.swing.JMenu();
         menuCajaNuevoTicket = new javax.swing.JMenuItem();
         menuCajaAbrirCaja = new javax.swing.JMenuItem();
@@ -45,13 +55,11 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdminProveedores = new javax.swing.JMenuItem();
         MenuAdminUsuario = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administración");
 
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(1000, 750));
         pnlPrincipal.setLayout(new java.awt.CardLayout());
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
 
         MenuCaja.setText("Caja");
 
@@ -64,9 +72,19 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuCaja.add(menuCajaNuevoTicket);
 
         menuCajaAbrirCaja.setText("Abrir Nueva Caja");
+        menuCajaAbrirCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCajaAbrirCajaActionPerformed(evt);
+            }
+        });
         MenuCaja.add(menuCajaAbrirCaja);
 
         menuCajaCierreCaja.setText("Cierre de Caja");
+        menuCajaCierreCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCajaCierreCajaActionPerformed(evt);
+            }
+        });
         MenuCaja.add(menuCajaCierreCaja);
 
         jMenuBar1.add(MenuCaja);
@@ -82,12 +100,27 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdmin.add(MenuAdminCategoria);
 
         MenuAdminClientes.setText("Clientes");
+        MenuAdminClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminClientesActionPerformed(evt);
+            }
+        });
         MenuAdmin.add(MenuAdminClientes);
 
         MenuAdminProductos.setText("Productos");
+        MenuAdminProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProductosActionPerformed(evt);
+            }
+        });
         MenuAdmin.add(MenuAdminProductos);
 
         MenuAdminProveedores.setText("Proveedores");
+        MenuAdminProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProveedoresActionPerformed(evt);
+            }
+        });
         MenuAdmin.add(MenuAdminProveedores);
 
         MenuAdminUsuario.setText("Usuario");
@@ -130,14 +163,13 @@ public class PrincipalForm extends javax.swing.JFrame {
     private void menuCajaNuevoTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaNuevoTicketActionPerformed
         // TODO add your handling code here:
         Caja caja = new Caja();
-        caja = logica.consultarCajaAbierta();
+        caja = fachadaControl.consultarCajaAbierta();
         if (caja == null) {
-            abrirCaja.instanciaAbrirCaja().mostrarFormulario();
+            AbrirCajaForm.instanciaAbrirCaja().mostrarFormulario();
 
         } else {
             ventasForm = ventasForm.instanciaFrmVentas();
             ventasForm.setCaja(caja);
-            mostrarPanel(ventasForm);
         }
 
 
@@ -146,73 +178,55 @@ public class PrincipalForm extends javax.swing.JFrame {
     private void MenuAdminUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuarioActionPerformed
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdmiUsuarioForm().setVisible(true);
+                AdmiUsuarioForm.getInstance().setVisible(true);
             }
         });
     }//GEN-LAST:event_MenuAdminUsuarioActionPerformed
 
     private void MenuAdminCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaActionPerformed
-                java.awt.EventQueue.invokeLater(new Runnable() {
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdmiCategoria().setVisible(true);
+                AdmiCategoria.getInstance().setVisible(true);
             }
         });
     }//GEN-LAST:event_MenuAdminCategoriaActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
+    private void MenuAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesActionPerformed
+        // TODO add your handling code here:
+        
+          java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                instanciaFrmPrincipal().setVisible(true);
-
+                AdmiClienteForm.getInstance().setVisible(true);
             }
         });
+    }//GEN-LAST:event_MenuAdminClientesActionPerformed
 
-    }
+    private void MenuAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosActionPerformed
+        // TODO add your handling code here:
+         java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiProductoForm.getInstance().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_MenuAdminProductosActionPerformed
 
-    public void mostrarPanel(JPanel panelActual) {
+    private void MenuAdminProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresActionPerformed
 
-        instanciaFrmPrincipal();
-        principalFrm.pnlPrincipal.removeAll();
-        principalFrm.pnlPrincipal.add(panelActual);
-        principalFrm.pnlPrincipal.repaint();
-        principalFrm.pnlPrincipal.revalidate();
+ java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiProveedorForm.getInstance().setVisible(true);
+            }
+        });
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminProveedoresActionPerformed
 
-    }
+    private void menuCajaAbrirCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaAbrirCajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCajaAbrirCajaActionPerformed
 
-    public static PrincipalForm instanciaFrmPrincipal() {
-        if (principalFrm == null) {
-            principalFrm = new PrincipalForm();
-        }
-        return principalFrm;
-    }
+    private void menuCajaCierreCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaCierreCajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuCajaCierreCajaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -223,7 +237,6 @@ public class PrincipalForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuAdminProveedores;
     private javax.swing.JMenuItem MenuAdminUsuario;
     private javax.swing.JMenu MenuCaja;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem menuCajaAbrirCaja;
     private javax.swing.JMenuItem menuCajaCierreCaja;

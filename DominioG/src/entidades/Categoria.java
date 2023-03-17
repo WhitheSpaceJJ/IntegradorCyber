@@ -28,7 +28,7 @@ public class Categoria implements Serializable {
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
 
-    @OneToMany (cascade = CascadeType.ALL, mappedBy = "categoria")
+    @OneToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "categoria")
     private List<Producto> productos;
 
     public Categoria() {

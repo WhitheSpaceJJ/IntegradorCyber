@@ -46,7 +46,6 @@ public class FachadaControl implements IFachadaControl {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
             return ventasDAO.buscarEntre(inicio, fin);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -57,7 +56,6 @@ public class FachadaControl implements IFachadaControl {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
             return ventasDAO.buscarEntreCliente(inicio, fin, cliente);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -68,7 +66,6 @@ public class FachadaControl implements IFachadaControl {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
             return ventasDAO.consultar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -79,7 +76,6 @@ public class FachadaControl implements IFachadaControl {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
             return ventasDAO.consultarTodas();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -90,7 +86,6 @@ public class FachadaControl implements IFachadaControl {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
             return ventasDAO.buscarEntreCliente(inicio, fin, cliente);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -101,7 +96,6 @@ public class FachadaControl implements IFachadaControl {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
             return ventasDAO.agregar(venta);
         } catch (Exception e) {
-            e.printStackTrace();
             return -1;
         }
     }
@@ -113,7 +107,6 @@ public class FachadaControl implements IFachadaControl {
             IControlDetalleVentas detalleVentasDAO = fabrica.getDetalleVentasDAO();
             return detalleVentasDAO.agregar(detalleVenta);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -125,7 +118,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.agregar(entradaAlmacen);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -147,7 +139,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.consultarTodos();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -158,7 +149,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntre(inicio, fin);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -169,7 +159,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntreProveedores(inicio, fin, proveedor);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -180,7 +169,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
             return detalleCompraDAO.buscarEntreProductos(inicio, fin, producto);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -192,7 +180,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.consultar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -203,7 +190,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.agregar(producto);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -214,7 +200,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.actualizar(producto);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -225,7 +210,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.eliminar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -236,7 +220,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.quitarStock(producto, stock);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -247,7 +230,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.agregarStock(producto, stock);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -258,7 +240,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.consultarPorNombre(nombre);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -269,7 +250,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.consultarTodos();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -281,7 +261,6 @@ public class FachadaControl implements IFachadaControl {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
             return usuariosDAO.agregar(usuario);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -292,7 +271,6 @@ public class FachadaControl implements IFachadaControl {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
             return usuariosDAO.actualizar(usuario);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -303,7 +281,6 @@ public class FachadaControl implements IFachadaControl {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
             return usuariosDAO.eliminar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -314,7 +291,6 @@ public class FachadaControl implements IFachadaControl {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
             return usuariosDAO.consultar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -325,7 +301,6 @@ public class FachadaControl implements IFachadaControl {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
             return usuariosDAO.consultarTodos();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -337,7 +312,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
             return proveedoresDAO.agregar(proveedor);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -347,7 +321,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
             return proveedoresDAO.actualizar(proveedor);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -358,7 +331,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
             return proveedoresDAO.eliminar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -369,7 +341,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
             return proveedoresDAO.consultar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -380,7 +351,6 @@ public class FachadaControl implements IFachadaControl {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
             return proveedoresDAO.consultarTodos();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -392,7 +362,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
             return categoriasDAO.agregar(categoria);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -403,7 +372,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
             return categoriasDAO.actualizar(categoria);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -414,7 +382,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
             return categoriasDAO.eliminar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -425,7 +392,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
             return categoriasDAO.consultar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -436,7 +402,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
             return categoriasDAO.consultarTodos();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -448,7 +413,6 @@ public class FachadaControl implements IFachadaControl {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
             return clientesDAO.agregar(cliente);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -459,7 +423,6 @@ public class FachadaControl implements IFachadaControl {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
             return clientesDAO.actualizar(cliente);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -470,7 +433,6 @@ public class FachadaControl implements IFachadaControl {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
             return clientesDAO.eliminar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -481,7 +443,6 @@ public class FachadaControl implements IFachadaControl {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
             return clientesDAO.consultar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -492,7 +453,6 @@ public class FachadaControl implements IFachadaControl {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
             return clientesDAO.consultarTodos();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -504,7 +464,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
             return cajasDAO.agregar(caja);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -515,7 +474,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
             return cajasDAO.actualizar(caja);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -526,7 +484,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
             return cajasDAO.eliminar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return false;
         }
     }
@@ -538,7 +495,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
             return cajasDAO.consultar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -558,7 +514,6 @@ public class FachadaControl implements IFachadaControl {
            
             }
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
         return null;
@@ -571,7 +526,6 @@ public class FachadaControl implements IFachadaControl {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
             return cajasDAO.consultarTodos();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -583,7 +537,6 @@ public class FachadaControl implements IFachadaControl {
             IControlGastos gastosDAO = fabrica.getGastosDAO();
             return gastosDAO.agregar(gasto);
         } catch (Exception e) {
-            e.printStackTrace();
             return -1;
         }
     }
@@ -594,7 +547,6 @@ public class FachadaControl implements IFachadaControl {
             IControlGastos gastosDAO = fabrica.getGastosDAO();
             return gastosDAO.consultar(id);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -605,7 +557,6 @@ public class FachadaControl implements IFachadaControl {
             IControlGastos gastosDAO = fabrica.getGastosDAO();
             return gastosDAO.consultarTodas();
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }
@@ -616,7 +567,6 @@ public class FachadaControl implements IFachadaControl {
             IControlGastos gastosDAO = fabrica.getGastosDAO();
             return gastosDAO.buscarEntre(inicio, fin);
         } catch (Exception e) {
-            e.printStackTrace();
             return null;
         }
     }

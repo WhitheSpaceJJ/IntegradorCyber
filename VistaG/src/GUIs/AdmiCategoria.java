@@ -25,13 +25,13 @@ public class AdmiCategoria extends javax.swing.JFrame {
     /**
      * Creates new form AdmiClienteForm
      */
-
     IFachadaControl logica;
 
     // Especifica un ID de producto que se está editando.
     private int idCategoria;
+    private static AdmiCategoria admiCategoria;
 
-    public AdmiCategoria() {
+    private AdmiCategoria() {
         initComponents();
         logica = new FachadaControl();
         llenarTabla();
@@ -40,25 +40,27 @@ public class AdmiCategoria extends javax.swing.JFrame {
         // Limita los caracteres de los text fields y deshabilita el poder mover la tabla.
         tblCategorias.getTableHeader().setReorderingAllowed(false);
         txtNombre.setDocument(new JTextFieldLimit(50));
+    }
 
+    public static AdmiCategoria getInstance() {
+        if (admiCategoria == null) {
+            admiCategoria = new AdmiCategoria();
+        }
+        return admiCategoria;
     }
 
     private void initBotonesTabla() {
-        ActionListener onEditarClickListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                idCategoria = (int) tblCategorias.getValueAt(tblCategorias.getSelectedRow(), 0);
-
-                int indexColumna = tblCategorias.getSelectedColumn();
-
-                if (indexColumna == COLEDITAR) {
-                    llenarFormulario(logica.consultarCategoria(idCategoria));
-                    //Evita que se modifique el nombre del producto al editarse.
-                    //txtNombre.setEditable(false);
-                } else {
-                    eliminar();
-                }
+        ActionListener onEditarClickListener = (ActionEvent e) -> {
+            idCategoria = (int) tblCategorias.getValueAt(tblCategorias.getSelectedRow(), 0);
+            
+            int indexColumna = tblCategorias.getSelectedColumn();
+            
+            if (indexColumna == COLEDITAR) {
+                llenarFormulario(logica.consultarCategoria(idCategoria));
+                //Evita que se modifique el nombre del producto al editarse.
+                //txtNombre.setEditable(false);
+            } else {
+                eliminar();
             }
         };
 
@@ -117,11 +119,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
             return;
         }
 
-        opcionSeleccionada = JOptionPane.showConfirmDialog(this, "Eliminar esta categoria eliminará también los productos en las que se encuentre\n ¿Está seguro que desea eliminar la categoria?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
-        if (opcionSeleccionada != JOptionPane.YES_OPTION) {
-            return;
-        }
 
         boolean seElimino = logica.eliminarCategoria(idCategoria);
 
@@ -142,6 +139,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
     private boolean validarCamposLlenos() {
 
         if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre de la categoria");
             return false;
         }
         return true;
@@ -170,6 +168,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administracion Categoria");
         setResizable(false);
 
         pnlCategorias.setPreferredSize(new java.awt.Dimension(1100, 650));
@@ -325,55 +324,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
         this.limpiarFormulario();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-//    public static void main(String args[]) {
-//        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(AdmiCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//        //</editor-fold>
-//
-//        /* Create and display the form */
-////        java.awt.EventQueue.invokeLater(new Runnable() {
-////            public void run() {
-////                new AdmiCategoria().setVisible(true);
-////            }
-////        });
-//    }
+  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -404,9 +355,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
     }
 
     private void agregar() {
-//        if(validarFormulario() == false){
-//            return;
-//        }
 
         String nombre = this.txtNombre.getText();
 
@@ -424,9 +372,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
     }
 
     private void actualizar() {
-//        if(validarFormulario() == false){
-//            return;
-//        }
 
         String nombre = txtNombre.getText();
 

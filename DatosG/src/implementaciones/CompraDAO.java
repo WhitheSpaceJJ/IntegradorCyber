@@ -41,7 +41,6 @@ public class CompraDAO implements ICompraDAO {
 
         } catch (IllegalStateException ise) {
             System.err.println("No fue posible guardar la entrada al almacen");
-            ise.printStackTrace();
             return false;
         }
 
@@ -57,7 +56,6 @@ public class CompraDAO implements ICompraDAO {
             return entradaAlmacen;
         } catch (IllegalStateException ise) {
             System.err.println("No fue posible consultar la venta");
-            ise.printStackTrace();
             return null;
         }
     }
@@ -81,7 +79,6 @@ public class CompraDAO implements ICompraDAO {
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar todas entradas al almacen");
-            ex.printStackTrace();
             return null;
         }
 
@@ -107,7 +104,6 @@ public class CompraDAO implements ICompraDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar las entradas al almacen entre las fechas dadas");
-            ex.printStackTrace();
             return null;
         }
 
@@ -131,7 +127,6 @@ public class CompraDAO implements ICompraDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar las entradas al almacen del proveedor en la fecha dada");
-            ex.printStackTrace();
             return null;
         }
     }
@@ -154,7 +149,6 @@ public class CompraDAO implements ICompraDAO {
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar las entradas al almacen del producto en la fecha dada");
-            ex.printStackTrace();
             return null;
         }}
 
