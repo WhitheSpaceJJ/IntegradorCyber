@@ -1,4 +1,3 @@
-
 package fabrica;
 
 import implementaciones.*;
@@ -13,33 +12,39 @@ public class FabricaDAO {
     private ProveedoresDAO instanceProveedoresDAO;
     private UsuariosDAO instanceUsuariosDAO;
     private VentasDAO instanceVentasDAO;
+    private MermasDAO instanceMermasDAO;
+    private ComprasDAO instanceComprasDAO;
     private final ConexionBD instanceConexionBD;
     private DetalleVentasDAO instanceDetalleVentasDAO;
-    private CompraDAO instanceDetalleCompraDAO;
+    private DetalleComprasDAO instanceDetalleCompraDAO;
+    private DetalleMermasDAO instanceDetalleMermaDAO;
     private CajasDAO instanceCajaDAO;
-private GastosDAO instanceGastosDAO;
+    private GastosDAO instanceGastosDAO;
 
     private FabricaDAO() {
         instanceConexionBD = new ConexionBD();
 
     }
-  public CajasDAO getCajasDAO(){
-      if(instanceCajaDAO==null){
-          instanceCajaDAO=new CajasDAO(instanceConexionBD,getUsuariosDAO());
-      }
-      return instanceCajaDAO;
-  }
-  public GastosDAO getGastosDAO(){
-      if(instanceGastosDAO==null){
-          instanceGastosDAO=new GastosDAO(instanceConexionBD);
-      }
-      return instanceGastosDAO;
-  }
+
     public static FabricaDAO getInstancia() {
         if (instancia == null) {
             instancia = new FabricaDAO();
         }
         return instancia;
+    }
+
+    public CajasDAO getCajasDAO() {
+        if (instanceCajaDAO == null) {
+            instanceCajaDAO = new CajasDAO(instanceConexionBD);
+        }
+        return instanceCajaDAO;
+    }
+
+    public GastosDAO getGastosDAO() {
+        if (instanceGastosDAO == null) {
+            instanceGastosDAO = new GastosDAO(instanceConexionBD);
+        }
+        return instanceGastosDAO;
     }
 
     public DetalleVentasDAO getDetalleVentasDAO() {
@@ -49,11 +54,18 @@ private GastosDAO instanceGastosDAO;
         return instanceDetalleVentasDAO;
     }
 
-    public CompraDAO getDetalleCompraDAO() {
+    public DetalleComprasDAO getDetalleCompraDAO() {
         if (instanceDetalleCompraDAO == null) {
-            instanceDetalleCompraDAO = new CompraDAO(instanceConexionBD);
+            instanceDetalleCompraDAO = new DetalleComprasDAO(instanceConexionBD);
         }
         return instanceDetalleCompraDAO;
+    }
+
+    public DetalleMermasDAO getDetalleMermaDAO() {
+        if (instanceDetalleMermaDAO == null) {
+            instanceDetalleMermaDAO = new DetalleMermasDAO(instanceConexionBD);
+        }
+        return instanceDetalleMermaDAO;
     }
 
     public CategoriasDAO getCategoriasDAO() {
@@ -98,5 +110,19 @@ private GastosDAO instanceGastosDAO;
             instanceVentasDAO = new VentasDAO(instanceConexionBD);
         }
         return instanceVentasDAO;
+    }
+    
+    public MermasDAO getMermasDAO() {
+        if (instanceMermasDAO == null) {
+            instanceMermasDAO = new MermasDAO(instanceConexionBD);
+        }
+        return instanceMermasDAO;
+    }
+    
+    public ComprasDAO getComprasDAO() {
+        if (instanceComprasDAO == null) {
+            instanceComprasDAO = new ComprasDAO(instanceConexionBD);
+        }
+        return instanceComprasDAO;
     }
 }

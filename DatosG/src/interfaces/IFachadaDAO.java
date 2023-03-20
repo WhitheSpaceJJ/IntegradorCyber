@@ -1,16 +1,13 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
 package interfaces;
+
 import entidades.*;
 
 import java.util.Calendar;
 import java.util.List;
+
 public interface IFachadaDAO {
- 
-    
-    
+
+    //Caja
     public boolean agregarCaja(Caja caja);
 
     public boolean actualizarCaja(Caja caja);
@@ -22,11 +19,13 @@ public interface IFachadaDAO {
     public List<Caja> consultarCajas();
 
     //Gastos
-    public int agregarGasto(Gasto gasto);
-    
+    public boolean agregarGasto(Gasto gasto);
+
+    public boolean actualizarGasto(Gasto gasto);
+
     public Gasto consultar(int id);
 
-    public List<Gasto> consultarTodas();
+    public List<Gasto> consultarTodos();
 
     public List<Gasto> buscarGastosEntreFechas(Calendar inicio, Calendar fin);
 
@@ -50,10 +49,11 @@ public interface IFachadaDAO {
 
     public Cliente consultarCliente(int id);
 
-    public List<Cliente> consultarTodosClientes() ;
+    public List<Cliente> consultarTodosClientes();
+
     //Proveedores
     public boolean agregarProveedor(Proveedor proveedor);
-    
+
     public boolean actualizarProveedor(Proveedor proveedor);
 
     public boolean eliminarProveedor(int id);
@@ -69,25 +69,29 @@ public interface IFachadaDAO {
 
     public Venta consultarVenta(int id);
 
-    public List<Venta> consultarVentas();
+    public List<Venta> consultarTodasVentas();
 
-    public int agregarVenta(Venta venta);
+    public boolean agregarVenta(Venta venta);
 
     //Detalle Venta
     public boolean agregarDetalleVenta(DetalleVenta detalleVenta);
 
-    //compra Detalle
-    public boolean agregarDetalleCompra(DetalleCompra entradaAlmacen);
+    // Detalle Compra
+    public boolean agregarDetalleCompra(DetalleCompra detalleCompra);
 
-    public DetalleCompra consultarDetalleCompra(int id);
+    // Detalle Merma
+    public boolean agregarDetalleMerma(DetalleMerma detalleMerma);
 
-    public List<DetalleCompra> consultarTodasEntradasAlmacen();
+    //Compra
+    public boolean agregarCompra(Compra compra);
 
-    public List<DetalleCompra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin);
+    public Compra consultarCompra(int id);
 
-    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor);
+    public List<Compra> consultarTodasCompras();
 
-    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto);
+    public List<Compra> buscarComprasEntreFechas(Calendar inicio, Calendar fin);
+
+    public List<Compra> buscarComprasEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor);
 
 //Producto
     public Producto consultarProducto(int id);
@@ -98,13 +102,10 @@ public interface IFachadaDAO {
 
     public boolean eliminarProducto(int id);
 
-    public boolean quitarStockProducto(Producto producto, int stock);
-
-    public boolean agregarStockProducto(Producto producto, int stock);
-
     public List<Producto> buscarProductosPorNombre(String nombre);
 
     public List<Producto> consultarTodosProductos();
+
     //Usuario
     public boolean agregarUsuario(Usuario usuario);
 
@@ -115,5 +116,14 @@ public interface IFachadaDAO {
     public Usuario consultarUsuario(int id);
 
     public List<Usuario> consultarTodosUsuarios();
+
+    //Merma
+    public boolean agregarMerma(Merma merma);
+
+    public Merma consultarMerma(int id);
+
+    public List<Merma> consultarTodasMermas();
+
+    public List<Merma> buscarMermasEntreFechas(Calendar inicio, Calendar fin);
 
 }

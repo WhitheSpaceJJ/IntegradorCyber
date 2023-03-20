@@ -21,24 +21,44 @@ public class ControlGastos implements IControlGastos {
         this.fachadaDAO=fachadaDAO;
     }
 
+//    @Override
+//    public int agregar(Gasto gasto) {
+//       return this.fachadaDAO.agregarGasto(gasto);
+//    }
+//
+//    @Override
+//    public Gasto consultar(int id) {
+//        return this.fachadaDAO.consultar(id);
+//    }
+//
+//    @Override
+//    public List<Gasto> consultarTodas() {
+//     return this.fachadaDAO.consultarTodas();
+//    }
+//
+//    @Override
+//    public List<Gasto> buscarEntre(Calendar inicio, Calendar fin) {
+//    return this.fachadaDAO.buscarGastosEntreFechas(inicio, fin);
+//    }
+
     @Override
     public int agregar(Gasto gasto) {
-       return this.fachadaDAO.agregarGasto(gasto);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public Gasto consultar(int id) {
-        return this.fachadaDAO.consultar(id);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public List<Gasto> consultarTodas() {
-     return this.fachadaDAO.consultarTodas();
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public List<Gasto> buscarEntre(Calendar inicio, Calendar fin) {
-    return this.fachadaDAO.buscarGastosEntreFechas(inicio, fin);
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

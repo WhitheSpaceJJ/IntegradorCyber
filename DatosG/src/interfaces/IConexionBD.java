@@ -10,3 +10,4 @@ public interface IConexionBD {
         
     EntityManager crearConexion() throws IllegalStateException;
 }
+

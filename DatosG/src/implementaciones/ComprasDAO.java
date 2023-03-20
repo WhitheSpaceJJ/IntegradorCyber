@@ -1,13 +1,11 @@
 package implementaciones;
 
-import entidades.DetalleCompra;
+import entidades.Compra;
 import entidades.Producto;
 import entidades.Proveedor;
 
 import interfaces.IConexionBD;
 import interfaces.ICompraDAO;
-import interfaces.IProductosDAO;
-import interfaces.IProveedoresDAO;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
@@ -16,27 +14,23 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-
-public class CompraDAO implements ICompraDAO {
+public class ComprasDAO implements ICompraDAO {
 
     private final IConexionBD conexion;
 
-    public CompraDAO(IConexionBD conexion) {
+    public ComprasDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
 
     @Override
-    public boolean agregar(DetalleCompra entradaAlmacen) {
-
+    public boolean agregar(Compra compra) {
+        EntityManager em = this.conexion.crearConexion();
         try {
-            EntityManager em = this.conexion.crearConexion();
+
             em.getTransaction().begin();
-
-            em.persist(entradaAlmacen);
-
-            em.flush();
-
+            em.persist(compra);
             em.getTransaction().commit();
+
             return true;
 
         } catch (IllegalStateException ise) {
@@ -47,52 +41,49 @@ public class CompraDAO implements ICompraDAO {
     }
 
     @Override
-    public DetalleCompra consultar(int id) {
-        try {
-            EntityManager em = this.conexion.crearConexion();
+    public Compra consultar(int id) {
+        EntityManager em = this.conexion.crearConexion();
 
-            DetalleCompra entradaAlmacen = em.find(DetalleCompra.class, id);
+        try {
+
+            Compra entradaAlmacen = em.find(Compra.class, id);
 
             return entradaAlmacen;
         } catch (IllegalStateException ise) {
-            System.err.println("No fue posible consultar la venta");
+            System.err.println("No fue posible consultar la compra");
             return null;
         }
     }
 
     @Override
-    public List<DetalleCompra> consultarTodos() {
-        List<DetalleCompra> entradasAlmacen = null;
-
+    public List<Compra> consultarTodos() {
+        List<Compra> compras = null;
+        EntityManager em = conexion.crearConexion();
         try {
-
-            EntityManager em = conexion.crearConexion();
 
             em.getTransaction().begin();
 
             CriteriaBuilder builder = em.getCriteriaBuilder();
-            CriteriaQuery<DetalleCompra> criteria = builder.createQuery(DetalleCompra.class);
-            TypedQuery<DetalleCompra> query = em.createQuery(criteria);
+            CriteriaQuery<Compra> criteria = builder.createQuery(Compra.class);
+            TypedQuery<Compra> query = em.createQuery(criteria);
 
-            entradasAlmacen = query.getResultList();
+            compras = query.getResultList();
 
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudieron consultar todas entradas al almacen");
+            System.err.println("No se pudieron consultar todas compras");
             return null;
         }
 
-        return entradasAlmacen;
+        return compras;
     }
 
     @Override
-    public List<DetalleCompra> buscarEntre(Calendar inicio, Calendar fin) {
+    public List<Compra> buscarEntre(Calendar inicio, Calendar fin) {
 
-        List<DetalleCompra> entradasAlmacen = null;
-
+        List<Compra> compras = null;
+        EntityManager em = conexion.crearConexion();
         try {
-
-            EntityManager em = conexion.crearConexion();
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -100,22 +91,20 @@ public class CompraDAO implements ICompraDAO {
 
             String fechaFin = dateFormat.format(fin.getTimeInMillis());
 
-            return em.createQuery(String.format("SELECT v FROM EntradaAlmacen v WHERE v.fecha >= '%s' AND v.fecha <= '%s'", fechaInicio, fechaFin)).getResultList();
+            return em.createQuery(String.format("SELECT v FROM Compra v WHERE v.fecha >= '%s' AND v.fecha <= '%s'", fechaInicio, fechaFin)).getResultList();
 
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudieron consultar las entradas al almacen entre las fechas dadas");
+            System.err.println("No se pudieron consultar las compras entre las fechas dadas");
             return null;
         }
 
     }
 
     @Override
-    public List<DetalleCompra> buscarEntreProveedores(Calendar inicio, Calendar fin, Proveedor proveedor) {
-        List<DetalleCompra> entradasAlmacen = null;
-
+    public List<Compra> buscarEntreProveedores(Calendar inicio, Calendar fin, Proveedor proveedor) {
+        List<Compra> compras = null;
+        EntityManager em = conexion.crearConexion();
         try {
-
-            EntityManager em = conexion.crearConexion();
 
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -123,33 +112,22 @@ public class CompraDAO implements ICompraDAO {
 
             String fechaFin = dateFormat.format(fin.getTimeInMillis());
 
-            return em.createQuery(String.format("SELECT v FROM EntradaAlmacen v WHERE v.fecha >= '%s' AND v.fecha <= '%s' AND v.proveedor.id = %d", fechaInicio, fechaFin, proveedor.getId())).getResultList();
+            return em.createQuery(String.format("SELECT v FROM Compra v WHERE v.fecha >= '%s' AND v.fecha <= '%s' AND v.proveedor.id = %d", fechaInicio, fechaFin, proveedor.getId())).getResultList();
 
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudieron consultar las entradas al almacen del proveedor en la fecha dada");
+            System.err.println("No se pudieron consultar compras al proveedor en la fecha dada");
             return null;
         }
     }
 
     @Override
-    public List<DetalleCompra> buscarEntreProductos(Calendar inicio, Calendar fin, Producto producto) {
-        List<DetalleCompra> entradasAlmacen = null;
+    public boolean actualizar(Compra t) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
-        try {
-
-            EntityManager em = conexion.crearConexion();
-
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-            String fechaInicio = dateFormat.format(inicio.getTimeInMillis());
-
-            String fechaFin = dateFormat.format(fin.getTimeInMillis());
-
-            return em.createQuery(String.format("SELECT v FROM Producto v WHERE v.fecha >= '%s' AND v.fecha <= '%s' AND v.proveedor.id = %d", fechaInicio, fechaFin, producto.getId())).getResultList();
-
-        } catch (IllegalStateException ex) {
-            System.err.println("No se pudieron consultar las entradas al almacen del producto en la fecha dada");
-            return null;
-        }}
+    @Override
+    public boolean eliminar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 }

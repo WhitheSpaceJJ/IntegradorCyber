@@ -43,7 +43,7 @@ public class Compra implements Serializable {
     @JoinColumn(name = "idProveedor", nullable = false)
     private Proveedor proveedor;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "venta")
+    @OneToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE}, mappedBy = "compra")
     private List<DetalleCompra> detalleCompras;
 
     public Compra() {

@@ -1,7 +1,5 @@
 package implementaciones;
 
-import entidades.Caja;
-import entidades.Cliente;
 import entidades.Gasto;
 import interfaces.IConexionBD;
 import interfaces.IGastosDAO;
@@ -24,27 +22,18 @@ public class GastosDAO implements IGastosDAO {
     }
 
     @Override
-    public int agregar(Gasto gasto) {
-        int idGasto = -1;
+    public boolean agregar(Gasto gasto) {
+        EntityManager em = conexion.crearConexion();
 
         try {
-            EntityManager em = this.conexion.crearConexion();
             em.getTransaction().begin();
-
-            Caja cajaBD = em.find(Caja.class, gasto.getCaja().getId());
-
-            gasto.setCaja(cajaBD);
-
             em.persist(gasto);
-            em.flush();
-
-            idGasto = gasto.getId();
-
             em.getTransaction().commit();
-            return idGasto;
-        } catch (IllegalStateException ise) {
-            System.err.println("No fue posible guardar el gasto");
-            return idGasto;
+            return true;
+
+        } catch (IllegalStateException ex) {
+            System.err.println("No se pudo agregar el gasto");
+            return false;
         }
     }
 
@@ -61,9 +50,9 @@ public class GastosDAO implements IGastosDAO {
             return null;
         }
     }
-
+    
     @Override
-    public List<Gasto> consultarTodas() {
+    public List<Gasto> consultarTodos() {
         List<Gasto> ventas = null;
 
         try {
@@ -87,6 +76,7 @@ public class GastosDAO implements IGastosDAO {
         return ventas;
     }
 
+
     @Override
     public List<Gasto> buscarEntre(Calendar inicio, Calendar fin) {
         List<Gasto> gastos = null;
@@ -108,5 +98,34 @@ public class GastosDAO implements IGastosDAO {
             return null;
         }
     }
+
+    @Override
+    public boolean actualizar(Gasto gasto) {
+        EntityManager em = conexion.crearConexion();
+
+        try {
+            em.getTransaction().begin();
+
+            Gasto gastoBD = em.find(Gasto.class, gasto.getId());
+
+            gastoBD.setFechaGasto(gasto.getFechaGasto());
+            gastoBD.setConcepto(gasto.getConcepto());
+            gastoBD.setCosto(gasto.getCosto());
+            gastoBD.setAutoriza(gasto.getAutoriza());
+
+            em.getTransaction().commit();
+            return true;
+
+        } catch (IllegalStateException ex) {
+            System.err.println("No fue posible actualizar la caja");
+            return false;
+        }}
+
+    @Override
+    public boolean eliminar(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+
 
 }

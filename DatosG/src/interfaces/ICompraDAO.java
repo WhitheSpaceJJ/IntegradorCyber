@@ -1,23 +1,14 @@
 package interfaces;
 
-import entidades.DetalleCompra;
-import entidades.Producto;
+import entidades.Compra;
 import entidades.Proveedor;
 import java.util.Calendar;
 import java.util.List;
 
-public interface ICompraDAO {
+public interface ICompraDAO extends IDAO<Compra>{
 
-    boolean agregar(DetalleCompra entradaAlmacen);
-
-    DetalleCompra consultar(int id);
-
-    List<DetalleCompra> consultarTodos();
+    List<Compra> buscarEntre (Calendar inicio, Calendar fin);
     
-    List<DetalleCompra> buscarEntre (Calendar inicio, Calendar fin);
-    
-    List<DetalleCompra> buscarEntreProveedores (Calendar inicio, Calendar fin, Proveedor proveedor);
-    
-    List<DetalleCompra> buscarEntreProductos (Calendar inicio, Calendar fin, Producto producto);
+    List<Compra> buscarEntreProveedores (Calendar inicio, Calendar fin, Proveedor proveedor);
     
 }

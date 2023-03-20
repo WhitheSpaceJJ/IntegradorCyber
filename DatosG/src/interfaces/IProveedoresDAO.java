@@ -2,18 +2,9 @@
 package interfaces;
 
 import entidades.Proveedor;
-import java.util.List;
 
-public interface IProveedoresDAO {
+
+public interface IProveedoresDAO extends IDAO<Proveedor>{
     
-    boolean agregar(Proveedor proveedor);
-    
-    boolean actualizar(Proveedor proveedor);
-    
-    boolean eliminar(int id);
-    
-    Proveedor consultar(int id);
-    
-    List<Proveedor> consultarTodos();
 
 }

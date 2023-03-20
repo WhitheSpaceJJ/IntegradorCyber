@@ -35,7 +35,7 @@ public class Prueba {
         FachadaDAO fachada = new FachadaDAO();
         List<Usuario> usuarios = new ArrayList<>();
         usuarios.add(new Usuario("Jose", "JoseJesus12$", Rol.VENDEDOR));
-        usuarios.add(new Usuario("Jose2", "JoseJesus123", Rol.VENDEDOR));
+        usuarios.add(new Usuario("Jesus", "JoseJesus123", Rol.VENDEDOR));
 //
         List<Categoria> categorias = new ArrayList<>();
         categorias.add(new Categoria("Libretas"));
@@ -165,11 +165,11 @@ public class Prueba {
 //        fachada.agregarStockProducto(compra.getProducto(), compra.getCantidadComprada());
         System.out.println("Compra agregada yy el stock del producto se ha aumentado");
         System.out.println("Compras");
-        List<DetalleCompra> compras = fachada.consultarTodasEntradasAlmacen();
-        for (int i = 0; i < compras.size(); i++) {
-            DetalleCompra get = compras.get(i);
-            System.out.println(get.toString());
-        }
+      //  List<DetalleCompra> compras = fachada.consultarTodasEntradasAlmacen();
+        //for (int i = 0; i < compras.size(); i++) {
+        //    DetalleCompra get = compras.get(i);
+        //    System.out.println(get.toString());
+       // }
         System.out.println("Productos obtenidos");
         productosO = fachada.consultarTodosProductos();
         for (int i = 0; i < productosO.size(); i++) {
@@ -180,8 +180,7 @@ public class Prueba {
         System.out.println("Venta agregada");
         Venta venta=new Venta(100, Calendar.getInstance(), 400, cliente, caja);
         fachada.agregarVenta(venta);
-        fachada.quitarStockProducto(productosO.get(0), 40);
-        System.out.println("Venta; "+fachada.consultarVentas().toString());
+        System.out.println("Venta; "+fachada.consultarTodasVentas().toString());
         System.out.println("Producto Venta; "+fachada.consultarProducto(1));
        
         DetalleVenta detalleVenta=new DetalleVenta(40, 10, 400, venta, productosO.get(0));
@@ -189,7 +188,7 @@ public class Prueba {
         System.out.println("Ahora a consultar la base pero antes, realizamos un gasto");
         Gasto gasto=new Gasto(Calendar.getInstance(), "nomina empleado", 400, "Jose", caja);
         fachada.agregarGasto(gasto);
-        System.out.println("Gastos, "+fachada.consultarTodas().toString());
+        System.out.println("Gastos, "+fachada.consultarTodos().toString());
         Caja caja2=fachada.consultarCaja(1);
         caja2.setTotalIngresos(venta.getTotalventa());
         caja2.setTotalGastos(gasto.getCosto());

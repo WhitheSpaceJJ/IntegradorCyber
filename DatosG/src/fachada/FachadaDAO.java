@@ -3,9 +3,12 @@ package fachada;
 import entidades.Caja;
 import entidades.Categoria;
 import entidades.Cliente;
+import entidades.Compra;
 import entidades.DetalleCompra;
+import entidades.DetalleMerma;
 import entidades.DetalleVenta;
 import entidades.Gasto;
+import entidades.Merma;
 import entidades.Producto;
 import entidades.Proveedor;
 import entidades.Usuario;
@@ -15,9 +18,12 @@ import interfaces.ICajasDAO;
 import interfaces.ICategoriasDAO;
 import interfaces.IClientesDAO;
 import interfaces.ICompraDAO;
+import interfaces.IDetalleCompraDAO;
+import interfaces.IDetalleMermaDAO;
 import interfaces.IDetalleVentasDAO;
 import interfaces.IFachadaDAO;
 import interfaces.IGastosDAO;
+import interfaces.IMermaDAO;
 import interfaces.IProductosDAO;
 import interfaces.IProveedoresDAO;
 import interfaces.IUsuariosDAO;
@@ -25,7 +31,7 @@ import interfaces.IVentasDAO;
 import java.util.List;
 import java.util.Calendar;
 
-public class FachadaDAO  implements IFachadaDAO{
+public class FachadaDAO implements IFachadaDAO {
 
     private final FabricaDAO fabrica = FabricaDAO.getInstancia();
 
@@ -81,12 +87,22 @@ public class FachadaDAO  implements IFachadaDAO{
 
     //Gastos
     @Override
-    public int agregarGasto(Gasto gasto) {
+    public boolean agregarGasto(Gasto gasto) {
         try {
             IGastosDAO gastosDAO = fabrica.getGastosDAO();
             return gastosDAO.agregar(gasto);
         } catch (Exception e) {
-            return -1;
+            return false;
+        }
+    }
+
+    @Override
+    public boolean actualizarGasto(Gasto gasto) {
+        try {
+            IGastosDAO gastosDAO = fabrica.getGastosDAO();
+            return gastosDAO.actualizar(gasto);
+        } catch (Exception e) {
+            return false;
         }
     }
 
@@ -101,10 +117,10 @@ public class FachadaDAO  implements IFachadaDAO{
     }
 
     @Override
-    public List<Gasto> consultarTodas() {
+    public List<Gasto> consultarTodos() {
         try {
             IGastosDAO gastosDAO = fabrica.getGastosDAO();
-            return gastosDAO.consultarTodas();
+            return gastosDAO.consultarTodos();
         } catch (Exception e) {
             return null;
         }
@@ -293,7 +309,8 @@ public class FachadaDAO  implements IFachadaDAO{
             return null;
         }
     }
-@Override
+
+    @Override
     public Venta consultarVenta(int id) {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
@@ -304,22 +321,22 @@ public class FachadaDAO  implements IFachadaDAO{
     }
 
     @Override
-    public List<Venta> consultarVentas() {
+    public List<Venta> consultarTodasVentas() {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
-            return ventasDAO.consultarTodas();
+            return ventasDAO.consultarTodos();
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public int agregarVenta(Venta venta) {
+    public boolean agregarVenta(Venta venta) {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
             return ventasDAO.agregar(venta);
         } catch (Exception e) {
-            return -1;
+            return false;
         }
     }
 
@@ -334,66 +351,80 @@ public class FachadaDAO  implements IFachadaDAO{
         }
     }
 
-    //compra Detalle
+    //Detalle Compra
     @Override
-    public boolean agregarDetalleCompra(DetalleCompra entradaAlmacen) {
+    public boolean agregarDetalleCompra(DetalleCompra detalleCompra) {
         try {
-            ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
-            return detalleCompraDAO.agregar(entradaAlmacen);
+            IDetalleCompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
+            return detalleCompraDAO.agregar(detalleCompra);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    //Detalle Merma
+    @Override
+    public boolean agregarDetalleMerma(DetalleMerma detalleMerma) {
+        try {
+            IDetalleMermaDAO detalleMermasDAO = fabrica.getDetalleMermaDAO();
+            return detalleMermasDAO.agregar(detalleMerma);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    // Compra
+    @Override
+    public boolean agregarCompra(Compra compra) {
+        try {
+            ICompraDAO comprasDAO = fabrica.getComprasDAO();
+            return comprasDAO.agregar(compra);
         } catch (Exception e) {
             return false;
         }
     }
 
     @Override
-    public DetalleCompra consultarDetalleCompra(int id) {
+    public Compra consultarCompra(int id) {
         try {
-            ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
-            return detalleCompraDAO.consultar(id);
+            ICompraDAO comprasDAO = fabrica.getComprasDAO();
+            return comprasDAO.consultar(id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+        @Override
+    public List<Compra> consultarTodasCompras() {
+        try {
+            ICompraDAO comprasDAO = fabrica.getComprasDAO();
+            return comprasDAO.consultarTodos();
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public List<DetalleCompra> consultarTodasEntradasAlmacen() {
+    public List<Compra> buscarComprasEntreFechas(Calendar inicio, Calendar fin) {
         try {
-            ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
-            return detalleCompraDAO.consultarTodos();
+            ICompraDAO comprasDAO = fabrica.getComprasDAO();
+            return comprasDAO.buscarEntre(inicio, fin);
         } catch (Exception e) {
             return null;
         }
     }
 
     @Override
-    public List<DetalleCompra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin) {
+    public List<Compra> buscarComprasEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor) {
         try {
-            ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
-            return detalleCompraDAO.buscarEntre(inicio, fin);
+            ICompraDAO comprasDAO = fabrica.getComprasDAO();
+            return comprasDAO.buscarEntreProveedores(inicio, fin, proveedor);
         } catch (Exception e) {
             return null;
         }
     }
 
-    @Override
-    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor) {
-        try {
-            ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
-            return detalleCompraDAO.buscarEntreProveedores(inicio, fin, proveedor);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
-    @Override
-    public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto) {
-        try {
-            ICompraDAO detalleCompraDAO = fabrica.getDetalleCompraDAO();
-            return detalleCompraDAO.buscarEntreProductos(inicio, fin, producto);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
 //Producto
     @Override
@@ -431,26 +462,6 @@ public class FachadaDAO  implements IFachadaDAO{
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
             return productosDAO.eliminar(id);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean quitarStockProducto(Producto producto, int stock) {
-        try {
-            IProductosDAO productosDAO = fabrica.getProductosDAO();
-            return productosDAO.quitarStock(producto, stock);
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    @Override
-    public boolean agregarStockProducto(Producto producto, int stock) {
-        try {
-            IProductosDAO productosDAO = fabrica.getProductosDAO();
-            return productosDAO.agregarStock(producto, stock);
         } catch (Exception e) {
             return false;
         }
@@ -522,6 +533,48 @@ public class FachadaDAO  implements IFachadaDAO{
         try {
             IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
             return usuariosDAO.consultarTodos();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+
+    // Merma
+    @Override
+    public boolean agregarMerma(Merma merma) {
+        try {
+            IMermaDAO mermasDAO = fabrica.getMermasDAO();
+            return mermasDAO.agregar(merma);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Merma consultarMerma(int id) {
+        try {
+            IMermaDAO mermasDAO = fabrica.getMermasDAO();
+            return mermasDAO.consultar(id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+        @Override
+    public List<Merma> consultarTodasMermas() {
+        try {
+            IMermaDAO mermasDAO = fabrica.getMermasDAO();
+            return mermasDAO.consultarTodos();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Merma> buscarMermasEntreFechas(Calendar inicio, Calendar fin) {
+        try {
+            IMermaDAO mermasDAO = fabrica.getMermasDAO();
+            return mermasDAO.buscarEntre(inicio, fin);
         } catch (Exception e) {
             return null;
         }

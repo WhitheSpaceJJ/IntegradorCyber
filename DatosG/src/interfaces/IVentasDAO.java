@@ -5,13 +5,8 @@ import entidades.Venta;
 import java.util.Calendar;
 import java.util.List;
 
-public interface IVentasDAO {
+public interface IVentasDAO extends IDAO<Venta>{
 
-    int agregar(Venta venta);
-    
-    Venta consultar(int id);
-    
-    List<Venta> consultarTodas();
     
     List<Venta> buscarEntre(Calendar inicio , Calendar fin);   
     
