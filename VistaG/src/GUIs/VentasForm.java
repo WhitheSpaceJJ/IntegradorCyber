@@ -67,10 +67,12 @@ public class VentasForm extends javax.swing.JFrame {
         }
         clientesC.setModel(model);
     }
-private Caja caja;
+    private Caja caja;
+
     public void establecerCaja(Caja cajaAbierta) {
         cajaTxt.setText("" + cajaAbierta.getId());
         txtOperador.setText("" + cajaAbierta.getUsuario().getNombre());
+        this.caja = cajaAbierta;
     }
 
 //    public void bloquearCampos() {
@@ -93,9 +95,9 @@ private Caja caja;
             numTicket = ventas.size() + 1;
         }
         Calendar fecha = Calendar.getInstance();
-        Float totalVenta=Float.valueOf(txtTotalCobrar.getText());
-                int indiceCliente = clientesC.getSelectedIndex();
-Cliente cliente=clientes.get(indiceCliente);
+        Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
+        int indiceCliente = clientesC.getSelectedIndex();
+        Cliente cliente = clientes.get(indiceCliente);
         Venta venta = new Venta(numTicket, fecha, totalVenta, cliente, detalleV, caja);
 //
 //        ventaT = ventas.get(ventas.size() - 1);
@@ -133,9 +135,12 @@ Cliente cliente=clientes.get(indiceCliente);
 //            detalleVenta.setVenta(venta);
 //            logica.agregarDetalleVenta(detalleVenta);
 //        }
-logica.agregarVenta(venta);
+        boolean ventaAgregada = logica.agregarVenta(venta);
+        if (ventaAgregada) {
+            JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
+            limpiarCampos();
+        }
 //        System.out.println("Se registro la venta");
-        limpiarCampos();
 //        desbloquearCampos();
 
     }

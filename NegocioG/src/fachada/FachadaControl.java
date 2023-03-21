@@ -91,12 +91,12 @@ public class FachadaControl implements IFachadaControl {
     }
 
      @Override
-    public int agregarVenta(Venta venta) {
+    public boolean agregarVenta(Venta venta) {
         try {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
             return ventasDAO.agregar(venta);
         } catch (Exception e) {
-            return -1;
+            return false;
         }
     }
 

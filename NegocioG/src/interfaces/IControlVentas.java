@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IControlVentas {
 
-    int agregar(Venta venta);
+    boolean agregar(Venta venta);
     
     Venta consultar(int id);
     
