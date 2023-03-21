@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package GUIs;
 
 
@@ -23,7 +20,7 @@ public static FrmCobro frmCobro1;
     /**
      * Creates new form FrmCobro
      */
-    private FrmCobro() {
+    public FrmCobro() {
         initComponents();
    this.setLocationRelativeTo(null);
  instanciaVentasForm();

@@ -22,16 +22,15 @@ public class AdmiCategoria extends javax.swing.JFrame {
     private final int COLEDITAR = 2;
     private final int COLELIMINAR = 3;
 
-    /**
-     * Creates new form AdmiClienteForm
-     */
+  
+    
     private IFachadaControl logica;
 
     // Especifica un ID de producto que se está editando.
     private int idCategoria;
     private static AdmiCategoria admiCategoria;
 
-    private AdmiCategoria() {
+    public AdmiCategoria() {
         initComponents();
         // Limita los caracteres de los text fields y deshabilita el poder mover la tabla.
         tblCategorias.getTableHeader().setReorderingAllowed(false);

@@ -11,7 +11,6 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-
 public class GastosDAO implements IGastosDAO {
 
     private final IConexionBD conexion;
@@ -32,32 +31,32 @@ public class GastosDAO implements IGastosDAO {
             return true;
 
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudo agregar el gasto");
+            System.err.println("No fue posible agregar el gasto");
             return false;
         }
     }
 
     @Override
     public Gasto consultar(int id) {
+        EntityManager em = this.conexion.crearConexion();
+
         try {
-            EntityManager em = this.conexion.crearConexion();
 
-            Gasto gasto = em.find(Gasto.class, id);
+            Gasto gastoBD = em.find(Gasto.class, id);
 
-            return gasto;
+            return gastoBD;
         } catch (IllegalStateException ise) {
             System.err.println("No fue posible consultar el gasto");
             return null;
         }
     }
-    
+
     @Override
     public List<Gasto> consultarTodos() {
-        List<Gasto> ventas = null;
+        List<Gasto> gastos = null;
+        EntityManager em = conexion.crearConexion();
 
         try {
-
-            EntityManager em = conexion.crearConexion();
 
             em.getTransaction().begin();
 
@@ -65,33 +64,31 @@ public class GastosDAO implements IGastosDAO {
             CriteriaQuery<Gasto> criteria = builder.createQuery(Gasto.class);
             TypedQuery<Gasto> query = em.createQuery(criteria);
 
-            ventas = query.getResultList();
+            gastos = query.getResultList();
 
             em.getTransaction().commit();
         } catch (IllegalStateException ex) {
-            System.err.println("No se pudieron consultar todos los gastos");
+            System.err.println("No fue posible consultar todos los gastos");
             return null;
         }
 
-        return ventas;
+        return gastos;
     }
-
 
     @Override
     public List<Gasto> buscarEntre(Calendar inicio, Calendar fin) {
-        List<Gasto> gastos = null;
-
+        
         try {
-
+            
             EntityManager em = conexion.crearConexion();
-
+            
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
             String fechaInicio = dateFormat.format(inicio.getTimeInMillis());
 
             String fechaFin = dateFormat.format(fin.getTimeInMillis());
 
-            return em.createQuery(String.format("SELECT v FROM Gasto v WHERE v.fecha >= '%s' AND v.fecha <= '%s'", fechaInicio, fechaFin)).getResultList();
+            return em.createQuery(String.format("SELECT g FROM Gasto g WHERE g.fecha >= '%s' AND g.fecha <= '%s'", fechaInicio, fechaFin)).getResultList();
 
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar los gastos entre las fechas dadas");
@@ -108,7 +105,7 @@ public class GastosDAO implements IGastosDAO {
 
             Gasto gastoBD = em.find(Gasto.class, gasto.getId());
 
-            gastoBD.setFechaGasto(gasto.getFechaGasto());
+            //gastoBD.setFechaGasto(gasto.getFechaGasto());
             gastoBD.setConcepto(gasto.getConcepto());
             gastoBD.setCosto(gasto.getCosto());
             gastoBD.setAutoriza(gasto.getAutoriza());
@@ -119,13 +116,12 @@ public class GastosDAO implements IGastosDAO {
         } catch (IllegalStateException ex) {
             System.err.println("No fue posible actualizar la caja");
             return false;
-        }}
+        }
+    }
 
     @Override
     public boolean eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-
 
 }

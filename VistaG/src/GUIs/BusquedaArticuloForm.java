@@ -9,29 +9,28 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ *
+ * @author Giovanni Garrido
+ */
 public class BusquedaArticuloForm extends javax.swing.JFrame {
 
     private Producto productoSelect = new Producto();
-
+    
     private List<Producto> productosCoinicidentes = new ArrayList<>();
     private IFachadaControl logica = new FachadaControl();
     private VentasForm ventasFrm = null;
-private static BusquedaArticuloForm busquedaArticuloForm;
+
     /**
      * Creates new form AdmiClienteForm
      */
-    private BusquedaArticuloForm() {
+    public BusquedaArticuloForm(VentasForm frmVentas) {
         initComponents();
         vaciarCampos();
-        instanciaVentasForm(VentasForm.instanciaFrmVentas());
+        instanciaVentasForm(frmVentas);
         llenarCBoxCategorias();
     }
-   public static BusquedaArticuloForm getInstance(){
-   if(busquedaArticuloForm==null){
-       busquedaArticuloForm=new BusquedaArticuloForm();
-   }
-   return busquedaArticuloForm;
-   }
+
     /**
      *
      * Modelo para el combobox de categorias
@@ -65,8 +64,7 @@ private static BusquedaArticuloForm busquedaArticuloForm;
         categoriasC = new javax.swing.JComboBox<>();
         lblRectangulo4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Busqueda Articulos");
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -179,9 +177,9 @@ private static BusquedaArticuloForm busquedaArticuloForm;
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here
         productosCoinicidentes.clear();
-        if (txtArticulo.getText().equals("")) {
+        if(txtArticulo.getText().equals("")){
             buscarCoincidenciasCategoria();
-        } else {
+        }else{
             buscarCoincidenciasNombre(txtArticulo.getText());
         }
         vaciarCampos();
@@ -236,39 +234,41 @@ private static BusquedaArticuloForm busquedaArticuloForm;
         productosCoinicidentes = logica.buscarProductosPorNombre(busqueda);
         if (!productosCoinicidentes.isEmpty()) {
             for (int i = 0; i < productosCoinicidentes.size(); i++) {
-                if (!((productosCoinicidentes.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase()))) {
+                if(!((productosCoinicidentes.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase()))){
                     productosCoinicidentes.remove(i);
                 }
             }
-            if (!productosCoinicidentes.isEmpty()) {
+            if(!productosCoinicidentes.isEmpty()){
                 cargarCoincidencias();
-            } else {
+            }
+            else{
                 JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
             }
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
 
     }
-
+    
     /**
      * Metodo que busca las coincidencias dependiendo de lo
      */
     public void buscarCoincidenciasCategoria() {
-        List<Producto> todosPro = logica.consultarTodosProductos();
+        List <Producto> todosPro = logica.consultarTodosProductos();
         if (!todosPro.isEmpty()) {
             for (int i = 0; i < todosPro.size(); i++) {
-                if ((todosPro.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase())) {
+                if((todosPro.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase())){
                     productosCoinicidentes.add(todosPro.get(i));
                 }
             }
-            if (!productosCoinicidentes.isEmpty()) {
+            if(!productosCoinicidentes.isEmpty()){
                 cargarCoincidencias();
-            } else {
+            }
+            else{
                 JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
             }
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }

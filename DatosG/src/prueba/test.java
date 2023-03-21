@@ -3,7 +3,9 @@ package prueba;
 
 import conexion.ConexionBD;
 import entidades.Categoria;
+import entidades.Producto;
 import implementaciones.CategoriasDAO;
+import implementaciones.ProductosDAO;
 import interfaces.IConexionBD;
 
 /**
@@ -19,12 +21,19 @@ public class test {
 
         IConexionBD conexion = new ConexionBD();
         
-        Categoria categoria = new Categoria("Dulces");
+        //Categoria categoria = new Categoria("Papeleria");
         
         CategoriasDAO categoriasDAO = new CategoriasDAO(conexion);
         
-        categoriasDAO.agregar(categoria);
+        Categoria categoria = categoriasDAO.consultar(5);
         
+        ProductosDAO productosDAO = new ProductosDAO(conexion);
+        
+        //Producto producto = new Producto("Maza", "Dulce de cacahuate", "De la Rosa", 23, 100, 10, 6, categoria);
+        Producto producto = productosDAO.consultar(1);
+        
+        producto.setCategoria(categoria);
+        productosDAO.actualizar(producto);
     }
     
 }

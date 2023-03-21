@@ -18,7 +18,11 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class VentasForm extends javax.swing.JFrame {
+/**
+ *
+ * @author Giovanni Garrido
+ */
+public class VentasForm extends javax.swing.JPanel {
 
     private DefaultComboBoxModel listaClientes;
     List<Producto> productos = new ArrayList<>();
@@ -104,9 +108,6 @@ public class VentasForm extends javax.swing.JFrame {
         txtTotalCobrar = new javax.swing.JTextField();
         clientesC = new javax.swing.JComboBox<>();
         txtCaja = new javax.swing.JLabel();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Ventas");
 
         tblVenta.setBackground(new java.awt.Color(255, 255, 255));
         tblVenta.setPreferredSize(new java.awt.Dimension(1000, 750));
@@ -313,8 +314,8 @@ public class VentasForm extends javax.swing.JFrame {
         txtCaja.setText("Caja");
         tblVenta.add(txtCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1115, Short.MAX_VALUE)
@@ -502,7 +503,7 @@ public class VentasForm extends javax.swing.JFrame {
 
     public static FrmCobro instanciaFrmCobro() {
         if (frmCobro == null) {
-            frmCobro =FrmCobro.getInstance();
+            frmCobro = new FrmCobro();
         }
         return frmCobro;
     }
@@ -516,6 +517,9 @@ public class VentasForm extends javax.swing.JFrame {
 
     public void mostrarFormulario() {
         instanciaFrmVentas();
+        PrincipalForm principal = new PrincipalForm();
+
+        principal.mostrarPanel(frmVentas);
 
     }
 
@@ -565,7 +569,7 @@ public class VentasForm extends javax.swing.JFrame {
         txtCategoria.setText(productoCargado.getCategoria().getNombre());
         txtDisponibilidad.setText(productoCargado.getStock() + "");
         txtImporte.setText(productoCargado.getPrecio() + "");
-        txtTotalProducto.setText(productoCargado.getPrecio() + "");
+        txtTotalProducto.setText(productoCargado.getCosto()+ "");
     }
     
     public void cargarTabla() {
@@ -585,7 +589,7 @@ public class VentasForm extends javax.swing.JFrame {
     
     public BusquedaArticuloForm instanciaFrmBusArt() {
         if (frmBusArt == null) {
-            frmBusArt =BusquedaArticuloForm.getInstance();
+            frmBusArt = new BusquedaArticuloForm(this);
         }
         return frmBusArt;
     }
