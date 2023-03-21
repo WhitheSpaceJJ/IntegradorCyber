@@ -321,10 +321,7 @@ private       List<Cliente> clientes;
         tbClientes.setBackground(new java.awt.Color(204, 204, 255));
         tbClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "RFC", "Email", "Teléfono", "Editar", "Eliminar"

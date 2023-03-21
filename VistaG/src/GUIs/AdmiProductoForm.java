@@ -24,9 +24,9 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
     private AdmiProductoForm() {
         initComponents();
         this.logica = new FachadaControl();
-        llenarTabla();
-                initBotonesTabla();
         llenarCategorias();
+        llenarTabla();
+        initBotonesTabla();
         jTableProductos.getTableHeader().setReorderingAllowed(false);
         jTextFieldNombre.setDocument(new JTextFieldLimit(100));
         jTextFieldDescripcion.setDocument(new JTextFieldLimit(200));
@@ -230,7 +230,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         String marca = jTextFieldMarca.getText();
         long codigo = Long.parseLong(jTextFieldCodigo.getText());
         Producto producto = new Producto(nombre, descripcion, marca, codigo, Float.parseFloat(stock), Float.parseFloat(precioVenta), Float.parseFloat(precioCompra), categoria);
-      producto.setId(idProducto);
+        producto.setId(idProducto);
         boolean seActualizo = logica.actualizarProducto(producto);
         if (seActualizo) {
             JOptionPane.showMessageDialog(this, "Se actualizó el producto", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -241,28 +241,29 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No fue posible actualizar el producto", "Información", JOptionPane.ERROR_MESSAGE);
         }
     }
-private    List<Producto> productos;
+    private List<Producto> productos;
+
     //Bien
     private void llenarTabla() {
-productos = this.logica.consultarTodosProductos();
-if(productos!=null ){
-    DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProductos.getModel();
-        this.jTableProductos.setRowHeight(30);
-        modeloTabla.setRowCount(0);
-        productos.forEach((var usuario) -> {
-            Object[] fila = new Object[8];
-            fila[0] = usuario.getId();
-            fila[1] = usuario.getNombre();
-            fila[2] = usuario.getMarca();
-            fila[3] = usuario.getDescripcion();
-            fila[4] = usuario.getCodigo();
-            fila[5] = usuario.getCosto();
-            fila[6] = usuario.getPrecio();
-            fila[7] = usuario.getStock();
-            modeloTabla.addRow(fila);
-        });
-}
-    
+        productos = this.logica.consultarTodosProductos();
+        if (productos != null) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProductos.getModel();
+            this.jTableProductos.setRowHeight(30);
+            modeloTabla.setRowCount(0);
+            productos.forEach((var usuario) -> {
+                Object[] fila = new Object[8];
+                fila[0] = usuario.getId();
+                fila[1] = usuario.getNombre();
+                fila[2] = usuario.getMarca();
+                fila[3] = usuario.getDescripcion();
+                fila[4] = usuario.getCodigo();
+                fila[5] = usuario.getCosto();
+                fila[6] = usuario.getPrecio();
+                fila[7] = usuario.getStock();
+                modeloTabla.addRow(fila);
+            });
+        }
+
     }
     private final IFachadaControl logica;
 
@@ -386,10 +387,7 @@ if(productos!=null ){
         jTableProductos.setBackground(new java.awt.Color(204, 204, 255));
         jTableProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Marca", "Descripción", "Codigo", "Precio Compra", "Precio Venta", "Stock", "Editar", "Eliminar"
@@ -399,7 +397,7 @@ if(productos!=null ){
                 java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true, true, true
+                false, false, false, false, false, false, false, false, true, true
             };
 
             public Class getColumnClass(int columnIndex) {

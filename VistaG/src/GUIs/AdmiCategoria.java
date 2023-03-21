@@ -240,10 +240,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
         tblCategorias.setBackground(new java.awt.Color(204, 204, 255));
         tblCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Editar", "Eliminar"

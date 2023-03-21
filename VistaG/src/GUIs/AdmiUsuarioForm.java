@@ -310,10 +310,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         tblUsuarios.setBackground(new java.awt.Color(204, 204, 255));
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+
             },
             new String [] {
                 "ID", "Nombre", "Password", "Rol", "Editar", "Eliminar"

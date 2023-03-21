@@ -100,9 +100,8 @@ public class CategoriasDAO implements ICategoriasDAO {
     @Override
     public List<Categoria> consultarTodos() {
         List<Categoria> categorias = null;
-        EntityManager em = conexion.crearConexion();
-
         try {
+            EntityManager em = conexion.crearConexion();
 
             em.getTransaction().begin();
 

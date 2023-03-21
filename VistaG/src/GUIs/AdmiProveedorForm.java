@@ -217,7 +217,7 @@ public class AdmiProveedorForm extends javax.swing.JFrame {
 private  List<Proveedor> proveedores ;
     private void llenarTabla() {
      proveedores = logica.consultarTodosProveedores();
-      if(proveedores!=null || !proveedores.isEmpty()){
+      if(proveedores!=null ){
            DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProveedores.getModel();
         this.jTableProveedores.setRowHeight(30);
         modeloTabla.setRowCount(0);
