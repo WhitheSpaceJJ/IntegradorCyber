@@ -27,7 +27,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     private final int COLEDITAR = 4;
     private final int COLELIMINAR = 5;
 
-  private  IFachadaControl logica;
+    private IFachadaControl logica;
 
     // Especifica un ID de usuario que se está editando.
     private int idUsuario;
@@ -54,21 +54,25 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         }
         return admiUsuarioForm;
     }
- 
-private         List<Usuario> usuarios;
+
+    private List<Usuario> usuarios;
+
     private void llenarTabla() {
- usuarios = new ArrayList<>();
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblUsuarios.getModel();
-        this.tblUsuarios.setRowHeight(30);
-        modeloTabla.setRowCount(0);
-        usuarios.forEach(usuario -> {
-            Object[] fila = new Object[4];
-            fila[0] = usuario.getId();
-            fila[1] = usuario.getNombre();
-            fila[2] = usuario.getPassword();
-            fila[3] = usuario.getRol();
-            modeloTabla.addRow(fila);
-        });
+        usuarios = logica.consultarTodosUsuarios();
+        if (usuarios != null || !usuarios.isEmpty()) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tblUsuarios.getModel();
+            this.tblUsuarios.setRowHeight(30);
+            modeloTabla.setRowCount(0);
+            usuarios.forEach(usuario -> {
+                Object[] fila = new Object[4];
+                fila[0] = usuario.getId();
+                fila[1] = usuario.getNombre();
+                fila[2] = usuario.getPassword();
+                fila[3] = usuario.getRol();
+                modeloTabla.addRow(fila);
+            });
+        }
+
     }
 
     private void limpiarId() {
@@ -220,6 +224,7 @@ private         List<Usuario> usuarios;
             JOptionPane.showMessageDialog(this, "No fue posible actualizar al usuario", "Información", JOptionPane.ERROR_MESSAGE);
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -361,7 +366,6 @@ private         List<Usuario> usuarios;
 
         cmbRoles.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TECNICO", "ADMINISTRADOR", "VENDEDOR" }));
-        cmbRoles.setSelectedIndex(-1);
         cmbRoles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbRolesActionPerformed(evt);
@@ -406,7 +410,7 @@ private         List<Usuario> usuarios;
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-           setVisible(false);
+        setVisible(false);
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
@@ -434,7 +438,5 @@ private         List<Usuario> usuarios;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtPassword;
     // End of variables declaration//GEN-END:variables
-
-  
 
 }

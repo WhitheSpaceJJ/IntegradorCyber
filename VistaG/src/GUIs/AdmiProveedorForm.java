@@ -214,10 +214,11 @@ public class AdmiProveedorForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No fue posible actualizar el proveedor", "Información", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+private  List<Proveedor> proveedores ;
     private void llenarTabla() {
-        List<Proveedor> proveedores = logica.consultarTodosProveedores();
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProveedores.getModel();
+     proveedores = logica.consultarTodosProveedores();
+      if(proveedores!=null || !proveedores.isEmpty()){
+           DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProveedores.getModel();
         this.jTableProveedores.setRowHeight(30);
         modeloTabla.setRowCount(0);
         proveedores.forEach(proveedor -> {
@@ -231,6 +232,8 @@ public class AdmiProveedorForm extends javax.swing.JFrame {
             fila[6] = proveedor.getContacto();
             modeloTabla.addRow(fila);
         });
+      } 
+    
     }
     private final IFachadaControl logica;
 

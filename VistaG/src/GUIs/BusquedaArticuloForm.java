@@ -12,7 +12,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class BusquedaArticuloForm extends javax.swing.JFrame {
 
-
     private List<Producto> productosCoinicidentes;
     private IFachadaControl logica;
     private static BusquedaArticuloForm busquedaArticuloForm;
@@ -263,17 +262,20 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     }
 
     public void cargarCoincidencias() {
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
-        modeloTabla.setRowCount(0);
-        productosCoinicidentes.forEach(producto -> {
-            Object[] fila = new Object[5];
-            fila[0] = producto.getNombre();
-            fila[1] = producto.getDescripcion();
-            fila[2] = producto.getPrecio();
-            fila[3] = producto.getStock();
-            fila[4] = producto.getCategoria().getNombre();
-            modeloTabla.addRow(fila);
-        });
+        if (productosCoinicidentes != null || !productosCoinicidentes.isEmpty()) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
+            modeloTabla.setRowCount(0);
+            productosCoinicidentes.forEach(producto -> {
+                Object[] fila = new Object[5];
+                fila[0] = producto.getNombre();
+                fila[1] = producto.getDescripcion();
+                fila[2] = producto.getPrecio();
+                fila[3] = producto.getStock();
+                fila[4] = producto.getCategoria().getNombre();
+                modeloTabla.addRow(fila);
+            });
+        }
+
     }
 
     public void vaciarCampos() {

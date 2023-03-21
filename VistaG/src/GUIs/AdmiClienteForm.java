@@ -202,10 +202,11 @@ public class AdmiClienteForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No fue posible actualizar el cliente", "Información", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+private       List<Cliente> clientes;
     //Bien
     private void llenarTabla() {
-        List<Cliente> clientes = this.logica.consultarTodosClientes();
+  clientes = this.logica.consultarTodosClientes();
+  if(clientes!=null || !clientes.isEmpty()){
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tbClientes.getModel();
         this.tbClientes.setRowHeight(30);
         modeloTabla.setRowCount(0);
@@ -218,6 +219,8 @@ public class AdmiClienteForm extends javax.swing.JFrame {
             fila[4] = cliente.getTelefono();
             modeloTabla.addRow(fila);
         });
+  }
+      
     }
     private final IFachadaControl logica;
 

@@ -24,8 +24,8 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
     private AdmiProductoForm() {
         initComponents();
         this.logica = new FachadaControl();
-        initBotonesTabla();
         llenarTabla();
+                initBotonesTabla();
         llenarCategorias();
         jTableProductos.getTableHeader().setReorderingAllowed(false);
         jTextFieldNombre.setDocument(new JTextFieldLimit(100));
@@ -241,12 +241,12 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No fue posible actualizar el producto", "Información", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+private    List<Producto> productos;
     //Bien
     private void llenarTabla() {
-
-        List<Producto> productos = this.logica.consultarTodosProductos();
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProductos.getModel();
+productos = this.logica.consultarTodosProductos();
+if(productos!=null || !productos.isEmpty()){
+    DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProductos.getModel();
         this.jTableProductos.setRowHeight(30);
         modeloTabla.setRowCount(0);
         productos.forEach((var usuario) -> {
@@ -261,6 +261,8 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
             fila[7] = usuario.getStock();
             modeloTabla.addRow(fila);
         });
+}
+    
     }
     private final IFachadaControl logica;
 

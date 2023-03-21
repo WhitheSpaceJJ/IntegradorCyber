@@ -160,7 +160,8 @@ public class AdmiCategoria extends javax.swing.JFrame {
     //Bien
     private void llenarTabla() {
         categorias = this.logica.consultarTodasCategorias();
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
+        if(categorias!=null || !categorias.isEmpty()){
+              DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
         this.tblCategorias.setRowHeight(30);
         modeloTabla.setRowCount(0);
         categorias.forEach(categoria -> {
@@ -169,6 +170,8 @@ public class AdmiCategoria extends javax.swing.JFrame {
             fila[1] = categoria.getNombre();
             modeloTabla.addRow(fila);
         });
+        }
+      
     }
 
     private void limpiarFormulario() {
