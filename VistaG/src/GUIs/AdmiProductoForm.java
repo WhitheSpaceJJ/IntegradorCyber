@@ -250,16 +250,16 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
             DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProductos.getModel();
             this.jTableProductos.setRowHeight(30);
             modeloTabla.setRowCount(0);
-            productos.forEach((var usuario) -> {
+            productos.forEach(producto -> {
                 Object[] fila = new Object[8];
-                fila[0] = usuario.getId();
-                fila[1] = usuario.getNombre();
-                fila[2] = usuario.getMarca();
-                fila[3] = usuario.getDescripcion();
-                fila[4] = usuario.getCodigo();
-                fila[5] = usuario.getCosto();
-                fila[6] = usuario.getPrecio();
-                fila[7] = usuario.getStock();
+                fila[0] = producto.getId();
+                fila[1] = producto.getNombre();
+                fila[2] = producto.getMarca();
+                fila[3] = producto.getDescripcion();
+                fila[4] = producto.getCodigo();
+                fila[5] = producto.getCosto();
+                fila[6] = producto.getPrecio();
+                fila[7] = producto.getStock();
                 modeloTabla.addRow(fila);
             });
         }
@@ -273,7 +273,8 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jTextFieldPrecioCompra.setText("");
         jTextFieldPrecioVenta.setText("");
         jTextFieldStock.setText("");
-
+jTextFieldCodigo.setText("");
+jTextFieldMarca.setText("");
         limpiarId();
         jTextFieldNombre.setEditable(true);
     }
