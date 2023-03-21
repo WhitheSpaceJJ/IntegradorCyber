@@ -202,6 +202,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         if (indice != -1) {
             vaciarCampos();
             VentasForm.getInstance().agregarArtBuscado(productosCoinicidentes.get(indice));
+                    setVisible(false);
             dispose();
             VentasForm.getInstance().setVisible(true);
         } else {
@@ -256,7 +257,10 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         }
 
     }
-
+   public void resetBusquedas(){
+     DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
+            modeloTabla.setRowCount(0);
+   }
     public void cargarCoincidencias() {
         if (productosCoinicidentes != null ) {
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();

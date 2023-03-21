@@ -44,7 +44,7 @@ public class VentasForm extends javax.swing.JFrame {
         this.txtDisponibilidad.setEditable(false);
         this.txtDescripcion.setEditable(false);
         this.txtTotalCobrar.setEditable(false);
-    this.txtFecha.setEditable(false);
+        this.txtFecha.setEditable(false);
         this.txtNumTicket.setEditable(false);
         this.txtOperador.setEditable(false);
         this.cajaTxt.setEditable(false);
@@ -67,66 +67,76 @@ public class VentasForm extends javax.swing.JFrame {
         }
         clientesC.setModel(model);
     }
-
-    public void establecerCaja(Caja caja) {
-        cajaTxt.setText("" + caja.getId());
-        txtOperador.setText(""+caja.getUsuario().getNombre());
+private Caja caja;
+    public void establecerCaja(Caja cajaAbierta) {
+        cajaTxt.setText("" + cajaAbierta.getId());
+        txtOperador.setText("" + cajaAbierta.getUsuario().getNombre());
     }
 
-    public void bloquearCampos() {
-
-        btnCobrar.setEnabled(false);
-        clientesC.setEnabled(false);
-        btnAgregar.setEnabled(false);
-        btnBuscarProducto.setEnabled(false);
-        btnQuitar.setEnabled(false);
-    }
+//    public void bloquearCampos() {
 //
-
+//        btnCobrar.setEnabled(false);
+//        clientesC.setEnabled(false);
+//        btnAgregar.setEnabled(false);
+//        btnBuscarProducto.setEnabled(false);
+//        btnQuitar.setEnabled(false);
+//    }
+//
     public void registrarVenta() {
-
-        Venta venta = new Venta();
-        Venta ventaT = new Venta();
+//
+//      Venta venta=new Venta(numTicket, fecha, totalVenta, cliente, detalleV, caja)
         List<Venta> ventas = logica.consultarVentas();
-
-        ventaT = ventas.get(ventas.size() - 1);
-        String fecha = frmVentas.txtFecha.getText();
-        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-        Calendar fechaCalendar = Calendar.getInstance();
-
-        try {
-            fechaCalendar.setTime(formatoFecha.parse(fecha));
-        } catch (ParseException e) {
-            e.printStackTrace();
+        int numTicket;
+        if (ventas == null) {
+            numTicket = 0;
+        } else {
+            numTicket = ventas.size() + 1;
         }
-
-        //cliente= (Cliente) clientesC.getSelectedItem();
-        Cliente c = new Cliente();
-        Integer id = 1;
-        c.setId(id);
-        c.setRfc("HSHGDGS6A77");
-        c.setNombre("Jose");
-
-        Calendar fechaActual = Calendar.getInstance();
-        Caja caja = new Caja();
-        caja = logica.consultarCaja(1);
-
-        venta.setNumTicket(ventaT.getNumTicket() + 1);
-        venta.setFecha(fechaActual);
-        venta.setTotalventa(Float.parseFloat(txtTotalCobrar.getText()));
-        venta.setCliente(c);
-        venta.setCaja(caja);
-        logica.agregarVenta(venta);
-        for (int i = 0; i < detalleV.size(); i++) {
-            DetalleVenta detalleVenta = new DetalleVenta();
-            detalleVenta = detalleV.get(i);
-            detalleV.remove(i);
-            detalleVenta.setVenta(venta);
-            logica.agregarDetalleVenta(detalleVenta);
-        }
-        System.out.println("Se registro la venta");
+        Calendar fecha = Calendar.getInstance();
+        Float totalVenta=Float.valueOf(txtTotalCobrar.getText());
+                int indiceCliente = clientesC.getSelectedIndex();
+Cliente cliente=clientes.get(indiceCliente);
+        Venta venta = new Venta(numTicket, fecha, totalVenta, cliente, detalleV, caja);
+//
+//        ventaT = ventas.get(ventas.size() - 1);
+//        String fecha = frmVentas.txtFecha.getText();
+//        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+//        Calendar fechaCalendar = Calendar.getInstance();
+//
+//        try {
+//            fechaCalendar.setTime(formatoFecha.parse(fecha));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+////        //cliente= (Cliente) clientesC.getSelectedItem();
+////        Cliente c = new Cliente();
+////        Integer id = 1;
+////        c.setId(id);
+////        c.setRfc("HSHGDGS6A77");
+////        c.setNombre("Jose");
+//        Calendar fechaActual = Calendar.getInstance();
+//        Caja caja = new Caja();
+//        caja = logica.consultarCaja(1);
+//
+//        venta.setNumTicket(ventaT.getNumTicket() + 1);
+//        venta.setFecha(fechaActual);
+//        venta.setTotalventa(Float.parseFloat(txtTotalCobrar.getText()));
+//        int indiceCliente = clientesC.getSelectedIndex();
+//        venta.setCliente(clientes.get(indiceCliente));
+//        venta.setCaja(caja);
+//        logica.agregarVenta(venta);
+//        for (int i = 0; i < detalleV.size(); i++) {
+//            DetalleVenta detalleVenta = new DetalleVenta();
+//            detalleVenta = detalleV.get(i);
+//            detalleV.remove(i);
+//            detalleVenta.setVenta(venta);
+//            logica.agregarDetalleVenta(detalleVenta);
+//        }
+logica.agregarVenta(venta);
+//        System.out.println("Se registro la venta");
         limpiarCampos();
-        desbloquearCampos();
+//        desbloquearCampos();
 
     }
 
@@ -141,17 +151,17 @@ public class VentasForm extends javax.swing.JFrame {
 
         this.txtFecha.setText(fechaFormateada);
     }
-
-    public void desbloquearCampos() {
+//
+//    public void desbloquearCampos() {
 //        instanciaFrmVentas();
-
-        frmVentas.btnCobrar.setEnabled(true);
-        frmVentas.clientesC.setEnabled(true);
-        frmVentas.btnAgregar.setEnabled(true);
-        frmVentas.btnBuscarProducto.setEnabled(true);
-        frmVentas.btnQuitar.setEnabled(true);
-
-    }
+//
+//        frmVentas.btnCobrar.setEnabled(true);
+//        frmVentas.clientesC.setEnabled(true);
+//        frmVentas.btnAgregar.setEnabled(true);
+//        frmVentas.btnBuscarProducto.setEnabled(true);
+//        frmVentas.btnQuitar.setEnabled(true);
+//
+//    }
 
     public void limpiarCampos() {
         txtCantidad.setText("");
@@ -162,9 +172,6 @@ public class VentasForm extends javax.swing.JFrame {
         txtImporte.setText("");
         txtObservaciones.setText("");
         txtTotalProducto.setText("");
-        txtNumTicket.setText("");
-        txtOperador.setText("");
-
     }
 
     public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
@@ -211,13 +218,15 @@ public class VentasForm extends javax.swing.JFrame {
             return null;
         }
     }
+    private Producto articuloBuscado;
 
     //Bien
     public void agregarArtBuscado(Producto productoS) {
-        productos.add(productoS);
-        if (!productos.isEmpty()) {
-            cargarCampos(productoS);
-        }
+        articuloBuscado = productoS;
+//        productos.add(productoS);
+//        if (!productos.isEmpty()) {
+        cargarCampos(articuloBuscado);
+//        }
     }
 
     public void cargarCampos(Producto productoCargado) {
@@ -246,9 +255,13 @@ public class VentasForm extends javax.swing.JFrame {
     }
 
     private void actualizarPrecioTotal() {
-        precio = precio + (Float.parseFloat(txtTotalProducto.getText()) * Integer.parseInt(txtCantidad.getText()));
+        float suma = 0;
+        for (int i = 0; i < detalleV.size(); i++) {
+            DetalleVenta get = detalleV.get(i);
+            suma = suma + get.getImporte();
+        }
+        precio = suma;
         txtTotalCobrar.setText(precio + "");
-        System.out.println(precio);
     }
 
     /**
@@ -412,6 +425,11 @@ public class VentasForm extends javax.swing.JFrame {
         tblVenta.add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 205, 180, -1));
 
         txtCantidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCantidadActionPerformed(evt);
+            }
+        });
         txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtCantidadKeyReleased(evt);
@@ -482,7 +500,7 @@ public class VentasForm extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, false
+                false, false, true, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -502,6 +520,11 @@ public class VentasForm extends javax.swing.JFrame {
         tblVenta.add(lblRectangulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 900, 180));
 
         txtTotalCobrar.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTotalCobrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalCobrarActionPerformed(evt);
+            }
+        });
         tblVenta.add(txtTotalCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 635, 150, -1));
 
         clientesC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -556,9 +579,9 @@ public class VentasForm extends javax.swing.JFrame {
         } else {
             try {
                 int idProducto = Integer.parseInt(txtCodigoArticulo.getText());
-                Producto productoBuscado = logica.consultarProducto(idProducto);
-                if (productoBuscado != null) {
-                    cargarCampos(productoBuscado);
+                articuloBuscado = logica.consultarProducto(idProducto);
+                if (articuloBuscado != null) {
+                    cargarCampos(articuloBuscado);
                 } else {
                     JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
                 }
@@ -575,7 +598,7 @@ public class VentasForm extends javax.swing.JFrame {
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
 //        instanciaFrmVentas();
-        bloquearCampos();
+//        bloquearCampos();
         registrarVenta();
     }//GEN-LAST:event_btnCobrarActionPerformed
 
@@ -598,24 +621,30 @@ public class VentasForm extends javax.swing.JFrame {
         if (validarDatos()) {
             return;
         }
-        Producto productoAgregar = agregarProducto();
+        Producto productoAgregar = articuloBuscado;
         DetalleVenta dv = new DetalleVenta();
         dv.setCantidad(Integer.parseInt(txtCantidad.getText()));
         dv.setImporte(Float.parseFloat(txtTotalProducto.getText()));
         dv.setPrecioVendido(Float.parseFloat(txtImporte.getText()));
         dv.setProducto(productoAgregar);
         detalleV.add(dv);
-        System.out.println(detalleV.get(0).getProducto().toString());
         actualizarPrecioTotal();
         cargarTabla();
         limpiarCampos();
+        articuloBuscado = null;
+        BusquedaArticuloForm.getInstance().resetBusquedas();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
-        Producto productoQuitar = getProductoSeleccionado();
-        detalleV.remove(productoQuitar);
-        cargarTabla();
-        actualizarPrecioTotal();
+        int indice = tblProductos.getSelectedRow();
+        if (indice != -1) {
+            detalleV.remove(indice);
+            cargarTabla();
+            actualizarPrecioTotal();
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecciona un artículo, para eliminarlo der la lista", "Eliminacion articulo", JOptionPane.ERROR_MESSAGE);
+        }
+
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void txtCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyReleased
@@ -632,6 +661,14 @@ public class VentasForm extends javax.swing.JFrame {
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCantidadActionPerformed
+
+    private void txtTotalCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalCobrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalCobrarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -135,7 +135,7 @@ public class FrmCobro extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         cerrarFormulario();
-        ventasFrm.desbloquearCampos();
+//        ventasFrm.desbloquearCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     public void mostrarFormulario() {
