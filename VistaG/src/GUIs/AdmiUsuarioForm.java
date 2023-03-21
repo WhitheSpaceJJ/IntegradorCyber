@@ -64,7 +64,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        spdH = new javax.swing.JPanel();
+        pnlUsuarios = new javax.swing.JPanel();
         lblusuarios = new javax.swing.JLabel();
         spdV = new javax.swing.JSeparator();
         lblRegistros = new javax.swing.JLabel();
@@ -85,7 +85,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         setTitle("Administracion Usuario");
         setResizable(false);
 
-        spdH.setPreferredSize(new java.awt.Dimension(1100, 650));
+        pnlUsuarios.setPreferredSize(new java.awt.Dimension(1100, 650));
 
         lblusuarios.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lblusuarios.setText("USUARIOS");
@@ -165,83 +165,83 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout spdHLayout = new javax.swing.GroupLayout(spdH);
-        spdH.setLayout(spdHLayout);
-        spdHLayout.setHorizontalGroup(
-            spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(spdHLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlUsuariosLayout = new javax.swing.GroupLayout(pnlUsuarios);
+        pnlUsuarios.setLayout(pnlUsuariosLayout);
+        pnlUsuariosLayout.setHorizontalGroup(
+            pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUsuariosLayout.createSequentialGroup()
                 .addGap(470, 470, 470)
                 .addComponent(lblusuarios)
                 .addGap(0, 450, Short.MAX_VALUE))
-            .addGroup(spdHLayout.createSequentialGroup()
-                .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(spdHLayout.createSequentialGroup()
+            .addGroup(pnlUsuariosLayout.createSequentialGroup()
+                .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
                         .addGap(161, 161, 161)
                         .addComponent(lblRegistrar))
-                    .addGroup(spdHLayout.createSequentialGroup()
+                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
                         .addGap(23, 23, 23)
-                        .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5)
                             .addComponent(lblNombre))
                         .addGap(30, 30, 30)
-                        .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
                             .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                            .addGroup(spdHLayout.createSequentialGroup()
+                            .addGroup(pnlUsuariosLayout.createSequentialGroup()
                                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(cmbRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, spdHLayout.createSequentialGroup()
+                .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlUsuariosLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblRegistros)
                         .addGap(248, 248, 248))
-                    .addGroup(spdHLayout.createSequentialGroup()
+                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(spdV)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, spdHLayout.createSequentialGroup()
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlUsuariosLayout.createSequentialGroup()
                                 .addComponent(spnlTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
                                 .addContainerGap())))))
         );
-        spdHLayout.setVerticalGroup(
-            spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(spdHLayout.createSequentialGroup()
+        pnlUsuariosLayout.setVerticalGroup(
+            pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlUsuariosLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lblusuarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(spdV, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblRegistrar)
                     .addComponent(lblRegistros))
-                .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(spdHLayout.createSequentialGroup()
+                .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
                         .addGap(37, 37, 37)
-                        .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNombre)
                             .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(63, 63, 63)
-                        .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
                             .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(66, 66, 66)
-                        .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
                             .addComponent(cmbRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(77, 77, 77)
-                        .addGroup(spdHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnCancelar)
                             .addComponent(btnGuardar)))
-                    .addGroup(spdHLayout.createSequentialGroup()
+                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(spnlTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, spdHLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlUsuariosLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -253,12 +253,12 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(spdH, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spdH, 627, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pnlUsuarios, 627, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -296,7 +296,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblRegistrar;
     private javax.swing.JLabel lblRegistros;
     private javax.swing.JLabel lblusuarios;
-    private javax.swing.JPanel spdH;
+    private javax.swing.JPanel pnlUsuarios;
     private javax.swing.JSeparator spdV;
     private javax.swing.JScrollPane spnlTablaUsuarios;
     private javax.swing.JTable tblUsuarios;
@@ -357,7 +357,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
                     //Evita que se modifique el nombre del usuario al editarse.
                     txtNombre.setEditable(false);
                 } else {
-                    eliminar();
+                    eliminar(idUsuario);
                 }
             }
         };
@@ -390,33 +390,20 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     }
 
     //TODO implementar metodo para proteger datos relacionados MUY IMPORTANTE
-    private void eliminar() {
+    private void eliminar(int idUsuario) {
 
-        //Establece que por defecto que se seleccionó la opción "NO".
-        int opcionSeleccionada = -1;
+        int opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar al usuario seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (opcionSeleccionada == JOptionPane.YES_OPTION) {
+            boolean seElimino = logica.eliminarUsuario(idUsuario);
 
-        opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar al usuario seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
-        if (opcionSeleccionada != JOptionPane.YES_OPTION) {
-            return;
+            if (seElimino) {
+                JOptionPane.showMessageDialog(this, "Se eliminó al usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
+                this.llenarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "No fue posible eliminar al usuario", "Información", JOptionPane.ERROR_MESSAGE);
+            }
+            limpiarId();
         }
-
-        opcionSeleccionada = JOptionPane.showConfirmDialog(this, "Eliminar esta usuario eliminará también las ventas en las que se encuentre\n ¿Está seguro que desea eliminar la categoria?", "Confirmación", JOptionPane.YES_NO_OPTION);
-
-        if (opcionSeleccionada != JOptionPane.YES_OPTION) {
-            return;
-        }
-
-        boolean seElimino = logica.eliminarUsuario(idUsuario);
-
-        if (seElimino) {
-            JOptionPane.showMessageDialog(this, "Se eliminó al usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
-            this.llenarTabla();
-        } else {
-            JOptionPane.showMessageDialog(this, "No fue posible eliminar al usuario", "Información", JOptionPane.ERROR_MESSAGE);
-        }
-
-        limpiarId();
     }
 
     private void guardar() {

@@ -31,7 +31,7 @@ return this.fachadaDAO.actualizarProveedor(proveedor);
     @Override
     public boolean eliminar(int id) {
 
-      return this.fachadaDAO.eliminarProducto(id);
+      return this.fachadaDAO.eliminarProveedor(id);
     }
 
     @Override

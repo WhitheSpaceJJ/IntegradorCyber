@@ -36,7 +36,6 @@ public class PrincipalForm extends javax.swing.JFrame {
 
         pnlPrincipal = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
         MenuCaja = new javax.swing.JMenu();
         menuCajaNuevoTicket = new javax.swing.JMenuItem();
         menuCajaAbrirCaja = new javax.swing.JMenuItem();
@@ -52,9 +51,6 @@ public class PrincipalForm extends javax.swing.JFrame {
 
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(1000, 750));
         pnlPrincipal.setLayout(new java.awt.CardLayout());
-
-        jMenu1.setText("File");
-        jMenuBar1.add(jMenu1);
 
         MenuCaja.setText("Caja");
 
@@ -85,12 +81,27 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdmin.add(MenuAdminCategoria);
 
         MenuAdminClientes.setText("Clientes");
+        MenuAdminClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminClientesActionPerformed(evt);
+            }
+        });
         MenuAdmin.add(MenuAdminClientes);
 
         MenuAdminProductos.setText("Productos");
+        MenuAdminProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProductosActionPerformed(evt);
+            }
+        });
         MenuAdmin.add(MenuAdminProductos);
 
         MenuAdminProveedores.setText("Proveedores");
+        MenuAdminProveedores.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProveedoresActionPerformed(evt);
+            }
+        });
         MenuAdmin.add(MenuAdminProveedores);
 
         MenuAdminUsuario.setText("Usuario");
@@ -147,16 +158,44 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCajaNuevoTicketActionPerformed
 
     private void MenuAdminUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuarioActionPerformed
-        // TODO add your handling code here:
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiUsuarioForm.getInstance().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_MenuAdminUsuarioActionPerformed
 
     private void MenuAdminCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaActionPerformed
                 java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdmiCategoria().setVisible(true);
+                AdmiCategoria.getInstance().setVisible(true);
             }
         });
     }//GEN-LAST:event_MenuAdminCategoriaActionPerformed
+
+    private void MenuAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiProductoForm.getInstance().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_MenuAdminProductosActionPerformed
+
+    private void MenuAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiClienteForm.getInstance().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_MenuAdminClientesActionPerformed
+
+    private void MenuAdminProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiProveedorForm.getInstance().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_MenuAdminProveedoresActionPerformed
 
     /**
      * @param args the command line arguments
@@ -222,7 +261,6 @@ public class PrincipalForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuAdminProveedores;
     private javax.swing.JMenuItem MenuAdminUsuario;
     private javax.swing.JMenu MenuCaja;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem menuCajaAbrirCaja;
     private javax.swing.JMenuItem menuCajaCierreCaja;

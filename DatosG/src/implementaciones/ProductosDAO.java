@@ -117,6 +117,7 @@ public class ProductosDAO implements IProductosDAO{
             
         }catch(IllegalStateException ise){
             System.err.println("No se pudo consultar los productos por nombre");
+            ise.printStackTrace();
             return null;
         }
                 
@@ -124,22 +125,27 @@ public class ProductosDAO implements IProductosDAO{
 
     @Override
     public List<Producto> consultarTodos() {
+        
+        List<Producto> productos = null;
 
         try{
             EntityManager em = this.conexion.crearConexion();
-            
+            em.getTransaction().begin();
             CriteriaBuilder builder = em.getCriteriaBuilder();
             
             CriteriaQuery<Producto> criteria = builder.createQuery(Producto.class);
             
             TypedQuery<Producto>query = em.createQuery(criteria);
             
-            return query.getResultList();
+            productos = query.getResultList();
+            
+            em.getTransaction().commit();
         }catch(IllegalStateException ise){
             System.err.println("No se pudierón consultar los Productos");
             return null;
         }
+        
+        return productos;
 
-    
     } 
 }

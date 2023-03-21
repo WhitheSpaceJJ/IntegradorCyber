@@ -1,7 +1,25 @@
-
 package GUIs;
 
+import GUIs.utils.JButtonCellEditor;
+import GUIs.utils.JButtonRenderer;
+import GUIs.utils.JTextFieldLimit;
+import entidades.Cliente;
+import fachada.FachadaControl;
+import interfaces.IFachadaControl;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+
 public class AdmiClienteForm extends javax.swing.JFrame {
+
+    private final int COLEDITAR = 5;
+    private final int COLELIMINAR = 6;
+    private int idCliente;
+    private final IFachadaControl logica;
 
     private static AdmiClienteForm admiClienteForm;
 
@@ -10,6 +28,15 @@ public class AdmiClienteForm extends javax.swing.JFrame {
      */
     private AdmiClienteForm() {
         initComponents();
+        this.logica = new FachadaControl();
+        llenarTabla();
+        initBotonesTabla();
+        tblClientes.getTableHeader().setReorderingAllowed(false);
+        txtNombre.setDocument(new JTextFieldLimit(45));
+        txtEmail.setDocument(new JTextFieldLimit(100));
+        txtTelefono.setDocument(new JTextFieldLimit(15));
+        txtRFC.setDocument(new JTextFieldLimit(13));
+
     }
 
     public static AdmiClienteForm getInstance() {
@@ -29,23 +56,23 @@ public class AdmiClienteForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        lblClientes = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        lblRegistros = new javax.swing.JLabel();
+        lblResgistrar = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblRFC = new javax.swing.JLabel();
+        lblEmail = new javax.swing.JLabel();
+        lblTelefono = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        txtRFC = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        pnlTablaClientes = new javax.swing.JScrollPane();
+        tblClientes = new javax.swing.JTable();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administracion Clientes");
@@ -53,36 +80,36 @@ public class AdmiClienteForm extends javax.swing.JFrame {
 
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 650));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("CLIENTES");
+        lblClientes.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        lblClientes.setText("CLIENTES");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("REGISTROS");
+        lblRegistros.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblRegistros.setText("REGISTROS");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel3.setText("REGISTRAR");
+        lblResgistrar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        lblResgistrar.setText("REGISTRAR");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel4.setText("Nombre");
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNombre.setText("Nombre");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel5.setText("RFC");
+        lblRFC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblRFC.setText("RFC");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel6.setText("Email");
+        lblEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblEmail.setText("Email");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel7.setText("Telefono");
+        lblTelefono.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblTelefono.setText("Telefono");
 
-        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jTextField2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtRFC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jTextField3.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtEmail.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jTextField4.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTelefono.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -108,13 +135,23 @@ public class AdmiClienteForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        pnlTablaClientes.setViewportView(tblClientes);
 
-        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton1.setText("Guardar");
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
-        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jButton2.setText("Cancelar");
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -122,83 +159,83 @@ public class AdmiClienteForm extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(470, 470, 470)
-                .addComponent(jLabel1)
+                .addComponent(lblClientes)
                 .addGap(0, 470, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(161, 161, 161)
-                        .addComponent(jLabel3))
+                        .addComponent(lblResgistrar))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel4))
+                            .addComponent(lblTelefono)
+                            .addComponent(lblEmail)
+                            .addComponent(lblRFC)
+                            .addComponent(lblNombre))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2)
+                        .addComponent(lblRegistros)
                         .addGap(248, 248, 248))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jSeparator1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
+                                .addComponent(pnlTablaClientes, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
                                 .addContainerGap())))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(jLabel1)
+                .addComponent(lblClientes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
+                    .addComponent(lblResgistrar)
+                    .addComponent(lblRegistros))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(37, 37, 37)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblNombre)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(59, 59, 59)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(lblRFC)
+                                    .addComponent(txtRFC, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(66, 66, 66)
-                                .addComponent(jLabel6)))
+                                .addComponent(lblEmail)))
                         .addGap(57, 57, 57)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblTelefono)
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(48, 48, 48)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)))
+                            .addComponent(btnGuardar)
+                            .addComponent(btnCancelar)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlTablaClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(23, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -224,25 +261,217 @@ public class AdmiClienteForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        this.guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        this.limpiarFormulario();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel lblClientes;
+    private javax.swing.JLabel lblEmail;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblRFC;
+    private javax.swing.JLabel lblRegistros;
+    private javax.swing.JLabel lblResgistrar;
+    private javax.swing.JLabel lblTelefono;
+    private javax.swing.JScrollPane pnlTablaClientes;
+    private javax.swing.JTable tblClientes;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtRFC;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
+    private void llenarTabla() {
+        List<Cliente> clientes = this.logica.consultarTodosClientes();
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblClientes.getModel();
+        modeloTabla.setRowCount(0);
+        clientes.forEach(cliente -> {
+            Object[] fila = new Object[7];
+            fila[0] = cliente.getId();
+            fila[1] = cliente.getNombre();
+            fila[2] = cliente.getRfc();
+            fila[3] = cliente.getEmail();
+            fila[4] = cliente.getTelefono();
+            fila[5] = "Editar";
+            fila[6] = "Eliminar";
+            modeloTabla.addRow(fila);
+        });
+    }
+
+    private void initBotonesTabla() {
+        ActionListener onEditarClickListener = (ActionEvent e) -> {
+            idCliente = (int) tblClientes.getValueAt(tblClientes.getSelectedRow(), 0);
+            llenarFormulario(logica.consultarCliente(idCliente));
+
+        };
+
+        ActionListener onEliminarListener = (ActionEvent e) -> {
+            idCliente = (int) tblClientes.getValueAt(tblClientes.getSelectedRow(), 0);
+            eliminar(idCliente);
+        };
+
+        int indiceColumnaEditar = COLEDITAR;
+
+        TableColumnModel modeloColumnas = this.tblClientes.getColumnModel();
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellRenderer(new JButtonRenderer("Editar"));
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
+
+        indiceColumnaEditar = COLELIMINAR;
+
+        modeloColumnas = this.tblClientes.getColumnModel();
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellRenderer(new JButtonRenderer("Eliminar"));
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellEditor(new JButtonCellEditor(new JTextField(), onEliminarListener));
+    }
+
+    private void llenarFormulario(Cliente cliente) {
+        txtNombre.setText(cliente.getNombre());
+        txtTelefono.setText(cliente.getTelefono());
+        txtEmail.setText(cliente.getEmail());
+        txtRFC.setText(cliente.getRfc());
+    }
+
+    private void eliminar(int idEliminar) {
+        //Establece que por defecto que se seleccionó la opción "NO".
+        int opcionSeleccionada = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el cliente seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
+
+        if (opcionSeleccionada == JOptionPane.YES_OPTION) {
+            boolean seElimino = logica.eliminarCliente(idEliminar);
+            if (seElimino) {
+                JOptionPane.showMessageDialog(null, "Se eliminó el cliente", "Información", JOptionPane.INFORMATION_MESSAGE);
+                this.llenarTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "No fue posible eliminar al cliente", "Información", JOptionPane.ERROR_MESSAGE);
+            }
+            limpiarId();
+        }
+    }
+
+    private void limpiarId() {
+        idCliente = 0;
+    }
+    
+        public boolean validarDatos() {
+
+     if (!txtNombre.getText().matches("^([A-Za-z]+\\s?)+$")) {
+         JOptionPane.showMessageDialog(null, "El nombre solo puede contener letras mayúsculas y minúsculas, incluyendo espacios entre nombres");
+         return true;
+        }
+
+        if (!txtRFC.getText().matches("[A-Z]{4}\\d{6}[A-Z0-9]{3}")) {
+            JOptionPane.showMessageDialog(null, "El RFC tiene un formato invalido");
+
+            return true;
+        }
+        if (!txtEmail.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(null, "El correo tiene un formato invalido");
+            return true;
+        }
+        if (!txtTelefono.getText().matches("\\d{10}")) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero de 10 digitos, no ingrese caracteres extraños");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validarCamposLlenos() {
+
+        if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre del cliente");
+            return false;
+        }
+        if (txtEmail.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el email del cliente");
+            return false;
+        }
+        if (txtRFC.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el RFC del cliente");
+            return false;
+        }
+        if (txtTelefono.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el telefono del cliente");
+            return false;
+        }
+        return true;
+    }
+
+    private void guardar() {
+        if (validarCamposLlenos()) {
+            if (idCliente == 0) {
+                agregar();
+            } else {
+                actualizar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void agregar() {
+
+        if (validarDatos()) {
+            return;
+        }
+        String nombre = txtNombre.getText();
+        String rfc = txtRFC.getText();
+        String email = txtEmail.getText();
+        String telefono = txtTelefono.getText();
+        Cliente cliente = new Cliente(idCliente, nombre, rfc, email, telefono);
+
+        boolean seAgrego = logica.agregarCliente(cliente);
+
+        if (seAgrego) {
+            JOptionPane.showMessageDialog(this, "Se agregó el nuevo cliente", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.limpiarFormulario();
+            this.llenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible agregar el cliente", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void actualizar() {
+        if (validarDatos()) {
+            return;
+        }
+        String nombre = txtNombre.getText();
+        String rfc = txtRFC.getText();
+        String email = txtEmail.getText();
+        String telefono = txtTelefono.getText();
+        Cliente cliente = new Cliente(idCliente, nombre, rfc, email, telefono);
+        boolean seActualizo = logica.actualizarCliente(cliente);
+        if (seActualizo) {
+            JOptionPane.showMessageDialog(this, "Se actualizó el cliente", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.limpiarFormulario();
+            this.llenarTabla();
+            limpiarId();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible actualizar el cliente", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void limpiarFormulario() {
+        txtNombre.setText("");
+        txtEmail.setText("");
+        txtTelefono.setText("");
+        txtRFC.setText("");
+        limpiarId();
+        txtNombre.setEditable(true);
+    }
 }
