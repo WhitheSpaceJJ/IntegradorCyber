@@ -105,6 +105,12 @@ public class AbrirCajaForm extends javax.swing.JFrame {
             }
         });
         jPanel1.add(txtSaldoInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 140, 30));
+
+        txtFecha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtFechaActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 260, 30));
 
         btnCancelar.setBackground(new java.awt.Color(0, 0, 255));
@@ -190,6 +196,10 @@ public class AbrirCajaForm extends javax.swing.JFrame {
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtFechaActionPerformed
     private List<Usuario> usuarios;
 
     private void llenarCBoxUsuarios() {

@@ -37,13 +37,14 @@ public class VentasForm extends javax.swing.JFrame {
         this.detalleV = new ArrayList<>();
         this.precio = (float) 0.00;
         llenarCBoxClientes();
-//        llenarCampos();
+        llenarCampos();
         txtCategoria.setEditable(false);
         this.txtImporte.setEditable(false);
         this.txtTotalProducto.setEditable(false);
         this.txtDisponibilidad.setEditable(false);
         this.txtDescripcion.setEditable(false);
         this.txtTotalCobrar.setEditable(false);
+    this.txtFecha.setEditable(false);
         this.txtNumTicket.setEditable(false);
         this.txtOperador.setEditable(false);
         this.cajaTxt.setEditable(false);
@@ -69,7 +70,7 @@ public class VentasForm extends javax.swing.JFrame {
 
     public void establecerCaja(Caja caja) {
         cajaTxt.setText("" + caja.getId());
-        txtOperador.setText(caja.getUsuario().getNombre());
+        txtOperador.setText(""+caja.getUsuario().getNombre());
     }
 
     public void bloquearCampos() {
