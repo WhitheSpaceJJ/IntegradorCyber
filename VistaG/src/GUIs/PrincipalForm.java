@@ -48,7 +48,7 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdminProveedores = new javax.swing.JMenuItem();
         MenuAdminUsuario = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administración");
 
         pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));

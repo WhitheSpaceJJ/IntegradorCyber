@@ -55,11 +55,9 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         return admiUsuarioForm;
     }
  
-
+private         List<Usuario> usuarios;
     private void llenarTabla() {
-        List<Usuario> usuarios = new ArrayList<>();
-        usuarios.add(new Usuario("Jose", "JoseJesus12$", Rol.VENDEDOR));
-        usuarios.add(new Usuario("Jose2", "JoseJesus123", Rol.VENDEDOR));
+ usuarios = new ArrayList<>();
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblUsuarios.getModel();
         this.tblUsuarios.setRowHeight(30);
         modeloTabla.setRowCount(0);

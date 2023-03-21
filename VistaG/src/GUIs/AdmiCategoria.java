@@ -155,10 +155,11 @@ public class AdmiCategoria extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No fue posible actualizar la categoria", "Información", JOptionPane.ERROR_MESSAGE);
         }
     }
+    private List<Categoria> categorias;
 
     //Bien
     private void llenarTabla() {
-        List<Categoria> categorias = this.logica.consultarTodasCategorias();
+        categorias = this.logica.consultarTodasCategorias();
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
         this.tblCategorias.setRowHeight(30);
         modeloTabla.setRowCount(0);
@@ -319,7 +320,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-          setVisible(false);
+        setVisible(false);
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
@@ -340,7 +341,5 @@ public class AdmiCategoria extends javax.swing.JFrame {
     private javax.swing.JTable tblCategorias;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
-
-   
 
 }
