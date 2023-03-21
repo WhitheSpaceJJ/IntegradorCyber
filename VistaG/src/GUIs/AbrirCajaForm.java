@@ -11,25 +11,22 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class AbrirCajaForm extends javax.swing.JFrame {
 
-    public static AbrirCajaForm abrirCaja = null;
-    VentasForm ventasForm = null;
-    IFachadaControl logica = new FachadaControl();
+    private static AbrirCajaForm abrirCaja;
+    private IFachadaControl logica;
 
-    /**
-     * Creates new form AbrirCaja
-     */
-    public AbrirCajaForm() {
+    private AbrirCajaForm() {
         initComponents();
-
+        txtFecha.setEditable(false);
+        this.logica = new FachadaControl();
         llenarCampos();
         llenarCBoxUsuarios();
     }
 
     public void mostrarFormulario() {
-        instanciaAbrirCaja();
         abrirCaja.setLocationRelativeTo(null);
         abrirCaja.setVisible(true);
 
@@ -37,6 +34,7 @@ public class AbrirCajaForm extends javax.swing.JFrame {
 
     public void cerrarCajaForm() {
         abrirCaja.dispose();
+        PrincipalForm.getInstance().setVisible(true);
     }
 
     public static AbrirCajaForm instanciaAbrirCaja() {
@@ -71,26 +69,33 @@ public class AbrirCajaForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        lblRectangulo4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administración Caja");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel2.setText("Apertura de caja");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, -1, -1));
+        jLabel2.setText("APERTURA DE CAJA");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, -1, -1));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Operador:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("Fecha:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, -1));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel4.setText("Saldo Inicial:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
@@ -102,23 +107,31 @@ public class AbrirCajaForm extends javax.swing.JFrame {
         jPanel1.add(txtSaldoInicial, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 140, 30));
         jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 260, 30));
 
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnCancelar.setBackground(new java.awt.Color(0, 0, 255));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, new java.awt.Color(0, 153, 255), java.awt.Color.white, java.awt.Color.white));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, 110, 40));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 330, 120, 40));
 
-        btnAbrir1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAbrir1.setBackground(new java.awt.Color(0, 0, 255));
+        btnAbrir1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnAbrir1.setForeground(new java.awt.Color(255, 255, 255));
+        btnAbrir1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/abrir.png"))); // NOI18N
         btnAbrir1.setText("Abrir");
+        btnAbrir1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, new java.awt.Color(0, 153, 255), java.awt.Color.white, java.awt.Color.white));
         btnAbrir1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAbrir1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAbrir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 320, 110, 40));
+        jPanel1.add(btnAbrir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 120, 40));
 
         jPanel1.add(comboBoxUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 260, 30));
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, -1, -1));
@@ -127,6 +140,10 @@ public class AbrirCajaForm extends javax.swing.JFrame {
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 240, 80, 50));
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 300, 80, 50));
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, 150, 30));
+
+        lblRectangulo4.setBackground(new java.awt.Color(204, 204, 255));
+        lblRectangulo4.setOpaque(true);
+        jPanel1.add(lblRectangulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 500, 220));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -144,28 +161,22 @@ public class AbrirCajaForm extends javax.swing.JFrame {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpiarCampos();
-        abrirCaja.dispose();
+        cerrarCajaForm();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnAbrir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAbrir1ActionPerformed
-        //   ventasForm=ventasForm.instanciaFrmVentas();
-        ventasForm = new VentasForm();
+        if (validarDatos()) {
+            return;
+        }
         Caja c = new Caja();
         c.setEstado(Estado.ABIERTA);
         c.setFechaApertura(Calendar.getInstance());
         c.setSaldoInicial(Float.parseFloat(this.txtSaldoInicial.getText()));
-        String usuarioSeleccionado = comboBoxUsuarios.getSelectedItem().toString();
-        String[] partes = usuarioSeleccionado.split(",");
-        c.setUsuario(logica.consultarUsuario(Integer.parseInt(partes[0])));
-
+        int seleccionado = comboBoxUsuarios.getSelectedIndex();
+        c.setUsuario(usuarios.get(seleccionado));
         if (logica.consultarCajaAbierta() == null) {
-
             logica.agregarCaja(c);
-            ventasForm.setCaja(logica.consultarCajaAbierta());
             this.cerrarCajaForm();
-            //ventasForm.instanciaFrmVentas();
-            ventasForm.mostrarFormulario();
-            ventasForm.setCaja(c);
         }
     }//GEN-LAST:event_btnAbrir1ActionPerformed
 
@@ -173,23 +184,28 @@ public class AbrirCajaForm extends javax.swing.JFrame {
         numeroDecimal(evt);
     }//GEN-LAST:event_txtSaldoInicialKeyTyped
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+           setVisible(false);
+        dispose();
+        PrincipalForm.getInstance().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+    private List<Usuario> usuarios;
+
     private void llenarCBoxUsuarios() {
-
-        List<Usuario> usuarios = new ArrayList<Usuario>();
-        usuarios = logica.consultarTodosUsuarios();
-        //  System.out.println("Usuario ID"+usuarios.get(0).getId());
-        Object[] objetos = usuarios.toArray();
-        comboBoxUsuarios.setModel(new DefaultComboBoxModel(objetos));
-
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        this.usuarios = logica.consultarTodosUsuarios();
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario get = usuarios.get(i);
+            model.addElement("Nombre; " + get.getNombre() + ", Rol; " + get.getRol());
+        }
+        comboBoxUsuarios.setModel(model);
     }
 
     public void llenarCampos() {
         Calendar fechaC = Calendar.getInstance();
-
         Date fecha = fechaC.getTime();
-
         SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-
         String fechaFormateada = formatoFecha.format(fecha);
         this.txtFecha.setText(fechaFormateada);
     }
@@ -197,12 +213,19 @@ public class AbrirCajaForm extends javax.swing.JFrame {
     public void limpiarCampos() {
         abrirCaja.txtSaldoInicial.setText("");
         comboBoxUsuarios.setSelectedIndex(0);
+    }
 
+    public boolean validarDatos() {
+        String regexFloat = "\\d+(\\.\\d+)?";
+        if (!txtSaldoInicial.getText().matches(regexFloat) || Float.parseFloat(txtSaldoInicial.getText()) <= 0 || Float.parseFloat(txtSaldoInicial.getText()) > 999999999) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero mayor a 0 y no mayor a 9999999910");
+            return true;
+        }
+        return false;
     }
 
     public void numeroDecimal(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
-
         if (Character.isDigit(car) || car == '.') {
 
         } else {
@@ -227,6 +250,7 @@ public class AbrirCajaForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblRectangulo4;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtSaldoInicial;
     // End of variables declaration//GEN-END:variables

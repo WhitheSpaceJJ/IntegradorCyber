@@ -11,6 +11,7 @@ import interfaces.IFachadaControl;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,7 +27,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     private final int COLEDITAR = 4;
     private final int COLELIMINAR = 5;
 
-    IFachadaControl logica;
+  private  IFachadaControl logica;
 
     // Especifica un ID de usuario que se está editando.
     private int idUsuario;
@@ -38,7 +39,6 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         initComponents();
         logica = new FachadaControl();
         llenarTabla();
-        llenarComboRoles();
         initBotonesTabla();
 
         // Limita los caracteres de los text fields y deshabilita el poder mover la tabla.
@@ -54,7 +54,174 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         }
         return admiUsuarioForm;
     }
+ 
 
+    private void llenarTabla() {
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(new Usuario("Jose", "JoseJesus12$", Rol.VENDEDOR));
+        usuarios.add(new Usuario("Jose2", "JoseJesus123", Rol.VENDEDOR));
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblUsuarios.getModel();
+        this.tblUsuarios.setRowHeight(30);
+        modeloTabla.setRowCount(0);
+        usuarios.forEach(usuario -> {
+            Object[] fila = new Object[4];
+            fila[0] = usuario.getId();
+            fila[1] = usuario.getNombre();
+            fila[2] = usuario.getPassword();
+            fila[3] = usuario.getRol();
+            modeloTabla.addRow(fila);
+        });
+    }
+
+    private void limpiarId() {
+        idUsuario = 0;
+    }
+
+    private void limpiarFormulario() {
+        txtNombre.setText("");
+        txtPassword.setText("");
+        cmbRoles.setSelectedIndex(0);
+        limpiarId();
+        txtNombre.setEditable(true);
+    }
+
+    private void initBotonesTabla() {
+        ActionListener onEditarClickListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                idUsuario = (int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0);
+                llenarFormulario(logica.consultarUsuario(idUsuario));
+                txtNombre.setEditable(false);
+            }
+        };
+        ActionListener onEliminarClickListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                idUsuario = (int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0);
+                eliminar(idUsuario);
+            }
+        };
+
+        int indiceColumnaEditar = COLEDITAR;
+
+        TableColumnModel modeloColumnas = this.tblUsuarios.getColumnModel();
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellRenderer(new JButtonRenderer("Editar"));
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
+
+        indiceColumnaEditar = COLELIMINAR;
+
+        modeloColumnas = this.tblUsuarios.getColumnModel();
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellRenderer(new JButtonRenderer("Eliminar"));
+
+        modeloColumnas.getColumn(indiceColumnaEditar)
+                .setCellEditor(new JButtonCellEditor(new JTextField(), onEliminarClickListener));
+    }
+
+    private void llenarFormulario(Usuario usuario) {
+        txtNombre.setText(usuario.getNombre());
+        txtPassword.setText(usuario.getPassword());
+        cmbRoles.setSelectedItem(usuario.getRol().toString());
+    }
+
+    private void eliminar(int idUsuario) {
+
+        int opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar al usuario seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (opcionSeleccionada == JOptionPane.YES_OPTION) {
+            boolean seElimino = logica.eliminarUsuario(idUsuario);
+
+            if (seElimino) {
+                JOptionPane.showMessageDialog(this, "Se eliminó al usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
+                this.llenarTabla();
+            } else {
+                JOptionPane.showMessageDialog(this, "No fue posible eliminar al usuario", "Información", JOptionPane.ERROR_MESSAGE);
+            }
+            limpiarId();
+        }
+    }
+
+    private void guardar() {
+        if (validarCamposLlenos()) {
+            if (idUsuario == 0) {
+                agregar();
+            } else {
+                actualizar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private boolean validarCamposLlenos() {
+        if (txtNombre.getText().isEmpty()) {
+            return false;
+        }
+        if (txtPassword.getText().isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private void agregar() {
+        if (validarFormulario() == false) {
+            return;
+        }
+        String nombre = this.txtNombre.getText();
+        String password = this.txtPassword.getText();
+        Rol rol = Rol.valueOf(cmbRoles.getItemAt(cmbRoles.getSelectedIndex()));
+        Usuario usuario = new Usuario(nombre, password, rol);
+        boolean seAgregoProdcuto = logica.agregarUsuario(usuario);
+        if (seAgregoProdcuto) {
+            JOptionPane.showMessageDialog(this, "Se agregó el nuevo usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.limpiarFormulario();
+            this.llenarTabla();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private boolean validarFormulario() {
+        String mensajeError = "";
+        mensajeError = (validarSoloLetras(txtNombre.getText())) ? mensajeError : mensajeError + "El nombre debe contener solo letras\n";
+        mensajeError = (txtPassword.getText().length() >= 8) ? mensajeError : mensajeError + "El password debe de ser de mínimo 8 caracteres";
+        if ("".equals(mensajeError)) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, mensajeError, "Información", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+    }
+
+    private boolean validarSoloLetras(String string) {
+        Pattern pattern = Pattern.compile("[\\d\\p{Punct}]");
+        Matcher matcher = pattern.matcher(string);
+        return !matcher.find();
+    }
+
+    private void actualizar() {
+        if (validarFormulario() == false) {
+            return;
+        }
+        String nombre = this.txtNombre.getText();
+        String password = this.txtPassword.getText();
+        Rol rol = Rol.valueOf(cmbRoles.getSelectedItem().toString());
+        Usuario usuario = new Usuario(idUsuario, nombre, password, rol);
+        boolean seActualizo = logica.actualizarUsuario(usuario);
+        if (seActualizo) {
+            JOptionPane.showMessageDialog(this, "Se actualizó al usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
+            this.limpiarFormulario();
+            this.llenarTabla();
+            limpiarId();
+        } else {
+            JOptionPane.showMessageDialog(this, "No fue posible actualizar al usuario", "Información", JOptionPane.ERROR_MESSAGE);
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +231,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnlUsuarios = new javax.swing.JPanel();
+        spdH = new javax.swing.JPanel();
         lblusuarios = new javax.swing.JLabel();
         spdV = new javax.swing.JSeparator();
         lblRegistros = new javax.swing.JLabel();
@@ -80,32 +247,48 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         cmbRoles = new javax.swing.JComboBox<>();
+        lblRectangulo4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administracion Usuario");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
-        pnlUsuarios.setPreferredSize(new java.awt.Dimension(1100, 650));
+        spdH.setBackground(new java.awt.Color(255, 255, 255));
+        spdH.setPreferredSize(new java.awt.Dimension(1100, 650));
+        spdH.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblusuarios.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lblusuarios.setText("USUARIOS");
+        spdH.add(lblusuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, -1));
+        spdH.add(spdV, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 80, 1120, 10));
 
         lblRegistros.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblRegistros.setText("REGISTROS");
+        spdH.add(lblRegistros, new org.netbeans.lib.awtextra.AbsoluteConstraints(724, 114, -1, -1));
 
         lblRegistrar.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         lblRegistrar.setText("REGISTRAR");
+        spdH.add(lblRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(161, 114, -1, -1));
 
-        lblNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNombre.setText("Nombre");
+        spdH.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Password");
+        spdH.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("ROL");
+        spdH.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
         txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        spdH.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 300, -1));
 
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtPassword.addActionListener(new java.awt.event.ActionListener() {
@@ -113,7 +296,15 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
                 txtPasswordActionPerformed(evt);
             }
         });
+        spdH.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 300, -1));
 
+        jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
+        spdH.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 80, 10, 540));
+
+        spnlTablaUsuarios.setBackground(new java.awt.Color(204, 204, 255));
+        spnlTablaUsuarios.setBorder(null);
+
+        tblUsuarios.setBackground(new java.awt.Color(204, 204, 255));
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null},
@@ -142,123 +333,57 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         });
         spnlTablaUsuarios.setViewportView(tblUsuarios);
 
-        btnGuardar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        spdH.add(spnlTablaUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 160, 649, 440));
+
+        btnGuardar.setBackground(new java.awt.Color(0, 0, 255));
+        btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png"))); // NOI18N
         btnGuardar.setText("Guardar");
+        btnGuardar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, new java.awt.Color(0, 153, 255), java.awt.Color.white, java.awt.Color.white));
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
+        spdH.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 470, 150, -1));
 
-        btnCancelar.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        btnCancelar.setBackground(new java.awt.Color(0, 0, 255));
+        btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.white, new java.awt.Color(0, 153, 255), java.awt.Color.white, java.awt.Color.white));
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
+        spdH.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 470, 150, -1));
 
         cmbRoles.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cmbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "TECNICO", "ADMINISTRADOR", "VENDEDOR" }));
+        cmbRoles.setSelectedIndex(-1);
         cmbRoles.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbRolesActionPerformed(evt);
             }
         });
+        spdH.add(cmbRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 300, -1));
 
-        javax.swing.GroupLayout pnlUsuariosLayout = new javax.swing.GroupLayout(pnlUsuarios);
-        pnlUsuarios.setLayout(pnlUsuariosLayout);
-        pnlUsuariosLayout.setHorizontalGroup(
-            pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                .addGap(470, 470, 470)
-                .addComponent(lblusuarios)
-                .addGap(0, 450, Short.MAX_VALUE))
-            .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                        .addGap(161, 161, 161)
-                        .addComponent(lblRegistrar))
-                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(lblNombre))
-                        .addGap(30, 30, 30)
-                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                            .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cmbRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlUsuariosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblRegistros)
-                        .addGap(248, 248, 248))
-                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(spdV)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlUsuariosLayout.createSequentialGroup()
-                                .addComponent(spnlTablaUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, 649, Short.MAX_VALUE)
-                                .addContainerGap())))))
-        );
-        pnlUsuariosLayout.setVerticalGroup(
-            pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblusuarios)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(spdV, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblRegistrar)
-                    .addComponent(lblRegistros))
-                .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNombre)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(63, 63, 63)
-                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(66, 66, 66)
-                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(cmbRoles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(77, 77, 77)
-                        .addGroup(pnlUsuariosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCancelar)
-                            .addComponent(btnGuardar)))
-                    .addGroup(pnlUsuariosLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(spnlTablaUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(23, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlUsuariosLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 552, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        lblRectangulo4.setBackground(new java.awt.Color(204, 204, 255));
+        lblRectangulo4.setOpaque(true);
+        spdH.add(lblRectangulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 420, 280));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlUsuarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(spdH, javax.swing.GroupLayout.DEFAULT_SIZE, 1115, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlUsuarios, 627, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(spdH, javax.swing.GroupLayout.Alignment.TRAILING, 627, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -281,6 +406,13 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         this.limpiarFormulario();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+           setVisible(false);
+        dispose();
+        PrincipalForm.getInstance().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -293,10 +425,11 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblRectangulo4;
     private javax.swing.JLabel lblRegistrar;
     private javax.swing.JLabel lblRegistros;
     private javax.swing.JLabel lblusuarios;
-    private javax.swing.JPanel pnlUsuarios;
+    private javax.swing.JPanel spdH;
     private javax.swing.JSeparator spdV;
     private javax.swing.JScrollPane spnlTablaUsuarios;
     private javax.swing.JTable tblUsuarios;
@@ -304,199 +437,6 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtPassword;
     // End of variables declaration//GEN-END:variables
 
-    private void llenarComboRoles() {
-        cmbRoles.addItem("");
-        for (Rol rol : Rol.values()) {
-            cmbRoles.addItem(rol.toString());
-        }
+  
 
-    }
-
-    private void llenarTabla() {
-        List<Usuario> usuarios = this.logica.consultarTodosUsuarios();
-
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblUsuarios.getModel();
-
-        modeloTabla.setRowCount(0);
-
-        usuarios.forEach(usuario -> {
-            Object[] fila = new Object[6];
-            fila[0] = usuario.getId();
-            fila[1] = usuario.getNombre();
-            fila[2] = usuario.getPassword();
-            fila[3] = usuario.getRol();
-            fila[4] = "Editar";
-            fila[5] = "Eliminar";
-            modeloTabla.addRow(fila);
-        });
-    }
-
-    private void limpiarId() {
-        idUsuario = 0;
-    }
-
-    private void limpiarFormulario() {
-        txtNombre.setText("");
-        txtPassword.setText("");
-        cmbRoles.setSelectedIndex(0);
-        limpiarId();
-        txtNombre.setEditable(true);
-    }
-
-    private void initBotonesTabla() {
-        ActionListener onEditarClickListener = new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                idUsuario = (int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0);
-
-                int indexColumna = tblUsuarios.getSelectedColumn();
-
-                if (indexColumna == COLEDITAR) {
-                    llenarFormulario(logica.consultarUsuario(idUsuario));
-                    //Evita que se modifique el nombre del usuario al editarse.
-                    txtNombre.setEditable(false);
-                } else {
-                    eliminar(idUsuario);
-                }
-            }
-        };
-
-        int indiceColumnaEditar = COLEDITAR;
-
-        TableColumnModel modeloColumnas = this.tblUsuarios.getColumnModel();
-
-        modeloColumnas.getColumn(indiceColumnaEditar)
-                .setCellRenderer(new JButtonRenderer("Editar"));
-
-        modeloColumnas.getColumn(indiceColumnaEditar)
-                .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
-
-        indiceColumnaEditar = COLELIMINAR;
-
-        modeloColumnas = this.tblUsuarios.getColumnModel();
-
-        modeloColumnas.getColumn(indiceColumnaEditar)
-                .setCellRenderer(new JButtonRenderer("Eliminar"));
-
-        modeloColumnas.getColumn(indiceColumnaEditar)
-                .setCellEditor(new JButtonCellEditor(new JTextField(), onEditarClickListener));
-    }
-
-    private void llenarFormulario(Usuario usuario) {
-        txtNombre.setText(usuario.getNombre());
-        txtPassword.setText(usuario.getPassword());
-        cmbRoles.setSelectedItem(usuario.getRol().toString());
-    }
-
-    //TODO implementar metodo para proteger datos relacionados MUY IMPORTANTE
-    private void eliminar(int idUsuario) {
-
-        int opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar al usuario seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
-        if (opcionSeleccionada == JOptionPane.YES_OPTION) {
-            boolean seElimino = logica.eliminarUsuario(idUsuario);
-
-            if (seElimino) {
-                JOptionPane.showMessageDialog(this, "Se eliminó al usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
-                this.llenarTabla();
-            } else {
-                JOptionPane.showMessageDialog(this, "No fue posible eliminar al usuario", "Información", JOptionPane.ERROR_MESSAGE);
-            }
-            limpiarId();
-        }
-    }
-
-    private void guardar() {
-        if (validarCamposLlenos()) {
-
-            if (idUsuario == 0) {
-                agregar();
-            } else {
-                actualizar();
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Rellene todos los campos", "Información", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private boolean validarCamposLlenos() {
-
-        if (txtNombre.getText().isEmpty()) {
-            return false;
-        }
-
-        if (txtPassword.getText().isEmpty()) {
-            return false;
-        }
-        if (cmbRoles.getSelectedIndex() == 0) {
-            return false;
-        }
-        return true;
-    }
-
-    private void agregar() {
-        if (validarFormulario() == false) {
-            return;
-        }
-
-        String nombre = this.txtNombre.getText();
-        String password = this.txtPassword.getText();
-        Rol rol = Rol.valueOf(cmbRoles.getSelectedItem().toString());
-
-        Usuario usuario = new Usuario(nombre, password, rol);
-
-        boolean seAgregoProdcuto = logica.agregarUsuario(usuario);
-
-        if (seAgregoProdcuto) {
-            JOptionPane.showMessageDialog(this, "Se agregó el nuevo usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
-            this.limpiarFormulario();
-            this.llenarTabla();
-        } else {
-            JOptionPane.showMessageDialog(this, "No fue posible agregar al usuario", "Error", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-    private boolean validarFormulario() {
-        String mensajeError = "";
-
-        mensajeError = (validarSoloLetras(txtNombre.getText())) ? mensajeError : mensajeError + "El nombre debe contener solo letras\n";
-        mensajeError = (txtPassword.getText().length() >= 8) ? mensajeError : mensajeError + "El password debe de ser de mínimo 8 caracteres";
-        if (mensajeError == "") {
-            return true;
-        } else {
-            JOptionPane.showMessageDialog(this, mensajeError, "Información", JOptionPane.INFORMATION_MESSAGE);
-            return false;
-        }
-    }
-
-    private boolean validarSoloLetras(String string) {
-        Pattern pattern = Pattern.compile("[\\d\\p{Punct}]");
-        Matcher matcher = pattern.matcher(string);
-
-        return !matcher.find();
-    }
-
-    private void actualizar() {
-        if (validarFormulario() == false) {
-            return;
-        }
-
-        String nombre = this.txtNombre.getText();
-        String password = this.txtPassword.getText();
-        Rol rol = Rol.valueOf(cmbRoles.getSelectedItem().toString());
-
-        Usuario usuario = new Usuario(idUsuario, nombre, password, rol);
-
-        boolean seActualizo = logica.actualizarUsuario(usuario);
-
-        if (seActualizo) {
-            JOptionPane.showMessageDialog(this, "Se actualizó al usuario", "Información", JOptionPane.INFORMATION_MESSAGE);
-            this.limpiarFormulario();
-            this.llenarTabla();
-            limpiarId();
-        } else {
-            JOptionPane.showMessageDialog(this, "No fue posible actualizar al usuario", "Información", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-
-}//end class
+}

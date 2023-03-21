@@ -5,30 +5,35 @@ import entidades.*;
 import fachada.FachadaControl;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Giovanni Garrido
- */
 public class BusquedaArticuloForm extends javax.swing.JFrame {
 
-    private Producto productoSelect = new Producto();
-    
-    private List<Producto> productosCoinicidentes = new ArrayList<>();
-    private IFachadaControl logica = new FachadaControl();
-    private VentasForm ventasFrm = null;
+
+    private List<Producto> productosCoinicidentes;
+    private IFachadaControl logica;
+    private static BusquedaArticuloForm busquedaArticuloForm;
+    private static List<Categoria> categorias;
 
     /**
      * Creates new form AdmiClienteForm
      */
-    public BusquedaArticuloForm(VentasForm frmVentas) {
+    private BusquedaArticuloForm() {
         initComponents();
+        this.logica = new FachadaControl();
+        this.productosCoinicidentes = new ArrayList<>();
         vaciarCampos();
-        instanciaVentasForm(frmVentas);
         llenarCBoxCategorias();
+    }
+
+    public static BusquedaArticuloForm getInstance() {
+        if (busquedaArticuloForm == null) {
+            busquedaArticuloForm = new BusquedaArticuloForm();
+        }
+        return busquedaArticuloForm;
     }
 
     /**
@@ -36,11 +41,13 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
      * Modelo para el combobox de categorias
      */
     public void llenarCBoxCategorias() {
-        //listaClientes = new DefaultComboBoxModel();
-        List<Categoria> categorias = new ArrayList<Categoria>();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
         categorias = logica.consultarTodasCategorias();
-        Object[] objetos = categorias.toArray();
-        categoriasC.setModel(new DefaultComboBoxModel(objetos));
+        for (int i = 0; i < categorias.size(); i++) {
+            Categoria get = categorias.get(i);
+            model.addElement(get.getNombre());
+        }
+        categoriasC.setModel(model);
     }
 
     /**
@@ -64,8 +71,14 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         categoriasC = new javax.swing.JComboBox<>();
         lblRectangulo4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Busqueda Articulos");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 650));
@@ -123,27 +136,31 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         btnSeleccionar.setBackground(new java.awt.Color(0, 0, 255));
         btnSeleccionar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnSeleccionar.setForeground(new java.awt.Color(255, 255, 255));
+        btnSeleccionar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/click.png"))); // NOI18N
         btnSeleccionar.setText("Seleccionar");
         btnSeleccionar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSeleccionarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(575, 258, 140, -1));
+        jPanel1.add(btnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 258, 160, -1));
 
         btnBuscar.setBackground(new java.awt.Color(0, 0, 255));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/lupa.png"))); // NOI18N
         btnBuscar.setText("Buscar");
+        btnBuscar.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(575, 172, 140, -1));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(555, 172, 160, -1));
 
         categoriasC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         categoriasC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----------" }));
+        categoriasC.setSelectedIndex(-1);
         categoriasC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 categoriasCActionPerformed(evt);
@@ -175,100 +192,70 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     }//GEN-LAST:event_categoriasCActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        // TODO add your handling code here
         productosCoinicidentes.clear();
-        if(txtArticulo.getText().equals("")){
+        if (txtArticulo.getText().equals("")) {
             buscarCoincidenciasCategoria();
-        }else{
+        } else {
             buscarCoincidenciasNombre(txtArticulo.getText());
         }
         vaciarCampos();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
-        try {
-            DefaultTableModel model = (DefaultTableModel) tblProductos.getModel();
-            if (tblProductos.getSelectedRow() != -1) {
-                String nombre = model.getValueAt(tblProductos.getSelectedRow(), 0).toString();
-                for (int i = 0; i < productosCoinicidentes.size(); i++) {
-                    if ((productosCoinicidentes.get(i).getNombre().toUpperCase()).equals(nombre.toUpperCase())) {
-                        productoSelect = productosCoinicidentes.get(i);
-                    }
-                }
-                cerrarFormulario();
-                vaciarCampos();
-                ventasFrm.agregarArtBuscado(productoSelect);
-                ventasFrm.desbloquearCampos();
-            } else {
-                JOptionPane.showMessageDialog(null, "Selecciona un artículo", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
-            }
-        } catch (Exception e) {
-
+        int indice = tblProductos.getSelectedRow();
+        if (indice != -1) {
+            vaciarCampos();
+            VentasForm.getInstance().agregarArtBuscado(productosCoinicidentes.get(indice));
+            setVisible(false);
+            dispose();
+            VentasForm.getInstance().setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecciona un artículo", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
 
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
-    /**
-     * Metodo para mostrar el formulario
-     */
-    public void mostrarFormulario() {
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        setVisible(false);
+        dispose();
+        VentasForm.getInstance().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
 
-    }
-
-    /**
-     * Metodo para cerrar el formulario
-     */
-    public void cerrarFormulario() {
-        this.dispose();
-    }
-
-    /**
-     * Metodo que busca las coincidencias dependiendo de lo
-     */
     public void buscarCoincidenciasNombre(String busqueda) {
         productosCoinicidentes.clear();
         productosCoinicidentes = logica.buscarProductosPorNombre(busqueda);
         if (!productosCoinicidentes.isEmpty()) {
             for (int i = 0; i < productosCoinicidentes.size(); i++) {
-                if(!((productosCoinicidentes.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase()))){
+                if (!((productosCoinicidentes.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase()))) {
                     productosCoinicidentes.remove(i);
                 }
             }
-            if(!productosCoinicidentes.isEmpty()){
+            if (!productosCoinicidentes.isEmpty()) {
                 cargarCoincidencias();
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
 
     }
-    
-    /**
-     * Metodo que busca las coincidencias dependiendo de lo
-     */
+
     public void buscarCoincidenciasCategoria() {
-        List <Producto> todosPro = logica.consultarTodosProductos();
+        List<Producto> todosPro = logica.consultarTodosProductos();
         if (!todosPro.isEmpty()) {
             for (int i = 0; i < todosPro.size(); i++) {
-                if((todosPro.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase())){
+                if ((todosPro.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase())) {
                     productosCoinicidentes.add(todosPro.get(i));
                 }
             }
-            if(!productosCoinicidentes.isEmpty()){
+            if (!productosCoinicidentes.isEmpty()) {
                 cargarCoincidencias();
-            }
-            else{
+            } else {
                 JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
             }
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
@@ -277,7 +264,6 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
 
     public void cargarCoincidencias() {
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
-
         modeloTabla.setRowCount(0);
         productosCoinicidentes.forEach(producto -> {
             Object[] fila = new Object[5];
@@ -298,12 +284,6 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         tblProductos.setModel(modeloTabla);
     }
 
-    public VentasForm instanciaVentasForm(VentasForm frmVentas) {
-        if (ventasFrm == null) {
-            ventasFrm = frmVentas;
-        }
-        return ventasFrm;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

@@ -1,28 +1,29 @@
 package GUIs;
 
 import entidades.Caja;
+import enumeradores.Estado;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
-/**
- *
- * @author giova
- */
 public class PrincipalForm extends javax.swing.JFrame {
 
-    private VentasForm ventasForm = new VentasForm();
-    IFachadaControl logica = new FachadaControl();
-    AbrirCajaForm abrirCaja = new AbrirCajaForm();
-    public static PrincipalForm principalFrm = null;
+    private IFachadaControl fachadaControl;
+    private static PrincipalForm principalForm;
 
     /**
      * Creates new form PrincipalForm
      */
-    public PrincipalForm() {
+    private PrincipalForm() {
         initComponents();
+        fachadaControl = new FachadaControl();
+    }
 
+    public static PrincipalForm getInstance() {
+        if (principalForm == null) {
+            principalForm = new PrincipalForm();
+        }
+        return principalForm;
     }
 
     /**
@@ -47,14 +48,16 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdminProveedores = new javax.swing.JMenuItem();
         MenuAdminUsuario = new javax.swing.JMenuItem();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Administración");
 
+        pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(1000, 750));
         pnlPrincipal.setLayout(new java.awt.CardLayout());
 
         MenuCaja.setText("Caja");
 
-        menuCajaNuevoTicket.setText("Nuevo Ticket");
+        menuCajaNuevoTicket.setText("Nueva Venta");
         menuCajaNuevoTicket.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 menuCajaNuevoTicketActionPerformed(evt);
@@ -63,9 +66,19 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuCaja.add(menuCajaNuevoTicket);
 
         menuCajaAbrirCaja.setText("Abrir Nueva Caja");
+        menuCajaAbrirCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCajaAbrirCajaActionPerformed(evt);
+            }
+        });
         MenuCaja.add(menuCajaAbrirCaja);
 
         menuCajaCierreCaja.setText("Cierre de Caja");
+        menuCajaCierreCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuCajaCierreCajaActionPerformed(evt);
+            }
+        });
         MenuCaja.add(menuCajaCierreCaja);
 
         jMenuBar1.add(MenuCaja);
@@ -142,22 +155,26 @@ public class PrincipalForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuCajaNuevoTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaNuevoTicketActionPerformed
-        // TODO add your handling code here:
-        Caja caja = new Caja();
-        caja = logica.consultarCajaAbierta();
-        if (caja == null) {
-            abrirCaja.instanciaAbrirCaja().mostrarFormulario();
 
+        //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
+        //verifica si el usuario corresponde a la sesion
+        Caja caja = fachadaControl.consultarCajaAbierta();
+        if (caja != null) {
+            this.setVisible(false);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    VentasForm.getInstance().setVisible(true);
+                    VentasForm.getInstance().establecerCaja(caja);
+                }
+            });
         } else {
-            ventasForm = ventasForm.instanciaFrmVentas();
-            ventasForm.setCaja(caja);
-            mostrarPanel(ventasForm);
+            JOptionPane.showMessageDialog(null, "No se ha registrado alguna caja se requiere que abra alguna");
         }
-
-
     }//GEN-LAST:event_menuCajaNuevoTicketActionPerformed
 
     private void MenuAdminUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuarioActionPerformed
+
+        this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiUsuarioForm.getInstance().setVisible(true);
@@ -166,22 +183,18 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuAdminUsuarioActionPerformed
 
     private void MenuAdminCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaActionPerformed
-                java.awt.EventQueue.invokeLater(new Runnable() {
+        this.setVisible(false);
+        java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiCategoria.getInstance().setVisible(true);
             }
         });
     }//GEN-LAST:event_MenuAdminCategoriaActionPerformed
 
-    private void MenuAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProductoForm.getInstance().setVisible(true);
-            }
-        });
-    }//GEN-LAST:event_MenuAdminProductosActionPerformed
-
     private void MenuAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiClienteForm.getInstance().setVisible(true);
@@ -189,7 +202,20 @@ public class PrincipalForm extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_MenuAdminClientesActionPerformed
 
+    private void MenuAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiProductoForm.getInstance().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_MenuAdminProductosActionPerformed
+
     private void MenuAdminProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresActionPerformed
+
+        this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiProveedorForm.getInstance().setVisible(true);
@@ -197,60 +223,28 @@ public class PrincipalForm extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_MenuAdminProveedoresActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+    private void menuCajaAbrirCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaAbrirCajaActionPerformed
+    //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
+        //verifica si el usuario corresponde a la sesions
+        Caja caja = fachadaControl.consultarCajaAbierta();
+        if (caja != null) {
+            JOptionPane.showMessageDialog(null, "No se ha cerrado la caja actual, requiere cerrarla");
+        } else {
+            this.setVisible(false);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    AbrirCajaForm.instanciaAbrirCaja().setVisible(true);
                 }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PrincipalForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            });
         }
-        //</editor-fold>
-        //</editor-fold>
+    }//GEN-LAST:event_menuCajaAbrirCajaActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                instanciaFrmPrincipal().setVisible(true);
-
-            }
-        });
-
-    }
-
-    public void mostrarPanel(JPanel panelActual) {
-
-        instanciaFrmPrincipal();
-        principalFrm.pnlPrincipal.removeAll();
-        principalFrm.pnlPrincipal.add(panelActual);
-        principalFrm.pnlPrincipal.repaint();
-        principalFrm.pnlPrincipal.revalidate();
-
-    }
-
-    public static PrincipalForm instanciaFrmPrincipal() {
-        if (principalFrm == null) {
-            principalFrm = new PrincipalForm();
-        }
-        return principalFrm;
-    }
+    private void menuCajaCierreCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaCierreCajaActionPerformed
+        //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
+        //verifica si el usuario corresponde a la sesion
+        JOptionPane.showMessageDialog(null, "El cierre de caja, aun no se implementa espera actualizaciones y casos de uso");
+//        Caja caja=new Caja(fechaApertura, TOP_ALIGNMENT, TOP_ALIGNMENT, TOP_ALIGNMENT, TOP_ALIGNMENT, Estado.CERRADA, usuario)
+    }//GEN-LAST:event_menuCajaCierreCajaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
