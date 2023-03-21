@@ -46,6 +46,7 @@ public class VentasForm extends javax.swing.JFrame {
         this.txtTotalCobrar.setEditable(false);
         this.txtNumTicket.setEditable(false);
         this.txtOperador.setEditable(false);
+        this.cajaTxt.setEditable(false);
     }
 
     public static VentasForm getInstance() {
@@ -593,7 +594,6 @@ public class VentasForm extends javax.swing.JFrame {
     }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-
         if (validarDatos()) {
             return;
         }
