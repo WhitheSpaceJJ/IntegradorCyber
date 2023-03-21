@@ -245,7 +245,7 @@ private    List<Producto> productos;
     //Bien
     private void llenarTabla() {
 productos = this.logica.consultarTodosProductos();
-if(productos!=null || !productos.isEmpty()){
+if(productos!=null ){
     DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProductos.getModel();
         this.jTableProductos.setRowHeight(30);
         modeloTabla.setRowCount(0);
