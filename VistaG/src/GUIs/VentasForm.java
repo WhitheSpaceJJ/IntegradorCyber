@@ -92,13 +92,24 @@ public class VentasForm extends javax.swing.JFrame {
         if (ventas == null) {
             numTicket = 0;
         } else {
-            numTicket = ventas.size() + 1;
+            numTicket =ventas.get(ventas.size()-1).getId() + 1;
         }
         Calendar fecha = Calendar.getInstance();
         Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
         int indiceCliente = clientesC.getSelectedIndex();
         Cliente cliente = clientes.get(indiceCliente);
-        Venta venta = new Venta(numTicket, fecha, totalVenta, cliente, detalleV, caja);
+        Venta venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
+        boolean ventaAgregada = logica.agregarVenta(venta);
+        if (ventaAgregada) {
+            venta.setId(numTicket);
+            for (int i = 0; i < detalleV.size(); i++) {
+                detalleV.get(i).setVenta(venta);
+                logica.agregarDetalleVenta(detalleV.get(i));
+            }
+            JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
+            limpiarCampos();
+        }
+
 //
 //        ventaT = ventas.get(ventas.size() - 1);
 //        String fecha = frmVentas.txtFecha.getText();
@@ -135,11 +146,11 @@ public class VentasForm extends javax.swing.JFrame {
 //            detalleVenta.setVenta(venta);
 //            logica.agregarDetalleVenta(detalleVenta);
 //        }
-        boolean ventaAgregada = logica.agregarVenta(venta);
-        if (ventaAgregada) {
-            JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
-            limpiarCampos();
-        }
+//        boolean ventaAgregada = logica.agregarVenta(venta);
+//        if (ventaAgregada) {
+//            JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
+//            limpiarCampos();
+//        }
 //        System.out.println("Se registro la venta");
 //        desbloquearCampos();
 
