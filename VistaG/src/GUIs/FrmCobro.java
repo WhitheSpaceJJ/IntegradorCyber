@@ -4,18 +4,23 @@
  */
 package GUIs;
 
+import entidades.DetalleVenta;
+import entidades.Venta;
 import fachada.FachadaControl;
 import interfaces.*;
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.List;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class FrmCobro extends javax.swing.JFrame {
 
     IFachadaControl logica = new FachadaControl();
     VentasForm ventasFrm = null;
-    FrmCobro frmCobro = null;
+    private FrmCobro frmCobro=null;
+    private Venta venta=new Venta();
     public static FrmCobro frmCobro1;
 
     /**
@@ -25,7 +30,17 @@ public class FrmCobro extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         instanciaVentasForm();
+        
     }
+    
+    public FrmCobro(Venta venta) {
+        initComponents();
+        this.setLocationRelativeTo(null);
+        instanciaVentasForm();
+        this.venta=venta;
+        
+    }
+
 
     public static FrmCobro getInstance() {
         if (frmCobro1 == null) {
@@ -52,6 +67,10 @@ public class FrmCobro extends javax.swing.JFrame {
         btnContinuar = new javax.swing.JButton();
         checkBoxTicket = new javax.swing.JCheckBox();
         lblRectangulo4 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtTicket = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        txtCambio = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cobro");
@@ -76,6 +95,11 @@ public class FrmCobro extends javax.swing.JFrame {
                 txtMontoUsuarioActionPerformed(evt);
             }
         });
+        txtMontoUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMontoUsuarioKeyReleased(evt);
+            }
+        });
         jPanel1.add(txtMontoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 170, -1));
 
         btnCancelar.setBackground(new java.awt.Color(0, 0, 255));
@@ -88,7 +112,7 @@ public class FrmCobro extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 220, -1, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
 
         btnContinuar.setBackground(new java.awt.Color(0, 0, 255));
         btnContinuar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -100,22 +124,36 @@ public class FrmCobro extends javax.swing.JFrame {
                 btnContinuarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(38, 224, -1, -1));
+        jPanel1.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
         jPanel1.add(checkBoxTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
 
         lblRectangulo4.setBackground(new java.awt.Color(204, 204, 255));
         lblRectangulo4.setOpaque(true);
         jPanel1.add(lblRectangulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 420, 130));
 
+        txtTicket.setColumns(20);
+        txtTicket.setRows(5);
+        jScrollPane1.setViewportView(txtTicket);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 280, 400));
+
+        jLabel4.setText("Cambio:");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, -1, -1));
+        jPanel1.add(txtCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 140, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 440, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 764, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 424, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,25 +164,88 @@ public class FrmCobro extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMontoUsuarioActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
+        
+       
+        if(Float.parseFloat(txtMontoUsuario.getText())>=venta.getTotalventa())  {
+           
+            ventasFrm.registrarTodoVenta();
         cerrarFormulario();
-        ventasFrm.registrarVenta();
+        }else{
+            JOptionPane.showMessageDialog(null, "Monto ingresado menor al total de la venta");
+        }
+        
+      
         
 //         
 
     }//GEN-LAST:event_btnContinuarActionPerformed
 
+    
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         cerrarFormulario();
 //        ventasFrm.desbloquearCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    public void mostrarFormulario() {
-        instanciaFrmCobro();
+    private void txtMontoUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoUsuarioKeyReleased
+     if(txtMontoUsuario.getText().trim()!=""){
+        if( Float.parseFloat(txtMontoUsuario.getText())>venta.getTotalventa()){
+           float cambio=Float.parseFloat(txtMontoUsuario.getText())-venta.getTotalventa();
+           this.txtCambio.setText(String.valueOf(cambio));
+       }
+     }else{
+         this.txtCambio.setText("");
+     }
+    }//GEN-LAST:event_txtMontoUsuarioKeyReleased
+
+    public void mostrarFormulario(VentasForm ventas,Venta venta,List<DetalleVenta>detalles) {
+        instanciaFrmCobro(venta);
+       frmCobro.mostrarTicket(venta,detalles);
         frmCobro.setLocationRelativeTo(null);
         frmCobro.setVisible(true);
+        this.venta=venta;
+        this.ventasFrm=ventas;
 
     }
 
+    
+    
+    public void mostrarTicket(Venta venta,List<DetalleVenta>detalles){
+     
+    String ticket = "";
+    int espacioNombre=0;
+  int espacioCantidad=0;
+  int espacioPrecio=0;
+  int espacioImporte=0;
+    // Formatear los datos de cada producto en una sola línea y agregarlos al ticket
+ticket += "-------------------------------------------------------------------\n";
+ticket += "                            TICKET DE VENTA                        \n";
+ticket += "-------------------------------------------------------------------\n";
+ticket += "Producto            Cantidad       Precio     importe              \n";
+ticket += "-------------------------------------------------------------------\n";
+for (DetalleVenta d : detalles) {
+    
+    int longitudNombre=d.getProducto().getNombre().length();
+     int longitudCantidad=String.valueOf(d.getCantidad()).length();
+      int longitudPrecio=String.valueOf(d.getProducto().getPrecio()).length();
+       int longitudImporte=String.valueOf(d.getImporte()).length();
+    espacioNombre=15;
+    espacioCantidad=20-longitudNombre;
+    espacioPrecio=20-longitudCantidad;
+    espacioImporte=25-longitudImporte;
+    
+    String linea = String.format("%-"+espacioNombre+"s %"+espacioCantidad+"s %"+espacioPrecio+"s %"+espacioImporte+"s\n", d.getProducto().getNombre(), d.getCantidad(), d.getProducto().getPrecio(),d.getImporte());
+    ticket += linea;
+}
+ticket += "-------------------------------------------------------------------\n";
+String lineaTotal = String.format("%70s %10.2f\n", "Total:", venta.getTotalventa());
+ticket += lineaTotal;
+ticket += "-------------------------------------------------------------------\n";
+
+
+txtTicket.setText(ticket);
+txtTicket.setEditable(false);
+    
+    }
     public void cerrarFormulario() {
         this.dispose();
     }
@@ -156,9 +257,9 @@ public class FrmCobro extends javax.swing.JFrame {
         return ventasFrm;
     }
 
-    public FrmCobro instanciaFrmCobro() {
+    public FrmCobro instanciaFrmCobro(Venta venta) {
         if (frmCobro == null) {
-            frmCobro = new FrmCobro();
+            frmCobro = new FrmCobro(venta);
         }
         return frmCobro;
     }
@@ -173,9 +274,13 @@ public class FrmCobro extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblRectangulo4;
+    private javax.swing.JTextField txtCambio;
     private javax.swing.JTextField txtMontoUsuario;
+    private javax.swing.JTextArea txtTicket;
     // End of variables declaration//GEN-END:variables
 }
 /*

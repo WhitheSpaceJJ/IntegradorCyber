@@ -1,5 +1,6 @@
 package GUIs;
 
+import static GUIs.FrmCobro.frmCobro1;
 import interfaces.*;
 import entidades.*;
 
@@ -20,7 +21,9 @@ public class VentasForm extends javax.swing.JFrame {
 
     private static VentasForm ventasForm;
     private FrmCobro frmCobro;
+    Venta venta=null;
 
+    
     private List<Producto> productos;
     private List<DetalleVenta> detalleV;
 
@@ -86,35 +89,7 @@ public class VentasForm extends javax.swing.JFrame {
 //        btnQuitar.setEnabled(false);
 //    }
 //
-    public void registrarVenta() {
-
-        if(detalleV.size()>0){
-        List<Venta> ventas = logica.consultarVentas();
-        int numTicket;
-        if (ventas.size()<1) {
-            numTicket = 0;
-        } else {
-            numTicket = ventas.get(ventas.size()-1 ).getId() + 1;
-        }
-        Calendar fecha = Calendar.getInstance();
-        Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
-        int indiceCliente = clientesC.getSelectedIndex();
-        Cliente cliente = clientes.get(indiceCliente);
-        Venta venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
-        boolean ventaAgregada = logica.agregarVenta(venta,detalleV);
-        
-        if (ventaAgregada==true) {
-            
-            JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
-            limpiarCampos();
-        }
-        }else{
-            JOptionPane.showMessageDialog(null, "Aun no ha agregado productos");
-        }
-
-
-    }
-
+  
     public void llenarCampos() {
         Calendar fechaC = Calendar.getInstance();
 
@@ -591,7 +566,7 @@ public class VentasForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
             } else {
                 //Verifica si ya se ha agregado antes a la lista local de detalleV para cambiar el sotck al desplegarlo de manera local
-                for (int i = 0; 0 < detalleV.size() - 1; i++) {
+                for (int i = 0; i < detalleV.size() - 1; i++) {
                     if (detalleV.get(i).getProducto().getId() == Integer.parseInt(txtCodigoArticulo.getText())) {
 
                         //Muestra el stock de la lista local no de la base de datos
@@ -629,19 +604,79 @@ public class VentasForm extends javax.swing.JFrame {
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
 //        instanciaFrmVentas();
 //        bloquearCampos();
-        frmCobro= frmCobro.instanciaFrmCobro();
-       
-        frmCobro.mostrarFormulario();
+    if(detalleV.size()>0){
+        //Lleno la venta para mostrarla en el formulario de cobro
+       List<Venta> ventas = logica.consultarVentas();
+        int numTicket;
+        if (ventas.size()<1) {
+            numTicket = 0;
+        } else {
+            numTicket = ventas.get(ventas.size()-1 ).getId() + 1;
+        }
+        Calendar fecha = Calendar.getInstance();
+        Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
+        int indiceCliente = clientesC.getSelectedIndex();
+        Cliente cliente = clientes.get(indiceCliente);
+         venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
+         
+        instanciaCobro().instanciaFrmCobro(venta);
+        
+        
+        frmCobro.mostrarFormulario(this,venta,detalleV);
+    }else{
+        JOptionPane.showMessageDialog(null, "No ha agregado productos");
+    }
         
         
     }//GEN-LAST:event_btnCobrarActionPerformed
 
-    public void registrar(){
-    registrarVenta();
-          limpiarCamposTodo();
+    /**
+ * Metodo que gregistra la venta y limpia los campos
+ */
+    public void registrarTodoVenta(){
+         registrarVenta();
+         limpiarCamposTodo();
          detalleV.clear();
         cargarTabla();
     }
+      public void registrarVenta() {
+
+        if(detalleV.size()>0){
+        List<Venta> ventas = logica.consultarVentas();
+        int numTicket;
+        if (ventas.size()<1) {
+            numTicket = 0;
+        } else {
+            numTicket = ventas.get(ventas.size()-1 ).getId() + 1;
+        }
+        Calendar fecha = Calendar.getInstance();
+        Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
+        int indiceCliente = clientesC.getSelectedIndex();
+        Cliente cliente = clientes.get(indiceCliente);
+         venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
+        boolean ventaAgregada = logica.agregarVenta(venta,detalleV);
+        
+        if (ventaAgregada==true) {
+            
+            JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
+            this.limpiarCampos();
+        }
+        }else{
+            JOptionPane.showMessageDialog(null, "Aun no ha agregado productos");
+        }
+
+
+    }
+
+    
+    public FrmCobro instanciaCobro() {
+        if (frmCobro == null) {
+            frmCobro = new FrmCobro();
+        }
+        return frmCobro;
+    }
+
+
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         adminitirSoloNumeros(evt);
     }//GEN-LAST:event_txtCantidadKeyTyped
