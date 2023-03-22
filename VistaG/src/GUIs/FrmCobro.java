@@ -21,7 +21,7 @@ public class FrmCobro extends javax.swing.JFrame {
     /**
      * Creates new form FrmCobro
      */
-    private FrmCobro() {
+    public FrmCobro() {
         initComponents();
         this.setLocationRelativeTo(null);
         instanciaVentasForm();

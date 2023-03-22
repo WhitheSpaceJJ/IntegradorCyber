@@ -3,23 +3,23 @@
   <persistence-unit name="CyberPapeleriaDatosPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entidades.Caja</class>
-    <class>entidades.DetalleVenta</class>
-    <class>entidades.Proveedor</class>
-    <class>entidades.Venta</class>
-    <class>entidades.Cliente</class>
-    <class>entidades.Producto</class>
-    <class>entidades.Gasto</class>
-    <class>entidades.Compra</class>
     <class>entidades.Categoria</class>
-    <class>entidades.Usuario</class>
+    <class>entidades.Cliente</class>
+    <class>entidades.Compra</class>
     <class>entidades.DetalleCompra</class>
-    <class>entidades.Merma</class>
     <class>entidades.DetalleMerma</class>
+    <class>entidades.DetalleVenta</class>
+    <class>entidades.Gasto</class>
+    <class>entidades.Merma</class>
+    <class>entidades.Producto</class>
+    <class>entidades.Proveedor</class>
+    <class>entidades.Usuario</class>
+    <class>entidades.Venta</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/papeleria?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="123456"/>
+      <property name="javax.persistence.jdbc.password" value="12345"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
     </properties>
   </persistence-unit>

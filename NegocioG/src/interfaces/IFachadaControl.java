@@ -76,7 +76,7 @@ public interface IFachadaControl {
 
     public List<Venta> buscarVentasEntreFechasYCliente(Calendar inicio, Calendar fin, Cliente cliente);
 
-    public boolean agregarVenta(Venta venta);
+    public boolean agregarVenta(Venta venta,List<DetalleVenta> detalles);
 
   
     public boolean agregarDetalleVenta(DetalleVenta detalleVenta);

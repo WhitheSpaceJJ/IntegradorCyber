@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class VentasForm extends javax.swing.JFrame {
 
     private static VentasForm ventasForm;
+    private FrmCobro frmCobro;
 
     private List<Producto> productos;
     private List<DetalleVenta> detalleV;
@@ -29,6 +30,7 @@ public class VentasForm extends javax.swing.JFrame {
 
     private IFachadaControl logica;
     private List<Cliente> clientes;
+      private Producto articuloBuscado;
 
     private VentasForm() {
         initComponents();
@@ -85,74 +87,31 @@ public class VentasForm extends javax.swing.JFrame {
 //    }
 //
     public void registrarVenta() {
-//
-//      Venta venta=new Venta(numTicket, fecha, totalVenta, cliente, detalleV, caja)
+
+        if(detalleV.size()>0){
         List<Venta> ventas = logica.consultarVentas();
         int numTicket;
-        if (ventas == null) {
+        if (ventas.size()<1) {
             numTicket = 0;
         } else {
-            numTicket =ventas.get(ventas.size()-1).getId() + 1;
+            numTicket = ventas.get(ventas.size()-1 ).getId() + 1;
         }
         Calendar fecha = Calendar.getInstance();
         Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
         int indiceCliente = clientesC.getSelectedIndex();
         Cliente cliente = clientes.get(indiceCliente);
         Venta venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
-        boolean ventaAgregada = logica.agregarVenta(venta);
-        if (ventaAgregada) {
-            venta.setId(numTicket);
-            for (int i = 0; i < detalleV.size(); i++) {
-                detalleV.get(i).setVenta(venta);
-                logica.agregarDetalleVenta(detalleV.get(i));
-            }
+        boolean ventaAgregada = logica.agregarVenta(venta,detalleV);
+        
+        if (ventaAgregada==true) {
+            
             JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
             limpiarCampos();
         }
+        }else{
+            JOptionPane.showMessageDialog(null, "Aun no ha agregado productos");
+        }
 
-//
-//        ventaT = ventas.get(ventas.size() - 1);
-//        String fecha = frmVentas.txtFecha.getText();
-//        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
-//        Calendar fechaCalendar = Calendar.getInstance();
-//
-//        try {
-//            fechaCalendar.setTime(formatoFecha.parse(fecha));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-////        //cliente= (Cliente) clientesC.getSelectedItem();
-////        Cliente c = new Cliente();
-////        Integer id = 1;
-////        c.setId(id);
-////        c.setRfc("HSHGDGS6A77");
-////        c.setNombre("Jose");
-//        Calendar fechaActual = Calendar.getInstance();
-//        Caja caja = new Caja();
-//        caja = logica.consultarCaja(1);
-//
-//        venta.setNumTicket(ventaT.getNumTicket() + 1);
-//        venta.setFecha(fechaActual);
-//        venta.setTotalventa(Float.parseFloat(txtTotalCobrar.getText()));
-//        int indiceCliente = clientesC.getSelectedIndex();
-//        venta.setCliente(clientes.get(indiceCliente));
-//        venta.setCaja(caja);
-//        logica.agregarVenta(venta);
-//        for (int i = 0; i < detalleV.size(); i++) {
-//            DetalleVenta detalleVenta = new DetalleVenta();
-//            detalleVenta = detalleV.get(i);
-//            detalleV.remove(i);
-//            detalleVenta.setVenta(venta);
-//            logica.agregarDetalleVenta(detalleVenta);
-//        }
-//        boolean ventaAgregada = logica.agregarVenta(venta);
-//        if (ventaAgregada) {
-//            JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
-//            limpiarCampos();
-//        }
-//        System.out.println("Se registro la venta");
-//        desbloquearCampos();
 
     }
 
@@ -186,6 +145,18 @@ public class VentasForm extends javax.swing.JFrame {
         txtDescripcion.setText("");
         txtDisponibilidad.setText("");
         txtImporte.setText("");
+        txtObservaciones.setText("");
+        txtTotalProducto.setText("");
+    }
+    
+    public void limpiarCamposTodo() {
+        txtCantidad.setText("");
+        txtCategoria.setText("");
+        txtCodigoArticulo.setText("");
+        txtDescripcion.setText("");
+        txtDisponibilidad.setText("");
+        txtImporte.setText("");
+        txtTotalCobrar.setText("");
         txtObservaciones.setText("");
         txtTotalProducto.setText("");
     }
@@ -227,14 +198,14 @@ public class VentasForm extends javax.swing.JFrame {
     }
 
     private Producto agregarProducto() {
-        if (txtCodigoArticulo.getText() != "") {
+        if (txtCodigoArticulo.getText().trim() != "") {
             Producto productoAgregar = logica.consultarProducto(Integer.parseInt(txtCodigoArticulo.getText()));
             return productoAgregar;
         } else {
             return null;
         }
     }
-    private Producto articuloBuscado;
+  
 
     //Bien
     public void agregarArtBuscado(Producto productoS) {
@@ -584,13 +555,11 @@ public class VentasForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-        if (txtCodigoArticulo.getText().equals("")) {
+        /*   if (txtCodigoArticulo.getText().equals("")) {
 //            bloquearCampos();
             this.setVisible(false);
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    BusquedaArticuloForm.getInstance().setVisible(true);
-                }
+            java.awt.EventQueue.invokeLater(() -> {
+                BusquedaArticuloForm.getInstance().setVisible(true);
             });
         } else {
             try {
@@ -605,6 +574,51 @@ public class VentasForm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Para realizar una busqueda directa con el id se requiere que ingrese solo digitos(12,1,2)", "Venta", JOptionPane.ERROR_MESSAGE);
             }
 
+        }*/
+
+        if (txtCodigoArticulo.getText().equals("")) {
+              this.setVisible(false);
+            java.awt.EventQueue.invokeLater(() -> {
+                BusquedaArticuloForm.getInstance().setVisible(true);
+            });
+
+        } else {
+            try{
+            boolean existenteLocalmente = false;
+            int idProducto = Integer.parseInt(txtCodigoArticulo.getText());
+            articuloBuscado = logica.consultarProducto(idProducto);
+            if (articuloBuscado == null) {
+                JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
+            } else {
+                //Verifica si ya se ha agregado antes a la lista local de detalleV para cambiar el sotck al desplegarlo de manera local
+                for (int i = 0; 0 < detalleV.size() - 1; i++) {
+                    if (detalleV.get(i).getProducto().getId() == Integer.parseInt(txtCodigoArticulo.getText())) {
+
+                        //Muestra el stock de la lista local no de la base de datos
+                        articuloBuscado.setStock(detalleV.get(i).getProducto().getStock());
+
+                        cargarCampos(articuloBuscado);
+                        existenteLocalmente = true;
+                        break;
+                    }
+                }
+
+                //Si no se a agregado antes lo busca solamente y carga la informacion
+                if (existenteLocalmente == false) {
+
+                    articuloBuscado = logica.consultarProducto(idProducto);
+                    if (articuloBuscado != null) {
+
+                        cargarCampos(articuloBuscado);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+
+        }catch (HeadlessException | NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Para realizar una busqueda directa con el id se requiere que ingrese solo digitos(12,1,2)", "Venta", JOptionPane.ERROR_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
@@ -615,9 +629,19 @@ public class VentasForm extends javax.swing.JFrame {
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
 //        instanciaFrmVentas();
 //        bloquearCampos();
-        registrarVenta();
+        frmCobro= frmCobro.instanciaFrmCobro();
+       
+        frmCobro.mostrarFormulario();
+        
+        
     }//GEN-LAST:event_btnCobrarActionPerformed
 
+    public void registrar(){
+    registrarVenta();
+          limpiarCamposTodo();
+         detalleV.clear();
+        cargarTabla();
+    }
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
         adminitirSoloNumeros(evt);
     }//GEN-LAST:event_txtCantidadKeyTyped
@@ -634,7 +658,7 @@ public class VentasForm extends javax.swing.JFrame {
     }
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        if (validarDatos()) {
+        /* if (validarDatos()) {
             return;
         }
         Producto productoAgregar = articuloBuscado;
@@ -648,9 +672,60 @@ public class VentasForm extends javax.swing.JFrame {
         cargarTabla();
         limpiarCampos();
         articuloBuscado = null;
-        BusquedaArticuloForm.getInstance().resetBusquedas();
+        BusquedaArticuloForm.getInstance().resetBusquedas();*/
+        agregarProductoTabla();
+
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    private void agregarProductoTabla() {
+if (validarDatos()) {
+            return;
+        }
+        if (txtCodigoArticulo.getText().trim() != "") {
+            int cantidad = Integer.parseInt(txtCantidad.getText());
+            float totalProducto = Float.parseFloat(txtTotalProducto.getText());
+            Producto productoAgregar = articuloBuscado;
+
+            boolean repetido = false;
+
+            if (cantidad <= productoAgregar.getStock()) {
+
+                for (int i = 0; i < detalleV.size(); i++) {
+                    if (productoAgregar.getId() == detalleV.get(i).getProducto().getId()) {
+                        detalleV.get(i).setCantidad(detalleV.get(i).getCantidad() + cantidad);
+                        detalleV.get(i).setImporte(detalleV.get(i).getImporte() + totalProducto);
+                        detalleV.get(i).getProducto().setStock(productoAgregar.getStock() - cantidad);
+                         //productoAgregar.setStock(productoAgregar.getStock() - cantidad);
+                        actualizarPrecioTotal();
+                        cargarTabla();
+                        limpiarCampos();
+                        repetido = true;
+                        break;
+                    }
+                }
+                if (repetido == false) {
+                    DetalleVenta dv = new DetalleVenta();
+                    dv.setCantidad(cantidad);
+                    dv.setImporte(totalProducto);
+                    dv.setPrecioVendido(Float.parseFloat(txtImporte.getText()));
+                    //Restando stock en lista de detalle ventas local antes de mandarlos guardar
+                    productoAgregar.setStock(productoAgregar.getStock() - cantidad);
+                    dv.setProducto(productoAgregar);
+                    detalleV.add(dv);
+
+                    actualizarPrecioTotal();
+                    cargarTabla();
+                    limpiarCampos();
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Se ingreso una cantidad mayor al stock");
+
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Ingrese producto");
+        }
+
+    }
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         int indice = tblProductos.getSelectedRow();
         if (indice != -1) {

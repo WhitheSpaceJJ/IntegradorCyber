@@ -12,6 +12,7 @@ import entidades.Usuario;
 import entidades.Venta;
 import enumeradores.Estado;
 import fabrica.FabricaControl;
+import implementaciones.ControlVentas;
 import java.util.List;
 import java.util.Calendar;
 import interfaces.IControlCajas;
@@ -35,6 +36,7 @@ public class FachadaControl implements IFachadaControl {
 
     public FachadaControl() {
         this.fabrica=FabricaControl.getInstancia();
+
     }
 
     
@@ -91,10 +93,10 @@ public class FachadaControl implements IFachadaControl {
     }
 
      @Override
-    public boolean agregarVenta(Venta venta) {
+    public boolean agregarVenta(Venta venta,List<DetalleVenta>detalles) {
         try {
-            IControlVentas ventasDAO = fabrica.getVentasDAO();
-            return ventasDAO.agregar(venta);
+            IControlVentas controlVentas = fabrica.getVentasDAO();
+            return controlVentas.agregar(venta,detalles);
         } catch (Exception e) {
             return false;
         }

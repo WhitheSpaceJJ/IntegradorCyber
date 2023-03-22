@@ -2,6 +2,7 @@ package implementaciones;
 
 import entidades.Caja;
 import entidades.Cliente;
+import entidades.DetalleVenta;
 import entidades.Venta;
 import fachada.FachadaDAO;
 import interfaces.IConexionBD;
@@ -20,11 +21,22 @@ public class ControlVentas implements IControlVentas {
     public ControlVentas(IFachadaDAO fachadaDAO) {
         this.fachadaDAO = fachadaDAO;
     }
-
-    @Override
-    public boolean agregar(Venta venta) {
-        return this.fachadaDAO.agregarVenta(venta);
+@Override
+    public boolean agregar(Venta venta, List<DetalleVenta> detalles) {
+        try{
+      this.fachadaDAO.agregarVenta(venta);
+      for (int i = 0; i < detalles.size(); i++) {
+                detalles.get(i).setVenta(venta);
+                this.fachadaDAO.agregarDetalleVenta(detalles.get(i));
+                this.fachadaDAO.actualizarProducto(detalles.get(i).getProducto());
+            }
+      return true;
+        }catch(Exception ex){
+            
+        }
+        return false;
     }
+   
 
     @Override
     public Venta consultar(int id) {
@@ -46,5 +58,7 @@ public class ControlVentas implements IControlVentas {
     public List<Venta> consultarTodas() {
         return this.fachadaDAO.consultarTodasVentas();
     }
+
+    
 
 }
