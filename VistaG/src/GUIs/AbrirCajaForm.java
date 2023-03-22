@@ -207,7 +207,7 @@ public class AbrirCajaForm extends javax.swing.JFrame {
         this.usuarios = logica.consultarTodosUsuarios();
         for (int i = 0; i < usuarios.size(); i++) {
             Usuario get = usuarios.get(i);
-            model.addElement("Nombre; " + get.getNombre() + ", Rol; " + get.getRol());
+            model.addElement(get.getNombre());
         }
         comboBoxUsuarios.setModel(model);
     }

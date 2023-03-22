@@ -198,6 +198,7 @@ public class PrincipalForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiClienteForm.getInstance().setVisible(true);
+                
             }
         });
     }//GEN-LAST:event_MenuAdminClientesActionPerformed

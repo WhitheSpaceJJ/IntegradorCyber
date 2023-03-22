@@ -729,7 +729,7 @@ if (validarDatos()) {
                     if (productoAgregar.getId() == detalleV.get(i).getProducto().getId()) {
                         detalleV.get(i).setCantidad(detalleV.get(i).getCantidad() + cantidad);
                         detalleV.get(i).setImporte(detalleV.get(i).getImporte() + totalProducto);
-                        detalleV.get(i).getProducto().setStock(productoAgregar.getStock() - cantidad);
+                        //detalleV.get(i).getProducto().setStock(productoAgregar.getStock() - cantidad);
                          //productoAgregar.setStock(productoAgregar.getStock() - cantidad);
                         actualizarPrecioTotal();
                         cargarTabla();
