@@ -25,12 +25,12 @@ public class test {
         
         CategoriasDAO categoriasDAO = new CategoriasDAO(conexion);
         
-        Categoria categoria = categoriasDAO.consultar(5);
+        Categoria categoria = categoriasDAO.consultar(1);
         
         ProductosDAO productosDAO = new ProductosDAO(conexion);
         
         //Producto producto = new Producto("Maza", "Dulce de cacahuate", "De la Rosa", 23, 100, 10, 6, categoria);
-        Producto producto = productosDAO.consultar(1);
+        Producto producto = productosDAO.consultar(2);
         
         producto.setCategoria(categoria);
         productosDAO.actualizar(producto);

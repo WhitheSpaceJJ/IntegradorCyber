@@ -559,27 +559,16 @@ public class VentasForm extends javax.swing.JFrame {
 
         } else {
             try{
-            boolean existenteLocalmente = false;
+           
             int idProducto = Integer.parseInt(txtCodigoArticulo.getText());
             articuloBuscado = logica.consultarProducto(idProducto);
             if (articuloBuscado == null) {
                 JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
             } else {
-                //Verifica si ya se ha agregado antes a la lista local de detalleV para cambiar el sotck al desplegarlo de manera local
-                for (int i = 0; i < detalleV.size() - 1; i++) {
-                    if (detalleV.get(i).getProducto().getId() == Integer.parseInt(txtCodigoArticulo.getText())) {
-
-                        //Muestra el stock de la lista local no de la base de datos
-                        articuloBuscado.setStock(detalleV.get(i).getProducto().getStock());
-
-                        cargarCampos(articuloBuscado);
-                        existenteLocalmente = true;
-                        break;
-                    }
-                }
+               
 
                 //Si no se a agregado antes lo busca solamente y carga la informacion
-                if (existenteLocalmente == false) {
+           
 
                     articuloBuscado = logica.consultarProducto(idProducto);
                     if (articuloBuscado != null) {
@@ -588,7 +577,7 @@ public class VentasForm extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
                     }
-                }
+                
             }
 
         }catch (HeadlessException | NumberFormatException e) {
@@ -723,10 +712,21 @@ if (validarDatos()) {
 
             boolean repetido = false;
 
+            //Que no agregue mas del stock
             if (cantidad <= productoAgregar.getStock()) {
 
                 for (int i = 0; i < detalleV.size(); i++) {
+                    //Verifica que no se exceda del stock con los ya agregafos
                     if (productoAgregar.getId() == detalleV.get(i).getProducto().getId()) {
+                        if(productoAgregar.getStock()<cantidad+detalleV.get(i).getCantidad()){
+                            int restante=(int) (productoAgregar.getStock()-detalleV.get(i).getCantidad());
+                            repetido=true;
+                           
+
+                            String mensaje="Stock Producto: "+productoAgregar.getStock()+"\nCantidad actual agregada: "+detalleV.get(i).getCantidad()+"\nRestante: "+restante;
+                            JOptionPane.showMessageDialog(null,mensaje,"Excede el stock",JOptionPane.INFORMATION_MESSAGE );
+                            break;
+                        }else if(productoAgregar.getId() == detalleV.get(i).getProducto().getId()){
                         detalleV.get(i).setCantidad(detalleV.get(i).getCantidad() + cantidad);
                         detalleV.get(i).setImporte(detalleV.get(i).getImporte() + totalProducto);
                         //detalleV.get(i).getProducto().setStock(productoAgregar.getStock() - cantidad);
@@ -736,15 +736,19 @@ if (validarDatos()) {
                         limpiarCampos();
                         repetido = true;
                         break;
+                        }else{
+                            
+                        }
                     }
                 }
                 if (repetido == false) {
+                    
                     DetalleVenta dv = new DetalleVenta();
                     dv.setCantidad(cantidad);
                     dv.setImporte(totalProducto);
                     dv.setPrecioVendido(Float.parseFloat(txtImporte.getText()));
                     //Restando stock en lista de detalle ventas local antes de mandarlos guardar
-                    productoAgregar.setStock(productoAgregar.getStock() - cantidad);
+                    //productoAgregar.setStock(productoAgregar.getStock() - cantidad);
                     dv.setProducto(productoAgregar);
                     detalleV.add(dv);
 

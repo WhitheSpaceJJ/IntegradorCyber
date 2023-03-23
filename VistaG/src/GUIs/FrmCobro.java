@@ -165,21 +165,30 @@ public class FrmCobro extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
         
-       
-        if(Float.parseFloat(txtMontoUsuario.getText())>=venta.getTotalventa())  {
+       if(validaDatos()==true){
            
             ventasFrm.registrarTodoVenta();
         cerrarFormulario();
-        }else{
-            JOptionPane.showMessageDialog(null, "Monto ingresado menor al total de la venta");
         }
-        
       
         
 //         
 
     }//GEN-LAST:event_btnContinuarActionPerformed
 
+    public boolean validaDatos(){
+        if("".equals(txtMontoUsuario.getText().trim())){ 
+            
+            JOptionPane.showMessageDialog(null, "Campo vacio");
+            return false;
+        }else if(Float.parseFloat(txtMontoUsuario.getText())<venta.getTotalventa())  {
+           
+            JOptionPane.showMessageDialog(null, "Monto ingresado menor al total de la venta");
+            return false;
+        }
+       
+      return true;
+    }
     
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         cerrarFormulario();
@@ -246,8 +255,10 @@ txtTicket.setText(ticket);
 txtTicket.setEditable(false);
     
     }
+    
     public void cerrarFormulario() {
         this.dispose();
+        
     }
 
     public VentasForm instanciaVentasForm() {

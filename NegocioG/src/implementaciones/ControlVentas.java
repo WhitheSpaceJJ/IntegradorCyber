@@ -23,10 +23,15 @@ public class ControlVentas implements IControlVentas {
     }
 @Override
     public boolean agregar(Venta venta, List<DetalleVenta> detalles) {
+        int cantidad=0;
+        int stock=0;
         try{
       this.fachadaDAO.agregarVenta(venta);
       for (int i = 0; i < detalles.size(); i++) {
                 detalles.get(i).setVenta(venta);
+                cantidad=detalles.get(i).getCantidad();
+                stock=(int) detalles.get(i).getProducto().getStock();
+                detalles.get(i).getProducto().setStock(stock-cantidad);
                 this.fachadaDAO.agregarDetalleVenta(detalles.get(i));
                 this.fachadaDAO.actualizarProducto(detalles.get(i).getProducto());
             }
