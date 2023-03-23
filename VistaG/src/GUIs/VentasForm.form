@@ -548,7 +548,7 @@
                   <Table columnCount="5" rowCount="0">
                     <Column editable="false" title="Art&#xed;culo" type="java.lang.String"/>
                     <Column editable="false" title="Descripci&#xf3;n" type="java.lang.String"/>
-                    <Column editable="true" title="Cantidad" type="java.lang.Integer"/>
+                    <Column editable="false" title="Cantidad" type="java.lang.Integer"/>
                     <Column editable="false" title="Precio" type="java.lang.Double"/>
                     <Column editable="false" title="Total" type="java.lang.Double"/>
                   </Table>

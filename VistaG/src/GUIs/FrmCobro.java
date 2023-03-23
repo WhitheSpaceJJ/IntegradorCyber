@@ -19,8 +19,8 @@ public class FrmCobro extends javax.swing.JFrame {
 
     IFachadaControl logica = new FachadaControl();
     VentasForm ventasFrm = null;
-    private FrmCobro frmCobro=null;
-    private Venta venta=new Venta();
+    private FrmCobro frmCobro = null;
+    private Venta venta = new Venta();
     public static FrmCobro frmCobro1;
 
     /**
@@ -30,17 +30,16 @@ public class FrmCobro extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         instanciaVentasForm();
-        
+
     }
-    
+
     public FrmCobro(Venta venta) {
         initComponents();
         this.setLocationRelativeTo(null);
         instanciaVentasForm();
-        this.venta=venta;
-        
-    }
+        this.venta = venta;
 
+    }
 
     public static FrmCobro getInstance() {
         if (frmCobro1 == null) {
@@ -164,101 +163,105 @@ public class FrmCobro extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMontoUsuarioActionPerformed
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
-        
-       if(validaDatos()==true){
-           
+
+        if (validaDatos() == true) {
+
             ventasFrm.registrarTodoVenta();
-        cerrarFormulario();
+            cerrarFormulario();
         }
-      
-        
+
 //         
 
     }//GEN-LAST:event_btnContinuarActionPerformed
 
-    public boolean validaDatos(){
-        if("".equals(txtMontoUsuario.getText().trim())){ 
-            
+    public boolean validaDatos() {
+        if ("".equals(txtMontoUsuario.getText().trim())) {
+
             JOptionPane.showMessageDialog(null, "Campo vacio");
             return false;
-        }else if(Float.parseFloat(txtMontoUsuario.getText())<venta.getTotalventa())  {
-           
+        } else if (Float.parseFloat(txtMontoUsuario.getText()) < venta.getTotalventa()) {
+
             JOptionPane.showMessageDialog(null, "Monto ingresado menor al total de la venta");
             return false;
         }
-       
-      return true;
+
+        return true;
     }
-    
+
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         cerrarFormulario();
 //        ventasFrm.desbloquearCampos();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtMontoUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoUsuarioKeyReleased
-     if(txtMontoUsuario.getText().trim()!=""){
-        if( Float.parseFloat(txtMontoUsuario.getText())>venta.getTotalventa()){
-           float cambio=Float.parseFloat(txtMontoUsuario.getText())-venta.getTotalventa();
-           this.txtCambio.setText(String.valueOf(cambio));
-       }
-     }else{
-         this.txtCambio.setText("");
-     }
+        if (txtMontoUsuario.getText().trim() != "") {
+            if (txtMontoUsuario.getText().isEmpty()) {
+                txtCambio.setText("");
+            } else {
+                if (Float.parseFloat(txtMontoUsuario.getText()) >= venta.getTotalventa()) {
+                    float cambio = Float.parseFloat(txtMontoUsuario.getText()) - venta.getTotalventa();
+                    this.txtCambio.setText(String.valueOf(cambio));
+                } else {
+                    txtCambio.setText("");
+                }
+            }
+
+        } else {
+            this.txtCambio.setText("");
+        }
     }//GEN-LAST:event_txtMontoUsuarioKeyReleased
 
-    public void mostrarFormulario(VentasForm ventas,Venta venta,List<DetalleVenta>detalles) {
+    public void mostrarFormulario(VentasForm ventas, Venta venta, List<DetalleVenta> detalles) {
         instanciaFrmCobro(venta);
-       frmCobro.mostrarTicket(venta,detalles);
+        frmCobro.mostrarTicket(venta, detalles);
         frmCobro.setLocationRelativeTo(null);
         frmCobro.setVisible(true);
-        this.venta=venta;
-        this.ventasFrm=ventas;
+        this.venta = venta;
+        this.ventasFrm = ventas;
 
     }
 
-    
-    
-    public void mostrarTicket(Venta venta,List<DetalleVenta>detalles){
-     
-    String ticket = "";
-    int espacioNombre=0;
-  int espacioCantidad=0;
-  int espacioPrecio=0;
-  int espacioImporte=0;
-    // Formatear los datos de cada producto en una sola línea y agregarlos al ticket
-ticket += "-------------------------------------------------------------------\n";
-ticket += "                            TICKET DE VENTA                        \n";
-ticket += "-------------------------------------------------------------------\n";
-ticket += "Producto            Cantidad       Precio     importe              \n";
-ticket += "-------------------------------------------------------------------\n";
-for (DetalleVenta d : detalles) {
-    
-    int longitudNombre=d.getProducto().getNombre().length();
-     int longitudCantidad=String.valueOf(d.getCantidad()).length();
-      int longitudPrecio=String.valueOf(d.getProducto().getPrecio()).length();
-       int longitudImporte=String.valueOf(d.getImporte()).length();
-    espacioNombre=15;
-    espacioCantidad=20-longitudNombre;
-    espacioPrecio=20-longitudCantidad;
-    espacioImporte=25-longitudImporte;
-    
-    String linea = String.format("%-"+espacioNombre+"s %"+espacioCantidad+"s %"+espacioPrecio+"s %"+espacioImporte+"s\n", d.getProducto().getNombre(), d.getCantidad(), d.getProducto().getPrecio(),d.getImporte());
-    ticket += linea;
-}
-ticket += "-------------------------------------------------------------------\n";
-String lineaTotal = String.format("%70s %10.2f\n", "Total:", venta.getTotalventa());
-ticket += lineaTotal;
-ticket += "-------------------------------------------------------------------\n";
+    public void mostrarTicket(Venta venta, List<DetalleVenta> detalles) {
 
+        String ticket = "";
+        int espacioNombre = 0;
+        int espacioCantidad = 0;
+        int espacioPrecio = 0;
+        int espacioImporte = 0;
+        // Formatear los datos de cada producto en una sola línea y agregarlos al ticket
+        ticket += "-------------------------------------------------------------------\n";
+        ticket += "                            TICKET DE VENTA                        \n";
+        ticket += "-------------------------------------------------------------------\n";
+        ticket += "Producto            Cantidad       Precio     importe              \n";
+        ticket += "-------------------------------------------------------------------\n";
+        for (DetalleVenta d : detalles) {
 
-txtTicket.setText(ticket);
-txtTicket.setEditable(false);
-    
+            int longitudNombre = d.getProducto().getNombre().length();
+            int longitudCantidad = String.valueOf(d.getCantidad()).length();
+            int longitudPrecio = String.valueOf(d.getProducto().getPrecio()).length();
+            int longitudImporte = String.valueOf(d.getImporte()).length();
+            espacioNombre = 15;
+            espacioCantidad = 20 - longitudNombre;
+            espacioPrecio = 20 - longitudCantidad;
+            espacioImporte = 25 - longitudImporte;
+
+            String linea = String.format("%-" + espacioNombre + "s %" + espacioCantidad + "s %" + espacioPrecio + "s %" + espacioImporte + "s\n", d.getProducto().getNombre(), d.getCantidad(), d.getProducto().getPrecio(), d.getImporte());
+            ticket += linea;
+        }
+        ticket += "-------------------------------------------------------------------\n";
+        String lineaTotal = String.format("%70s %10.2f\n", "Total:", venta.getTotalventa());
+        ticket += lineaTotal;
+        ticket += "-------------------------------------------------------------------\n";
+
+        txtTicket.setText(ticket);
+        txtTicket.setEditable(false);
+
     }
-    
+
     public void cerrarFormulario() {
+        limpiar();
         this.dispose();
-        
+
     }
 
     public VentasForm instanciaVentasForm() {
@@ -273,6 +276,12 @@ txtTicket.setEditable(false);
             frmCobro = new FrmCobro(venta);
         }
         return frmCobro;
+    }
+
+    public void limpiar() {
+        txtMontoUsuario.setText("");
+        txtCambio.setText("");
+        
     }
     /**
      * @param args the command line arguments

@@ -68,7 +68,7 @@ public class VentasForm extends javax.swing.JFrame {
         clientes = logica.consultarTodosClientes();
         for (int i = 0; i < clientes.size(); i++) {
             Cliente get = clientes.get(i);
-            model.addElement("Nombre; " + get.getNombre());
+            model.addElement(get.getNombre());
         }
         clientesC.setModel(model);
     }
@@ -462,7 +462,7 @@ public class VentasForm extends javax.swing.JFrame {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Double.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
