@@ -33,6 +33,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jTextFieldPrecioCompra.setDocument(new JTextFieldLimit(12));
         jTextFieldPrecioVenta.setDocument(new JTextFieldLimit(12));
         jTextFieldStock.setDocument(new JTextFieldLimit(12));
+        jTextFieldCodigo.setDocument(new JTextFieldLimit(13));
     }
 
     public void llenarCategorias() {
@@ -94,6 +95,8 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jTextFieldDescripcion.setText(producto.getDescripcion());
         jTextFieldPrecioCompra.setText(String.valueOf(producto.getCosto()));
         jTextFieldPrecioVenta.setText(String.valueOf(producto.getPrecio()));
+        jTextFieldMarca.setText(String.valueOf(producto.getMarca()));
+        jTextFieldCodigo.setText(String.valueOf(producto.getCodigo()));
         int valor = (int) producto.getStock();
         jTextFieldStock.setText(String.valueOf(valor));
         int indic2e = categorias.indexOf(producto.getCategoria());
@@ -183,10 +186,10 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         }
 
         if (!jTextFieldStock.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldStock.getText()) <= 0 || Integer.parseInt(jTextFieldStock.getText()) > 999999999) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero en el stock  mayor a 0 y no mayor a 9999999910");
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero en el stock  mayor a 0 y no mayor a 999999999");
             return true;
         }
-        if (!jTextFieldCodigo.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldCodigo.getText()) <= 0 || Integer.parseInt(jTextFieldCodigo.getText()) > 999999999) {
+        if (!jTextFieldCodigo.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldCodigo.getText()) <= 0){ //|| Integer.parseInt(jTextFieldCodigo.getText()) > 999999999) {
             JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero de 10 digitos maximo");
             return true;
         }
@@ -339,31 +342,36 @@ jTextFieldMarca.setText("");
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Nombre");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, -1, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Descripción");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel6.setText("Precio de Compra");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 340, -1, -1));
+        jLabel6.setText("Costo");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel7.setText("Precio Venta");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, -1, -1));
+        jLabel7.setText("Precio");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, -1, -1));
 
         jTextFieldNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel1.add(jTextFieldNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 300, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setText("Codigo");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 260, -1, -1));
 
         jTextFieldMarca.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel1.add(jTextFieldMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 300, -1));
 
         jTextFieldCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldCodigo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldCodigoActionPerformed(evt);
+            }
+        });
         jPanel1.add(jTextFieldCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 300, -1));
 
         jTextFieldDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -371,7 +379,7 @@ jTextFieldMarca.setText("");
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("Marca");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, -1, -1));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
         jTextFieldPrecioCompra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jPanel1.add(jTextFieldPrecioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 300, -1));
@@ -441,7 +449,7 @@ jTextFieldMarca.setText("");
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Categoria");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 480, -1, -1));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, -1, -1));
 
         jTextFieldStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextFieldStock.addActionListener(new java.awt.event.ActionListener() {
@@ -453,7 +461,7 @@ jTextFieldMarca.setText("");
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel9.setText("Stock");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 440, -1, -1));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, -1, -1));
 
         jPanel1.add(jComboBoxCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 300, 30));
 
@@ -496,6 +504,10 @@ jTextFieldMarca.setText("");
     private void jTextFieldStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStockActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldStockActionPerformed
+
+    private void jTextFieldCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldCodigoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

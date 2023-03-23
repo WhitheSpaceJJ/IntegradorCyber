@@ -45,9 +45,15 @@ public class ProductosDAO implements IProductosDAO {
             Producto productoBD = em.find(Producto.class, producto.getId());
 
             productoBD.setNombre(producto.getNombre());
-            productoBD.setDescripcion(productoBD.getDescripcion());
-            productoBD.setStock(productoBD.getStock());
-            productoBD.setPrecio(productoBD.getPrecio());
+            productoBD.setMarca(producto.getMarca());
+            productoBD.setCodigo(producto.getCodigo());
+            productoBD.setDescripcion(producto.getDescripcion());
+            productoBD.setPrecio(producto.getPrecio());
+            productoBD.setCosto(producto.getCosto());
+            productoBD.setStock(producto.getStock());
+            productoBD.setCategoria(producto.getCategoria());
+            
+            
 
             em.getTransaction().commit();
             return true;
