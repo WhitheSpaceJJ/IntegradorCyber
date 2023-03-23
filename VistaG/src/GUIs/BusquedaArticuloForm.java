@@ -41,6 +41,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
      */
     public void llenarCBoxCategorias() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("TODAS");
         categorias = logica.consultarTodasCategorias();
         for (int i = 0; i < categorias.size(); i++) {
             Categoria get = categorias.get(i);
@@ -202,9 +203,10 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         if (indice != -1) {
             vaciarCampos();
             VentasForm.getInstance().agregarArtBuscado(productosCoinicidentes.get(indice));
-                    setVisible(false);
+            setVisible(false);
             dispose();
             VentasForm.getInstance().setVisible(true);
+
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un artículo", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
@@ -219,19 +221,31 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
 
     public void buscarCoincidenciasNombre(String busqueda) {
         productosCoinicidentes.clear();
-        productosCoinicidentes = logica.buscarProductosPorNombre(busqueda);
-        if (!productosCoinicidentes.isEmpty()) {
-            for (int i = 0; i < productosCoinicidentes.size(); i++) {
-                if (!((productosCoinicidentes.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase()))) {
-                    productosCoinicidentes.remove(i);
+        List<Producto> todosPro = logica.buscarProductosPorNombre(busqueda);
+        if (categoriasC.getSelectedIndex() == 0) {
+            productosCoinicidentes = todosPro;
+        } else {
+            for (int i = 0; i < todosPro.size(); i++) {
+                if ((todosPro.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase())) {
+                    productosCoinicidentes.add(todosPro.get(i));
                 }
             }
-            if (!productosCoinicidentes.isEmpty()) {
-                cargarCoincidencias();
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
-            }
-
+        }
+//        if (!productosCoinicidentes.isEmpty()) {
+//            for (int i = 0; i < productosCoinicidentes.size(); i++) {
+//                if (!((productosCoinicidentes.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase()))) {
+//                    productosCoinicidentes.remove(i);
+//                }
+//            }
+//            if (!productosCoinicidentes.isEmpty()) {
+//                cargarCoincidencias();
+//            } else {
+//                JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
+//            }
+//
+//        } 
+        if (!productosCoinicidentes.isEmpty()) {
+            cargarCoincidencias();
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
@@ -241,11 +255,16 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     public void buscarCoincidenciasCategoria() {
         List<Producto> todosPro = logica.consultarTodosProductos();
         if (!todosPro.isEmpty()) {
-            for (int i = 0; i < todosPro.size(); i++) {
-                if ((todosPro.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase())) {
-                    productosCoinicidentes.add(todosPro.get(i));
+            if (categoriasC.getSelectedIndex() == 0) {
+                productosCoinicidentes = todosPro;
+            } else {
+                for (int i = 0; i < todosPro.size(); i++) {
+                    if ((todosPro.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase())) {
+                        productosCoinicidentes.add(todosPro.get(i));
+                    }
                 }
             }
+
             if (!productosCoinicidentes.isEmpty()) {
                 cargarCoincidencias();
             } else {
@@ -257,12 +276,14 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         }
 
     }
-   public void resetBusquedas(){
-     DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
-            modeloTabla.setRowCount(0);
-   }
+
+    public void resetBusquedas() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
+        modeloTabla.setRowCount(0);
+    }
+
     public void cargarCoincidencias() {
-        if (productosCoinicidentes != null ) {
+        if (productosCoinicidentes != null) {
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
             modeloTabla.setRowCount(0);
             productosCoinicidentes.forEach(producto -> {

@@ -21,9 +21,8 @@ public class VentasForm extends javax.swing.JFrame {
 
     private static VentasForm ventasForm;
     private FrmCobro frmCobro;
-    Venta venta=null;
+    Venta venta = null;
 
-    
     private List<Producto> productos;
     private List<DetalleVenta> detalleV;
 
@@ -33,7 +32,7 @@ public class VentasForm extends javax.swing.JFrame {
 
     private IFachadaControl logica;
     private List<Cliente> clientes;
-      private Producto articuloBuscado;
+    private Producto articuloBuscado;
 
     private VentasForm() {
         initComponents();
@@ -44,7 +43,7 @@ public class VentasForm extends javax.swing.JFrame {
         llenarCBoxClientes();
         llenarCampos();
         txtCategoria.setEditable(false);
-        this.txtImporte.setEditable(false);
+        //this.txtImporte.setEditable(false);
         this.txtTotalProducto.setEditable(false);
         this.txtDisponibilidad.setEditable(false);
         this.txtDescripcion.setEditable(false);
@@ -89,7 +88,6 @@ public class VentasForm extends javax.swing.JFrame {
 //        btnQuitar.setEnabled(false);
 //    }
 //
-  
     public void llenarCampos() {
         Calendar fechaC = Calendar.getInstance();
 
@@ -123,7 +121,7 @@ public class VentasForm extends javax.swing.JFrame {
         txtObservaciones.setText("");
         txtTotalProducto.setText("");
     }
-    
+
     public void limpiarCamposTodo() {
         txtCantidad.setText("");
         txtCategoria.setText("");
@@ -144,6 +142,20 @@ public class VentasForm extends javax.swing.JFrame {
             evt.consume();
             getToolkit().beep();
         }
+    }
+
+    public void adminitirFlotante(java.awt.event.KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if (Character.isDigit(car)||(countOccurrences(txtImporte.getText(), '.'))<1) {
+
+        } else {
+            evt.consume();
+            getToolkit().beep();
+        }
+    }
+
+    private static int countOccurrences(String str, char ch) {
+        return str.length() - str.replace(String.valueOf(ch), "").length();
     }
 
     /**
@@ -180,7 +192,6 @@ public class VentasForm extends javax.swing.JFrame {
             return null;
         }
     }
-  
 
     //Bien
     public void agregarArtBuscado(Producto productoS) {
@@ -198,6 +209,7 @@ public class VentasForm extends javax.swing.JFrame {
         txtDisponibilidad.setText(productoCargado.getStock() + "");
         txtImporte.setText(productoCargado.getPrecio() + "");
         txtTotalProducto.setText(productoCargado.getPrecio() + "");
+        txtCantidad.setText("1");
     }
 
     //
@@ -406,12 +418,35 @@ public class VentasForm extends javax.swing.JFrame {
         tblVenta.add(txtObservaciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 325, 710, -1));
 
         txtTotalProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtTotalProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTotalProductoActionPerformed(evt);
+            }
+        });
         tblVenta.add(txtTotalProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 285, 100, -1));
 
         txtImporte.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtImporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtImporteActionPerformed(evt);
+            }
+        });
+        txtImporte.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtImporteKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtImporteKeyTyped(evt);
+            }
+        });
         tblVenta.add(txtImporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 285, 100, -1));
 
         txtCodigoArticulo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCodigoArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoArticuloActionPerformed(evt);
+            }
+        });
         tblVenta.add(txtCodigoArticulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 205, 180, -1));
 
         lblCliente9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -552,24 +587,21 @@ public class VentasForm extends javax.swing.JFrame {
         }*/
 
         if (txtCodigoArticulo.getText().equals("")) {
-              this.setVisible(false);
+            this.setVisible(false);
             java.awt.EventQueue.invokeLater(() -> {
                 BusquedaArticuloForm.getInstance().setVisible(true);
             });
 
         } else {
-            try{
-           
-            int idProducto = Integer.parseInt(txtCodigoArticulo.getText());
-            articuloBuscado = logica.consultarProducto(idProducto);
-            if (articuloBuscado == null) {
-                JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
-            } else {
-               
+            try {
 
-                //Si no se a agregado antes lo busca solamente y carga la informacion
-           
+                int idProducto = Integer.parseInt(txtCodigoArticulo.getText());
+                articuloBuscado = logica.consultarProducto(idProducto);
+                if (articuloBuscado == null) {
+                    JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
+                } else {
 
+                    //Si no se a agregado antes lo busca solamente y carga la informacion
                     articuloBuscado = logica.consultarProducto(idProducto);
                     if (articuloBuscado != null) {
 
@@ -577,10 +609,10 @@ public class VentasForm extends javax.swing.JFrame {
                     } else {
                         JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
                     }
-                
-            }
 
-        }catch (HeadlessException | NumberFormatException e) {
+                }
+
+            } catch (HeadlessException | NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Para realizar una busqueda directa con el id se requiere que ingrese solo digitos(12,1,2)", "Venta", JOptionPane.ERROR_MESSAGE);
             }
         }
@@ -593,71 +625,69 @@ public class VentasForm extends javax.swing.JFrame {
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
 //        instanciaFrmVentas();
 //        bloquearCampos();
-    if(detalleV.size()>0){
-        //Lleno la venta para mostrarla en el formulario de cobro
-       List<Venta> ventas = logica.consultarVentas();
-        int numTicket;
-        if (ventas.size()<1) {
-            numTicket = 0;
+        if (detalleV.size() > 0) {
+            //Lleno la venta para mostrarla en el formulario de cobro
+            List<Venta> ventas = logica.consultarVentas();
+            int numTicket;
+            if (ventas.size() < 1) {
+                numTicket = 0;
+            } else {
+                numTicket = ventas.get(ventas.size() - 1).getId() + 1;
+            }
+            Calendar fecha = Calendar.getInstance();
+            Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
+            int indiceCliente = clientesC.getSelectedIndex();
+            Cliente cliente = clientes.get(indiceCliente);
+            venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
+
+            instanciaCobro().instanciaFrmCobro(venta);
+
+            frmCobro.mostrarFormulario(this, venta, detalleV);
         } else {
-            numTicket = ventas.get(ventas.size()-1 ).getId() + 1;
+            JOptionPane.showMessageDialog(null, "No ha agregado productos");
         }
-        Calendar fecha = Calendar.getInstance();
-        Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
-        int indiceCliente = clientesC.getSelectedIndex();
-        Cliente cliente = clientes.get(indiceCliente);
-         venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
-         
-        instanciaCobro().instanciaFrmCobro(venta);
-        
-        
-        frmCobro.mostrarFormulario(this,venta,detalleV);
-    }else{
-        JOptionPane.showMessageDialog(null, "No ha agregado productos");
-    }
-        
-        
+
+
     }//GEN-LAST:event_btnCobrarActionPerformed
 
     /**
- * Metodo que gregistra la venta y limpia los campos
- */
-    public void registrarTodoVenta(){
-         registrarVenta();
-         limpiarCamposTodo();
-         detalleV.clear();
+     * Metodo que gregistra la venta y limpia los campos
+     */
+    public void registrarTodoVenta() {
+        registrarVenta();
+        limpiarCamposTodo();
+        detalleV.clear();
         cargarTabla();
     }
-      public void registrarVenta() {
 
-        if(detalleV.size()>0){
-        List<Venta> ventas = logica.consultarVentas();
-        int numTicket;
-        if (ventas.size()<1) {
-            numTicket = 0;
+    public void registrarVenta() {
+
+        if (detalleV.size() > 0) {
+            List<Venta> ventas = logica.consultarVentas();
+            int numTicket;
+            if (ventas.size() < 1) {
+                numTicket = 0;
+            } else {
+                numTicket = ventas.get(ventas.size() - 1).getId() + 1;
+            }
+            Calendar fecha = Calendar.getInstance();
+            Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
+            int indiceCliente = clientesC.getSelectedIndex();
+            Cliente cliente = clientes.get(indiceCliente);
+            venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
+            boolean ventaAgregada = logica.agregarVenta(venta, detalleV);
+
+            if (ventaAgregada == true) {
+
+                JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
+                this.limpiarCampos();
+            }
         } else {
-            numTicket = ventas.get(ventas.size()-1 ).getId() + 1;
-        }
-        Calendar fecha = Calendar.getInstance();
-        Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
-        int indiceCliente = clientesC.getSelectedIndex();
-        Cliente cliente = clientes.get(indiceCliente);
-         venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
-        boolean ventaAgregada = logica.agregarVenta(venta,detalleV);
-        
-        if (ventaAgregada==true) {
-            
-            JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
-            this.limpiarCampos();
-        }
-        }else{
             JOptionPane.showMessageDialog(null, "Aun no ha agregado productos");
         }
 
-
     }
 
-    
     public FrmCobro instanciaCobro() {
         if (frmCobro == null) {
             frmCobro = new FrmCobro();
@@ -674,7 +704,7 @@ public class VentasForm extends javax.swing.JFrame {
         String regexNumeros = "\\d+";
 
         if (!txtCantidad.getText().matches(regexNumeros) || Integer.parseInt(txtCantidad.getText()) <= 0 || Integer.parseInt(txtCantidad.getText()) > 999999999) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero mayor a 0 y no mayor a 9999999910, en la cantidad a comprar");
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero mayor a 0 y no mayor a 999999999, en la cantidad a comprar");
             return true;
         }
 
@@ -702,7 +732,7 @@ public class VentasForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void agregarProductoTabla() {
-if (validarDatos()) {
+        if (validarDatos()) {
             return;
         }
         if (txtCodigoArticulo.getText().trim() != "") {
@@ -718,31 +748,30 @@ if (validarDatos()) {
                 for (int i = 0; i < detalleV.size(); i++) {
                     //Verifica que no se exceda del stock con los ya agregafos
                     if (productoAgregar.getId() == detalleV.get(i).getProducto().getId()) {
-                        if(productoAgregar.getStock()<cantidad+detalleV.get(i).getCantidad()){
-                            int restante=(int) (productoAgregar.getStock()-detalleV.get(i).getCantidad());
-                            repetido=true;
-                           
+                        if (productoAgregar.getStock() < cantidad + detalleV.get(i).getCantidad()) {
+                            int restante = (int) (productoAgregar.getStock() - detalleV.get(i).getCantidad());
+                            repetido = true;
 
-                            String mensaje="Stock Producto: "+productoAgregar.getStock()+"\nCantidad actual agregada: "+detalleV.get(i).getCantidad()+"\nRestante: "+restante;
-                            JOptionPane.showMessageDialog(null,mensaje,"Excede el stock",JOptionPane.INFORMATION_MESSAGE );
+                            String mensaje = "Stock Producto: " + productoAgregar.getStock() + "\nCantidad actual agregada: " + detalleV.get(i).getCantidad() + "\nRestante: " + restante;
+                            JOptionPane.showMessageDialog(null, mensaje, "Excede el stock", JOptionPane.INFORMATION_MESSAGE);
                             break;
-                        }else if(productoAgregar.getId() == detalleV.get(i).getProducto().getId()){
-                        detalleV.get(i).setCantidad(detalleV.get(i).getCantidad() + cantidad);
-                        detalleV.get(i).setImporte(detalleV.get(i).getImporte() + totalProducto);
-                        //detalleV.get(i).getProducto().setStock(productoAgregar.getStock() - cantidad);
-                         //productoAgregar.setStock(productoAgregar.getStock() - cantidad);
-                        actualizarPrecioTotal();
-                        cargarTabla();
-                        limpiarCampos();
-                        repetido = true;
-                        break;
-                        }else{
-                            
+                        } else if (productoAgregar.getId() == detalleV.get(i).getProducto().getId()) {
+                            detalleV.get(i).setCantidad(detalleV.get(i).getCantidad() + cantidad);
+                            detalleV.get(i).setImporte(detalleV.get(i).getImporte() + totalProducto);
+                            //detalleV.get(i).getProducto().setStock(productoAgregar.getStock() - cantidad);
+                            //productoAgregar.setStock(productoAgregar.getStock() - cantidad);
+                            actualizarPrecioTotal();
+                            cargarTabla();
+                            limpiarCampos();
+                            repetido = true;
+                            break;
+                        } else {
+
                         }
                     }
                 }
                 if (repetido == false) {
-                    
+
                     DetalleVenta dv = new DetalleVenta();
                     dv.setCantidad(cantidad);
                     dv.setImporte(totalProducto);
@@ -760,7 +789,7 @@ if (validarDatos()) {
                 JOptionPane.showMessageDialog(null, "Se ingreso una cantidad mayor al stock");
 
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(null, "Ingrese producto");
         }
 
@@ -799,6 +828,31 @@ if (validarDatos()) {
     private void txtTotalCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalCobrarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTotalCobrarActionPerformed
+
+    private void txtTotalProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalProductoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTotalProductoActionPerformed
+
+    private void txtCodigoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoArticuloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoArticuloActionPerformed
+
+    private void txtImporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtImporteActionPerformed
+
+    private void txtImporteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImporteKeyReleased
+        // TODO add your handling code here:
+        String importe = txtImporte.getText();
+        if (!importe.equals("") && importe.matches("^[0-9]*\\.?[0-9]$")) {
+            float total = Float.parseFloat(txtImporte.getText()) * Integer.parseInt(txtCantidad.getText());
+            txtTotalProducto.setText(total + "");
+        }
+    }//GEN-LAST:event_txtImporteKeyReleased
+
+    private void txtImporteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImporteKeyTyped
+        adminitirFlotante(evt);
+    }//GEN-LAST:event_txtImporteKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
