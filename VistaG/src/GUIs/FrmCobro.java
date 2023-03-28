@@ -98,6 +98,9 @@ public class FrmCobro extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtMontoUsuarioKeyReleased(evt);
             }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMontoUsuarioKeyTyped(evt);
+            }
         });
         jPanel1.add(txtMontoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 170, -1));
 
@@ -194,23 +197,30 @@ public class FrmCobro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtMontoUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoUsuarioKeyReleased
-        if (txtMontoUsuario.getText().trim() != "") {
-            if (txtMontoUsuario.getText().isEmpty()) {
-                txtCambio.setText("");
-            } else {
-                if (Float.parseFloat(txtMontoUsuario.getText()) >= venta.getTotalventa()) {
-                    float cambio = Float.parseFloat(txtMontoUsuario.getText()) - venta.getTotalventa();
-                    this.txtCambio.setText(String.valueOf(cambio));
-                } else {
-                    txtCambio.setText("");
-                }
-            }
 
+        String montoUsuario = txtMontoUsuario.getText();
+        if((!montoUsuario.isEmpty()) && (montoUsuario.matches("^[0-9]*\\.?[0-9]$")) && (Float.parseFloat(txtMontoUsuario.getText()) >= venta.getTotalventa())){
+            float cambio = Float.parseFloat(txtMontoUsuario.getText()) - venta.getTotalventa();
+            this.txtCambio.setText(String.valueOf(cambio));
         } else {
-            this.txtCambio.setText("");
+            txtCambio.setText("");
         }
     }//GEN-LAST:event_txtMontoUsuarioKeyReleased
 
+    private void txtMontoUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoUsuarioKeyTyped
+        adminitirFlotante(evt);
+    }//GEN-LAST:event_txtMontoUsuarioKeyTyped
+
+    
+        public void adminitirFlotante(java.awt.event.KeyEvent evt) {
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9'))
+                && (caracter != evt.VK_BACK_SPACE)
+                && (caracter != '.' || txtMontoUsuario.getText().contains("."))) {
+            evt.consume();
+            getToolkit().beep();
+        }
+    }
     public void mostrarFormulario(VentasForm ventas, Venta venta, List<DetalleVenta> detalles) {
         instanciaFrmCobro(venta);
         frmCobro.mostrarTicket(venta, detalles);
@@ -281,7 +291,7 @@ public class FrmCobro extends javax.swing.JFrame {
     public void limpiar() {
         txtMontoUsuario.setText("");
         txtCambio.setText("");
-        
+
     }
     /**
      * @param args the command line arguments

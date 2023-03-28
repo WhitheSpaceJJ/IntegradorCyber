@@ -144,20 +144,6 @@ public class VentasForm extends javax.swing.JFrame {
         }
     }
 
-    public void adminitirFlotante(java.awt.event.KeyEvent evt) {
-        char car = evt.getKeyChar();
-        if (Character.isDigit(car)||(countOccurrences(txtImporte.getText(), '.'))<1) {
-
-        } else {
-            evt.consume();
-            getToolkit().beep();
-        }
-    }
-
-    private static int countOccurrences(String str, char ch) {
-        return str.length() - str.replace(String.valueOf(ch), "").length();
-    }
-
     /**
      * Metodo para solo poder introducir texto en un textField
      */
@@ -735,7 +721,7 @@ public class VentasForm extends javax.swing.JFrame {
         if (validarDatos()) {
             return;
         }
-        if (txtCodigoArticulo.getText().trim() != "") {
+        if ((txtCodigoArticulo.getText().trim() != "") &&(!txtTotalProducto.getText().isEmpty())) {
             int cantidad = Integer.parseInt(txtCantidad.getText());
             float totalProducto = Float.parseFloat(txtTotalProducto.getText());
             Producto productoAgregar = articuloBuscado;
@@ -845,14 +831,29 @@ public class VentasForm extends javax.swing.JFrame {
         // TODO add your handling code here:
         String importe = txtImporte.getText();
         if (!importe.equals("") && importe.matches("^[0-9]*\\.?[0-9]$")) {
-            float total = Float.parseFloat(txtImporte.getText()) * Integer.parseInt(txtCantidad.getText());
+            float total = Float.parseFloat(importe) * Integer.parseInt(txtCantidad.getText());
             txtTotalProducto.setText(total + "");
+        }else{
+            txtTotalProducto.setText("");
         }
     }//GEN-LAST:event_txtImporteKeyReleased
 
     private void txtImporteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImporteKeyTyped
+
+
         adminitirFlotante(evt);
+
     }//GEN-LAST:event_txtImporteKeyTyped
+
+    public void adminitirFlotante(java.awt.event.KeyEvent evt) {
+        char caracter = evt.getKeyChar();
+        if (((caracter < '0') || (caracter > '9'))
+                && (caracter != evt.VK_BACK_SPACE)
+                && (caracter != '.' || txtImporte.getText().contains("."))) {
+            evt.consume();
+            getToolkit().beep();
+        }
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
