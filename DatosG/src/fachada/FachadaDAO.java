@@ -507,7 +507,15 @@ public class FachadaDAO implements IFachadaDAO {
             return false;
         }
     }
-
+    @Override
+ public boolean iniciarSesion(Usuario usuario) {
+     try {
+            IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
+            return usuariosDAO.iniciarSesion(usuario);
+        } catch (Exception e) {
+            return false;
+        }
+ }
     @Override
     public boolean eliminarUsuario(int id) {
         try {

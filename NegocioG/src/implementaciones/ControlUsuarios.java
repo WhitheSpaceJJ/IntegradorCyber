@@ -17,7 +17,10 @@ public class ControlUsuarios implements IControlUsuarios{
     public ControlUsuarios(IFachadaDAO fachadaDAO) {
         this.fachadaDAO=fachadaDAO;
     }
-
+    @Override
+ public boolean iniciarSesion(Usuario usuario) {
+     return this.fachadaDAO.iniciarSesion(usuario);
+ }
     @Override
     public boolean agregar(Usuario usuario) {
 return this.fachadaDAO.agregarUsuario(usuario);

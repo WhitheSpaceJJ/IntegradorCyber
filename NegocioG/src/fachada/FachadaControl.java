@@ -28,21 +28,17 @@ import interfaces.IControlVentas;
 import interfaces.IFachadaControl;
 import java.util.ArrayList;
 
-
 public class FachadaControl implements IFachadaControl {
 
     private final FabricaControl fabrica;
-   
 
     public FachadaControl() {
-        this.fabrica=FabricaControl.getInstancia();
+        this.fabrica = FabricaControl.getInstancia();
 
     }
 
-    
-
     // Venta
-     @Override
+    @Override
     public List<Venta> buscarVentasEntreFechas(Calendar inicio, Calendar fin) {
         try {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
@@ -52,7 +48,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Venta> buscarVentasEntreFechasPorCliente(Calendar inicio, Calendar fin, Cliente cliente) {
         try {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
@@ -62,7 +58,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public Venta consultarVenta(int id) {
         try {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
@@ -72,7 +68,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Venta> consultarVentas() {
         try {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
@@ -82,7 +78,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Venta> buscarVentasEntreFechasYCliente(Calendar inicio, Calendar fin, Cliente cliente) {
         try {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
@@ -92,11 +88,11 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
-    public boolean agregarVenta(Venta venta,List<DetalleVenta>detalles) {
+    @Override
+    public boolean agregarVenta(Venta venta, List<DetalleVenta> detalles) {
         try {
             IControlVentas controlVentas = fabrica.getVentasDAO();
-            return controlVentas.agregar(venta,detalles);
+            return controlVentas.agregar(venta, detalles);
         } catch (Exception e) {
             return false;
         }
@@ -114,7 +110,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
     //compra Detalle
-     @Override
+    @Override
     public boolean agregarDetalleCompra(DetalleCompra entradaAlmacen) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -124,7 +120,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public DetalleCompra consultarDetalleCompra(int id) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -135,7 +131,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<DetalleCompra> consultarTodasEntradasAlmacen() {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -145,7 +141,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<DetalleCompra> buscarEntradasAlmacenEntreFechas(Calendar inicio, Calendar fin) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -155,7 +151,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -165,7 +161,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto) {
         try {
             IControlCompra detalleCompraDAO = fabrica.getDetalleCompraDAO();
@@ -186,7 +182,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean agregarProducto(Producto producto) {
         try {
             IControlProductos productosDAO = fabrica.getProductosDAO();
@@ -196,7 +192,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean actualizarProducto(Producto producto) {
         try {
             IControlProductos productosDAO = fabrica.getProductosDAO();
@@ -206,7 +202,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean eliminarProducto(int id) {
         try {
             IControlProductos productosDAO = fabrica.getProductosDAO();
@@ -216,8 +212,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-
-     @Override
+    @Override
     public List<Producto> buscarProductosPorNombre(String nombre) {
         try {
             IControlProductos productosDAO = fabrica.getProductosDAO();
@@ -227,7 +222,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Producto> consultarTodosProductos() {
         try {
             IControlProductos productosDAO = fabrica.getProductosDAO();
@@ -238,7 +233,8 @@ public class FachadaControl implements IFachadaControl {
     }
 //Clases  que sean de agregar,actualizar eliminar, consultar ID, consultar todos
     //Usuarios
-     @Override
+
+    @Override
     public boolean agregarUsuario(Usuario usuario) {
         try {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
@@ -248,7 +244,17 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
+    public boolean iniciarSesion(Usuario usuario) {
+        try {
+            IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
+            return usuariosDAO.agregar(usuario);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
     public boolean actualizarUsuario(Usuario usuario) {
         try {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
@@ -258,7 +264,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean eliminarUsuario(int id) {
         try {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
@@ -268,7 +274,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public Usuario consultarUsuario(int id) {
         try {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
@@ -278,7 +284,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Usuario> consultarTodosUsuarios() {
         try {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
@@ -289,7 +295,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
     //Proveedores
-     @Override
+    @Override
     public boolean agregarProveedor(Proveedor proveedor) {
         try {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
@@ -298,7 +304,8 @@ public class FachadaControl implements IFachadaControl {
             return false;
         }
     }
- @Override
+
+    @Override
     public boolean actualizarProveedor(Proveedor proveedor) {
         try {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
@@ -308,7 +315,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean eliminarProveedor(int id) {
         try {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
@@ -318,7 +325,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public Proveedor consultarProveedor(int id) {
         try {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
@@ -328,7 +335,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Proveedor> consultarTodosProveedores() {
         try {
             IControlProveedores proveedoresDAO = fabrica.getProveedoresDAO();
@@ -339,7 +346,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
     //Categorias
-     @Override
+    @Override
     public boolean agregarCategoria(Categoria categoria) {
         try {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
@@ -349,7 +356,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean actualizarCategoria(Categoria categoria) {
         try {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
@@ -359,7 +366,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean eliminarCategoria(int id) {
         try {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
@@ -369,7 +376,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public Categoria consultarCategoria(int id) {
         try {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
@@ -379,7 +386,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Categoria> consultarTodasCategorias() {
         try {
             IControlCategorias categoriasDAO = fabrica.getCategoriasDAO();
@@ -390,7 +397,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
     //Clientes
-     @Override
+    @Override
     public boolean agregarCliente(Cliente cliente) {
         try {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
@@ -400,7 +407,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean actualizarCliente(Cliente cliente) {
         try {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
@@ -410,7 +417,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean eliminarCliente(int id) {
         try {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
@@ -420,7 +427,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public Cliente consultarCliente(int id) {
         try {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
@@ -430,7 +437,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Cliente> consultarTodosClientes() {
         try {
             IControlClientes clientesDAO = fabrica.getClientesDAO();
@@ -439,7 +446,7 @@ public class FachadaControl implements IFachadaControl {
             return null;
         }
     }
-    
+
     //Cajas
     @Override
     public boolean agregarCaja(Caja caja) {
@@ -461,7 +468,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public boolean eliminarCaja(int id) {
         try {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
@@ -471,8 +478,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-    
-     @Override
+    @Override
     public Caja consultarCaja(int id) {
         try {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
@@ -481,29 +487,29 @@ public class FachadaControl implements IFachadaControl {
             return null;
         }
     }
-    
+
     @Override
-     public Caja consultarCajaAbierta(){
-         List<Caja> cajasObtenidas= new ArrayList();
-       
-         try {
+    public Caja consultarCajaAbierta() {
+        List<Caja> cajasObtenidas = new ArrayList();
+
+        try {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
-            cajasObtenidas=cajasDAO.consultarTodos();
-            for(int i=0;i<cajasObtenidas.size();i++){
-                if(cajasObtenidas.get(i).getEstado()== Estado.ABIERTA){
+            cajasObtenidas = cajasDAO.consultarTodos();
+            for (int i = 0; i < cajasObtenidas.size(); i++) {
+                if (cajasObtenidas.get(i).getEstado() == Estado.ABIERTA) {
                     return cajasObtenidas.get(i);
-                    
+
                 }
-           
+
             }
         } catch (Exception e) {
             return null;
         }
         return null;
-         
-     }
 
-     @Override
+    }
+
+    @Override
     public List<Caja> consultarCajas() {
         try {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
@@ -514,7 +520,7 @@ public class FachadaControl implements IFachadaControl {
     }
 
     //Gastos
-     @Override
+    @Override
     public int agregarGasto(Gasto gasto) {
         try {
             IControlGastos gastosDAO = fabrica.getGastosDAO();
@@ -524,7 +530,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public Gasto consultar(int id) {
         try {
             IControlGastos gastosDAO = fabrica.getGastosDAO();
@@ -534,7 +540,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Gasto> consultarTodas() {
         try {
             IControlGastos gastosDAO = fabrica.getGastosDAO();
@@ -544,7 +550,7 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-     @Override
+    @Override
     public List<Gasto> buscarGastosEntreFechas(Calendar inicio, Calendar fin) {
         try {
             IControlGastos gastosDAO = fabrica.getGastosDAO();

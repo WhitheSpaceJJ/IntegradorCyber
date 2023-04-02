@@ -9,7 +9,7 @@ public interface IControlUsuarios {
     boolean agregar(Usuario usuario);
 
     boolean actualizar(Usuario usuario);
-
+ public boolean iniciarSesion(Usuario usuario) ;
     boolean eliminar(int id);
 
     Usuario consultar(int id);

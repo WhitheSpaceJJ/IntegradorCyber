@@ -108,7 +108,7 @@ public interface IFachadaDAO {
 
     //Usuario
     public boolean agregarUsuario(Usuario usuario);
-
+ public boolean iniciarSesion(Usuario usuario) ;
     public boolean actualizarUsuario(Usuario usuario);
 
     public boolean eliminarUsuario(int id);

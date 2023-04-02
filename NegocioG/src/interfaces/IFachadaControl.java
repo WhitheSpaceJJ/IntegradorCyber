@@ -8,8 +8,11 @@ import java.util.Calendar;
 import java.util.List;
 
 public interface IFachadaControl {
+ public boolean iniciarSesion(Usuario usuario);
     
-    public boolean agregarCaja(Caja caja);
+ 
+ public boolean agregarCaja(Caja caja);
+    
     
 
     public boolean actualizarCaja(Caja caja);
