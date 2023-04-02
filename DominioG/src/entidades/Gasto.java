@@ -161,8 +161,6 @@ public class Gasto implements Serializable{
     public String toString() {
         return "Gasto{" + "id=" + id + ", fechaGasto=" + fechaGasto + ", concepto=" + concepto + ", costo=" + costo + ", autoriza=" + autoriza + ", caja=" + caja + '}';
     }
-
-    
     
 
-}//end class
+}

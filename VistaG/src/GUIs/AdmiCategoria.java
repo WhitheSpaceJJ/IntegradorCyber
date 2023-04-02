@@ -81,7 +81,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
     private void eliminar(int idElimninar) {
 
-        //Establece que por defecto que se seleccionó la opción "NO".
         int opcionSeleccionada = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar la categoria seleccionada?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
         if (opcionSeleccionada == JOptionPane.YES_OPTION) {
@@ -157,7 +156,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
     }
     private List<Categoria> categorias;
 
-    //Bien
     private void llenarTabla() {
         categorias = this.logica.consultarTodasCategorias();
         if(categorias!=null || !categorias.isEmpty()){

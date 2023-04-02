@@ -3,15 +3,11 @@ package implementaciones;
 import entidades.DetalleCompra;
 import entidades.Producto;
 import entidades.Proveedor;
-import fachada.FachadaDAO;
 
-import interfaces.IConexionBD;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import interfaces.IControlCompra;
-import interfaces.IControlProductos;
-import interfaces.IControlProveedores;
+
 import interfaces.IFachadaDAO;
 
 public class ControlCompra implements IControlCompra {

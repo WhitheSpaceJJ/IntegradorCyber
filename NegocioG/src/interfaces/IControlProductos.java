@@ -1,7 +1,6 @@
 
 package interfaces;
 
-import entidades.DetalleCompra;
 import entidades.Producto;
 import java.util.List;
 

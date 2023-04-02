@@ -12,7 +12,6 @@ import entidades.Usuario;
 import entidades.Venta;
 import enumeradores.Estado;
 import fabrica.FabricaControl;
-import implementaciones.ControlVentas;
 import java.util.List;
 import java.util.Calendar;
 import interfaces.IControlCajas;
@@ -37,7 +36,6 @@ public class FachadaControl implements IFachadaControl {
 
     }
 
-    // Venta
     @Override
     public List<Venta> buscarVentasEntreFechas(Calendar inicio, Calendar fin) {
         try {
@@ -98,7 +96,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-    //Detalle Venta
     @Override
     public boolean agregarDetalleVenta(DetalleVenta detalleVenta) {
         try {
@@ -109,7 +106,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-    //compra Detalle
     @Override
     public boolean agregarDetalleCompra(DetalleCompra entradaAlmacen) {
         try {
@@ -171,7 +167,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-//Producto 
     @Override
     public Producto consultarProducto(int id) {
         try {
@@ -231,8 +226,6 @@ public class FachadaControl implements IFachadaControl {
             return null;
         }
     }
-//Clases  que sean de agregar,actualizar eliminar, consultar ID, consultar todos
-    //Usuarios
 
     @Override
     public boolean agregarUsuario(Usuario usuario) {
@@ -294,7 +287,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-    //Proveedores
     @Override
     public boolean agregarProveedor(Proveedor proveedor) {
         try {
@@ -345,7 +337,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-    //Categorias
     @Override
     public boolean agregarCategoria(Categoria categoria) {
         try {
@@ -396,7 +387,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-    //Clientes
     @Override
     public boolean agregarCliente(Cliente cliente) {
         try {
@@ -447,7 +437,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-    //Cajas
     @Override
     public boolean agregarCaja(Caja caja) {
         try {
@@ -519,7 +508,6 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
-    //Gastos
     @Override
     public int agregarGasto(Gasto gasto) {
         try {

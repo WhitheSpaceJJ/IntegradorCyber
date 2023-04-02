@@ -1,8 +1,7 @@
 package implementaciones;
 
 import entidades.Usuario;
-import fachada.FachadaDAO;
-import interfaces.IConexionBD;
+
 import java.util.List;
 
 import interfaces.IControlUsuarios;

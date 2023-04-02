@@ -185,11 +185,7 @@ public Caja( Estado estado,Calendar fechaApertura, Calendar fechaCierre, float s
         this.ventas = ventas;
         this.usuario = usuario;
     }
-/*
-    public Caja(Estado estado, Calendar instance, Calendar instance0, double d, double d0, double d1, double d2, int i) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-*/
+
     public Integer getId() {
         return id;
     }

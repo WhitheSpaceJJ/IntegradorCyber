@@ -1,7 +1,5 @@
 package GUIs.utils;
         
-import java.awt.*;
-import javax.swing.*;
 import javax.swing.text.*;
 
 public class JTextFieldLimit extends PlainDocument {

@@ -104,8 +104,6 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
     }
 
     private void eliminar(int idElimninar) {
-
-        //Establece que por defecto que se seleccionó la opción "NO".
         int opcionSeleccionada = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el producto seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
         if (opcionSeleccionada == JOptionPane.YES_OPTION) {
@@ -246,7 +244,6 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
     }
     private List<Producto> productos;
 
-    //Bien
     private void llenarTabla() {
         productos = this.logica.consultarTodosProductos();
         if (productos != null) {
@@ -485,28 +482,25 @@ jTextFieldMarca.setText("");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         this.guardar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
         this.limpiarFormulario();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
         setVisible(false);
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void jTextFieldStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStockActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextFieldStockActionPerformed
 
     private void jTextFieldCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodigoActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_jTextFieldCodigoActionPerformed
 
 

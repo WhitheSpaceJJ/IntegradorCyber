@@ -1,16 +1,12 @@
 package implementaciones;
 
-import entidades.Caja;
 import entidades.Cliente;
 import entidades.DetalleVenta;
 import entidades.Venta;
-import fachada.FachadaDAO;
-import interfaces.IConexionBD;
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.List;
-import interfaces.IControlCajas;
-import interfaces.IControlClientes;
+
 import interfaces.IControlVentas;
 import interfaces.IFachadaDAO;
 

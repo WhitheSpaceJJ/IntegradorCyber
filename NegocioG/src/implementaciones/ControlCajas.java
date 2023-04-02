@@ -1,12 +1,9 @@
 package implementaciones;
 
 import entidades.Caja;
-import entidades.Usuario;
-import fachada.FachadaDAO;
-import interfaces.IConexionBD;
+
 import java.util.List;
 import interfaces.IControlCajas;
-import interfaces.IControlUsuarios;
 import interfaces.IFachadaDAO;
 
 public class ControlCajas implements IControlCajas {

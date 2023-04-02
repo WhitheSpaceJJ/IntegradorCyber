@@ -1,8 +1,7 @@
 package implementaciones;
 
 import entidades.Cliente;
-import fachada.FachadaDAO;
-import interfaces.IConexionBD;
+
 import java.util.List;
 import interfaces.IControlClientes;
 import interfaces.IFachadaDAO;

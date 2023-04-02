@@ -35,7 +35,6 @@ public class FachadaDAO implements IFachadaDAO {
 
     private final FabricaDAO fabrica = FabricaDAO.getInstancia();
 
-    //Cajas
     @Override
     public boolean agregarCaja(Caja caja) {
         try {
@@ -85,7 +84,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    //Gastos
     @Override
     public boolean agregarGasto(Gasto gasto) {
         try {
@@ -136,7 +134,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    //Categorias
     @Override
     public boolean agregarCategoria(Categoria categoria) {
         try {
@@ -187,7 +184,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    //Clientes
     @Override
     public boolean agregarCliente(Cliente cliente) {
         try {
@@ -238,7 +234,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    //Proveedores
     @Override
     public boolean agregarProveedor(Proveedor proveedor) {
         try {
@@ -289,7 +284,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    // Venta
     @Override
     public List<Venta> buscarVentasEntreFechas(Calendar inicio, Calendar fin) {
         try {
@@ -340,7 +334,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    //Detalle Venta
     @Override
     public boolean agregarDetalleVenta(DetalleVenta detalleVenta) {
         try {
@@ -351,7 +344,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    //Detalle Compra
     @Override
     public boolean agregarDetalleCompra(DetalleCompra detalleCompra) {
         try {
@@ -362,7 +354,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    //Detalle Merma
     @Override
     public boolean agregarDetalleMerma(DetalleMerma detalleMerma) {
         try {
@@ -373,7 +364,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-    // Compra
     @Override
     public boolean agregarCompra(Compra compra) {
         try {
@@ -424,9 +414,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-
-
-//Producto
     @Override
     public Producto consultarProducto(int id) {
         try {
@@ -486,8 +473,6 @@ public class FachadaDAO implements IFachadaDAO {
             return null;
         }
     }
-
-    //Usuario
     @Override
     public boolean agregarUsuario(Usuario usuario) {
         try {
@@ -546,8 +531,6 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
-
-    // Merma
     @Override
     public boolean agregarMerma(Merma merma) {
         try {

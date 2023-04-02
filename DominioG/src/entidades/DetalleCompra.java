@@ -168,10 +168,5 @@ public class DetalleCompra implements Serializable{
         return id.toString();
     }
 
-
-
-
-       
     
-    
-}//end class
+}

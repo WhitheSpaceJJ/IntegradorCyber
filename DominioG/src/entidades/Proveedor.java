@@ -192,8 +192,5 @@ public class Proveedor implements Serializable {
         return nombre;
     }
     
-      
     
-    
-    
-}//end class
+}

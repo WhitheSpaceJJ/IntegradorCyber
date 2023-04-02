@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
- */
+
 package interfaces;
 import entidades.*;
 import java.util.Calendar;
@@ -34,7 +31,6 @@ public interface IFachadaControl {
 
     public List<Gasto> buscarGastosEntreFechas(Calendar inicio, Calendar fin);
 
-    //Categorias
     public boolean agregarCategoria(Categoria categoria);
 
     public boolean actualizarCategoria(Categoria categoria);
@@ -45,7 +41,6 @@ public interface IFachadaControl {
 
     public List<Categoria> consultarTodasCategorias();
 
-    //Clientes
     public boolean agregarCliente(Cliente cliente);
 
     public boolean actualizarCliente(Cliente cliente);
@@ -57,7 +52,6 @@ public interface IFachadaControl {
     public List<Cliente> consultarTodosClientes();
     
 
-    //Proveedores
     public boolean agregarProveedor(Proveedor proveedor);
 
     public boolean actualizarProveedor(Proveedor proveedor);
@@ -111,7 +105,6 @@ public interface IFachadaControl {
 
     public List<Producto> consultarTodosProductos();
 
-    //Usuario
     public boolean agregarUsuario(Usuario usuario);
 
     public boolean actualizarUsuario(Usuario usuario);

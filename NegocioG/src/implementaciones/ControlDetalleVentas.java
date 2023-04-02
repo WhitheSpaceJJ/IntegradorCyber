@@ -1,12 +1,8 @@
 package implementaciones;
 
 import entidades.DetalleVenta;
-import entidades.Producto;
-import entidades.Venta;
-import fachada.FachadaDAO;
-import interfaces.IConexionBD;
+
 import interfaces.IControlDetalleVentas;
-import interfaces.IControlProductos;
 import interfaces.IFachadaDAO;
 
 public class ControlDetalleVentas implements IControlDetalleVentas {

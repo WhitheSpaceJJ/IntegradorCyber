@@ -2,7 +2,6 @@ package GUIs.utils;
 
 import java.awt.Component;
 import java.net.URL;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTable;

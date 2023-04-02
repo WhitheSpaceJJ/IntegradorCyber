@@ -289,7 +289,5 @@ public class Producto implements Serializable {
     public String toString() {
         return nombre;
     }
-    
-    
 
-}//end class
+}

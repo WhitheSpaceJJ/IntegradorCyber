@@ -1,7 +1,6 @@
 package interfaces;
 
 import entidades.Categoria;
-import entidades.Cliente;
 import java.util.List;
 
 public interface IControlCategorias {

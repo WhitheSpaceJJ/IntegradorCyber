@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package GUIs;
 
 import GUIs.utils.JButtonCellEditor;
@@ -86,7 +83,6 @@ public class AdmiClienteForm extends javax.swing.JFrame {
 
     private void eliminar(int idElimninar) {
 
-        //Establece que por defecto que se seleccionó la opción "NO".
         int opcionSeleccionada = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar el cliente seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
         if (opcionSeleccionada == JOptionPane.YES_OPTION) {
@@ -203,7 +199,6 @@ public class AdmiClienteForm extends javax.swing.JFrame {
         }
     }
 private       List<Cliente> clientes;
-    //Bien
     private void llenarTabla() {
   clientes = this.logica.consultarTodosClientes();
   if(clientes!=null || !clientes.isEmpty()){
@@ -394,13 +389,11 @@ private       List<Cliente> clientes;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
         this.guardar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.limpiarFormulario();
-        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing

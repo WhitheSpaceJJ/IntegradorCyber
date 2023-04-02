@@ -1,11 +1,7 @@
 package implementaciones;
 
-import entidades.Caja;
-import entidades.Cliente;
 import entidades.Gasto;
-import fachada.FachadaDAO;
-import interfaces.IConexionBD;
-import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.List;
 import interfaces.IControlGastos;

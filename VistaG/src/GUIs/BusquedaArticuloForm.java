@@ -5,7 +5,6 @@ import entidades.*;
 import fachada.FachadaControl;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,9 +16,6 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     private static BusquedaArticuloForm busquedaArticuloForm;
     private static List<Categoria> categorias;
 
-    /**
-     * Creates new form AdmiClienteForm
-     */
     private BusquedaArticuloForm() {
         initComponents();
         this.logica = new FachadaControl();

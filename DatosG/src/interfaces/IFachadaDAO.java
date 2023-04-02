@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IFachadaDAO {
 
-    //Caja
     public boolean agregarCaja(Caja caja);
 
     public boolean actualizarCaja(Caja caja);
@@ -18,7 +17,6 @@ public interface IFachadaDAO {
 
     public List<Caja> consultarCajas();
 
-    //Gastos
     public boolean agregarGasto(Gasto gasto);
 
     public boolean actualizarGasto(Gasto gasto);
@@ -29,7 +27,6 @@ public interface IFachadaDAO {
 
     public List<Gasto> buscarGastosEntreFechas(Calendar inicio, Calendar fin);
 
-    //Categorias
     public boolean agregarCategoria(Categoria categoria);
 
     public boolean actualizarCategoria(Categoria categoria);
@@ -40,7 +37,6 @@ public interface IFachadaDAO {
 
     public List<Categoria> consultarTodasCategorias();
 
-    //Clientes
     public boolean agregarCliente(Cliente cliente);
 
     public boolean actualizarCliente(Cliente cliente);
@@ -51,7 +47,6 @@ public interface IFachadaDAO {
 
     public List<Cliente> consultarTodosClientes();
 
-    //Proveedores
     public boolean agregarProveedor(Proveedor proveedor);
 
     public boolean actualizarProveedor(Proveedor proveedor);
@@ -62,7 +57,6 @@ public interface IFachadaDAO {
 
     public List<Proveedor> consultarTodosProveedores();
 
-    // Venta
     public List<Venta> buscarVentasEntreFechas(Calendar inicio, Calendar fin);
 
     public List<Venta> buscarVentasEntreFechasPorCliente(Calendar inicio, Calendar fin, Cliente cliente);
@@ -73,16 +67,12 @@ public interface IFachadaDAO {
 
     public boolean agregarVenta(Venta venta);
 
-    //Detalle Venta
     public boolean agregarDetalleVenta(DetalleVenta detalleVenta);
 
-    // Detalle Compra
     public boolean agregarDetalleCompra(DetalleCompra detalleCompra);
 
-    // Detalle Merma
     public boolean agregarDetalleMerma(DetalleMerma detalleMerma);
 
-    //Compra
     public boolean agregarCompra(Compra compra);
 
     public Compra consultarCompra(int id);
@@ -93,7 +83,6 @@ public interface IFachadaDAO {
 
     public List<Compra> buscarComprasEntreFechasYProveedor(Calendar inicio, Calendar fin, Proveedor proveedor);
 
-//Producto
     public Producto consultarProducto(int id);
 
     public boolean agregarProducto(Producto producto);
@@ -106,7 +95,6 @@ public interface IFachadaDAO {
 
     public List<Producto> consultarTodosProductos();
 
-    //Usuario
     public boolean agregarUsuario(Usuario usuario);
  public boolean iniciarSesion(Usuario usuario) ;
     public boolean actualizarUsuario(Usuario usuario);
@@ -117,7 +105,6 @@ public interface IFachadaDAO {
 
     public List<Usuario> consultarTodosUsuarios();
 
-    //Merma
     public boolean agregarMerma(Merma merma);
 
     public Merma consultarMerma(int id);
