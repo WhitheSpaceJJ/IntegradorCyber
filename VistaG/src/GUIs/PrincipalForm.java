@@ -4,6 +4,9 @@ import entidades.Usuario;
 import enumeradores.Rol;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JButton;
 
 public class PrincipalForm extends javax.swing.JFrame {
 
@@ -24,22 +27,26 @@ public class PrincipalForm extends javax.swing.JFrame {
         return principalForm;
     }
 
-    public void establecerFunciones(Usuario usuario) {
-        this.usuarioSesion = usuario;
-
-    }
-
     public void establecerSession(Usuario usuario) {
         this.usuarioSesion = usuario;
-        this.jLabelTitulo.setText("Usuario; "+usuario.getNombre()+" Rol; "+usuario.getRol());
+        this.jLabelTitulo.setText("Usuario; " + this.usuarioSesion.getNombre() + " Rol; " + this.usuarioSesion.getRol());
         if (usuario.getRol() == Rol.ADMINISTRADOR) {
-
         }
         if (usuario.getRol() == Rol.TECNICO) {
-
+            this.jButtonUsuarios.setEnabled(false);
+            this.jButtonCatehorias.setEnabled(false);
+            this.jButtonProductos.setEnabled(false);
+            this.jButtonRealizarVenta.setEnabled(false);
+            this.jButtonClientes.setEnabled(false);
+            this.jButtonProveedores.setEnabled(false);
         }
         if (usuario.getRol() == Rol.VENDEDOR) {
-
+            this.jButtonUsuarios.setEnabled(false);
+            this.jButtonCatehorias.setEnabled(false);
+            this.jButtonProductos.setEnabled(false);
+            this.jButtonRealizarVenta.setEnabled(false);
+            this.jButtonClientes.setEnabled(false);
+            this.jButtonProveedores.setEnabled(false);
         }
     }
 
@@ -67,12 +74,6 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdminProductos = new javax.swing.JMenuItem();
         MenuAdminProveedores = new javax.swing.JMenuItem();
         MenuAdminUsuario = new javax.swing.JMenuItem();
-        MenuAdmin1 = new javax.swing.JMenu();
-        MenuAdminCategoria1 = new javax.swing.JMenuItem();
-        MenuAdminClientes1 = new javax.swing.JMenuItem();
-        MenuAdminProductos1 = new javax.swing.JMenuItem();
-        MenuAdminProveedores1 = new javax.swing.JMenuItem();
-        MenuAdminUsuario1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administración");
@@ -233,56 +234,6 @@ public class PrincipalForm extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuAdmin);
 
-        MenuAdmin1.setText("Servicios");
-        MenuAdmin1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-
-        MenuAdminCategoria1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminCategoria1.setText("Categorias");
-        MenuAdminCategoria1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminCategoria1ActionPerformed(evt);
-            }
-        });
-        MenuAdmin1.add(MenuAdminCategoria1);
-
-        MenuAdminClientes1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminClientes1.setText("Clientes");
-        MenuAdminClientes1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminClientes1ActionPerformed(evt);
-            }
-        });
-        MenuAdmin1.add(MenuAdminClientes1);
-
-        MenuAdminProductos1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminProductos1.setText("Productos");
-        MenuAdminProductos1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminProductos1ActionPerformed(evt);
-            }
-        });
-        MenuAdmin1.add(MenuAdminProductos1);
-
-        MenuAdminProveedores1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminProveedores1.setText("Proveedores");
-        MenuAdminProveedores1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminProveedores1ActionPerformed(evt);
-            }
-        });
-        MenuAdmin1.add(MenuAdminProveedores1);
-
-        MenuAdminUsuario1.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminUsuario1.setText("Usuario");
-        MenuAdminUsuario1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminUsuario1ActionPerformed(evt);
-            }
-        });
-        MenuAdmin1.add(MenuAdminUsuario1);
-
-        jMenuBar1.add(MenuAdmin1);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -395,40 +346,14 @@ public class PrincipalForm extends javax.swing.JFrame {
         });
     }//GEN-LAST:event_jButtonClientesActionPerformed
 
-    private void MenuAdminCategoria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoria1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuAdminCategoria1ActionPerformed
-
-    private void MenuAdminClientes1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientes1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuAdminClientes1ActionPerformed
-
-    private void MenuAdminProductos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductos1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuAdminProductos1ActionPerformed
-
-    private void MenuAdminProveedores1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedores1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuAdminProveedores1ActionPerformed
-
-    private void MenuAdminUsuario1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuario1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_MenuAdminUsuario1ActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdmin;
-    private javax.swing.JMenu MenuAdmin1;
     private javax.swing.JMenuItem MenuAdminCategoria;
-    private javax.swing.JMenuItem MenuAdminCategoria1;
     private javax.swing.JMenuItem MenuAdminClientes;
-    private javax.swing.JMenuItem MenuAdminClientes1;
     private javax.swing.JMenuItem MenuAdminProductos;
-    private javax.swing.JMenuItem MenuAdminProductos1;
     private javax.swing.JMenuItem MenuAdminProveedores;
-    private javax.swing.JMenuItem MenuAdminProveedores1;
     private javax.swing.JMenuItem MenuAdminUsuario;
-    private javax.swing.JMenuItem MenuAdminUsuario1;
     private javax.swing.JMenu MenuCaja1;
     private javax.swing.JButton jButtonCatehorias;
     private javax.swing.JButton jButtonClientes;
