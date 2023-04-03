@@ -187,6 +187,7 @@ public class InicioSesion extends javax.swing.JFrame {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
+                                                                    PrincipalForm.getInstance().establecerSession(usuario2);
                     PrincipalForm.getInstance().setVisible(true);
 
                 }

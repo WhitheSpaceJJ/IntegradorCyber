@@ -1,5 +1,6 @@
 package GUIs;
 
+import entidades.Caja;
 import entidades.Usuario;
 import enumeradores.Rol;
 import fachada.FachadaControl;
@@ -7,6 +8,7 @@ import interfaces.IFachadaControl;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
 public class PrincipalForm extends javax.swing.JFrame {
 
@@ -262,36 +264,91 @@ public class PrincipalForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuAdminUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuarioActionPerformed
-
+  this.setVisible(false);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiUsuarioForm.getInstance().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_MenuAdminUsuarioActionPerformed
 
     private void MenuAdminCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaActionPerformed
-
+ this.setVisible(false);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiCategoria.getInstance().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_MenuAdminCategoriaActionPerformed
 
     private void MenuAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesActionPerformed
+   this.setVisible(false);
 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiClienteForm.getInstance().setVisible(true);
+                
+            }
+        });
     }//GEN-LAST:event_MenuAdminClientesActionPerformed
 
     private void MenuAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosActionPerformed
+  // TODO add your handling code here:
+        this.setVisible(false);
 
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiProductoForm.getInstance().setVisible(true);
+            }
+        });
     }//GEN-LAST:event_MenuAdminProductosActionPerformed
 
     private void MenuAdminProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresActionPerformed
-
+        this.setVisible(false);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdmiProveedorForm.getInstance().setVisible(true);
+            }
+        });
 
     }//GEN-LAST:event_MenuAdminProveedoresActionPerformed
 
     private void menuCajaNuevoTicket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaNuevoTicket1ActionPerformed
 
+        //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
+        //verifica si el usuario corresponde a la sesion
+        Caja caja = fachadaControl.consultarCajaAbierta();
+        if (caja != null) {
+            this.setVisible(false);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    VentasForm.getInstance().setVisible(true);
+                    VentasForm.getInstance().establecerCaja(caja);
+                }
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha registrado alguna caja se requiere que abra alguna");
+        }
     }//GEN-LAST:event_menuCajaNuevoTicket1ActionPerformed
 
     private void menuCajaAbrirCaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaAbrirCaja1ActionPerformed
-
+ //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
+        //verifica si el usuario corresponde a la sesions
+        Caja caja = fachadaControl.consultarCajaAbierta();
+        if (caja != null) {
+            JOptionPane.showMessageDialog(null, "No se ha cerrado la caja actual, requiere cerrarla");
+        } else {
+            this.setVisible(false);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    AbrirCajaForm.instanciaAbrirCaja().setVisible(true);
+                }
+            });
+        }
     }//GEN-LAST:event_menuCajaAbrirCaja1ActionPerformed
 
     private void menuCajaCierreCaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaCierreCaja1ActionPerformed
-
+       JOptionPane.showMessageDialog(null, "El cierre de caja, aun no se implementa espera actualizaciones y casos de uso");
     }//GEN-LAST:event_menuCajaCierreCaja1ActionPerformed
 
     private void jButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosActionPerformed
@@ -306,6 +363,20 @@ public class PrincipalForm extends javax.swing.JFrame {
 
     private void jButtonRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealizarVentaActionPerformed
 
+        //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
+        //verifica si el usuario corresponde a la sesion
+        Caja caja = fachadaControl.consultarCajaAbierta();
+        if (caja != null) {
+            this.setVisible(false);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    VentasForm.getInstance().setVisible(true);
+                    VentasForm.getInstance().establecerCaja(caja);
+                }
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha registrado alguna caja se requiere que abra alguna");
+        }
     }//GEN-LAST:event_jButtonRealizarVentaActionPerformed
 
     private void jButtonCatehoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCatehoriasActionPerformed
