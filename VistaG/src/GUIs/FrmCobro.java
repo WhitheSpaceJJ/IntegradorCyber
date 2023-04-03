@@ -1,4 +1,3 @@
-
 package GUIs;
 
 import entidades.DetalleVenta;
@@ -61,11 +60,11 @@ public class FrmCobro extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel1.setText("REALIZAR COBRO");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel3.setText("Ticket:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 150, -1, -1));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Monto Usuario: ");
@@ -84,7 +83,7 @@ public class FrmCobro extends javax.swing.JFrame {
                 txtMontoUsuarioKeyTyped(evt);
             }
         });
-        jPanel1.add(txtMontoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 170, -1));
+        jPanel1.add(txtMontoUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 140, -1));
 
         btnCancelar.setBackground(new java.awt.Color(0, 0, 255));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -96,7 +95,7 @@ public class FrmCobro extends javax.swing.JFrame {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(242, 280, -1, -1));
 
         btnContinuar.setBackground(new java.awt.Color(0, 0, 255));
         btnContinuar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -108,22 +107,23 @@ public class FrmCobro extends javax.swing.JFrame {
                 btnContinuarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, -1, -1));
-        jPanel1.add(checkBoxTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 150, -1, -1));
+        jPanel1.add(btnContinuar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
+        jPanel1.add(checkBoxTicket, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, -1, -1));
 
         lblRectangulo4.setBackground(new java.awt.Color(204, 204, 255));
         lblRectangulo4.setOpaque(true);
-        jPanel1.add(lblRectangulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 420, 130));
+        jPanel1.add(lblRectangulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 370, 130));
 
         txtTicket.setColumns(20);
         txtTicket.setRows(5);
         jScrollPane1.setViewportView(txtTicket);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 280, 400));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 300, 400));
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Cambio:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 230, -1, -1));
-        jPanel1.add(txtCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 140, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
+        jPanel1.add(txtCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, 140, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -178,7 +178,7 @@ public class FrmCobro extends javax.swing.JFrame {
     private void txtMontoUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoUsuarioKeyReleased
 
         String montoUsuario = txtMontoUsuario.getText();
-        if((!montoUsuario.isEmpty()) && (montoUsuario.matches("^[0-9]*\\.?[0-9]$")) && (Float.parseFloat(txtMontoUsuario.getText()) >= venta.getTotalventa())){
+        if ((!montoUsuario.isEmpty()) && (montoUsuario.matches("^[0-9]*\\.?[0-9]$")) && (Float.parseFloat(txtMontoUsuario.getText()) >= venta.getTotalventa())) {
             float cambio = Float.parseFloat(txtMontoUsuario.getText()) - venta.getTotalventa();
             this.txtCambio.setText(String.valueOf(cambio));
         } else {
@@ -190,8 +190,7 @@ public class FrmCobro extends javax.swing.JFrame {
         adminitirFlotante(evt);
     }//GEN-LAST:event_txtMontoUsuarioKeyTyped
 
-    
-        public void adminitirFlotante(java.awt.event.KeyEvent evt) {
+    public void adminitirFlotante(java.awt.event.KeyEvent evt) {
         char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9'))
                 && (caracter != evt.VK_BACK_SPACE)
@@ -200,6 +199,7 @@ public class FrmCobro extends javax.swing.JFrame {
             getToolkit().beep();
         }
     }
+
     public void mostrarFormulario(VentasForm ventas, Venta venta, List<DetalleVenta> detalles) {
         instanciaFrmCobro(venta);
         frmCobro.mostrarTicket(venta, detalles);
@@ -217,11 +217,11 @@ public class FrmCobro extends javax.swing.JFrame {
         int espacioCantidad = 0;
         int espacioPrecio = 0;
         int espacioImporte = 0;
-        ticket += "-------------------------------------------------------------------\n";
-        ticket += "                            TICKET DE VENTA                        \n";
-        ticket += "-------------------------------------------------------------------\n";
-        ticket += "Producto            Cantidad       Precio     importe              \n";
-        ticket += "-------------------------------------------------------------------\n";
+        ticket += "  --------------------------------------------------------------------  \n";
+        ticket += "                              TICKET DE VENTA                          \n";
+        ticket += "  --------------------------------------------------------------------  \n";
+        ticket += "  Producto            Cantidad         Precio         Importe          \n";
+        ticket += "  --------------------------------------------------------------------  \n";
         for (DetalleVenta d : detalles) {
 
             int longitudNombre = d.getProducto().getNombre().length();
@@ -231,15 +231,18 @@ public class FrmCobro extends javax.swing.JFrame {
             espacioNombre = 15;
             espacioCantidad = 20 - longitudNombre;
             espacioPrecio = 20 - longitudCantidad;
-            espacioImporte = 25 - longitudImporte;
+            espacioImporte = 23 - longitudImporte;
 
-            String linea = String.format("%-" + espacioNombre + "s %" + espacioCantidad + "s %" + espacioPrecio + "s %" + espacioImporte + "s\n", d.getProducto().getNombre(), d.getCantidad(), d.getProducto().getPrecio(), d.getImporte());
+            //String linea = String.format("%-" + espacioNombre + "s %" + espacioCantidad + "s %" + espacioPrecio + "s %" + espacioImporte + "s\n", d.getProducto().getNombre(), d.getCantidad(), d.getProducto().getPrecio(), d.getImporte());
+            String linea = String.format("  %-" + espacioNombre + "s\n", d.getProducto().getNombre());
+            String linea2 = String.format("  %35s %" + espacioPrecio + "s %" + espacioImporte + "s\n", d.getCantidad(), d.getProducto().getPrecio(), d.getImporte());
             ticket += linea;
+            ticket += linea2;
         }
-        ticket += "-------------------------------------------------------------------\n";
-        String lineaTotal = String.format("%70s %10.2f\n", "Total:", venta.getTotalventa());
+        ticket += "  --------------------------------------------------------------------  \n";
+        String lineaTotal = String.format("  %64s %10.2f\n", "Total:", venta.getTotalventa());
         ticket += lineaTotal;
-        ticket += "-------------------------------------------------------------------\n";
+        ticket += "  --------------------------------------------------------------------  \n";
 
         txtTicket.setText(ticket);
         txtTicket.setEditable(false);
