@@ -502,7 +502,7 @@ public class VentasForm extends javax.swing.JFrame {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(() -> {
                 BusquedaArticuloForm.getInstance().setVisible(true);
-                BusquedaArticuloForm.getInstance().vaciarCampos();
+                BusquedaArticuloForm.getInstance().resetBusquedas();
             });
 
         } else {

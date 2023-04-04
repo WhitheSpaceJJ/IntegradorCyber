@@ -299,9 +299,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         txtArticulo.setText("");
         categoriasC.setSelectedIndex(0);
         tblProductos.clearSelection();
-        
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
-        modeloTabla.setRowCount(0);
         tblProductos.setModel(modeloTabla);
     }
 
