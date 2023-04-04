@@ -497,10 +497,12 @@ public class VentasForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
+        
         if (txtCodigoArticulo.getText().equals("")) {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(() -> {
                 BusquedaArticuloForm.getInstance().setVisible(true);
+                BusquedaArticuloForm.getInstance().vaciarCampos();
             });
 
         } else {
