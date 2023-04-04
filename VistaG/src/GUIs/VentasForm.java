@@ -113,6 +113,15 @@ public class VentasForm extends javax.swing.JFrame {
         txtTotalProducto.setText("");
     }
 
+    public void cargarCampos(Producto productoCargado) {
+        txtCodigoArticulo.setText(productoCargado.getId() + "");
+        txtDescripcion.setText(productoCargado.getDescripcion());
+        txtCategoria.setText(productoCargado.getCategoria().getNombre());
+        txtDisponibilidad.setText(productoCargado.getStock() + "");
+        txtImporte.setText(productoCargado.getPrecio() + "");
+        txtTotalProducto.setText(productoCargado.getPrecio() + "");
+        txtCantidad.setText("1");
+    }
     public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
         if (Character.isDigit(car)) {
@@ -140,15 +149,6 @@ public class VentasForm extends javax.swing.JFrame {
         cargarCampos(articuloBuscado);
     }
 
-    public void cargarCampos(Producto productoCargado) {
-        txtCodigoArticulo.setText(productoCargado.getId() + "");
-        txtDescripcion.setText(productoCargado.getDescripcion());
-        txtCategoria.setText(productoCargado.getCategoria().getNombre());
-        txtDisponibilidad.setText(productoCargado.getStock() + "");
-        txtImporte.setText(productoCargado.getPrecio() + "");
-        txtTotalProducto.setText(productoCargado.getPrecio() + "");
-        txtCantidad.setText("1");
-    }
 
     public void cargarTabla() {
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
@@ -162,7 +162,6 @@ public class VentasForm extends javax.swing.JFrame {
             fila[4] = producto.getImporte();
             modeloTabla.addRow(fila);
         });
-
     }
 
     private void actualizarPrecioTotal() {
@@ -503,6 +502,7 @@ public class VentasForm extends javax.swing.JFrame {
             java.awt.EventQueue.invokeLater(() -> {
                 BusquedaArticuloForm.getInstance().setVisible(true);
                 BusquedaArticuloForm.getInstance().resetBusquedas();
+                   BusquedaArticuloForm.getInstance().establecerBuscador(0);
             });
 
         } else {
@@ -631,11 +631,8 @@ public class VentasForm extends javax.swing.JFrame {
             int cantidad = Integer.parseInt(txtCantidad.getText());
             float totalProducto = Float.parseFloat(txtTotalProducto.getText());
             Producto productoAgregar = articuloBuscado;
-
             boolean repetido = false;
-
             if (cantidad <= productoAgregar.getStock()) {
-
                 for (int i = 0; i < detalleV.size(); i++) {
                     if (productoAgregar.getId() == detalleV.get(i).getProducto().getId()) {
                         if (productoAgregar.getStock() < cantidad + detalleV.get(i).getCantidad()) {
@@ -659,14 +656,12 @@ public class VentasForm extends javax.swing.JFrame {
                     }
                 }
                 if (repetido == false) {
-
                     DetalleVenta dv = new DetalleVenta();
                     dv.setCantidad(cantidad);
                     dv.setImporte(totalProducto);
                     dv.setPrecioVendido(Float.parseFloat(txtImporte.getText()));
                     dv.setProducto(productoAgregar);
                     detalleV.add(dv);
-
                     actualizarPrecioTotal();
                     cargarTabla();
                     limpiarCampos();
@@ -689,7 +684,6 @@ public class VentasForm extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un artículo, para eliminarlo der la lista", "Eliminacion articulo", JOptionPane.ERROR_MESSAGE);
         }
-
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void txtCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyReleased

@@ -1,4 +1,3 @@
-
 package entidades;
 
 import java.io.Serializable;
@@ -13,36 +12,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-
 @Entity
 @Table(name = "detallemermas")
 
+public class DetalleMerma implements Serializable {
 
-public class DetalleMerma implements Serializable{
-    
-    
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-   
-    
+
     @Column(name = "cantidad", nullable = false)
     private int cantidad;
-    
+
     @Column(name = "costo", nullable = false)
     private float costo;
-    
+
     @Column(name = "importe", nullable = false)
     private float importe;
-     
+    @Column(name = "motivo", nullable = false, length = 100)
+    private String motivo;
     
+
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
-    
+
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "idMerma", nullable = false)
     private Merma merma;
@@ -50,21 +48,23 @@ public class DetalleMerma implements Serializable{
     public DetalleMerma() {
     }
 
-    public DetalleMerma(int cantidad, float costo, float importe, Producto producto, Merma merma) {
+    public DetalleMerma(int cantidad, float costo, float importe, Producto producto, Merma merma,String motivo) {
         this.cantidad = cantidad;
         this.costo = costo;
         this.importe = importe;
         this.producto = producto;
         this.merma = merma;
+        this.motivo=motivo;
     }
 
-    public DetalleMerma(Integer id, int cantidad, float costo, float importe, Producto producto, Merma merma) {
+    public DetalleMerma(Integer id, int cantidad, float costo, float importe, Producto producto, Merma merma,String motivo) {
         this.id = id;
         this.cantidad = cantidad;
         this.costo = costo;
         this.importe = importe;
         this.producto = producto;
         this.merma = merma;
+           this.motivo=motivo;
     }
 
     public DetalleMerma(int cantidad, float costo, float importe) {
@@ -136,6 +136,14 @@ public class DetalleMerma implements Serializable{
         this.merma = merma;
     }
 
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 3;
@@ -158,13 +166,9 @@ public class DetalleMerma implements Serializable{
         return Objects.equals(this.id, other.id);
     }
 
-    
-    
     @Override
     public String toString() {
-        return "DetalleMerma{" + "id=" + id + ", cantidad=" + cantidad + ", costo=" + costo + ", importe=" + importe + ", producto=" + producto + ", merma=" + merma + '}';
+        return "DetalleMerma{" + "id=" + id + ", cantidad=" + cantidad + ", costo=" + costo + ", importe=" + importe + ", motivo=" + motivo + ", producto=" + producto + ", merma=" + merma + '}';
     }
-    
-    
-    
+
 }

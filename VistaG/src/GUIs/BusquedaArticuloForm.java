@@ -15,6 +15,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     private IFachadaControl logica;
     private static BusquedaArticuloForm busquedaArticuloForm;
     private static List<Categoria> categorias;
+    private int buscador = 0;
 
     private BusquedaArticuloForm() {
         initComponents();
@@ -22,6 +23,10 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         this.productosCoinicidentes = new ArrayList<>();
         vaciarCampos();
         llenarCBoxCategorias();
+    }
+
+    public void establecerBuscador(int buscador) {
+        this.buscador = buscador;
     }
 
     public static BusquedaArticuloForm getInstance() {
@@ -198,10 +203,17 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         int indice = tblProductos.getSelectedRow();
         if (indice != -1) {
             vaciarCampos();
-            VentasForm.getInstance().agregarArtBuscado(productosCoinicidentes.get(indice));
-            setVisible(false);
-            dispose();
-            VentasForm.getInstance().setVisible(true);
+            if (buscador == 0) {
+                VentasForm.getInstance().agregarArtBuscado(productosCoinicidentes.get(indice));
+                setVisible(false);
+                dispose();
+                VentasForm.getInstance().setVisible(true);
+            } else {
+                AdminMermas.getInstance().agregarArtBuscado(productosCoinicidentes.get(indice));
+                setVisible(false);
+                dispose();
+                AdminMermas.getInstance().setVisible(true);
+            }
 
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un artículo", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
@@ -227,19 +239,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
                 }
             }
         }
-//        if (!productosCoinicidentes.isEmpty()) {
-//            for (int i = 0; i < productosCoinicidentes.size(); i++) {
-//                if (!((productosCoinicidentes.get(i).getCategoria().getNombre().toUpperCase()).equals(categoriasC.getSelectedItem().toString().toUpperCase()))) {
-//                    productosCoinicidentes.remove(i);
-//                }
-//            }
-//            if (!productosCoinicidentes.isEmpty()) {
-//                cargarCoincidencias();
-//            } else {
-//                JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
-//            }
-//
-//        } 
+
         if (!productosCoinicidentes.isEmpty()) {
             cargarCoincidencias();
         } else {

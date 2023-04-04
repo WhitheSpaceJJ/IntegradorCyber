@@ -71,6 +71,7 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdminProductos = new javax.swing.JMenuItem();
         MenuAdminProveedores = new javax.swing.JMenuItem();
         MenuAdminUsuario = new javax.swing.JMenuItem();
+        MenuAdminMermas = new javax.swing.JMenuItem();
         MenuTecnico = new javax.swing.JMenu();
         MenuAdminCategoriaTecnico = new javax.swing.JMenuItem();
         MenuAdminClientesTecnico = new javax.swing.JMenuItem();
@@ -238,6 +239,15 @@ public class PrincipalForm extends javax.swing.JFrame {
             }
         });
         MenuAdmin.add(MenuAdminUsuario);
+
+        MenuAdminMermas.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminMermas.setText("Mermas");
+        MenuAdminMermas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminMermasActionPerformed(evt);
+            }
+        });
+        MenuAdmin.add(MenuAdminMermas);
 
         jMenuBar1.add(MenuAdmin);
 
@@ -536,6 +546,19 @@ public class PrincipalForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_MenuAdminProveedoresVendedorActionPerformed
 
+    private void MenuAdminMermasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminMermasActionPerformed
+        // TODO add your handling code here:
+        
+           this.setVisible(false);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                AdminMermas.getInstance().setVisible(true);
+                    AdminMermas.getInstance().establecerSesion(usuarioSesion);
+            }
+        });
+        
+    }//GEN-LAST:event_MenuAdminMermasActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdmin;
@@ -545,6 +568,7 @@ public class PrincipalForm extends javax.swing.JFrame {
     private javax.swing.JMenuItem MenuAdminClientes;
     private javax.swing.JMenuItem MenuAdminClientesTecnico;
     private javax.swing.JMenuItem MenuAdminClientesVendedor;
+    private javax.swing.JMenuItem MenuAdminMermas;
     private javax.swing.JMenuItem MenuAdminProductos;
     private javax.swing.JMenuItem MenuAdminProductosTecnico;
     private javax.swing.JMenuItem MenuAdminProductosVendedor;
