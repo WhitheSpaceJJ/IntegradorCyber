@@ -547,9 +547,10 @@ public class VentasForm extends javax.swing.JFrame {
             Cliente cliente = clientes.get(indiceCliente);
             venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
 
-            instanciaCobro().instanciaFrmCobro(venta);
 
-            frmCobro.mostrarFormulario(this, venta, detalleV);
+           FrmCobro.getInstance().establecerVenta(venta);
+           FrmCobro.getInstance().mostrarFormulario(venta, detalleV);
+
         } else {
             JOptionPane.showMessageDialog(null, "No ha agregado productos");
         }
@@ -591,12 +592,6 @@ public class VentasForm extends javax.swing.JFrame {
 
     }
 
-    public FrmCobro instanciaCobro() {
-        if (frmCobro == null) {
-            frmCobro = new FrmCobro();
-        }
-        return frmCobro;
-    }
 
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped

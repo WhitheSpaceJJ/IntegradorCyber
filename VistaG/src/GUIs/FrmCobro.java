@@ -9,15 +9,20 @@ import javax.swing.JOptionPane;
 
 public class FrmCobro extends javax.swing.JFrame {
 
-    VentasForm ventasFrm = null;
+    VentasForm ventasFrm = VentasForm.getInstance();
     private FrmCobro frmCobro = null;
-    private Venta venta = new Venta();
+    private Venta venta = null;
     public static FrmCobro frmCobro1;
+    
+    public void establecerVenta(Venta venta){
+        this.venta = venta;
+        
+    }
 
-    public FrmCobro() {
+    private FrmCobro() {
         initComponents();
         this.setLocationRelativeTo(null);
-        instanciaVentasForm();
+        //instanciaVentasForm();
     }
 
     public FrmCobro(Venta venta) {
@@ -123,6 +128,12 @@ public class FrmCobro extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Cambio:");
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
+
+        txtCambio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCambioActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtCambio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, 140, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,8 +163,10 @@ public class FrmCobro extends javax.swing.JFrame {
         if (validaDatos() == true) {
 
             ventasFrm.registrarTodoVenta();
+            venta = null;
             cerrarFormulario();
         }
+        
 
     }//GEN-LAST:event_btnContinuarActionPerformed
 
@@ -190,6 +203,10 @@ public class FrmCobro extends javax.swing.JFrame {
         adminitirFlotante(evt);
     }//GEN-LAST:event_txtMontoUsuarioKeyTyped
 
+    private void txtCambioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCambioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCambioActionPerformed
+
     public void adminitirFlotante(java.awt.event.KeyEvent evt) {
         char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9'))
@@ -200,13 +217,13 @@ public class FrmCobro extends javax.swing.JFrame {
         }
     }
 
-    public void mostrarFormulario(VentasForm ventas, Venta venta, List<DetalleVenta> detalles) {
+    public void mostrarFormulario(Venta venta, List<DetalleVenta> detalles) {
         instanciaFrmCobro(venta);
         frmCobro.mostrarTicket(venta, detalles);
         frmCobro.setLocationRelativeTo(null);
         frmCobro.setVisible(true);
         this.venta = venta;
-        this.ventasFrm = ventas;
+
 
     }
 
@@ -251,6 +268,7 @@ public class FrmCobro extends javax.swing.JFrame {
 
     public void cerrarFormulario() {
         limpiar();
+        venta=null;
         this.dispose();
 
     }
