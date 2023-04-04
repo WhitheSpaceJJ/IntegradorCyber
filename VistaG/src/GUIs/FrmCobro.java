@@ -9,27 +9,17 @@ import javax.swing.JOptionPane;
 
 public class FrmCobro extends javax.swing.JFrame {
 
-    VentasForm ventasFrm = VentasForm.getInstance();
-    private FrmCobro frmCobro = null;
-    private Venta venta = null;
+    private Venta venta;
     public static FrmCobro frmCobro1;
-    
-    public void establecerVenta(Venta venta){
+
+    public void establecerVenta(Venta venta) {
         this.venta = venta;
-        
+        mostrarTicket(this.venta.getDetalleVentas());
     }
 
     private FrmCobro() {
         initComponents();
         this.setLocationRelativeTo(null);
-        //instanciaVentasForm();
-    }
-
-    public FrmCobro(Venta venta) {
-        initComponents();
-        this.setLocationRelativeTo(null);
-        instanciaVentasForm();
-        this.venta = venta;
     }
 
     public static FrmCobro getInstance() {
@@ -59,6 +49,11 @@ public class FrmCobro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cobro");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -162,11 +157,12 @@ public class FrmCobro extends javax.swing.JFrame {
 
         if (validaDatos() == true) {
 
-            ventasFrm.registrarTodoVenta();
+            VentasForm.getInstance().registrarTodoVenta();
+
             venta = null;
             cerrarFormulario();
         }
-        
+
 
     }//GEN-LAST:event_btnContinuarActionPerformed
 
@@ -185,7 +181,10 @@ public class FrmCobro extends javax.swing.JFrame {
     }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        cerrarFormulario();
+             limpiar();
+        setVisible(false);
+        dispose();
+        VentasForm.getInstance().setVisible(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtMontoUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoUsuarioKeyReleased
@@ -207,6 +206,14 @@ public class FrmCobro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCambioActionPerformed
 
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        limpiar();
+        setVisible(false);
+        dispose();
+        VentasForm.getInstance().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+
     public void adminitirFlotante(java.awt.event.KeyEvent evt) {
         char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9'))
@@ -217,17 +224,7 @@ public class FrmCobro extends javax.swing.JFrame {
         }
     }
 
-    public void mostrarFormulario(Venta venta, List<DetalleVenta> detalles) {
-        instanciaFrmCobro(venta);
-        frmCobro.mostrarTicket(venta, detalles);
-        frmCobro.setLocationRelativeTo(null);
-        frmCobro.setVisible(true);
-        this.venta = venta;
-
-
-    }
-
-    public void mostrarTicket(Venta venta, List<DetalleVenta> detalles) {
+    public void mostrarTicket(List<DetalleVenta> detalles) {
 
         String ticket = "";
         int espacioNombre = 0;
@@ -268,23 +265,9 @@ public class FrmCobro extends javax.swing.JFrame {
 
     public void cerrarFormulario() {
         limpiar();
-        venta=null;
+        venta = null;
         this.dispose();
 
-    }
-
-    public VentasForm instanciaVentasForm() {
-        if (ventasFrm == null) {
-            ventasFrm = VentasForm.getInstance();
-        }
-        return ventasFrm;
-    }
-
-    public FrmCobro instanciaFrmCobro(Venta venta) {
-        if (frmCobro == null) {
-            frmCobro = new FrmCobro(venta);
-        }
-        return frmCobro;
     }
 
     public void limpiar() {

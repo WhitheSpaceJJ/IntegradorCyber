@@ -300,7 +300,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         categoriasC.setSelectedIndex(0);
         tblProductos.clearSelection();
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
-        tblProductos.setModel(modeloTabla);
+            modeloTabla.setRowCount(0);
     }
 
 

@@ -546,10 +546,17 @@ public class VentasForm extends javax.swing.JFrame {
             int indiceCliente = clientesC.getSelectedIndex();
             Cliente cliente = clientes.get(indiceCliente);
             venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
+            venta.setDetalleVentas(detalleV);
 
-
-           FrmCobro.getInstance().establecerVenta(venta);
-           FrmCobro.getInstance().mostrarFormulario(venta, detalleV);
+            
+               this.setVisible(false);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                FrmCobro.getInstance().setVisible(true);
+                FrmCobro.getInstance().establecerVenta(venta);
+            }
+        });
+            
 
         } else {
             JOptionPane.showMessageDialog(null, "No ha agregado productos");

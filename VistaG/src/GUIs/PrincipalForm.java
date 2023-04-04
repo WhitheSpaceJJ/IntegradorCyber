@@ -5,53 +5,48 @@ import entidades.Usuario;
 import enumeradores.Rol;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.JButton;
+
 import javax.swing.JOptionPane;
 
 public class PrincipalForm extends javax.swing.JFrame {
-
+    
     private IFachadaControl fachadaControl;
     private static PrincipalForm principalForm;
     private Usuario usuarioSesion;
-
+    
     private PrincipalForm() {
         initComponents();
         this.usuarioSesion = null;
         this.fachadaControl = new FachadaControl();
     }
-
+    
     public static PrincipalForm getInstance() {
         if (principalForm == null) {
             principalForm = new PrincipalForm();
         }
         return principalForm;
     }
-
+    
     public void establecerSession(Usuario usuario) {
         this.usuarioSesion = usuario;
         this.jLabelTitulo.setText("Usuario; " + this.usuarioSesion.getNombre() + " Rol; " + this.usuarioSesion.getRol());
         if (usuario.getRol() == Rol.ADMINISTRADOR) {
+            this.MenuTecnico.setEnabled(false);
+            this.jButtonUsuarios.setEnabled(true);
+            this.MenuVendedor.setEnabled(false);
         }
         if (usuario.getRol() == Rol.TECNICO) {
             this.jButtonUsuarios.setEnabled(false);
-            this.jButtonCatehorias.setEnabled(false);
-            this.jButtonProductos.setEnabled(false);
-            this.jButtonRealizarVenta.setEnabled(false);
-            this.jButtonClientes.setEnabled(false);
-            this.jButtonProveedores.setEnabled(false);
+            this.MenuAdmin.setEnabled(false);
+            this.MenuVendedor.setEnabled(false);
         }
         if (usuario.getRol() == Rol.VENDEDOR) {
             this.jButtonUsuarios.setEnabled(false);
-            this.jButtonCatehorias.setEnabled(false);
-            this.jButtonProductos.setEnabled(false);
-            this.jButtonRealizarVenta.setEnabled(false);
-            this.jButtonClientes.setEnabled(false);
-            this.jButtonProveedores.setEnabled(false);
+            this.MenuAdmin.setEnabled(false);
+            this.MenuTecnico.setEnabled(false);
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -76,6 +71,16 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdminProductos = new javax.swing.JMenuItem();
         MenuAdminProveedores = new javax.swing.JMenuItem();
         MenuAdminUsuario = new javax.swing.JMenuItem();
+        MenuTecnico = new javax.swing.JMenu();
+        MenuAdminCategoriaTecnico = new javax.swing.JMenuItem();
+        MenuAdminClientesTecnico = new javax.swing.JMenuItem();
+        MenuAdminProductosTecnico = new javax.swing.JMenuItem();
+        MenuAdminProveedoresTecnico = new javax.swing.JMenuItem();
+        MenuVendedor = new javax.swing.JMenu();
+        MenuAdminCategoriaVendedor = new javax.swing.JMenuItem();
+        MenuAdminClientesVendedor = new javax.swing.JMenuItem();
+        MenuAdminProductosVendedor = new javax.swing.JMenuItem();
+        MenuAdminProveedoresVendedor = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administración");
@@ -236,6 +241,88 @@ public class PrincipalForm extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuAdmin);
 
+        MenuTecnico.setText("Tecnico");
+        MenuTecnico.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+
+        MenuAdminCategoriaTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminCategoriaTecnico.setText("Categorias");
+        MenuAdminCategoriaTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminCategoriaTecnicoActionPerformed(evt);
+            }
+        });
+        MenuTecnico.add(MenuAdminCategoriaTecnico);
+
+        MenuAdminClientesTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminClientesTecnico.setText("Clientes");
+        MenuAdminClientesTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminClientesTecnicoActionPerformed(evt);
+            }
+        });
+        MenuTecnico.add(MenuAdminClientesTecnico);
+
+        MenuAdminProductosTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminProductosTecnico.setText("Productos");
+        MenuAdminProductosTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProductosTecnicoActionPerformed(evt);
+            }
+        });
+        MenuTecnico.add(MenuAdminProductosTecnico);
+
+        MenuAdminProveedoresTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminProveedoresTecnico.setText("Proveedores");
+        MenuAdminProveedoresTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProveedoresTecnicoActionPerformed(evt);
+            }
+        });
+        MenuTecnico.add(MenuAdminProveedoresTecnico);
+
+        jMenuBar1.add(MenuTecnico);
+
+        MenuVendedor.setText("Vendedor");
+        MenuVendedor.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+
+        MenuAdminCategoriaVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminCategoriaVendedor.setText("Categorias");
+        MenuAdminCategoriaVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminCategoriaVendedorActionPerformed(evt);
+            }
+        });
+        MenuVendedor.add(MenuAdminCategoriaVendedor);
+
+        MenuAdminClientesVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminClientesVendedor.setText("Clientes");
+        MenuAdminClientesVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminClientesVendedorActionPerformed(evt);
+            }
+        });
+        MenuVendedor.add(MenuAdminClientesVendedor);
+
+        MenuAdminProductosVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminProductosVendedor.setText("Productos");
+        MenuAdminProductosVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProductosVendedorActionPerformed(evt);
+            }
+        });
+        MenuVendedor.add(MenuAdminProductosVendedor);
+
+        MenuAdminProveedoresVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminProveedoresVendedor.setText("Proveedores");
+        MenuAdminProveedoresVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProveedoresVendedorActionPerformed(evt);
+            }
+        });
+        MenuVendedor.add(MenuAdminProveedoresVendedor);
+
+        jMenuBar1.add(MenuVendedor);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -264,7 +351,7 @@ public class PrincipalForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void MenuAdminUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuarioActionPerformed
-  this.setVisible(false);
+        this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiUsuarioForm.getInstance().setVisible(true);
@@ -273,7 +360,7 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuAdminUsuarioActionPerformed
 
     private void MenuAdminCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaActionPerformed
- this.setVisible(false);
+        this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiCategoria.getInstance().setVisible(true);
@@ -282,8 +369,8 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuAdminCategoriaActionPerformed
 
     private void MenuAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesActionPerformed
-   this.setVisible(false);
-
+        this.setVisible(false);
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiClienteForm.getInstance().setVisible(true);
@@ -293,9 +380,9 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_MenuAdminClientesActionPerformed
 
     private void MenuAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosActionPerformed
-  // TODO add your handling code here:
+        // TODO add your handling code here:
         this.setVisible(false);
-
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiProductoForm.getInstance().setVisible(true);
@@ -332,7 +419,7 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCajaNuevoTicket1ActionPerformed
 
     private void menuCajaAbrirCaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaAbrirCaja1ActionPerformed
- //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
+        //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
         //verifica si el usuario corresponde a la sesions
         Caja caja = fachadaControl.consultarCajaAbierta();
         if (caja != null) {
@@ -348,7 +435,7 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCajaAbrirCaja1ActionPerformed
 
     private void menuCajaCierreCaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaCierreCaja1ActionPerformed
-       JOptionPane.showMessageDialog(null, "El cierre de caja, aun no se implementa espera actualizaciones y casos de uso");
+        JOptionPane.showMessageDialog(null, "El cierre de caja, aun no se implementa espera actualizaciones y casos de uso");
     }//GEN-LAST:event_menuCajaCierreCaja1ActionPerformed
 
     private void jButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosActionPerformed
@@ -398,7 +485,7 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonProveedoresActionPerformed
 
     private void jButtonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsuariosActionPerformed
-
+        
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -412,20 +499,62 @@ public class PrincipalForm extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 AdmiClienteForm.getInstance().setVisible(true);
-
+                
             }
         });
     }//GEN-LAST:event_jButtonClientesActionPerformed
+
+    private void MenuAdminCategoriaTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaTecnicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminCategoriaTecnicoActionPerformed
+
+    private void MenuAdminClientesTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesTecnicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminClientesTecnicoActionPerformed
+
+    private void MenuAdminProductosTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosTecnicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminProductosTecnicoActionPerformed
+
+    private void MenuAdminProveedoresTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresTecnicoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminProveedoresTecnicoActionPerformed
+
+    private void MenuAdminCategoriaVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaVendedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminCategoriaVendedorActionPerformed
+
+    private void MenuAdminClientesVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesVendedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminClientesVendedorActionPerformed
+
+    private void MenuAdminProductosVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosVendedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminProductosVendedorActionPerformed
+
+    private void MenuAdminProveedoresVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresVendedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_MenuAdminProveedoresVendedorActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdmin;
     private javax.swing.JMenuItem MenuAdminCategoria;
+    private javax.swing.JMenuItem MenuAdminCategoriaTecnico;
+    private javax.swing.JMenuItem MenuAdminCategoriaVendedor;
     private javax.swing.JMenuItem MenuAdminClientes;
+    private javax.swing.JMenuItem MenuAdminClientesTecnico;
+    private javax.swing.JMenuItem MenuAdminClientesVendedor;
     private javax.swing.JMenuItem MenuAdminProductos;
+    private javax.swing.JMenuItem MenuAdminProductosTecnico;
+    private javax.swing.JMenuItem MenuAdminProductosVendedor;
     private javax.swing.JMenuItem MenuAdminProveedores;
+    private javax.swing.JMenuItem MenuAdminProveedoresTecnico;
+    private javax.swing.JMenuItem MenuAdminProveedoresVendedor;
     private javax.swing.JMenuItem MenuAdminUsuario;
     private javax.swing.JMenu MenuCaja1;
+    private javax.swing.JMenu MenuTecnico;
+    private javax.swing.JMenu MenuVendedor;
     private javax.swing.JButton jButtonCatehorias;
     private javax.swing.JButton jButtonClientes;
     private javax.swing.JButton jButtonProductos;

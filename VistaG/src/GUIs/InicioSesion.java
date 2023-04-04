@@ -187,7 +187,7 @@ public class InicioSesion extends javax.swing.JFrame {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-                                                                    PrincipalForm.getInstance().establecerSession(usuario2);
+                    PrincipalForm.getInstance().establecerSession(usuario2);
                     PrincipalForm.getInstance().setVisible(true);
 
                 }
@@ -207,7 +207,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 this.setVisible(false);
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
-                                                PrincipalForm.getInstance().establecerSession(usuario);
+                        PrincipalForm.getInstance().establecerSession(usuario);
                         PrincipalForm.getInstance().setVisible(true);
 
                     }
@@ -220,10 +220,11 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     public void limpiarCampos() {
-         this.jLabel2.setText("Inicio de Sesion");
+        this.jLabel2.setText("Inicio de Sesion");
         this.jTextFieldUsuario.setText("");
         this.jPasswordFieldContraseña.setText("");
-        this.jButtonIniciarSesion.setEnabled(true);
+        this.cmbRoles.setSelectedIndex(0);
+        this.cmbRoles.setEnabled(true);
     }
 
     public boolean validarCamposVacios() {
