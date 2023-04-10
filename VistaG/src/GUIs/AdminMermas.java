@@ -7,6 +7,7 @@ package GUIs;
 import GUIs.BusquedaArticuloForm;
 import entidades.Cliente;
 import entidades.DetalleMerma;
+import entidades.Merma;
 import entidades.Producto;
 import entidades.Usuario;
 import entidades.Venta;
@@ -34,7 +35,8 @@ public class AdminMermas extends javax.swing.JFrame {
         initComponents();
         this.detallesMermas = new ArrayList<>();
         this.logica = new FachadaControl();
-        this.bloquearCampos();
+        this.listaMermas = new ArrayList<>();
+        bloquearCampos();
     }
     private Usuario usuario;
 
@@ -82,6 +84,7 @@ public class AdminMermas extends javax.swing.JFrame {
         lblCliente2 = new javax.swing.JLabel();
         lblCliente3 = new javax.swing.JLabel();
         lblCliente4 = new javax.swing.JLabel();
+        lblCliente14 = new javax.swing.JLabel();
         lblCliente5 = new javax.swing.JLabel();
         lblCliente6 = new javax.swing.JLabel();
         lblCliente8 = new javax.swing.JLabel();
@@ -108,6 +111,7 @@ public class AdminMermas extends javax.swing.JFrame {
         btnRegistrarMermas = new javax.swing.JButton();
         lblCliente12 = new javax.swing.JLabel();
         lblCargaDeArticulos1 = new javax.swing.JLabel();
+        lblCliente13 = new javax.swing.JLabel();
 
         lblOperador.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblOperador.setText("Operador:");
@@ -200,6 +204,7 @@ public class AdminMermas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administrar Mermas");
+        setMinimumSize(new java.awt.Dimension(979, 651));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -244,6 +249,10 @@ public class AdminMermas extends javax.swing.JFrame {
         lblCliente4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCliente4.setText("Total Merma");
         tblVenta.add(lblCliente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 580, -1, -1));
+
+        lblCliente14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente14.setText("Categoria");
+        tblVenta.add(lblCliente14, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 260, -1, -1));
 
         lblCliente5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCliente5.setText("Total: ");
@@ -423,6 +432,10 @@ public class AdminMermas extends javax.swing.JFrame {
         lblCargaDeArticulos1.setText("Registro Mermas");
         tblVenta.add(lblCargaDeArticulos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 160, -1));
 
+        lblCliente13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente13.setText("Descripcion");
+        tblVenta.add(lblCliente13, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 210, -1, -1));
+
         getContentPane().add(tblVenta);
         tblVenta.setBounds(0, 0, 980, 650);
 
@@ -433,6 +446,7 @@ public class AdminMermas extends javax.swing.JFrame {
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
 
     }//GEN-LAST:event_txtFechaActionPerformed
+
     public void bloquearCampos() {
         this.txtNombre.setEnabled(false);
         this.txtDisponibilidad.setEnabled(false);
@@ -452,38 +466,20 @@ public class AdminMermas extends javax.swing.JFrame {
         this.txtCategoria.setText("");
         this.txtImporte.setText("");
         this.txtTotalProducto.setText("");
+        this.txtCodigoArticulo.setText("");
+        this.txtCantidad.setText("");
+        this.txtMotivo.setText("");
     }
 
     public void cargarCampos(Producto productoCargado) {
-        boolean encontrado = false;
-        double totalMerma = 0.0;
-        int cantidadMerma = 0;
-        for (int i = 0; i < listaMermas.size(); i++) {
-            DetalleMerma get = listaMermas.get(i);
-            if (get.getProducto().equals(productoCargado)) {
-                encontrado = true;
-                totalMerma = get.getImporte();
-                cantidadMerma = get.getCantidad();
-            }
-        }
-        if (encontrado) {
-            this.txtNombre.setText(productoCargado.getNombre() + "");
-            this.txtDisponibilidad.setText("" + productoCargado.getStock());
-            this.txtDescripcion.setText("" + productoCargado.getDescripcion());
-            this.txtCategoria.setText("" + productoCargado.getCategoria().getNombre());
-            this.txtImporte.setText("" + productoCargado.getPrecio());
-            this.txtTotalProducto.setText(totalMerma + "");
-            this.txtCantidad.setText("" + cantidadMerma);
-        } else {
-            this.txtNombre.setText(productoCargado.getNombre() + "");
-            this.txtDisponibilidad.setText("" + productoCargado.getStock());
-            this.txtDescripcion.setText("" + productoCargado.getDescripcion());
-            this.txtCategoria.setText("" + productoCargado.getCategoria().getNombre());
-            this.txtImporte.setText("" + productoCargado.getPrecio());
-            this.txtTotalProducto.setText("");
-            this.txtCantidad.setText("");
-        }
 
+        this.txtNombre.setText(productoCargado.getNombre() + "");
+        this.txtDisponibilidad.setText("" + productoCargado.getStock());
+        this.txtDescripcion.setText("" + productoCargado.getDescripcion());
+        this.txtCategoria.setText("" + productoCargado.getCategoria().getNombre());
+        this.txtImporte.setText("" + productoCargado.getPrecio());
+        this.txtTotalProducto.setText("");
+        this.txtCantidad.setText("");
     }
     private List<DetalleMerma> detallesMermas;
 
@@ -538,11 +534,7 @@ public class AdminMermas extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "", "La cantidad está fuera del rango permitido", JOptionPane.ERROR_MESSAGE);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "", "Mermas", JOptionPane.ERROR_MESSAGE);
         }
-
-
     }//GEN-LAST:event_txtCantidadKeyReleased
 
     private void txtCantidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyTyped
@@ -587,7 +579,7 @@ public class AdminMermas extends javax.swing.JFrame {
     }
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
-        int indice = tblProductos.getSelectedRow();
+        int indice = tblProductos1.getSelectedRow();
         if (indice != -1) {
             detallesMermas.remove(indice);
             cargarTabla();
@@ -611,8 +603,20 @@ public class AdminMermas extends javax.swing.JFrame {
                 detalleMerma.setImporte(totalProductoOficial);
                 detalleMerma.setProducto(articuloBuscado);
                 detalleMerma.setMotivo(motivo);
-                listaMermas.add(detalleMerma);
+                if (detallesMermas.isEmpty()) {
+                    this.txtTotalMerma.setText(totalProductoOficial + "");
+                } else {
+                    try {
+                        Double totalMerma
+                                = Double.valueOf(this.txtTotalMerma.getText());
+                        this.txtTotalMerma.setText((totalMerma + totalProductoOficial) + "");
+                    } catch (Exception e) {
+                        System.out.println("Error; " + e.getMessage());
+                    }
+                }
+                detallesMermas.add(detalleMerma);
                 cargarTabla();
+                limpiarCamposTodo();
             } else {
                 JOptionPane.showMessageDialog(null, "", "La cantidad está fuera del rango permitido", JOptionPane.ERROR_MESSAGE);
             }
@@ -623,7 +627,7 @@ public class AdminMermas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     public void cargarTabla() {
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos1.getModel();
         modeloTabla.setRowCount(0);
         detallesMermas.forEach(merma -> {
             Object[] fila = new Object[5];
@@ -654,28 +658,24 @@ public class AdminMermas extends javax.swing.JFrame {
     private void btnRegistrarMermasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMermasActionPerformed
 
         if (detallesMermas.size() > 0) {
-//            List<> ventas = logica.consultarVentas();
-//            int numTicket;
-//            if (ventas.isEmpty()) {
-//                numTicket = 1;
-//            } else {
-//                numTicket = ventas.get(ventas.size() - 1).getId() + 1;
-//            }
-//            Calendar fecha = Calendar.getInstance();
-//            Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
-//            int indiceCliente = clientesC.getSelectedIndex();
-//            Cliente cliente = clientes.get(indiceCliente);
-//            venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
-//            venta.setDetalleVentas(detalleV);
-//
-//            this.setVisible(false);
-//            java.awt.EventQueue.invokeLater(new Runnable() {
-//                public void run() {
-//                    FrmCobro.getInstance().setVisible(true);
-//                    FrmCobro.getInstance().establecerVenta(venta);
-//                }
-//            });
-
+            Merma merma = new Merma();
+            Calendar fecha = Calendar.getInstance();
+            Float totalVenta = Float.valueOf(this.txtTotalMerma.getText());
+            Usuario usuario2 = this.usuario;
+            merma.setDetalleMermas(detallesMermas);
+            merma.setFechaMerma(fecha);
+            merma.setUsuario(usuario2);
+            merma.setTotalventa(totalVenta);
+            boolean registroExitoso = logica.agregar(merma, detallesMermas);
+            if (registroExitoso) {
+                JOptionPane.showMessageDialog(null, "El registro de las mermas fue realizado exitosamente");
+                limpiarCamposTodo();
+                this.listaMermas.clear();
+                this.txtTotalMerma.setText("");
+                cargarTabla();
+            } else {
+                JOptionPane.showMessageDialog(null, "El registro de las mermas no fue realizado exitosamente");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "No ha agregado productos");
         }
@@ -700,6 +700,8 @@ public class AdminMermas extends javax.swing.JFrame {
     private javax.swing.JLabel lblCliente10;
     private javax.swing.JLabel lblCliente11;
     private javax.swing.JLabel lblCliente12;
+    private javax.swing.JLabel lblCliente13;
+    private javax.swing.JLabel lblCliente14;
     private javax.swing.JLabel lblCliente2;
     private javax.swing.JLabel lblCliente3;
     private javax.swing.JLabel lblCliente4;

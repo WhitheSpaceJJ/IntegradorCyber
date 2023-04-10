@@ -18,8 +18,10 @@ import interfaces.IControlCajas;
 import interfaces.IControlCategorias;
 import interfaces.IControlCompra;
 import interfaces.IControlClientes;
+import interfaces.IControlDetalleMerma;
 import interfaces.IControlDetalleVentas;
 import interfaces.IControlGastos;
+import interfaces.IControlMerma;
 import interfaces.IControlProductos;
 import interfaces.IControlProveedores;
 import interfaces.IControlUsuarios;
@@ -241,7 +243,7 @@ public class FachadaControl implements IFachadaControl {
     public boolean iniciarSesion(Usuario usuario) {
         try {
             IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
-            return usuariosDAO.agregar(usuario);
+            return usuariosDAO.iniciarSesion(usuario);
         } catch (Exception e) {
             return false;
         }
@@ -543,6 +545,56 @@ public class FachadaControl implements IFachadaControl {
         try {
             IControlGastos gastosDAO = fabrica.getGastosDAO();
             return gastosDAO.buscarEntre(inicio, fin);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean agregar(Merma merma, List<DetalleMerma> detalles) {
+        try {
+            IControlMerma mermasDAO = fabrica.getMermaDAO();
+            return mermasDAO.agregar(merma, detalles);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Merma consultarMerma(int id) {
+        try {
+            IControlMerma mermasDAO = fabrica.getMermaDAO();
+            return mermasDAO.consultar(id);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<Merma> consultarTodasMermas() {
+        try {
+            IControlMerma mermasDAO = fabrica.getMermaDAO();
+            return mermasDAO.consultarTodas();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean agregar(DetalleMerma detalleMerma) {
+           try {
+            IControlDetalleMerma mermasDAO = fabrica.getDetalleMermaDAO();
+            return mermasDAO.agregar(detalleMerma);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    @Override
+    public Usuario obtenerSesion(Usuario usuario) {
+      try {
+            IControlUsuarios usuariosDAO = fabrica.getUsuariosDAO();
+            return usuariosDAO.obtenerSesion(usuario);
         } catch (Exception e) {
             return null;
         }

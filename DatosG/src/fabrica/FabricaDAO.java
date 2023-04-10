@@ -2,24 +2,38 @@ package fabrica;
 
 import implementaciones.*;
 import conexion.ConexionBD;
+import interfaces.ICajasDAO;
+import interfaces.ICategoriasDAO;
+import interfaces.IClientesDAO;
+import interfaces.ICompraDAO;
+import interfaces.IConexionBD;
+import interfaces.IDetalleCompraDAO;
+import interfaces.IDetalleMermaDAO;
+import interfaces.IDetalleVentasDAO;
+import interfaces.IGastosDAO;
+import interfaces.IMermaDAO;
+import interfaces.IProductosDAO;
+import interfaces.IProveedoresDAO;
+import interfaces.IUsuariosDAO;
+import interfaces.IVentasDAO;
 
 public class FabricaDAO {
 
     private static FabricaDAO instancia;
-    private CategoriasDAO instanceCategoriasDAO;
-    private ClientesDAO instanceClientesDAO;
-    private ProductosDAO instancePRoductosDAO;
-    private ProveedoresDAO instanceProveedoresDAO;
-    private UsuariosDAO instanceUsuariosDAO;
-    private VentasDAO instanceVentasDAO;
-    private MermasDAO instanceMermasDAO;
-    private ComprasDAO instanceComprasDAO;
-    private final ConexionBD instanceConexionBD;
-    private DetalleVentasDAO instanceDetalleVentasDAO;
-    private DetalleComprasDAO instanceDetalleCompraDAO;
-    private DetalleMermasDAO instanceDetalleMermaDAO;
-    private CajasDAO instanceCajaDAO;
-    private GastosDAO instanceGastosDAO;
+    private ICategoriasDAO instanceCategoriasDAO;
+    private IClientesDAO instanceClientesDAO;
+    private IProductosDAO instancePRoductosDAO;
+    private IProveedoresDAO instanceProveedoresDAO;
+    private IUsuariosDAO instanceUsuariosDAO;
+    private IVentasDAO instanceVentasDAO;
+    private IMermaDAO instanceMermasDAO;
+    private ICompraDAO instanceComprasDAO;
+    private final IConexionBD instanceConexionBD;
+    private IDetalleVentasDAO instanceDetalleVentasDAO;
+    private IDetalleCompraDAO instanceDetalleCompraDAO;
+    private IDetalleMermaDAO instanceDetalleMermaDAO;
+    private ICajasDAO instanceCajaDAO;
+    private IGastosDAO instanceGastosDAO;
 
     private FabricaDAO() {
         instanceConexionBD = new ConexionBD();
@@ -33,56 +47,56 @@ public class FabricaDAO {
         return instancia;
     }
 
-    public CajasDAO getCajasDAO() {
+    public ICajasDAO getCajasDAO() {
         if (instanceCajaDAO == null) {
             instanceCajaDAO = new CajasDAO(instanceConexionBD);
         }
         return instanceCajaDAO;
     }
 
-    public GastosDAO getGastosDAO() {
+    public IGastosDAO getGastosDAO() {
         if (instanceGastosDAO == null) {
             instanceGastosDAO = new GastosDAO(instanceConexionBD);
         }
         return instanceGastosDAO;
     }
 
-    public DetalleVentasDAO getDetalleVentasDAO() {
+    public IDetalleVentasDAO getDetalleVentasDAO() {
         if (instanceDetalleVentasDAO == null) {
             instanceDetalleVentasDAO = new DetalleVentasDAO(instanceConexionBD);
         }
         return instanceDetalleVentasDAO;
     }
 
-    public DetalleComprasDAO getDetalleCompraDAO() {
+    public IDetalleCompraDAO getDetalleCompraDAO() {
         if (instanceDetalleCompraDAO == null) {
             instanceDetalleCompraDAO = new DetalleComprasDAO(instanceConexionBD);
         }
         return instanceDetalleCompraDAO;
     }
 
-    public DetalleMermasDAO getDetalleMermaDAO() {
+    public IDetalleMermaDAO getDetalleMermaDAO() {
         if (instanceDetalleMermaDAO == null) {
             instanceDetalleMermaDAO = new DetalleMermasDAO(instanceConexionBD);
         }
         return instanceDetalleMermaDAO;
     }
 
-    public CategoriasDAO getCategoriasDAO() {
+    public ICategoriasDAO getCategoriasDAO() {
         if (instanceCategoriasDAO == null) {
             instanceCategoriasDAO = new CategoriasDAO(instanceConexionBD);
         }
         return instanceCategoriasDAO;
     }
 
-    public ClientesDAO getClientesDAO() {
+    public IClientesDAO getClientesDAO() {
         if (instanceClientesDAO == null) {
             instanceClientesDAO = new ClientesDAO(instanceConexionBD);
         }
         return instanceClientesDAO;
     }
 
-    public ProductosDAO getProductosDAO() {
+    public IProductosDAO getProductosDAO() {
 
         if (instancePRoductosDAO == null) {
             instancePRoductosDAO = new ProductosDAO(instanceConexionBD);
@@ -91,35 +105,35 @@ public class FabricaDAO {
         return instancePRoductosDAO;
     }
 
-    public ProveedoresDAO getProveedoresDAO() {
+    public IProveedoresDAO getProveedoresDAO() {
         if (instanceProveedoresDAO == null) {
             instanceProveedoresDAO = new ProveedoresDAO(instanceConexionBD);
         }
         return instanceProveedoresDAO;
     }
 
-    public UsuariosDAO getUsuariosDAO() {
+    public IUsuariosDAO getUsuariosDAO() {
         if (instanceUsuariosDAO == null) {
             instanceUsuariosDAO = new UsuariosDAO(instanceConexionBD);
         }
         return instanceUsuariosDAO;
     }
 
-    public VentasDAO getVentasDAO() {
+    public IVentasDAO getVentasDAO() {
         if (instanceVentasDAO == null) {
             instanceVentasDAO = new VentasDAO(instanceConexionBD);
         }
         return instanceVentasDAO;
     }
     
-    public MermasDAO getMermasDAO() {
+    public IMermaDAO getMermasDAO() {
         if (instanceMermasDAO == null) {
             instanceMermasDAO = new MermasDAO(instanceConexionBD);
         }
         return instanceMermasDAO;
     }
     
-    public ComprasDAO getComprasDAO() {
+    public ICompraDAO getComprasDAO() {
         if (instanceComprasDAO == null) {
             instanceComprasDAO = new ComprasDAO(instanceConexionBD);
         }

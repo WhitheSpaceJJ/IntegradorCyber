@@ -4,32 +4,62 @@ package fabrica;
 import implementaciones.*;
 
 import fachada.FachadaDAO;
+import interfaces.IControlCajas;
+import interfaces.IControlCategorias;
+import interfaces.IControlClientes;
+import interfaces.IControlCompra;
+import interfaces.IControlDetalleMerma;
+import interfaces.IControlDetalleVentas;
+import interfaces.IControlGastos;
+import interfaces.IControlMerma;
+import interfaces.IControlProductos;
+import interfaces.IControlProveedores;
+import interfaces.IControlUsuarios;
+import interfaces.IControlVentas;
 import interfaces.IFachadaDAO;
 
 public class FabricaControl {
 
     private static FabricaControl instancia;
-    private ControlCategoria instanceCategoriasDAO;
-    private ControlClientes instanceClientesDAO;
-    private ControlProductos instancePRoductosDAO;
-    private ControlProveedores instanceProveedoresDAO;
-    private ControlUsuarios instanceUsuariosDAO;
-    private ControlVentas instanceVentasDAO;
-    private ControlDetalleVentas instanceDetalleVentasDAO;
-    private ControlCompra instanceDetalleCompraDAO;
-    private ControlCajas instanceCajaDAO;
-private ControlGastos instanceGastosDAO;
+    private IControlCategorias instanceCategoriasDAO;
+    private IControlClientes instanceClientesDAO;
+    private IControlProductos instancePRoductosDAO;
+    private IControlProveedores instanceProveedoresDAO;
+    private IControlUsuarios instanceUsuariosDAO;
+    private IControlVentas instanceVentasDAO;
+    private IControlDetalleVentas instanceDetalleVentasDAO;
+    private IControlCompra instanceDetalleCompraDAO;
+    private IControlCajas instanceCajaDAO;
+private IControlGastos instanceGastosDAO;
 private IFachadaDAO fachadaDAO;
+    private IControlDetalleMerma instanceDetalleMermasDAO;
+
+
+private IControlMerma instanceMermaDAO;
     private FabricaControl() {
         fachadaDAO=new FachadaDAO();
     }
-  public ControlCajas getCajasDAO(){
+    
+      public IControlDetalleMerma getDetalleMermaDAO() {
+        if (instanceDetalleMermasDAO== null) {
+            instanceDetalleMermasDAO = new ControlDetalleMerma(fachadaDAO);
+        }
+        return instanceDetalleMermasDAO;
+    }
+    
+     public IControlMerma getMermaDAO() {
+        if (instanceMermaDAO== null) {
+            instanceMermaDAO = new ControlMerma(fachadaDAO);
+        }
+        return instanceMermaDAO;
+    }
+  public IControlCajas getCajasDAO(){
       if(instanceCajaDAO==null){
           instanceCajaDAO=new ControlCajas(fachadaDAO);
       }
       return instanceCajaDAO;
   }
-  public ControlGastos getGastosDAO(){
+  public IControlGastos getGastosDAO(){
       if(instanceGastosDAO==null){
           instanceGastosDAO=new ControlGastos(fachadaDAO);
       }
@@ -42,35 +72,35 @@ private IFachadaDAO fachadaDAO;
         return instancia;
     }
 
-    public ControlDetalleVentas getDetalleVentasDAO() {
+    public IControlDetalleVentas getDetalleVentasDAO() {
         if (instanceDetalleVentasDAO == null) {
             instanceDetalleVentasDAO = new ControlDetalleVentas(fachadaDAO);
         }
         return instanceDetalleVentasDAO;
     }
 
-    public ControlCompra getDetalleCompraDAO() {
+    public IControlCompra getDetalleCompraDAO() {
         if (instanceDetalleCompraDAO == null) {
             instanceDetalleCompraDAO = new ControlCompra(fachadaDAO);
         }
         return instanceDetalleCompraDAO;
     }
 
-    public ControlCategoria getCategoriasDAO() {
+    public IControlCategorias getCategoriasDAO() {
         if (instanceCategoriasDAO == null) {
             instanceCategoriasDAO = new ControlCategoria(fachadaDAO);
         }
         return instanceCategoriasDAO;
     }
 
-    public ControlClientes getClientesDAO() {
+    public IControlClientes getClientesDAO() {
         if (instanceClientesDAO == null) {
             instanceClientesDAO = new ControlClientes(fachadaDAO);
         }
         return instanceClientesDAO;
     }
 
-    public ControlProductos getProductosDAO() {
+    public IControlProductos getProductosDAO() {
 
         if (instancePRoductosDAO == null) {
             instancePRoductosDAO = new ControlProductos(fachadaDAO);
@@ -79,21 +109,21 @@ private IFachadaDAO fachadaDAO;
         return instancePRoductosDAO;
     }
 
-    public ControlProveedores getProveedoresDAO() {
+    public IControlProveedores getProveedoresDAO() {
         if (instanceProveedoresDAO == null) {
             instanceProveedoresDAO = new ControlProveedores(fachadaDAO);
         }
         return instanceProveedoresDAO;
     }
 
-    public ControlUsuarios getUsuariosDAO() {
+    public IControlUsuarios getUsuariosDAO() {
         if (instanceUsuariosDAO == null) {
             instanceUsuariosDAO = new ControlUsuarios(fachadaDAO);
         }
         return instanceUsuariosDAO;
     }
 
-    public ControlVentas getVentasDAO() {
+    public IControlVentas getVentasDAO() {
         if (instanceVentasDAO == null) {
             instanceVentasDAO = new ControlVentas(fachadaDAO);
         }

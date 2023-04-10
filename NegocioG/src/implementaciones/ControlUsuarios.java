@@ -44,4 +44,9 @@ return this.fachadaDAO.consultarUsuario(id);
     public List<Usuario> consultarTodos() {
  return this.fachadaDAO.consultarTodosUsuarios();
     }
+
+    @Override
+    public Usuario obtenerSesion(Usuario usuario) {
+     return this.fachadaDAO.obtenerSesion(usuario);
+    }
 }

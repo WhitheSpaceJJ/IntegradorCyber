@@ -175,7 +175,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 this.setVisible(false);
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
-                        PrincipalForm.getInstance().establecerSession(usuario2);
+                        PrincipalForm.getInstance().establecerSession(control.obtenerSesion(usuario2));
                         PrincipalForm.getInstance().setVisible(true);
 
                     }
@@ -183,15 +183,7 @@ public class InicioSesion extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "No se ha determinado la existencia de un usuario");
             }
-            this.limpiarCampos();
-            this.setVisible(false);
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    PrincipalForm.getInstance().establecerSession(usuario2);
-                    PrincipalForm.getInstance().setVisible(true);
-
-                }
-            });
+       
         } else {
             if (validarCamposVacios()) {
                 return;
@@ -207,7 +199,7 @@ public class InicioSesion extends javax.swing.JFrame {
                 this.setVisible(false);
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
-                        PrincipalForm.getInstance().establecerSession(usuario);
+                        PrincipalForm.getInstance().establecerSession(control.obtenerSesion(usuario));
                         PrincipalForm.getInstance().setVisible(true);
 
                     }

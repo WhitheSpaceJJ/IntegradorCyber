@@ -1,4 +1,3 @@
-
 package GUIs;
 
 import GUIs.utils.JButtonCellEditor;
@@ -198,24 +197,25 @@ public class AdmiClienteForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "No fue posible actualizar el cliente", "Información", JOptionPane.ERROR_MESSAGE);
         }
     }
-private       List<Cliente> clientes;
+    private List<Cliente> clientes;
+
     private void llenarTabla() {
-  clientes = this.logica.consultarTodosClientes();
-  if(clientes!=null || !clientes.isEmpty()){
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.tbClientes.getModel();
-        this.tbClientes.setRowHeight(30);
-        modeloTabla.setRowCount(0);
-        clientes.forEach(cliente -> {
-            Object[] fila = new Object[5];
-            fila[0] = cliente.getId();
-            fila[1] = cliente.getNombre();
-            fila[2] = cliente.getRfc();
-            fila[3] = cliente.getEmail();
-            fila[4] = cliente.getTelefono();
-            modeloTabla.addRow(fila);
-        });
-  }
-      
+        clientes = this.logica.consultarTodosClientes();
+        if (clientes != null || !clientes.isEmpty()) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tbClientes.getModel();
+            this.tbClientes.setRowHeight(30);
+            modeloTabla.setRowCount(0);
+            clientes.forEach(cliente -> {
+                Object[] fila = new Object[5];
+                fila[0] = cliente.getId();
+                fila[1] = cliente.getNombre();
+                fila[2] = cliente.getRfc();
+                fila[3] = cliente.getEmail();
+                fila[4] = cliente.getTelefono();
+                modeloTabla.addRow(fila);
+            });
+        }
+
     }
     private final IFachadaControl logica;
 
@@ -397,7 +397,7 @@ private       List<Cliente> clientes;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-         setVisible(false);
+        setVisible(false);
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing

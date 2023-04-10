@@ -1,27 +1,25 @@
-
 package interfaces;
+
 import entidades.*;
 import java.util.Calendar;
 import java.util.List;
 
 public interface IFachadaControl {
- public boolean iniciarSesion(Usuario usuario);
-    
- 
- public boolean agregarCaja(Caja caja);
-    
-    
+    public Usuario obtenerSesion(Usuario usuario) 
+            ;
+    public boolean iniciarSesion(Usuario usuario);
+
+    public boolean agregarCaja(Caja caja);
 
     public boolean actualizarCaja(Caja caja);
 
     public boolean eliminarCaja(int id);
 
     public Caja consultarCaja(int id);
-        
 
     public List<Caja> consultarCajas();
-    public Caja consultarCajaAbierta();
 
+    public Caja consultarCajaAbierta();
 
     public int agregarGasto(Gasto gasto);
 
@@ -50,7 +48,6 @@ public interface IFachadaControl {
     public Cliente consultarCliente(int id);
 
     public List<Cliente> consultarTodosClientes();
-    
 
     public boolean agregarProveedor(Proveedor proveedor);
 
@@ -62,7 +59,6 @@ public interface IFachadaControl {
 
     public List<Proveedor> consultarTodosProveedores();
 
-    
     public List<Venta> buscarVentasEntreFechas(Calendar inicio, Calendar fin);
 
     public List<Venta> buscarVentasEntreFechasPorCliente(Calendar inicio, Calendar fin, Cliente cliente);
@@ -73,11 +69,9 @@ public interface IFachadaControl {
 
     public List<Venta> buscarVentasEntreFechasYCliente(Calendar inicio, Calendar fin, Cliente cliente);
 
-    public boolean agregarVenta(Venta venta,List<DetalleVenta> detalles);
+    public boolean agregarVenta(Venta venta, List<DetalleVenta> detalles);
 
-  
     public boolean agregarDetalleVenta(DetalleVenta detalleVenta);
-
 
     public boolean agregarDetalleCompra(DetalleCompra entradaAlmacen);
 
@@ -91,7 +85,6 @@ public interface IFachadaControl {
 
     public List<DetalleCompra> buscarEntradasAlmacenEntreFechasYProducto(Calendar inicio, Calendar fin, Producto producto);
 
-
     public Producto consultarProducto(int id);
 
     public boolean agregarProducto(Producto producto);
@@ -100,7 +93,6 @@ public interface IFachadaControl {
 
     public boolean eliminarProducto(int id);
 
-  
     public List<Producto> buscarProductosPorNombre(String nombre);
 
     public List<Producto> consultarTodosProductos();
@@ -114,5 +106,13 @@ public interface IFachadaControl {
     public Usuario consultarUsuario(int id);
 
     public List<Usuario> consultarTodosUsuarios();
+
+    boolean agregar(Merma merma, List<DetalleMerma> detalles);
+
+    Merma consultarMerma(int id);
+
+    List<Merma> consultarTodasMermas();
+    
+            boolean agregar (DetalleMerma detalleMerma);
 
 }

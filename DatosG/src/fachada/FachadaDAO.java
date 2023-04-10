@@ -383,8 +383,8 @@ public class FachadaDAO implements IFachadaDAO {
             return null;
         }
     }
-    
-        @Override
+
+    @Override
     public List<Compra> consultarTodasCompras() {
         try {
             ICompraDAO comprasDAO = fabrica.getComprasDAO();
@@ -473,6 +473,7 @@ public class FachadaDAO implements IFachadaDAO {
             return null;
         }
     }
+
     @Override
     public boolean agregarUsuario(Usuario usuario) {
         try {
@@ -492,15 +493,17 @@ public class FachadaDAO implements IFachadaDAO {
             return false;
         }
     }
+
     @Override
- public boolean iniciarSesion(Usuario usuario) {
-     try {
+    public boolean iniciarSesion(Usuario usuario) {
+        try {
             IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
             return usuariosDAO.iniciarSesion(usuario);
         } catch (Exception e) {
             return false;
         }
- }
+    }
+
     @Override
     public boolean eliminarUsuario(int id) {
         try {
@@ -535,7 +538,28 @@ public class FachadaDAO implements IFachadaDAO {
     public boolean agregarMerma(Merma merma) {
         try {
             IMermaDAO mermasDAO = fabrica.getMermasDAO();
-            return mermasDAO.agregar(merma);
+            List<DetalleMerma> mermas = merma.getDetalleMermas();
+            merma.setDetalleMermas(null);
+            boolean agregoMerma = mermasDAO.agregar(merma);
+            if (agregoMerma) {
+                Merma merma2 = mermasDAO.consultarUltimaMerma();
+                for (int i = 0; i < mermas.size(); i++) {
+                    DetalleMerma get = mermas.get(i);
+                    get.setMerma(merma2);
+                    boolean detalle = agregarDetalleMerma(get);
+                    if (!detalle) {
+                        return false;
+                    } else {
+                        Producto producto = this.consultarProducto(get.getId());
+                        producto.setStock(producto.getStock() - get.getCantidad());
+                        boolean productoAc = this.actualizarProducto(producto);
+                        if (!productoAc) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            return true;
         } catch (Exception e) {
             return false;
         }
@@ -550,8 +574,8 @@ public class FachadaDAO implements IFachadaDAO {
             return null;
         }
     }
-    
-        @Override
+
+    @Override
     public List<Merma> consultarTodasMermas() {
         try {
             IMermaDAO mermasDAO = fabrica.getMermasDAO();
@@ -566,6 +590,16 @@ public class FachadaDAO implements IFachadaDAO {
         try {
             IMermaDAO mermasDAO = fabrica.getMermasDAO();
             return mermasDAO.buscarEntre(inicio, fin);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Usuario obtenerSesion(Usuario usuario) {
+        try {
+            IUsuariosDAO usuariosDAO = fabrica.getUsuariosDAO();
+            return usuariosDAO.obtenerSesion(usuario);
         } catch (Exception e) {
             return null;
         }

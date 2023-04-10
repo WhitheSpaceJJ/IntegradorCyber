@@ -15,6 +15,7 @@ public interface IControlUsuarios {
     Usuario consultar(int id);
 
     List<Usuario> consultarTodos();
+ public Usuario obtenerSesion(Usuario usuario) ;
 
 
 }

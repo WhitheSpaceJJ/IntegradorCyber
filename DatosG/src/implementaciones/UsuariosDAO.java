@@ -10,8 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 
-
-public class UsuariosDAO implements IUsuariosDAO{
+public class UsuariosDAO implements IUsuariosDAO {
 
     private final IConexionBD conexion;
 
@@ -89,39 +88,37 @@ public class UsuariosDAO implements IUsuariosDAO{
             Usuario usuarioBD = em.find(Usuario.class, id);
             em.getTransaction().commit();
             return usuarioBD;
-            
+
         } catch (IllegalStateException ex) {
             System.err.println("No se pudo consultar al cliente");
             return null;
         }
     }
+
     @Override
- public boolean iniciarSesion(Usuario usuario) {
-    EntityManager em = conexion.crearConexion();
-    try {
-        em.getTransaction().begin();
-        TypedQuery<Usuario> query = em.createQuery(
-  "SELECT u FROM Usuario u WHERE u.nombre = :nombre AND u.contrasena = :contrasena AND u.rol = :rol", 
-                Usuario.class);
-        query.setParameter("nombre", usuario.getNombre());
-        query.setParameter("contrasena", usuario.getPassword());
-        query.setParameter("rol", usuario.getRol());
-        Usuario usuarioBD = query.getSingleResult();
-        em.getTransaction().commit();
-        return true;
-    } catch (NoResultException ex) {
-        System.err.println("Nombre de usuario o contraseña incorrectos");
-        return false;
-    } catch (IllegalStateException ex) {
-        System.err.println("No se pudo consultar al usuario");
-       return false;
+    public boolean iniciarSesion(Usuario usuario) {
+        EntityManager em = conexion.crearConexion();
+        try {
+            Usuario usuarioBD = null;
+            em.getTransaction().begin();
+            TypedQuery<Usuario> query = em.createQuery(
+                    "SELECT u FROM Usuario u WHERE u.nombre = :nombre AND u.password = :password AND u.rol = :rol",
+                    Usuario.class);
+            query.setParameter("nombre", usuario.getNombre());
+            query.setParameter("password", usuario.getPassword());
+            query.setParameter("rol", usuario.getRol());
+            usuarioBD = query.getSingleResult();
+
+            em.getTransaction().commit();
+            return usuarioBD != null;
+        } catch (NoResultException ex) {
+            System.err.println("Nombre de usuario o contraseña incorrectos");
+            return false;
+        } catch (IllegalStateException ex) {
+            System.err.println("No se pudo consultar al usuario");
+            return false;
+        }
     }
-}
-
-
-
-
-
 
     @Override
     public List<Usuario> consultarTodos() {
@@ -139,5 +136,30 @@ public class UsuariosDAO implements IUsuariosDAO{
             return null;
         }
         return usuarios;
+    }
+
+    @Override
+    public  Usuario obtenerSesion(Usuario usuario) {
+        EntityManager em = conexion.crearConexion();
+        try {
+            Usuario usuarioBD = null;
+            em.getTransaction().begin();
+            TypedQuery<Usuario> query = em.createQuery(
+                    "SELECT u FROM Usuario u WHERE u.nombre = :nombre AND u.password = :password AND u.rol = :rol",
+                    Usuario.class);
+            query.setParameter("nombre", usuario.getNombre());
+            query.setParameter("password", usuario.getPassword());
+            query.setParameter("rol", usuario.getRol());
+            usuarioBD = query.getSingleResult();
+
+            em.getTransaction().commit();
+            return usuarioBD ;
+        } catch (NoResultException ex) {
+            System.err.println("Nombre de usuario o contraseña incorrectos");
+            return null;
+        } catch (IllegalStateException ex) {
+            System.err.println("No se pudo consultar al usuario");
+            return null;
+        }
     }
 }

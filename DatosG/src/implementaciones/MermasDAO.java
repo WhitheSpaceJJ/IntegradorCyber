@@ -1,6 +1,5 @@
 package implementaciones;
 
-
 import entidades.Compra;
 import entidades.Merma;
 import interfaces.IConexionBD;
@@ -12,6 +11,8 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import interfaces.IMermaDAO;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 
 public class MermasDAO implements IMermaDAO {
 
@@ -54,6 +55,22 @@ public class MermasDAO implements IMermaDAO {
     }
 
     @Override
+    public Merma consultarUltimaMerma() {
+        EntityManager em = this.conexion.crearConexion();
+        try {
+            var query = em.createNativeQuery("SELECT * FROM mermas ORDER BY id DESC LIMIT 1", Merma.class);
+            Merma merma = (Merma) query.getSingleResult();
+            return merma;
+        } catch (NoResultException nre) {
+            System.err.println("No se encontraron resultados");
+            return null;
+        } catch (IllegalStateException ise) {
+            System.err.println("No fue posible consultar la última merma");
+            return null;
+        }
+    }
+
+    @Override
     public List<Merma> consultarTodos() {
         List<Merma> mermas = null;
         EntityManager em = conexion.crearConexion();
@@ -75,8 +92,8 @@ public class MermasDAO implements IMermaDAO {
 
         return mermas;
     }
-    
-        @Override
+
+    @Override
     public List<Merma> buscarEntre(Calendar inicio, Calendar fin) {
         List<Merma> mermas = null;
         EntityManager em = conexion.crearConexion();
@@ -93,7 +110,8 @@ public class MermasDAO implements IMermaDAO {
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar las compras entre las fechas dadas");
             return null;
-        }}
+        }
+    }
 
     @Override
     public boolean actualizar(Merma t) {
@@ -104,7 +122,5 @@ public class MermasDAO implements IMermaDAO {
     public boolean eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
-
-
 
 }
