@@ -163,6 +163,7 @@ public class FrmCobro extends javax.swing.JFrame {
             venta = null;
             cerrarFormulario();
         }
+        VentasForm.getInstance().setVisible(true);
 
 
     }//GEN-LAST:event_btnContinuarActionPerformed
@@ -182,7 +183,7 @@ public class FrmCobro extends javax.swing.JFrame {
     }
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-             limpiar();
+        limpiar();
         setVisible(false);
         dispose();
         VentasForm.getInstance().setVisible(true);
