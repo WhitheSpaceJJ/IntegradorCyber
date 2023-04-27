@@ -525,6 +525,7 @@ public class VentasForm extends javax.swing.JFrame {
                 articuloBuscado = logica.consultarProducto(idProducto);
                 if (articuloBuscado == null) {
                     JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
+                    limpiarCampos();
                 } else {
 
                     articuloBuscado = logica.consultarProducto(idProducto);
