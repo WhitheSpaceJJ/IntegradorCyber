@@ -549,16 +549,15 @@ public class VentasForm extends javax.swing.JFrame {
 
    
     public void registrarTodoVenta() {
-        detalleV.clear();
+        
        try{
         registrarVenta();
-        JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
         
        }catch(Exception e){
            
        }
         limpiarCamposTodo();
-       
+        detalleV.clear();
         cargarTabla();
     }
 
