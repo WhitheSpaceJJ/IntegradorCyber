@@ -19,6 +19,7 @@ public class FrmCobro extends javax.swing.JFrame {
 
     private FrmCobro() {
         initComponents();
+        txtCambio.setEditable(false);
         this.setLocationRelativeTo(null);
     }
 

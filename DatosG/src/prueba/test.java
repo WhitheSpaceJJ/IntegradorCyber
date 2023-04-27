@@ -33,6 +33,7 @@ public class test {
         Producto producto = productosDAO.consultar(2);
         
         producto.setCategoria(categoria);
+        System.out.println(producto.getCategoria());
         productosDAO.actualizar(producto);
     }
     
