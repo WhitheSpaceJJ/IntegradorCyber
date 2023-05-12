@@ -60,7 +60,7 @@ public class VentasForm extends javax.swing.JFrame {
     }
 //Funcionales
 
-    private void llenarCBoxClientes() {
+    public void llenarCBoxClientes() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         clientes = logica.consultarTodosClientes();
         for (int i = 0; i < clientes.size(); i++) {

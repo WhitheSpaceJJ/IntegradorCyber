@@ -396,6 +396,7 @@ public class PrincipalForm extends javax.swing.JFrame {
         
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                AdmiProductoForm.getInstance().llenarCategorias();
                 AdmiProductoForm.getInstance().setVisible(true);
             }
         });
@@ -405,6 +406,7 @@ public class PrincipalForm extends javax.swing.JFrame {
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                
                 AdmiProveedorForm.getInstance().setVisible(true);
             }
         });
@@ -420,6 +422,7 @@ public class PrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
+                    VentasForm.getInstance().llenarCBoxClientes();
                     VentasForm.getInstance().setVisible(true);
                     VentasForm.getInstance().establecerCaja(caja);
                 }
@@ -453,6 +456,7 @@ public class PrincipalForm extends javax.swing.JFrame {
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+                AdmiProductoForm.getInstance().llenarCategorias();
                 AdmiProductoForm.getInstance().setVisible(true);
             }
         });
@@ -468,6 +472,7 @@ public class PrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
+                    VentasForm.getInstance().llenarCBoxClientes();
                     VentasForm.getInstance().setVisible(true);
                     VentasForm.getInstance().establecerCaja(caja);
                 }
