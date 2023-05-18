@@ -448,6 +448,7 @@ jTextFieldMarca.setText("");
         jLabel8.setText("Categoria");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, -1, -1));
 
+        jTextFieldStock.setEditable(false);
         jTextFieldStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextFieldStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
