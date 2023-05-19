@@ -107,6 +107,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 idUsuario = (int) tblUsuarios.getValueAt(tblUsuarios.getSelectedRow(), 0);
                 eliminar(idUsuario);
+                limpiarFormulario();
             }
         };
 

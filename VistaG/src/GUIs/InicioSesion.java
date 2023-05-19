@@ -33,9 +33,9 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     public static InicioSesion getInstance() {
-        if (instance == null) {
+       // if (instance == null) {
             instance = new InicioSesion();
-        }
+       // }
         return instance;
     }
 
@@ -68,11 +68,11 @@ public class InicioSesion extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(750, 590));
         jPanel1.setLayout(null);
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Iniciar  Sesión");
+        jLabel2.setText("Iniciar Sesión");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(440, 20, 220, 50);
+        jLabel2.setBounds(460, 20, 180, 50);
 
         jTextFieldUsuario.setBackground(new java.awt.Color(39, 18, 48));
         jTextFieldUsuario.setColumns(10);
@@ -237,8 +237,8 @@ public class InicioSesion extends javax.swing.JFrame {
             if (validarCamposVacios()) {
                 return;
             }
-            String usuarioNombre = this.jTextFieldUsuario.getText();
-            String contrasena = this.jPasswordFieldContraseña.getText();
+            String usuarioNombre = this.jTextFieldUsuario.getText().trim();
+            String contrasena = this.jPasswordFieldContraseña.getText().trim();
             int indice = this.cmbRoles.getSelectedIndex();
             Rol rol = Rol.valueOf(this.cmbRoles.getItemAt(indice));
             Usuario usuario = new Usuario(usuarioNombre, contrasena, rol);
@@ -262,7 +262,7 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     public void limpiarCampos() {
-        this.jLabel2.setText("Inicio de Sesión");
+        this.jLabel2.setText("Iniciar sesión");
         this.jTextFieldUsuario.setText("");
         this.jPasswordFieldContraseña.setText("");
         this.cmbRoles.setSelectedIndex(0);

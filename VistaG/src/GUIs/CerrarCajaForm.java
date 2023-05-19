@@ -218,8 +218,13 @@ public class CerrarCajaForm extends javax.swing.JFrame  {
          c.setFechaApertura(Calendar.getInstance());
          c.setTotalIngresos(saldoCierre-c.getSaldoInicial());
         
+         try{
             logica.cerrarCaja(c);
+          JOptionPane.showMessageDialog(null, "Caja cerrada con exito");
             this.cerrarCajaForm();
+         }catch(Exception ex){
+            JOptionPane.showMessageDialog(null, "Error al cerrar caja");
+        }
         }
     }//GEN-LAST:event_btnCerrarActionPerformed
 

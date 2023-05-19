@@ -104,6 +104,7 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        jMenuItem1 = new javax.swing.JMenuItem();
         pnlPrincipal = new javax.swing.JPanel();
         panelRound5 = new GUIs.PanelRound();
         panelRound1 = new GUIs.PanelRound();
@@ -121,10 +122,13 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLayeredPane1 = new javax.swing.JLayeredPane();
         jLabel1 = new javax.swing.JLabel();
         panelRound6 = new GUIs.PanelRound();
         jLabelTitulo = new javax.swing.JLabel();
         panelRound7 = new GUIs.PanelRound();
+        jButton1 = new javax.swing.JButton();
+        jLabel35 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuCaja1 = new javax.swing.JMenu();
         menuCajaNuevoTicket1 = new javax.swing.JMenuItem();
@@ -454,6 +458,8 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         jLabel17.setText("jLabel2");
         panelRound2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 86, 62, 48));
 
+        jMenuItem1.setText("jMenuItem1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administración");
         setResizable(false);
@@ -571,6 +577,19 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         jLabel9.setText("jLabel2");
         panelRound1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(172, 86, 62, 48));
 
+        javax.swing.GroupLayout jLayeredPane1Layout = new javax.swing.GroupLayout(jLayeredPane1);
+        jLayeredPane1.setLayout(jLayeredPane1Layout);
+        jLayeredPane1Layout.setHorizontalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+        jLayeredPane1Layout.setVerticalGroup(
+            jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 100, Short.MAX_VALUE)
+        );
+
+        panelRound1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, -1, -1));
+
         panelRound5.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 700, 580));
 
         pnlPrincipal.add(panelRound5);
@@ -608,6 +627,21 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
 
         pnlPrincipal.add(panelRound6);
         panelRound6.setBounds(0, 0, 1000, 160);
+
+        jButton1.setBackground(new java.awt.Color(153, 153, 153));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Cerrar Sesión");
+        jButton1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        pnlPrincipal.add(jButton1);
+        jButton1.setBounds(870, 710, 120, 30);
+
+        jLabel35.setText("jLabel35");
 
         jMenuBar1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
 
@@ -915,6 +949,7 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
     }//GEN-LAST:event_menuCajaCierreCaja1ActionPerformed
 
     private void jButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosActionPerformed
+     if( fachadaControl.consultarTodasCategorias().size()>0){
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -922,6 +957,9 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
                 AdmiProductoForm.getInstance().setVisible(true);
             }
         });
+     }else{
+         JOptionPane.showMessageDialog(null, "No hay categorias registradas");
+     }
 
     }//GEN-LAST:event_jButtonProductosActionPerformed
 
@@ -929,6 +967,7 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
 
         //Aqui habra una validacion con el fin de que validamos el usario actual, el metodo de consultar caja abierta
         //verifica si el usuario corresponde a la sesion
+        if(fachadaControl.consultarTodosProductos().size()>0){
         Caja caja = fachadaControl.consultarCajaAbierta();
         if (caja != null) {
             this.setVisible(false);
@@ -941,6 +980,9 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
             });
         } else {
             JOptionPane.showMessageDialog(null, "No se ha registrado alguna caja se requiere que abra alguna");
+        }
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay productos registrados");
         }
     }//GEN-LAST:event_jButtonRealizarVentaActionPerformed
 
@@ -1099,6 +1141,11 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonUsuarios3ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+       this.dispose();
+        InicioSesion.getInstance().setVisible(true);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdmin;
@@ -1119,6 +1166,7 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
     private javax.swing.JMenu MenuCaja1;
     private javax.swing.JMenu MenuTecnico;
     private javax.swing.JMenu MenuVendedor;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCatehorias;
     private javax.swing.JButton jButtonCatehorias1;
     private javax.swing.JButton jButtonCatehorias2;
@@ -1170,6 +1218,7 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1177,7 +1226,9 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem menuCajaAbrirCaja1;
     private javax.swing.JMenuItem menuCajaCierreCaja1;
     private javax.swing.JMenuItem menuCajaNuevoTicket1;

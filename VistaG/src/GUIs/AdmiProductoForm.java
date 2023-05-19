@@ -297,6 +297,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        datePicker1 = new com.github.lgooddatepicker.components.DatePicker();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
@@ -384,6 +385,11 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
                 jTextFieldCodigoActionPerformed(evt);
             }
         });
+        jTextFieldCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldCodigoKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextFieldCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 300, -1));
 
         jTextFieldDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -394,9 +400,19 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, -1, -1));
 
         jTextFieldPrecioCompra.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldPrecioCompra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldPrecioCompraKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextFieldPrecioCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, 300, -1));
 
         jTextFieldPrecioVenta.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextFieldPrecioVenta.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldPrecioVentaKeyTyped(evt);
+            }
+        });
         jPanel1.add(jTextFieldPrecioVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 390, 300, -1));
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -463,11 +479,15 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jLabel8.setText("Categoria");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, -1, -1));
 
-        jTextFieldStock.setEditable(false);
         jTextFieldStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextFieldStock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldStockActionPerformed(evt);
+            }
+        });
+        jTextFieldStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldStockKeyTyped(evt);
             }
         });
         jPanel1.add(jTextFieldStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 440, 300, -1));
@@ -511,6 +531,26 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jButton2ActionPerformed
 
+     public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if (Character.isDigit(car)) {
+
+        } else {
+            evt.consume();
+            getToolkit().beep();
+        }
+    }
+
+      public void numeroDecimal(java.awt.event.KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if (Character.isDigit(car) || car == '.') {
+
+        } else {
+            evt.consume();
+            getToolkit().beep();
+        }
+    }
+      
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         setVisible(false);
         dispose();
@@ -529,8 +569,25 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBoxCategoriasActionPerformed
 
+    private void jTextFieldPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecioCompraKeyTyped
+       numeroDecimal(evt);
+    }//GEN-LAST:event_jTextFieldPrecioCompraKeyTyped
+
+    private void jTextFieldPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecioVentaKeyTyped
+        numeroDecimal(evt);
+    }//GEN-LAST:event_jTextFieldPrecioVentaKeyTyped
+
+    private void jTextFieldStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldStockKeyTyped
+       adminitirSoloNumeros(evt);
+    }//GEN-LAST:event_jTextFieldStockKeyTyped
+
+    private void jTextFieldCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCodigoKeyTyped
+      adminitirSoloNumeros(evt);
+    }//GEN-LAST:event_jTextFieldCodigoKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.github.lgooddatepicker.components.DatePicker datePicker1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBoxCategorias;
