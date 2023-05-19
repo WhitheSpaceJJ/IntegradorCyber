@@ -288,6 +288,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jTextFieldPrecioCompra.setText("");
         jTextFieldPrecioVenta.setText("");
         jTextFieldStock.setText("");
+    
         jTextFieldCodigo.setText("");
         jTextFieldMarca.setText("");
         limpiarId();
