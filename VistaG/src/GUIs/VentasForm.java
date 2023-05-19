@@ -753,9 +753,14 @@ public class VentasForm extends javax.swing.JFrame {
             }
             Calendar fecha = Calendar.getInstance();
             Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
+            
             int indiceCliente = clientesC.getSelectedIndex();
-            Cliente cliente = clientes.get(indiceCliente);
+             Cliente cliente=new Cliente();
+            if(indiceCliente>=0){
+            cliente = clientes.get(indiceCliente);
+            }
             venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
+          
             venta.setDetalleVentas(detalleV);
 
             

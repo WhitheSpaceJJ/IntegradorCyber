@@ -26,6 +26,10 @@ public interface IFachadaControl {
     public Gasto consultar(int id);
 
     public List<Gasto> consultarTodas();
+    
+     public List<DetalleVenta> consultarTodas(int idVenta);
+
+       public List<DetalleVenta> consultarTodasDetallesVentas();
 
     public List<Gasto> buscarGastosEntreFechas(Calendar inicio, Calendar fin);
 

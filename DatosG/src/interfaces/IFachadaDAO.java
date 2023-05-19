@@ -20,7 +20,11 @@ public interface IFachadaDAO {
 
     public boolean agregarGasto(Gasto gasto);
 
-    public boolean actualizarGasto(Gasto gasto);
+    public boolean actualizarGasto(Gasto gasto);  
+    
+    public List<DetalleVenta> consultarTodas (int idVenta);
+    
+      public List<DetalleVenta> consultarTodasDetallesVentas ();
 
     public Gasto consultar(int id);
 

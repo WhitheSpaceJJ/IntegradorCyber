@@ -137,6 +137,7 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         menuCajaNuevoTicket1 = new javax.swing.JMenuItem();
         menuCajaAbrirCaja1 = new javax.swing.JMenuItem();
         menuCajaCierreCaja1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         MenuAdmin = new javax.swing.JMenu();
         MenuAdminCategoria = new javax.swing.JMenuItem();
         MenuAdminClientes = new javax.swing.JMenuItem();
@@ -678,6 +679,15 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         });
         MenuCaja1.add(menuCajaCierreCaja1);
 
+        jMenuItem2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jMenuItem2.setText("Reporte Venta");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        MenuCaja1.add(jMenuItem2);
+
         jMenuBar1.add(MenuCaja1);
 
         MenuAdmin.setText("Administrador");
@@ -1149,6 +1159,15 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         InicioSesion.getInstance().setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        this.setVisible(false);
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                ReporteVentaForm.instanciaCerrarCaja().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdmin;
@@ -1232,6 +1251,7 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
     private javax.swing.JLayeredPane jLayeredPane1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem menuCajaAbrirCaja1;
     private javax.swing.JMenuItem menuCajaCierreCaja1;
     private javax.swing.JMenuItem menuCajaNuevoTicket1;

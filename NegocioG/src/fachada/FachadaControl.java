@@ -600,4 +600,24 @@ public class FachadaControl implements IFachadaControl {
         }
     }
 
+    @Override
+    public List<DetalleVenta> consultarTodas(int idVenta) {
+         try {
+            IControlDetalleVentas ventasDAO = fabrica.getDetalleVentasDAO();
+            return ventasDAO.consultarTodas(idVenta);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<DetalleVenta> consultarTodasDetallesVentas() {
+        try {
+            IControlDetalleVentas ventasDAO = fabrica.getDetalleVentasDAO();
+            return ventasDAO.consultarTodasDetallesVentas();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

@@ -605,4 +605,24 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
+    @Override
+    public List<DetalleVenta> consultarTodas(int idVenta) {
+       try {
+            IDetalleVentasDAO ventasDAO = fabrica.getDetalleVentasDAO();
+            return ventasDAO.consultarTodas(idVenta);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public List<DetalleVenta> consultarTodasDetallesVentas() {
+   try {
+            IDetalleVentasDAO ventasDAO = fabrica.getDetalleVentasDAO();
+            return ventasDAO.consultarTodos();
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }
