@@ -9,6 +9,8 @@ import fachada.FachadaControl;
 import interfaces.IFachadaControl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -34,6 +36,18 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jTextFieldPrecioVenta.setDocument(new JTextFieldLimit(12));
         jTextFieldStock.setDocument(new JTextFieldLimit(12));
         jTextFieldCodigo.setDocument(new JTextFieldLimit(13));
+
+        setDefaultCloseOperation(AdmiProductoForm.DISPOSE_ON_CLOSE);
+
+        // Agrega un WindowListener para el evento de cierre de ventana
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Aquí puedes realizar las acciones necesarias para borrar el formulario
+                // como restablecer los campos del formulario, limpiar los datos, etc.
+                limpiarFormulario();
+            }
+        });
     }
 
     public void llenarCategorias() {
@@ -187,7 +201,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero en el stock  mayor a 0 y no mayor a 999999999");
             return true;
         }
-        if (!jTextFieldCodigo.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldCodigo.getText()) <= 0){ //|| Integer.parseInt(jTextFieldCodigo.getText()) > 999999999) {
+        if (!jTextFieldCodigo.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldCodigo.getText()) <= 0) { //|| Integer.parseInt(jTextFieldCodigo.getText()) > 999999999) {
             JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero de 10 digitos maximo");
             return true;
         }
@@ -273,8 +287,8 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jTextFieldPrecioCompra.setText("");
         jTextFieldPrecioVenta.setText("");
         jTextFieldStock.setText("");
-jTextFieldCodigo.setText("");
-jTextFieldMarca.setText("");
+        jTextFieldCodigo.setText("");
+        jTextFieldMarca.setText("");
         limpiarId();
         jTextFieldNombre.setEditable(true);
     }
@@ -313,6 +327,7 @@ jTextFieldMarca.setText("");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administración Productos");
+        setName("frameAdminProductos"); // NOI18N
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -461,6 +476,11 @@ jTextFieldMarca.setText("");
         jLabel9.setText("Stock");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, -1, -1));
 
+        jComboBoxCategorias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCategoriasActionPerformed(evt);
+            }
+        });
         jPanel1.add(jComboBoxCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 300, 30));
 
         lblRectangulo4.setBackground(new java.awt.Color(204, 204, 255));
@@ -488,7 +508,7 @@ jTextFieldMarca.setText("");
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         this.limpiarFormulario();
-        
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -498,12 +518,16 @@ jTextFieldMarca.setText("");
     }//GEN-LAST:event_formWindowClosing
 
     private void jTextFieldStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStockActionPerformed
-        
+
     }//GEN-LAST:event_jTextFieldStockActionPerformed
 
     private void jTextFieldCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodigoActionPerformed
-        
+
     }//GEN-LAST:event_jTextFieldCodigoActionPerformed
+
+    private void jComboBoxCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCategoriasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

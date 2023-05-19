@@ -9,6 +9,8 @@ import fachada.FachadaControl;
 import interfaces.IFachadaControl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -37,6 +39,18 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         tblUsuarios.getTableHeader().setReorderingAllowed(false);
         txtNombre.setDocument(new JTextFieldLimit(45));
         txtPassword.setDocument(new JTextFieldLimit(20));
+        
+        setDefaultCloseOperation(admiUsuarioForm.DISPOSE_ON_CLOSE);
+
+        // Agrega un WindowListener para el evento de cierre de ventana
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Aquí puedes realizar las acciones necesarias para borrar el formulario
+                // como restablecer los campos del formulario, limpiar los datos, etc.
+                limpiarFormulario();
+            }
+        });
 
     }
 

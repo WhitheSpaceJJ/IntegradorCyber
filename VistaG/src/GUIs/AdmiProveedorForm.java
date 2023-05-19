@@ -8,6 +8,8 @@ import fachada.FachadaControl;
 import interfaces.IFachadaControl;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -30,6 +32,18 @@ public class AdmiProveedorForm extends javax.swing.JFrame {
         jTextFieldDireccion.setDocument(new JTextFieldLimit(100));
         jTextFieldWebSite.setDocument(new JTextFieldLimit(50));
         jTextFieldContacto.setDocument(new JTextFieldLimit(100));
+        
+        setDefaultCloseOperation(admiProveedorForm.DISPOSE_ON_CLOSE);
+
+        // Agrega un WindowListener para el evento de cierre de ventana
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                // Aquí puedes realizar las acciones necesarias para borrar el formulario
+                // como restablecer los campos del formulario, limpiar los datos, etc.
+                limpiarFormulario();
+            }
+        });
     }
 
     public static AdmiProveedorForm getInstance() {
