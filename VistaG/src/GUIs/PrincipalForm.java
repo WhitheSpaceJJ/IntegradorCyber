@@ -105,7 +105,6 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         pnlPrincipal = new javax.swing.JPanel();
-        jLabelTitulo = new javax.swing.JLabel();
         panelRound5 = new GUIs.PanelRound();
         panelRound1 = new GUIs.PanelRound();
         jButtonCatehorias = new javax.swing.JButton();
@@ -123,6 +122,9 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        panelRound6 = new GUIs.PanelRound();
+        jLabelTitulo = new javax.swing.JLabel();
+        panelRound7 = new GUIs.PanelRound();
         jMenuBar1 = new javax.swing.JMenuBar();
         MenuCaja1 = new javax.swing.JMenu();
         menuCajaNuevoTicket1 = new javax.swing.JMenuItem();
@@ -460,11 +462,6 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(1000, 750));
         pnlPrincipal.setLayout(null);
 
-        jLabelTitulo.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        jLabelTitulo.setForeground(new java.awt.Color(102, 102, 102));
-        pnlPrincipal.add(jLabelTitulo);
-        jLabelTitulo.setBounds(50, 20, 920, 60);
-
         panelRound5.setBackground(new java.awt.Color(70, 4, 129));
         panelRound5.setRoundBottomLeft(70);
         panelRound5.setRoundBottomRight(70);
@@ -577,11 +574,40 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
         panelRound5.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 700, 580));
 
         pnlPrincipal.add(panelRound5);
-        panelRound5.setBounds(130, 120, 700, 620);
+        panelRound5.setBounds(160, 120, 700, 620);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/sinfondochica.png"))); // NOI18N
         pnlPrincipal.add(jLabel1);
         jLabel1.setBounds(850, -50, 240, 250);
+
+        panelRound6.setBackground(new java.awt.Color(70, 4, 129));
+        panelRound6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabelTitulo.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        panelRound6.add(jLabelTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 850, 60));
+
+        panelRound7.setBackground(new java.awt.Color(204, 204, 255));
+        panelRound7.setRoundBottomLeft(60);
+        panelRound7.setRoundBottomRight(60);
+        panelRound7.setRoundTopLeft(60);
+        panelRound7.setRoundTopRight(60);
+
+        javax.swing.GroupLayout panelRound7Layout = new javax.swing.GroupLayout(panelRound7);
+        panelRound7.setLayout(panelRound7Layout);
+        panelRound7Layout.setHorizontalGroup(
+            panelRound7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 520, Short.MAX_VALUE)
+        );
+        panelRound7Layout.setVerticalGroup(
+            panelRound7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 80, Short.MAX_VALUE)
+        );
+
+        panelRound6.add(panelRound7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 520, 80));
+
+        pnlPrincipal.add(panelRound6);
+        panelRound6.setBounds(0, 0, 1000, 160);
 
         jMenuBar1.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
 
@@ -1160,6 +1186,8 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
     private GUIs.PanelRound panelRound3;
     private GUIs.PanelRound panelRound4;
     private GUIs.PanelRound panelRound5;
+    private GUIs.PanelRound panelRound6;
+    private GUIs.PanelRound panelRound7;
     private javax.swing.JPanel pnlPrincipal;
     // End of variables declaration//GEN-END:variables
 }
