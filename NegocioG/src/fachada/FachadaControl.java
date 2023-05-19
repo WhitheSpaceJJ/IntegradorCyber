@@ -460,10 +460,10 @@ public class FachadaControl implements IFachadaControl {
     }
 
     @Override
-    public boolean eliminarCaja(int id) {
+    public boolean cerrarCaja(Caja caja) {
         try {
             IControlCajas cajasDAO = fabrica.getCajasDAO();
-            return cajasDAO.eliminar(id);
+            return cajasDAO.actualizar(caja);
         } catch (Exception e) {
             return false;
         }

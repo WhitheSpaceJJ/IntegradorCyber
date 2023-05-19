@@ -13,7 +13,7 @@ public interface IFachadaControl {
 
     public boolean actualizarCaja(Caja caja);
 
-    public boolean eliminarCaja(int id);
+    public boolean cerrarCaja(Caja caja);
 
     public Caja consultarCaja(int id);
 

@@ -5,6 +5,10 @@ import entidades.Usuario;
 import enumeradores.Rol;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Insets;
 
 import javax.swing.JOptionPane;
 
@@ -18,6 +22,10 @@ public class PrincipalForm extends javax.swing.JFrame {
         initComponents();
         this.usuarioSesion = null;
         this.fachadaControl = new FachadaControl();
+        
+    
+
+jButtonProductos.setPreferredSize(new Dimension(40, 40));
     }
     
     public static PrincipalForm getInstance() {
@@ -449,7 +457,19 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCajaAbrirCaja1ActionPerformed
 
     private void menuCajaCierreCaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaCierreCaja1ActionPerformed
-        JOptionPane.showMessageDialog(null, "El cierre de caja, aun no se implementa espera actualizaciones y casos de uso");
+      Caja caja = fachadaControl.consultarCajaAbierta();
+      if(caja==null){
+          JOptionPane.showMessageDialog(this, "No hay caja abierta");
+          
+      }else{
+            this.setVisible(false);
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    CerrarCajaForm.instanciaCerrarCaja().mostrarFormulario();
+                }
+            });
+      }
+        
     }//GEN-LAST:event_menuCajaCierreCaja1ActionPerformed
 
     private void jButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosActionPerformed

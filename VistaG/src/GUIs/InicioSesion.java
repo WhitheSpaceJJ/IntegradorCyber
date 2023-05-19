@@ -60,7 +60,7 @@ public class InicioSesion extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Inicio de Sesion");
+        jLabel2.setText("Inicio de Sesión");
         jPanel1.add(jLabel2);
         jLabel2.setBounds(110, 10, 290, 50);
 
@@ -197,6 +197,7 @@ public class InicioSesion extends javax.swing.JFrame {
             if (esta) {
                 this.limpiarCampos();
                 this.setVisible(false);
+    
                 java.awt.EventQueue.invokeLater(new Runnable() {
                     public void run() {
                         PrincipalForm.getInstance().establecerSession(control.obtenerSesion(usuario));
@@ -212,7 +213,7 @@ public class InicioSesion extends javax.swing.JFrame {
     }
 
     public void limpiarCampos() {
-        this.jLabel2.setText("Inicio de Sesion");
+        this.jLabel2.setText("Inicio de Sesión");
         this.jTextFieldUsuario.setText("");
         this.jPasswordFieldContraseña.setText("");
         this.cmbRoles.setSelectedIndex(0);

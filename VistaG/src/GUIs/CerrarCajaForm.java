@@ -4,17 +4,38 @@
  */
 package GUIs;
 
+import entidades.Caja;
+import entidades.Usuario;
+import enumeradores.Estado;
+import fachada.FachadaControl;
+import interfaces.IFachadaControl;
+import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
- * @author Luis
+ * @author jarol
  */
-public class CerrarCajaForm extends javax.swing.JFrame {
+public class CerrarCajaForm extends javax.swing.JFrame  {
 
+       private static CerrarCajaForm cerrarCaja;
+    private IFachadaControl logica;
+        Caja caja = new Caja();
+        Usuario usuario=new Usuario();
     /**
      * Creates new form CerrarCajaForm
      */
     public CerrarCajaForm() {
         initComponents();
+          this.logica = new FachadaControl();
+     txtOperador.setEditable(false);
+      txtFecha.setEditable(false);
+      
+      llenarCampos();
+     
     }
 
     /**
@@ -33,7 +54,7 @@ public class CerrarCajaForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtOperador = new javax.swing.JTextField();
         txtFecha = new javax.swing.JTextField();
-        txtSaldoInicial1 = new javax.swing.JTextField();
+        txtSaldoCierre = new javax.swing.JTextField();
         btnCancelar = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
@@ -44,7 +65,12 @@ public class CerrarCajaForm extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         lblRectangulo4 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -79,12 +105,12 @@ public class CerrarCajaForm extends javax.swing.JFrame {
         });
         jPanel1.add(txtFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 260, 30));
 
-        txtSaldoInicial1.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtSaldoCierre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSaldoInicial1KeyTyped(evt);
+                txtSaldoCierreKeyTyped(evt);
             }
         });
-        jPanel1.add(txtSaldoInicial1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 140, 30));
+        jPanel1.add(txtSaldoCierre, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 140, 30));
 
         btnCancelar.setBackground(new java.awt.Color(0, 0, 255));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -136,6 +162,23 @@ public class CerrarCajaForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+     public static CerrarCajaForm instanciaCerrarCaja() {
+        if (cerrarCaja == null) {
+            cerrarCaja = new CerrarCajaForm();
+        }
+        return cerrarCaja;
+    }
+      public void mostrarFormulario() {
+        cerrarCaja.setLocationRelativeTo(null);
+        cerrarCaja.setVisible(true);
+
+    }
+      
+        public void cerrarCajaForm() {
+        cerrarCaja.dispose();
+        PrincipalForm.getInstance().setVisible(true);
+    }
+
     private void txtOperadorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtOperadorKeyTyped
     }//GEN-LAST:event_txtOperadorKeyTyped
 
@@ -144,16 +187,80 @@ public class CerrarCajaForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtFechaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-     
+        limpiarCampos();     
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+     public void llenarCampos() {
+        Calendar fechaC = Calendar.getInstance();
+        Date fecha = fechaC.getTime();
+        SimpleDateFormat formatoFecha = new SimpleDateFormat("dd-MM-yyyy");
+        String fechaFormateada = formatoFecha.format(fecha);
+           caja=logica.consultarCajaAbierta() ;
+        usuario=caja.getUsuario();
+        usuario=logica.consultarUsuario(usuario.getId());
         
+        txtOperador.setText(usuario.toString());
+        this.txtFecha.setText(fechaFormateada);
+    }
+
+    
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+       if (validarDatos()) {
+            return;
+        }
+       float saldoCierre;
+        Caja c = new Caja();
+        c=logica.consultarCajaAbierta();
+        if (c != null) {
+        saldoCierre=Float.parseFloat(txtSaldoCierre.getText().trim());
+        c.setSaldoCierre(saldoCierre);
+        c.setEstado(Estado.CERRADA);
+         c.setFechaApertura(Calendar.getInstance());
+         c.setTotalIngresos(saldoCierre-c.getSaldoInicial());
+        
+            logica.cerrarCaja(c);
+            this.cerrarCajaForm();
+        }
     }//GEN-LAST:event_btnCerrarActionPerformed
 
-    private void txtSaldoInicial1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoInicial1KeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtSaldoInicial1KeyTyped
+      
+      public boolean validarDatos() {
+        String regexFloat = "\\d+(\\.\\d+)?";
+        if (!txtSaldoCierre.getText().matches(regexFloat) || Float.parseFloat(txtSaldoCierre.getText()) <= 0 || Float.parseFloat(txtSaldoCierre.getText()) > 999999999) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el saldo de cierre");
+            return true;
+        }
+        return false;
+    }
+    
+    private void txtSaldoCierreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSaldoCierreKeyTyped
+        numeroDecimal(evt);
+    }//GEN-LAST:event_txtSaldoCierreKeyTyped
+
+     public void numeroDecimal(java.awt.event.KeyEvent evt) {
+        char car = evt.getKeyChar();
+        if (Character.isDigit(car) || car == '.') {
+
+        } else {
+            evt.consume();
+            getToolkit().beep();
+        }
+    }
+     public void limpiarCampos() {
+        cerrarCaja.txtSaldoCierre.setText("");
+       
+    }
+       
+      
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+         limpiarCampos();
+        setVisible(false);
+      
+        dispose();
+        PrincipalForm.getInstance().setVisible(true);
+        
+         
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -173,6 +280,7 @@ public class CerrarCajaForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblRectangulo4;
     private javax.swing.JTextField txtFecha;
     private javax.swing.JTextField txtOperador;
-    private javax.swing.JTextField txtSaldoInicial1;
+    private javax.swing.JTextField txtSaldoCierre;
     // End of variables declaration//GEN-END:variables
+
 }
