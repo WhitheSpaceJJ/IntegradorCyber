@@ -215,9 +215,8 @@ public class CerrarCajaForm extends javax.swing.JFrame  {
         saldoCierre=Float.parseFloat(txtSaldoCierre.getText().trim());
         c.setSaldoCierre(saldoCierre);
         c.setEstado(Estado.CERRADA);
-         c.setFechaApertura(Calendar.getInstance());
+         c.setFechaCierre(Calendar.getInstance());
          c.setTotalIngresos(saldoCierre-c.getSaldoInicial());
-        
          try{
             logica.cerrarCaja(c);
           JOptionPane.showMessageDialog(null, "Caja cerrada con exito");
