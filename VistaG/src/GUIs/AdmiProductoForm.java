@@ -75,6 +75,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         ActionListener onEditarClickListener = (ActionEvent e) -> {
             idProducto = (int) jTableProductos.getValueAt(jTableProductos.getSelectedRow(), 0);
             llenarFormulario(logica.consultarProducto(idProducto));
+            jTextFieldStock.setEditable(false);
 
         };
 
