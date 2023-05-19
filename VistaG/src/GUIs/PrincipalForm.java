@@ -42,16 +42,19 @@ jButtonProductos.setPreferredSize(new Dimension(40, 40));
             this.MenuTecnico.setEnabled(false);
             this.jButtonUsuarios.setEnabled(true);
             this.MenuVendedor.setEnabled(false);
+            this.MenuAdmin.setEnabled(true);
         }
         if (usuario.getRol() == Rol.TECNICO) {
             this.jButtonUsuarios.setEnabled(false);
             this.MenuAdmin.setEnabled(false);
-            this.MenuVendedor.setEnabled(false);
+            this.MenuVendedor.setEnabled(false); 
+            this.MenuTecnico.setEnabled(true);
         }
         if (usuario.getRol() == Rol.VENDEDOR) {
             this.jButtonUsuarios.setEnabled(false);
             this.MenuAdmin.setEnabled(false);
             this.MenuTecnico.setEnabled(false);
+            this.MenuVendedor.setEnabled(true);
         }
     }
     
