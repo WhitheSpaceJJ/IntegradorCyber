@@ -20,6 +20,7 @@ public class AbrirCajaForm extends javax.swing.JFrame {
         initComponents();
         txtFecha.setEditable(false);
         this.logica = new FachadaControl();
+        this.setLocationRelativeTo(null);
         llenarCampos();
         llenarCBoxUsuarios();
     }

@@ -6,6 +6,7 @@ import enumeradores.Rol;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class InicioSesion extends javax.swing.JFrame {
@@ -21,10 +22,13 @@ public class InicioSesion extends javax.swing.JFrame {
         Usuario usuarioConsulta = this.control.consultarUsuario(1);
         if (usuarioConsulta == null) {
             JOptionPane.showMessageDialog(null, "Bienvenido querido usuario para comenzar el uso del sistema registre un usuario");
-            this.jButtonIniciarSesion.setText("Registrar");
-            this.jLabel2.setText("Registrar Usuario");
+          //  this.jButtonIniciarSesion.setText("Registrar");
+            this.jButtonIniciarSesion.setIcon(new ImageIcon(getClass().getResource("/images/registrarse.jpg")));
+            this.jLabel2.setText("Registrarse");
             this.cmbRoles.setSelectedIndex(0);
             this.cmbRoles.setEnabled(false);
+        }else{
+             this.jButtonIniciarSesion.setIcon(new ImageIcon(getClass().getResource("/images/btninicio2.jpg")));
         }
     }
 
@@ -48,37 +52,57 @@ public class InicioSesion extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         cmbRoles = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
+        jSeparator3 = new javax.swing.JSeparator();
+        jSeparator4 = new javax.swing.JSeparator();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Inicio Sesion");
-        setMinimumSize(new java.awt.Dimension(450, 350));
+        setMinimumSize(new java.awt.Dimension(730, 510));
         setResizable(false);
         getContentPane().setLayout(null);
 
-        jPanel1.setBackground(new java.awt.Color(204, 255, 255));
+        jPanel1.setBackground(new java.awt.Color(39, 18, 48));
+        jPanel1.setPreferredSize(new java.awt.Dimension(750, 590));
         jPanel1.setLayout(null);
 
-        jLabel2.setFont(new java.awt.Font("Arial Black", 1, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel2.setText("Inicio de Sesión");
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Iniciar  Sesión");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(110, 10, 290, 50);
+        jLabel2.setBounds(440, 20, 220, 50);
 
+        jTextFieldUsuario.setBackground(new java.awt.Color(39, 18, 48));
         jTextFieldUsuario.setColumns(10);
-        jTextFieldUsuario.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jTextFieldUsuario.setFont(new java.awt.Font("Arial", 1, 18)); // NOI18N
+        jTextFieldUsuario.setForeground(new java.awt.Color(153, 153, 255));
+        jTextFieldUsuario.setBorder(null);
         jPanel1.add(jTextFieldUsuario);
-        jTextFieldUsuario.setBounds(160, 70, 260, 40);
+        jTextFieldUsuario.setBounds(450, 130, 240, 40);
 
-        jLabel3.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Usuario");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(10, 70, 90, 40);
+        jLabel3.setBounds(410, 90, 90, 40);
+
+        jPasswordFieldContraseña.setBackground(new java.awt.Color(39, 18, 48));
+        jPasswordFieldContraseña.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jPasswordFieldContraseña.setForeground(new java.awt.Color(153, 153, 255));
+        jPasswordFieldContraseña.setBorder(null);
+        jPasswordFieldContraseña.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPasswordFieldContraseñaActionPerformed(evt);
+            }
+        });
         jPanel1.add(jPasswordFieldContraseña);
-        jPasswordFieldContraseña.setBounds(160, 130, 260, 40);
+        jPasswordFieldContraseña.setBounds(450, 240, 240, 40);
 
         jButtonIniciarSesion.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-        jButtonIniciarSesion.setText("Iniciar");
+        jButtonIniciarSesion.setBorder(null);
+        jButtonIniciarSesion.setFocusPainted(false);
         jButtonIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonIniciarSesionActionPerformed(evt);
@@ -90,13 +114,13 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jButtonIniciarSesion);
-        jButtonIniciarSesion.setBounds(140, 250, 130, 40);
+        jButtonIniciarSesion.setBounds(480, 420, 140, 40);
 
-        jLabel4.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Rol");
         jPanel1.add(jLabel4);
-        jLabel4.setBounds(10, 180, 130, 40);
+        jLabel4.setBounds(410, 290, 130, 40);
 
         cmbRoles.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "VENDEDOR", "TECNICO" }));
@@ -111,16 +135,37 @@ public class InicioSesion extends javax.swing.JFrame {
             }
         });
         jPanel1.add(cmbRoles);
-        cmbRoles.setBounds(160, 180, 260, 40);
+        cmbRoles.setBounds(410, 330, 260, 40);
 
-        jLabel5.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Contraseña");
         jPanel1.add(jLabel5);
-        jLabel5.setBounds(10, 130, 130, 40);
+        jLabel5.setBounds(410, 190, 130, 40);
+
+        jSeparator3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jSeparator3);
+        jSeparator3.setBounds(410, 280, 280, 10);
+
+        jSeparator4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.add(jSeparator4);
+        jSeparator4.setBounds(410, 170, 270, 10);
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/desbloquear.png"))); // NOI18N
+        jPanel1.add(jLabel8);
+        jLabel8.setBounds(410, 250, 40, 30);
+
+        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/usuariolila.png"))); // NOI18N
+        jPanel1.add(jLabel9);
+        jLabel9.setBounds(410, 140, 30, 30);
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/inicio3.jpg"))); // NOI18N
+        jLabel7.setText("jLabel7");
+        jPanel1.add(jLabel7);
+        jLabel7.setBounds(-10, 0, 360, 480);
 
         getContentPane().add(jPanel1);
-        jPanel1.setBounds(0, 0, 450, 350);
+        jPanel1.setBounds(0, 0, 730, 570);
 
         pack();
         setLocationRelativeTo(null);
@@ -159,8 +204,12 @@ public class InicioSesion extends javax.swing.JFrame {
         this.iniciarSesion();
     }//GEN-LAST:event_jButtonIniciarSesionActionPerformed
 
+    private void jPasswordFieldContraseñaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPasswordFieldContraseñaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPasswordFieldContraseñaActionPerformed
+
     public void iniciarSesion() {
-        if (this.jButtonIniciarSesion.getText().equalsIgnoreCase("Registrar")) {
+        if (this.jLabel2.getText().equalsIgnoreCase("Registrarse")) {
             if (validarCamposVacios()) {
                 return;
             }
@@ -239,8 +288,13 @@ public class InicioSesion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPasswordField jPasswordFieldContraseña;
+    private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JSeparator jSeparator4;
     private javax.swing.JTextField jTextFieldUsuario;
     // End of variables declaration//GEN-END:variables
 }
