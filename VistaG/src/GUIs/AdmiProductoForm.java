@@ -293,6 +293,8 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jTextFieldMarca.setText("");
         limpiarId();
         jTextFieldNombre.setEditable(true);
+        jTextFieldStock.setEditable(true);
+        
     }
 
     @SuppressWarnings("unchecked")

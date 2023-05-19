@@ -186,7 +186,8 @@ public class AbrirCajaForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtSaldoInicialKeyTyped
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-           setVisible(false);
+        limpiarCampos();   
+        setVisible(false);
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
