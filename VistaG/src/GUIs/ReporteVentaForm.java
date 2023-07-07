@@ -10,6 +10,7 @@ import entidades.Usuario;
 import entidades.Venta;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
@@ -63,7 +64,7 @@ public class ReporteVentaForm extends javax.swing.JFrame {
             ventas.forEach(venta -> {
                 Object[] fila = new Object[7];
                 fila[0] = venta.getId().toString();
-                fila[1] = venta.getFecha().toString();
+                fila[1] = venta.getFecha().get(Calendar.DAY_OF_MONTH)+"/"+venta.getFecha().get(Calendar.MONTH)+"/"+venta.getFecha().get(Calendar.YEAR);
                 fila[2] = venta.getNumTicket();
                 fila[3] = venta.getTotalventa();  
                 fila[4] = venta.getCaja().getId();
