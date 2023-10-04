@@ -33,10 +33,10 @@ public class Prueba {
      */
     public static void main(String[] args) {
         FachadaDAO fachada = new FachadaDAO();
-//        List<Usuario> usuarios = new ArrayList<>();
-//        usuarios.add(new Usuario("Jose", "JoseJesus12$", Rol.VENDEDOR));
-//        usuarios.add(new Usuario("Jesus", "JoseJesus123", Rol.VENDEDOR));
-////
+        List<Usuario> usuarios = new ArrayList<>();
+        usuarios.add(new Usuario("Jose", "JoseJesus12$", Rol.VENDEDOR));
+        usuarios.add(new Usuario("Jesus", "JoseJesus123", Rol.VENDEDOR));
+//
 //        List<Categoria> categorias = new ArrayList<>();
 //        categorias.add(new Categoria("Libretas"));
 //        categorias.add(new Categoria("Cuadernos"));
@@ -93,10 +93,10 @@ public class Prueba {
 ////            fachada.agregarDetalleCompra(detalle);
 ////        }
 ////Prueba 1 Llenado
-//        for (int i = 0; i < usuarios.size(); i++) {
-//            Usuario get = usuarios.get(i);
-//            fachada.agregarUsuario(get);
-//        }
+        for (int i = 0; i < usuarios.size(); i++) {
+            Usuario get = usuarios.get(i);
+            fachada.agregarUsuario(get);
+        }
 //        System.out.println("Usuarios se han insertado correctamente");
 //        System.out.println("------------------------");
 //        for (int i = 0; i < productos.size(); i++) {
