@@ -1,122 +1,38 @@
 package GUIs;
 
-import GUIs.utils.JButtonCellEditor;
-import GUIs.utils.JButtonRenderer;
 import GUIs.utils.JTextFieldLimit;
 import entidades.Usuario;
 import enumeradores.Rol;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 public class AdmiUsuarioForm extends javax.swing.JFrame {
 
     private static AdmiUsuarioForm admiUsuarioForm;
-
     private IFachadaControl logica;
-
+    private List<Usuario> usuarios;
 
     private AdmiUsuarioForm() {
         initComponents();
         logica = new FachadaControl();
-        llenarTabla();
-
         tblUsuarios.getTableHeader().setReorderingAllowed(false);
         txtNombre.setDocument(new JTextFieldLimit(45));
         txtPassword.setDocument(new JTextFieldLimit(20));
 
-        setDefaultCloseOperation(admiUsuarioForm.DISPOSE_ON_CLOSE);
-
-        // Agrega un WindowListener para el evento de cierre de ventana
+        setDefaultCloseOperation(AdmiUsuarioForm.DISPOSE_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                // Aquí puedes realizar las acciones necesarias para borrar el formulario
-                // como restablecer los campos del formulario, limpiar los datos, etc.
                 limpiarFormulario();
             }
         });
-
-    }
-
-    public static AdmiUsuarioForm getInstance() {
-        if (admiUsuarioForm == null) {
-            admiUsuarioForm = new AdmiUsuarioForm();
-        }
-        return admiUsuarioForm;
-    }
-
-    private List<Usuario> usuarios;
-
-    public void llenarTabla() {
-        usuarios = logica.consultarTodosUsuarios();
-        if (usuarios != null || !usuarios.isEmpty()) {
-            DefaultTableModel modeloTabla = (DefaultTableModel) this.tblUsuarios.getModel();
-            this.tblUsuarios.setRowHeight(30);
-            modeloTabla.setRowCount(0);
-            usuarios.forEach(usuario -> {
-                Object[] fila = new Object[4];
-                fila[0] = usuario.getId();
-                fila[1] = usuario.getNombre();
-                fila[2] = usuario.getPassword();
-                fila[3] = usuario.getRol();
-                modeloTabla.addRow(fila);
-            });
-        }
-
-    }
-
-    private void limpiarFormulario() {
-        txtNombre.setText("");
-        txtPassword.setText("");
-        cmbRoles.setSelectedIndex(0);
-        this.txtID.setText("");
-        this.guardarBoton();
-    }
-
-    private void llenarFormulario(Usuario usuario) {
-        txtNombre.setText(usuario.getNombre());
-        txtPassword.setText(usuario.getPassword());
-        cmbRoles.setSelectedItem(usuario.getRol().toString());
-    }
-
-    private boolean validarCamposLlenos() {
-        if (txtNombre.getText().isEmpty()) {
-            return false;
-        }
-        if (txtPassword.getText().isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private boolean validarFormulario() {
-        String mensajeError = "";
-        mensajeError = (validarSoloLetras(txtNombre.getText())) ? mensajeError : mensajeError + "El nombre debe contener solo letras\n";
-        mensajeError = (txtPassword.getText().length() >= 8) ? mensajeError : mensajeError + "El password debe de ser de mínimo 8 caracteres";
-        if ("".equals(mensajeError)) {
-            return true;
-        } else {
-            JOptionPane.showMessageDialog(this, mensajeError, "Información", JOptionPane.INFORMATION_MESSAGE);
-            return false;
-        }
-    }
-
-    private boolean validarSoloLetras(String string) {
-        Pattern pattern = Pattern.compile("[\\d\\p{Punct}]");
-        Matcher matcher = pattern.matcher(string);
-        return !matcher.find();
     }
 
     @SuppressWarnings("unchecked")
@@ -193,11 +109,6 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         spdH.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 300, -1));
 
         txtPassword.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
         spdH.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 300, -1));
 
         jSeparator2.setOrientation(javax.swing.SwingConstants.VERTICAL);
@@ -268,11 +179,6 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
 
         cmbRoles.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         cmbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "VENDEDOR", "TECNICO" }));
-        cmbRoles.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbRolesActionPerformed(evt);
-            }
-        });
         spdH.add(cmbRoles, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 300, -1));
 
         lblRectangulo4.setBackground(new java.awt.Color(204, 204, 255));
@@ -293,14 +199,6 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void cmbRolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbRolesActionPerformed
-
-    }//GEN-LAST:event_cmbRolesActionPerformed
-
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-
-    }//GEN-LAST:event_txtPasswordActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
@@ -330,7 +228,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
                 if (validarFormulario() == false) {
                     return;
                 }
-                int id=Integer.parseInt(this.txtID.getText());
+                int id = Integer.parseInt(this.txtID.getText());
                 String nombre = this.txtNombre.getText();
                 String password = this.txtPassword.getText();
                 Rol rol = Rol.valueOf(cmbRoles.getSelectedItem().toString());
@@ -347,7 +245,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
 
         }
         if (this.btnGuardar.getText().equalsIgnoreCase("Eliminar")) {
-                int id=Integer.parseInt(this.txtID.getText());
+            int id = Integer.parseInt(this.txtID.getText());
 
             int opcionSeleccionada = JOptionPane.showConfirmDialog(this, "¿Seguro que deseas eliminar al usuario seleccionado?", "Confirmación", JOptionPane.YES_NO_OPTION);
             if (opcionSeleccionada == JOptionPane.YES_OPTION) {
@@ -373,23 +271,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
-    private void editarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
-        btnGuardar.setText("Editar");
-    }
-
-    private void eliminarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png")));
-        btnGuardar.setText("Eliminar");
-    }
-
-    private void guardarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png")));
-        btnGuardar.setText("Guardar");
-    }
-
     private void tblUsuariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuariosMouseClicked
-        // TODO add your handling code here:
         int filaSeleccionada = tblUsuarios.getSelectedRow();
         if (filaSeleccionada != -1) {
             Object id = tblUsuarios.getValueAt(filaSeleccionada, 0);
@@ -404,6 +286,88 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
         tblUsuarios.clearSelection(); // Esto limpia la selección
     }//GEN-LAST:event_tblUsuariosMouseClicked
 
+    public static AdmiUsuarioForm getInstance() {
+        if (admiUsuarioForm == null) {
+            admiUsuarioForm = new AdmiUsuarioForm();
+        }
+        return admiUsuarioForm;
+    }
+
+    public void llenarTabla() {
+        usuarios = logica.consultarTodosUsuarios();
+        if (usuarios != null || !usuarios.isEmpty()) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tblUsuarios.getModel();
+            this.tblUsuarios.setRowHeight(30);
+            modeloTabla.setRowCount(0);
+            usuarios.forEach(usuario -> {
+                Object[] fila = new Object[4];
+                fila[0] = usuario.getId();
+                fila[1] = usuario.getNombre();
+                fila[2] = usuario.getPassword();
+                fila[3] = usuario.getRol();
+                modeloTabla.addRow(fila);
+            });
+        }
+
+    }
+
+    private void limpiarFormulario() {
+        txtNombre.setText("");
+        txtPassword.setText("");
+        cmbRoles.setSelectedIndex(0);
+        this.txtID.setText("");
+        this.guardarBoton();
+    }
+
+    private void llenarFormulario(Usuario usuario) {
+        txtNombre.setText(usuario.getNombre());
+        txtPassword.setText(usuario.getPassword());
+        cmbRoles.setSelectedItem(usuario.getRol().toString());
+    }
+
+    private boolean validarCamposLlenos() {
+        if (txtNombre.getText().isEmpty()) {
+            return false;
+        }
+        if (txtPassword.getText().isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    private boolean validarFormulario() {
+        String mensajeError = "";
+        mensajeError = (validarSoloLetras(txtNombre.getText())) ? mensajeError : mensajeError + "El nombre debe contener solo letras\n";
+        mensajeError = (txtPassword.getText().length() >= 8) ? mensajeError : mensajeError + "El password debe de ser de mínimo 8 caracteres";
+        if ("".equals(mensajeError)) {
+            return true;
+        } else {
+            JOptionPane.showMessageDialog(this, mensajeError, "Información", JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+    }
+
+    private boolean validarSoloLetras(String string) {
+        Pattern pattern = Pattern.compile("[\\d\\p{Punct}]");
+        Matcher matcher = pattern.matcher(string);
+        return !matcher.find();
+    }
+
+    private void editarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
+        btnGuardar.setText("Editar");
+    }
+
+    private void eliminarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png")));
+        btnGuardar.setText("Eliminar");
+    }
+
+    private void guardarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png")));
+        btnGuardar.setText("Guardar");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

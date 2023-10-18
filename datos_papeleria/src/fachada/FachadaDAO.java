@@ -54,14 +54,16 @@ public class FachadaDAO implements IFachadaDAO {
             return false;
         }
     }
-  public Caja cajaAbierta(){
+
+    public Caja cajaAbierta() {
         try {
             ICajasDAO cajasDAO = fabrica.getCajasDAO();
             return cajasDAO.cajaAbierta();
         } catch (Exception e) {
-              return null;
+            return null;
         }
-  }
+    }
+
     @Override
     public boolean eliminarCaja(int id) {
         try {
@@ -423,6 +425,26 @@ public class FachadaDAO implements IFachadaDAO {
     }
 
     @Override
+    public List<Producto> consultarProductosCoincidencias(Object[] parametros) {
+        try {
+            IProductosDAO productosDAO = fabrica.getProductosDAO();
+            return productosDAO.consultarProductosCoincidencias(parametros);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Producto consultarCodigo(long codigo) {
+        try {
+            IProductosDAO productosDAO = fabrica.getProductosDAO();
+            return productosDAO.consultarCodigo(codigo);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public Producto consultarProducto(int id) {
         try {
             IProductosDAO productosDAO = fabrica.getProductosDAO();
@@ -615,7 +637,7 @@ public class FachadaDAO implements IFachadaDAO {
 
     @Override
     public List<DetalleVenta> consultarTodas(int idVenta) {
-       try {
+        try {
             IDetalleVentasDAO ventasDAO = fabrica.getDetalleVentasDAO();
             return ventasDAO.consultarTodas(idVenta);
         } catch (Exception e) {
@@ -625,7 +647,7 @@ public class FachadaDAO implements IFachadaDAO {
 
     @Override
     public List<DetalleVenta> consultarTodasDetallesVentas() {
-   try {
+        try {
             IDetalleVentasDAO ventasDAO = fabrica.getDetalleVentasDAO();
             return ventasDAO.consultarTodos();
         } catch (Exception e) {

@@ -1,29 +1,24 @@
 package GUIs;
 
-import GUIs.utils.JButtonCellEditor;
-import GUIs.utils.JButtonRenderer;
 import GUIs.utils.JTextFieldLimit;
 import entidades.Proveedor;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 public class AdmiProveedorForm extends javax.swing.JFrame {
 
     private static AdmiProveedorForm admiProveedorForm;
+    private final IFachadaControl logica;
+    private List<Proveedor> proveedores;
 
     private AdmiProveedorForm() {
         initComponents();
         this.logica = new FachadaControl();
-        llenarTabla();
         jTableProveedores.getTableHeader().setReorderingAllowed(false);
         jTextFieldNombre.setDocument(new JTextFieldLimit(50));
         jTextFieldEmail.setDocument(new JTextFieldLimit(100));
@@ -33,133 +28,12 @@ public class AdmiProveedorForm extends javax.swing.JFrame {
         jTextFieldContacto.setDocument(new JTextFieldLimit(100));
 
         setDefaultCloseOperation(AdmiProveedorForm.DISPOSE_ON_CLOSE);
-
-        // Agrega un WindowListener para el evento de cierre de ventana
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                // Aquí puedes realizar las acciones necesarias para borrar el formulario
-                // como restablecer los campos del formulario, limpiar los datos, etc.
                 limpiarFormulario();
             }
         });
-    }
-
-    public static AdmiProveedorForm getInstance() {
-        if (admiProveedorForm == null) {
-            admiProveedorForm = new AdmiProveedorForm();
-        }
-        return admiProveedorForm;
-    }
-
-    private void llenarFormulario(Proveedor proveedor) {
-        jTextFieldNombre.setText(proveedor.getNombre());
-        jTextFieldTelefono.setText(proveedor.getTelefono());
-        jTextFieldEmail.setText(proveedor.getEmail());
-        jTextFieldDireccion.setText(proveedor.getDireccion());
-        jTextFieldWebSite.setText(proveedor.getWebsite());
-        jTextFieldContacto.setText(proveedor.getContacto());
-        txtID.setText(proveedor.getId() + "");
-    }
-
-    public boolean validarDatos() {
-
-        if (!jTextFieldNombre.getText().matches("^([A-Za-z]+\\s?)+$")) {
-            JOptionPane.showMessageDialog(null, "El nombre solo puede contener letras mayúsculas y minúsculas, incluyendo espacios entre nombres");
-            return true;
-        }
-
-        if (!jTextFieldEmail.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-            JOptionPane.showMessageDialog(null, "El correo tiene un formato invalido");
-            return true;
-        }
-        if (!jTextFieldTelefono.getText().matches("\\d{10}")) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero de 10 digitos, no ingrese caracteres extraños");
-            return true;
-        }
-
-        if (!jTextFieldWebSite.getText().isEmpty()) {
-            if (!jTextFieldWebSite.getText().matches("^(http[s]?:\\/\\/)?[a-zA-Z0-9]+([\\-\\.{1}][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,}([\\/{1}][a-zA-Z0-9]+)*([\\/{1}][a-zA-Z0-9]+\\.[a-zA-Z0-9]{2,})?$")) {
-                JOptionPane.showMessageDialog(null, "El web site tiene un formato invalido");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean validarCamposLlenos() {
-
-        if (jTextFieldNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre del proveedor");
-            return false;
-        }
-        if (jTextFieldEmail.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el email del proveedor");
-            return false;
-        }
-        if (jTextFieldDireccion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese la direccion del proveedor");
-            return false;
-        }
-        if (jTextFieldTelefono.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el telefono del proveedor");
-            return false;
-        }
-        if (jTextFieldContacto.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el contacto del proveedor");
-            return false;
-        }
-        return true;
-    }
-
-    private List<Proveedor> proveedores;
-
-    public void llenarTabla() {
-        proveedores = logica.consultarTodosProveedores();
-        if (proveedores != null) {
-            DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProveedores.getModel();
-            this.jTableProveedores.setRowHeight(30);
-            modeloTabla.setRowCount(0);
-            proveedores.forEach(proveedor -> {
-                Object[] fila = new Object[7];
-                fila[0] = proveedor.getId();
-                fila[1] = proveedor.getNombre();
-                fila[2] = proveedor.getDireccion();
-                fila[3] = proveedor.getTelefono();
-                fila[4] = proveedor.getEmail();
-                fila[5] = proveedor.getWebsite();
-                fila[6] = proveedor.getContacto();
-                modeloTabla.addRow(fila);
-            });
-        }
-
-    }
-    private final IFachadaControl logica;
-
-    private void limpiarFormulario() {
-        jTextFieldNombre.setText("");
-        jTextFieldEmail.setText("");
-        jTextFieldTelefono.setText("");
-        jTextFieldDireccion.setText("");
-        jTextFieldContacto.setText("");
-        jTextFieldWebSite.setText("");
-        this.guardarBoton();
-        this.txtID.setText("");
-    }
-
-    private void editarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
-        btnGuardar.setText("Editar");
-    }
-
-    private void eliminarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png")));
-        btnGuardar.setText("Eliminar");
-    }
-
-    private void guardarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png")));
-        btnGuardar.setText("Guardar");
     }
 
     @SuppressWarnings("unchecked")
@@ -454,6 +328,119 @@ public class AdmiProveedorForm extends javax.swing.JFrame {
         jTableProveedores.clearSelection(); // Esto limpia la selección
     }//GEN-LAST:event_jTableProveedoresMouseClicked
 
+    public static AdmiProveedorForm getInstance() {
+        if (admiProveedorForm == null) {
+            admiProveedorForm = new AdmiProveedorForm();
+        }
+        return admiProveedorForm;
+    }
+
+    private void llenarFormulario(Proveedor proveedor) {
+        jTextFieldNombre.setText(proveedor.getNombre());
+        jTextFieldTelefono.setText(proveedor.getTelefono());
+        jTextFieldEmail.setText(proveedor.getEmail());
+        jTextFieldDireccion.setText(proveedor.getDireccion());
+        jTextFieldWebSite.setText(proveedor.getWebsite());
+        jTextFieldContacto.setText(proveedor.getContacto());
+        txtID.setText(proveedor.getId() + "");
+    }
+
+    public boolean validarDatos() {
+
+        if (!jTextFieldNombre.getText().matches("^([A-Za-z]+\\s?)+$")) {
+            JOptionPane.showMessageDialog(null, "El nombre solo puede contener letras mayúsculas y minúsculas, incluyendo espacios entre nombres");
+            return true;
+        }
+
+        if (!jTextFieldEmail.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(null, "El correo tiene un formato invalido");
+            return true;
+        }
+        if (!jTextFieldTelefono.getText().matches("\\d{10}")) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero de 10 digitos, no ingrese caracteres extraños");
+            return true;
+        }
+
+        if (!jTextFieldWebSite.getText().isEmpty()) {
+            if (!jTextFieldWebSite.getText().matches("^(http[s]?:\\/\\/)?[a-zA-Z0-9]+([\\-\\.{1}][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,}([\\/{1}][a-zA-Z0-9]+)*([\\/{1}][a-zA-Z0-9]+\\.[a-zA-Z0-9]{2,})?$")) {
+                JOptionPane.showMessageDialog(null, "El web site tiene un formato invalido");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean validarCamposLlenos() {
+
+        if (jTextFieldNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre del proveedor");
+            return false;
+        }
+        if (jTextFieldEmail.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el email del proveedor");
+            return false;
+        }
+        if (jTextFieldDireccion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese la direccion del proveedor");
+            return false;
+        }
+        if (jTextFieldTelefono.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el telefono del proveedor");
+            return false;
+        }
+        if (jTextFieldContacto.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el contacto del proveedor");
+            return false;
+        }
+        return true;
+    }
+
+    public void llenarTabla() {
+        proveedores = logica.consultarTodosProveedores();
+        if (proveedores != null) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProveedores.getModel();
+            this.jTableProveedores.setRowHeight(30);
+            modeloTabla.setRowCount(0);
+            proveedores.forEach(proveedor -> {
+                Object[] fila = new Object[7];
+                fila[0] = proveedor.getId();
+                fila[1] = proveedor.getNombre();
+                fila[2] = proveedor.getDireccion();
+                fila[3] = proveedor.getTelefono();
+                fila[4] = proveedor.getEmail();
+                fila[5] = proveedor.getWebsite();
+                fila[6] = proveedor.getContacto();
+                modeloTabla.addRow(fila);
+            });
+        }
+
+    }
+    private void limpiarFormulario() {
+        jTextFieldNombre.setText("");
+        jTextFieldEmail.setText("");
+        jTextFieldTelefono.setText("");
+        jTextFieldDireccion.setText("");
+        jTextFieldContacto.setText("");
+        jTextFieldWebSite.setText("");
+        this.guardarBoton();
+        this.txtID.setText("");
+    }
+
+    private void editarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
+        btnGuardar.setText("Editar");
+    }
+
+    private void eliminarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png")));
+        btnGuardar.setText("Eliminar");
+    }
+
+    private void guardarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png")));
+        btnGuardar.setText("Guardar");
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;

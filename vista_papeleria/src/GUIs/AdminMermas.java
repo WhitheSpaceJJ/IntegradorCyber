@@ -26,18 +26,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdminMermas extends javax.swing.JFrame {
 
-    private IFachadaControl logica;
+//    private IFachadaControl logica;
 
     /**
      * Creates new form AdminMermas
      */
     private AdminMermas() {
         initComponents();
-        this.detallesMermas = new ArrayList<>();
-        this.logica = new FachadaControl();
-        this.listaMermas = new ArrayList<>();
-        bloquearCampos();
+     //   this.detallesMermas = new ArrayList<>();
+       // this.logica = new FachadaControl();
+     //   this.listaMermas = new ArrayList<>();
+      //  bloquearCampos();
     }
+   /*
     private Usuario usuario;
 
     public void establecerSesion(Usuario usuario) {
@@ -52,7 +53,7 @@ public class AdminMermas extends javax.swing.JFrame {
         }
         return instance;
     }
-
+*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -446,7 +447,7 @@ public class AdminMermas extends javax.swing.JFrame {
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
 
     }//GEN-LAST:event_txtFechaActionPerformed
-
+/*
     public void bloquearCampos() {
         this.txtNombre.setEnabled(false);
         this.txtDisponibilidad.setEnabled(false);
@@ -487,13 +488,17 @@ public class AdminMermas extends javax.swing.JFrame {
         articuloBuscado = productoS;
         cargarCampos(articuloBuscado);
     }
+
+*/
+
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
+      /*
         if (txtCodigoArticulo.getText().equals("")) {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(() -> {
-                BusquedaArticuloForm.getInstance().setVisible(true);
-                BusquedaArticuloForm.getInstance().resetBusquedas();
-                BusquedaArticuloForm.getInstance().establecerBuscador(1);
+            //    BusquedaArticuloForm.getInstance().setVisible(true);
+              //  BusquedaArticuloForm.getInstance().resetBusquedas();
+              //  BusquedaArticuloForm.getInstance().establecerBuscador(1);
             });
 
         } else {
@@ -514,6 +519,7 @@ public class AdminMermas extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Para realizar una busqueda directa con el id se requiere que ingrese solo digitos(12,1,2)", "Venta", JOptionPane.ERROR_MESSAGE);
             }
         }
+*/
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
@@ -568,6 +574,8 @@ public class AdminMermas extends javax.swing.JFrame {
     private void txtCodigoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoArticuloActionPerformed
 
     }//GEN-LAST:event_txtCodigoArticuloActionPerformed
+    
+    /*
     private void actualizarPrecioTotal() {
         float suma = 0;
         for (int i = 0; i < detallesMermas.size(); i++) {
@@ -577,19 +585,20 @@ public class AdminMermas extends javax.swing.JFrame {
         float precio = suma;
         this.txtTotalMerma.setText(precio + "");
     }
-
+*/
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         int indice = tblProductos1.getSelectedRow();
         if (indice != -1) {
-            detallesMermas.remove(indice);
-            cargarTabla();
-            actualizarPrecioTotal();
+     //       detallesMermas.remove(indice);
+       //     cargarTabla();
+         //   actualizarPrecioTotal();
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un artículo, para eliminarlo der la lista", "Eliminacion articulo", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+      /*
         String cantidad = txtCantidad.getText();
         if (!cantidad.equals("") && cantidad.matches("^[1-9]\\d{0,8}$")) {
             int cantidadInt = Integer.parseInt(cantidad);
@@ -623,10 +632,11 @@ public class AdminMermas extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "", "Mermas", JOptionPane.ERROR_MESSAGE);
         }
-
+*/
     }//GEN-LAST:event_btnAgregarActionPerformed
-
+/*
     public void cargarTabla() {
+       
         DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos1.getModel();
         modeloTabla.setRowCount(0);
         detallesMermas.forEach(merma -> {
@@ -639,7 +649,7 @@ public class AdminMermas extends javax.swing.JFrame {
             modeloTabla.addRow(fila);
         });
     }
-
+*/
     private void txtTotalCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalCobrarActionPerformed
 
     }//GEN-LAST:event_txtTotalCobrarActionPerformed
@@ -656,7 +666,7 @@ public class AdminMermas extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void btnRegistrarMermasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMermasActionPerformed
-
+/*
         if (detallesMermas.size() > 0) {
             Merma merma = new Merma();
             Calendar fecha = Calendar.getInstance();
@@ -679,6 +689,7 @@ public class AdminMermas extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "No ha agregado productos");
         }
+*/
     }//GEN-LAST:event_btnRegistrarMermasActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

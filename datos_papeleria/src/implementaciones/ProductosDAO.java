@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 public class ProductosDAO implements IProductosDAO {
@@ -52,8 +53,6 @@ public class ProductosDAO implements IProductosDAO {
             productoBD.setCosto(producto.getCosto());
             productoBD.setStock(producto.getStock());
             productoBD.setCategoria(producto.getCategoria());
-            
-            
 
             em.getTransaction().commit();
             return true;
@@ -101,6 +100,22 @@ public class ProductosDAO implements IProductosDAO {
     }
 
     @Override
+    public Producto consultarCodigo(long codigo) {
+        try {
+            EntityManager em = this.conexion.crearConexion();
+            CriteriaBuilder builder = em.getCriteriaBuilder();
+            CriteriaQuery<Producto> criteria = builder.createQuery(Producto.class);
+            Root<Producto> root = criteria.from(Producto.class);
+            criteria.select(root).where(builder.equal(root.get("codigo"), codigo));
+            TypedQuery<Producto> query = em.createQuery(criteria);
+            return query.getSingleResult();
+        } catch (IllegalStateException ise) {
+            System.err.println("No se pudo consultar el producto");
+            return null;
+        }
+    }
+
+    @Override
     public List<Producto> consultarPorNombre(String nombre) {
 
         try {
@@ -145,4 +160,48 @@ public class ProductosDAO implements IProductosDAO {
         }
 
     }
+
+    @Override
+    public List<Producto> consultarProductosCoincidencias(Object[] parametros) {
+        try {
+            EntityManager em = this.conexion.crearConexion();
+            CriteriaBuilder builder = em.getCriteriaBuilder();
+            CriteriaQuery<Producto> criteria = builder.createQuery(Producto.class);
+            Root<Producto> root = criteria.from(Producto.class);
+
+            criteria.select(root);
+
+            // Parámetros: nombre, descripcion, marca, idCategoria.
+            String nombre = (String) parametros[0];
+            String descripcion = (String) parametros[1];
+            String marca = (String) parametros[2];
+            Integer idCategoria = (Integer) parametros[3];
+
+            Predicate conjuntoCondiciones = builder.conjunction();
+
+            if (nombre != null && !nombre.isEmpty()) {
+                conjuntoCondiciones = builder.and(conjuntoCondiciones, builder.like(root.get("nombre"), "%" + nombre + "%"));
+            }
+            if (descripcion != null && !descripcion.isEmpty()) {
+                conjuntoCondiciones = builder.and(conjuntoCondiciones, builder.like(root.get("descripcion"), "%" + descripcion + "%"));
+            }
+            if (marca != null && !marca.isEmpty()) {
+                conjuntoCondiciones = builder.and(conjuntoCondiciones, builder.like(root.get("marca"), "%" + marca + "%"));
+            }
+            if (idCategoria != null) {
+                conjuntoCondiciones = builder.and(conjuntoCondiciones, builder.equal(root.get("categoria").get("id"), idCategoria));
+            }
+
+            criteria.where(conjuntoCondiciones);
+
+            TypedQuery<Producto> query = em.createQuery(criteria);
+
+            return query.getResultList();
+        } catch (IllegalStateException ise) {
+            System.err.println("No se pudo consultar los productos por coincidencias");
+            ise.printStackTrace();
+            return null;
+        }
+    }
+
 }

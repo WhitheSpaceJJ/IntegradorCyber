@@ -16,6 +16,11 @@ public class ControlProductos implements IControlProductos{
         this.fachadaDAO=fachadaDAO;
     }
     
+    
+    
+    public  Producto consultarCodigo(long codigo){
+        return this.fachadaDAO.consultarCodigo(codigo);
+    }
     @Override
     public boolean agregar(Producto producto) {
 return this.fachadaDAO.agregarProducto(producto);
@@ -45,4 +50,9 @@ return this.fachadaDAO.agregarProducto(producto);
     public List<Producto> consultarTodos() {
     return this.fachadaDAO.consultarTodosProductos();
     } 
+
+    @Override
+    public List<Producto> consultarProductosCoincidencias(Object[] parametros) {
+    return this.fachadaDAO.consultarProductosCoincidencias(parametros);
+    }
 }

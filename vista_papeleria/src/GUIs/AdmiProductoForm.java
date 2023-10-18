@@ -14,14 +14,14 @@ import javax.swing.table.DefaultTableModel;
 
 public final class AdmiProductoForm extends javax.swing.JFrame {
 
+    private List<Producto> productos;
     private static AdmiProductoForm admiProductoForm;
     private List<Categoria> categorias;
+    private final IFachadaControl logica;
 
     private AdmiProductoForm() {
         initComponents();
         this.logica = new FachadaControl();
-        llenarCategorias();
-        llenarTabla();
         jTableProductos.getTableHeader().setReorderingAllowed(false);
         jTextFieldNombre.setDocument(new JTextFieldLimit(100));
         jTextFieldDescripcion.setDocument(new JTextFieldLimit(200));
@@ -29,153 +29,13 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jTextFieldPrecioVenta.setDocument(new JTextFieldLimit(12));
         jTextFieldStock.setDocument(new JTextFieldLimit(12));
         jTextFieldCodigo.setDocument(new JTextFieldLimit(13));
-
         setDefaultCloseOperation(AdmiProductoForm.DISPOSE_ON_CLOSE);
-
-        // Agrega un WindowListener para el evento de cierre de ventana
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 limpiarFormulario();
             }
         });
-    }
-
-    public void llenarCategorias() {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        categorias = logica.consultarTodasCategorias();
-        for (int i = 0; i < categorias.size(); i++) {
-            Categoria get = categorias.get(i);
-            model.addElement(get.getNombre());
-        }
-        jComboBoxCategorias.setModel(model);
-    }
-
-    public static AdmiProductoForm getInstance() {
-        if (admiProductoForm == null) {
-            admiProductoForm = new AdmiProductoForm();
-        }
-        return admiProductoForm;
-    }
-
-    private void llenarFormulario(Producto producto) {
-        jTextFieldNombre.setText(producto.getNombre());
-        jTextFieldDescripcion.setText(producto.getDescripcion());
-        jTextFieldPrecioCompra.setText(String.valueOf(producto.getCosto()));
-        jTextFieldPrecioVenta.setText(String.valueOf(producto.getPrecio()));
-        jTextFieldMarca.setText(String.valueOf(producto.getMarca()));
-        jTextFieldCodigo.setText(String.valueOf(producto.getCodigo()));
-        int valor = (int) producto.getStock();
-        jTextFieldStock.setText(String.valueOf(valor));
-        int indic2e = categorias.indexOf(producto.getCategoria());
-        jComboBoxCategorias.setSelectedIndex(indic2e);
-    }
-
-    private boolean validarCamposLlenos() {
-
-        if (jTextFieldNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre del producto");
-            return false;
-        }
-        if (jTextFieldCodigo.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el codigo del producto");
-            return false;
-        }
-
-        if (jTextFieldMarca.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese la marca del producto");
-            return false;
-        }
-        if (jTextFieldDescripcion.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese la descripcion del producto");
-            return false;
-        }
-        if (jTextFieldPrecioCompra.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el precioCompra del producto");
-            return false;
-        }
-        if (jTextFieldPrecioVenta.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el precio de venta del producto");
-            return false;
-        }
-        if (jTextFieldStock.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el stock del producto");
-            return false;
-        }
-        if (jTextFieldUtilidad.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese la utilidad del producto");
-            return false;
-        }
-        return true;
-    }
-
-    public boolean validarDatos() {
-        String regexNumeros = "\\d+";
-        String regexFloat = "\\d+(\\.\\d+)?";
-
-        if (!jTextFieldPrecioCompra.getText().matches(regexFloat) || Float.parseFloat(jTextFieldPrecioCompra.getText()) <= 0 || Float.parseFloat(jTextFieldPrecioCompra.getText()) > 999999999) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero mayor a 0 y no mayor a 9999999910, en el precio de compra");
-            return true;
-        }
-
-        if (!jTextFieldPrecioVenta.getText().matches(regexFloat) || Float.parseFloat(jTextFieldPrecioVenta.getText()) <= 0 || Float.parseFloat(jTextFieldPrecioVenta.getText()) > 999999999) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero mayor a 0 y no mayor a 9999999910, en el precio de venta");
-            return true;
-        }
-
-        if (!jTextFieldStock.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldStock.getText()) <= 0 || Integer.parseInt(jTextFieldStock.getText()) > 999999999) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero en el stock  mayor a 0 y no mayor a 999999999");
-            return true;
-        }
-        if (!jTextFieldCodigo.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldCodigo.getText()) <= 0) { //|| Integer.parseInt(jTextFieldCodigo.getText()) > 999999999) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero de 10 digitos maximo");
-            return true;
-        }
-        if (!jTextFieldUtilidad.getText().matches(regexFloat) || Float.parseFloat(jTextFieldUtilidad.getText()) <= 0 || Float.parseFloat(jTextFieldUtilidad.getText()) > 999999999) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero mayor a 0 y no mayor a 9999999910, en el precio de venta");
-            return true;
-        }
-        return false;
-    }
-
-    private List<Producto> productos;
-
-    public void llenarTabla() {
-        productos = this.logica.consultarTodosProductos();
-        if (productos != null) {
-            DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProductos.getModel();
-            this.jTableProductos.setRowHeight(30);
-            modeloTabla.setRowCount(0);
-            productos.forEach(producto -> {
-                Object[] fila = new Object[10];
-                fila[0] = producto.getId();
-                fila[1] = producto.getNombre();
-                fila[2] = producto.getMarca();
-                fila[3] = producto.getDescripcion();
-                fila[4] = producto.getCodigo();
-                fila[5] = producto.getCosto();
-                fila[6] = producto.getPrecio();
-                fila[7] = producto.getStock();
-                fila[8] = producto.getUtilidad();
-                fila[9] = producto.getCategoria().getNombre();
-                modeloTabla.addRow(fila);
-            });
-        }
-
-    }
-    private final IFachadaControl logica;
-
-    private void limpiarFormulario() {
-        jTextFieldNombre.setText("");
-        jTextFieldDescripcion.setText("");
-        jTextFieldPrecioCompra.setText("");
-        jTextFieldPrecioVenta.setText("");
-        jTextFieldStock.setText("");
-        jTextFieldCodigo.setText("");
-        jTextFieldMarca.setText("");
-        txtID.setText("");
-        jComboBoxCategorias.setSelectedIndex(0);
-        this.guardarBoton();
     }
 
     @SuppressWarnings("unchecked")
@@ -244,11 +104,6 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(724, 114, -1, -1));
 
         jTextFieldUtilidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextFieldUtilidad.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldUtilidadKeyTyped(evt);
-            }
-        });
         jPanel1.add(jTextFieldUtilidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 460, 300, -1));
 
         jLabel3.setText("Producto");
@@ -290,11 +145,6 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         jPanel1.add(jTextFieldMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 300, -1));
 
         jTextFieldCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextFieldCodigo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldCodigoActionPerformed(evt);
-            }
-        });
         jTextFieldCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldCodigoKeyTyped(evt);
@@ -401,11 +251,6 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
 
         jTextFieldStock.setEditable(false);
         jTextFieldStock.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jTextFieldStock.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldStockActionPerformed(evt);
-            }
-        });
         jTextFieldStock.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jTextFieldStockKeyTyped(evt);
@@ -413,11 +258,6 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         });
         jPanel1.add(jTextFieldStock, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 420, 300, -1));
 
-        jComboBoxCategorias.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxCategoriasActionPerformed(evt);
-            }
-        });
         jPanel1.add(jComboBoxCategorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 500, 300, 30));
 
         lblRectangulo4.setBackground(new java.awt.Color(204, 204, 255));
@@ -445,9 +285,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (this.btnGuardar.getText().equalsIgnoreCase("Guardar")) {
-
             if (validarCamposLlenos()) {
-
                 if (validarDatos()) {
                     return;
                 }
@@ -458,7 +296,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
                 String stock = jTextFieldStock.getText();
                 Categoria categoria = categorias.get(jComboBoxCategorias.getSelectedIndex());
                 String marca = jTextFieldMarca.getText();
-                String utilidad=this.jTextFieldUtilidad.getText();
+                String utilidad = this.jTextFieldUtilidad.getText();
                 long codigo = Long.parseLong(jTextFieldCodigo.getText());
                 Producto producto = new Producto(nombre, descripcion, marca, codigo, Float.parseFloat(stock), Float.parseFloat(precioVenta),
                         Float.parseFloat(precioCompra), categoria, Float.parseFloat(utilidad));
@@ -488,13 +326,13 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
                 String stock = jTextFieldStock.getText();
                 Categoria categoria = categorias.get(jComboBoxCategorias.getSelectedIndex());
                 String marca = jTextFieldMarca.getText();
-                String utilidad=this.jTextFieldUtilidad.getText();
+                String utilidad = this.jTextFieldUtilidad.getText();
 
                 long codigo = Long.parseLong(jTextFieldCodigo.getText());
                 Producto producto = new Producto(nombre, descripcion, marca, codigo,
-                        Float.parseFloat(stock), Float.parseFloat(precioVenta), 
+                        Float.parseFloat(stock), Float.parseFloat(precioVenta),
                         Float.parseFloat(precioCompra), categoria,
-                Float.parseFloat(utilidad)
+                        Float.parseFloat(utilidad)
                 );
                 producto.setId(id);
                 boolean seActualizo = logica.actualizarProducto(producto);
@@ -529,7 +367,45 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        setVisible(false);
+        dispose();
+        PrincipalForm.getInstance().setVisible(true);
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jTextFieldPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecioCompraKeyTyped
+        numeroDecimal(evt);
+    }//GEN-LAST:event_jTextFieldPrecioCompraKeyTyped
+
+    private void jTextFieldPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecioVentaKeyTyped
+        numeroDecimal(evt);
+    }//GEN-LAST:event_jTextFieldPrecioVentaKeyTyped
+
+    private void jTextFieldStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldStockKeyTyped
+        adminitirSoloNumeros(evt);
+    }//GEN-LAST:event_jTextFieldStockKeyTyped
+
+    private void jTextFieldCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCodigoKeyTyped
+        adminitirSoloNumeros(evt);
+    }//GEN-LAST:event_jTextFieldCodigoKeyTyped
+
+    private void jTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductosMouseClicked
+        int filaSeleccionada = jTableProductos.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            Object id = jTableProductos.getValueAt(filaSeleccionada, 0);
+            Producto produto = this.productos.get(this.productos.indexOf(new Producto((int) id)));
+            this.llenarFormulario(produto);
+            if (evt.getClickCount() == 1) {
+                this.editarBoton();
+            } else if (evt.getClickCount() == 2) {
+                this.eliminarBoton();
+            }
+        }
+        jTableProductos.clearSelection(); // Esto limpia la selección
+    }//GEN-LAST:event_jTableProductosMouseClicked
+
+   
+        public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
         if (Character.isDigit(car)) {
 
@@ -548,41 +424,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
             getToolkit().beep();
         }
     }
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        setVisible(false);
-        dispose();
-        PrincipalForm.getInstance().setVisible(true);
-    }//GEN-LAST:event_formWindowClosing
-
-    private void jTextFieldStockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldStockActionPerformed
-
-    }//GEN-LAST:event_jTextFieldStockActionPerformed
-
-    private void jTextFieldCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldCodigoActionPerformed
-
-    }//GEN-LAST:event_jTextFieldCodigoActionPerformed
-
-    private void jComboBoxCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCategoriasActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBoxCategoriasActionPerformed
-
-    private void jTextFieldPrecioCompraKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecioCompraKeyTyped
-        numeroDecimal(evt);
-    }//GEN-LAST:event_jTextFieldPrecioCompraKeyTyped
-
-    private void jTextFieldPrecioVentaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPrecioVentaKeyTyped
-        numeroDecimal(evt);
-    }//GEN-LAST:event_jTextFieldPrecioVentaKeyTyped
-
-    private void jTextFieldStockKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldStockKeyTyped
-        adminitirSoloNumeros(evt);
-    }//GEN-LAST:event_jTextFieldStockKeyTyped
-
-    private void jTextFieldCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldCodigoKeyTyped
-        adminitirSoloNumeros(evt);
-    }//GEN-LAST:event_jTextFieldCodigoKeyTyped
-
+    
     private void editarBoton() {
         btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
         btnGuardar.setText("Editar");
@@ -598,28 +440,139 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
         btnGuardar.setText("Guardar");
     }
 
-    private void jTableProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProductosMouseClicked
-        // TODO add your handling code here:
-
-        // TODO add your handling code here:
-        int filaSeleccionada = jTableProductos.getSelectedRow();
-        if (filaSeleccionada != -1) {
-            Object id = jTableProductos.getValueAt(filaSeleccionada, 0);
-            Producto produto = this.productos.get(this.productos.indexOf(new Producto((int) id)));
-            this.llenarFormulario(produto);
-            if (evt.getClickCount() == 1) {
-                this.editarBoton();
-            } else if (evt.getClickCount() == 2) {
-                this.eliminarBoton();
-            }
+    public void llenarCategorias() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        categorias = logica.consultarTodasCategorias();
+        for (int i = 0; i < categorias.size(); i++) {
+            Categoria get = categorias.get(i);
+            model.addElement(get.getNombre());
         }
-        jTableProductos.clearSelection(); // Esto limpia la selección
-    }//GEN-LAST:event_jTableProductosMouseClicked
+        jComboBoxCategorias.setModel(model);
+    }
 
-    private void jTextFieldUtilidadKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldUtilidadKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldUtilidadKeyTyped
+    public static AdmiProductoForm getInstance() {
+        if (admiProductoForm == null) {
+            admiProductoForm = new AdmiProductoForm();
+        }
+        return admiProductoForm;
+    }
 
+    private void llenarFormulario(Producto producto) {
+        jTextFieldNombre.setText(producto.getNombre());
+        jTextFieldDescripcion.setText(producto.getDescripcion());
+        jTextFieldPrecioCompra.setText(String.valueOf(producto.getCosto()));
+        jTextFieldPrecioVenta.setText(String.valueOf(producto.getPrecio()));
+        jTextFieldMarca.setText(String.valueOf(producto.getMarca()));
+        jTextFieldCodigo.setText(String.valueOf(producto.getCodigo()));
+        int valor = (int) producto.getStock();
+        jTextFieldStock.setText(String.valueOf(valor));
+        int indic2e = categorias.indexOf(producto.getCategoria());
+        jComboBoxCategorias.setSelectedIndex(indic2e);
+    }
+
+    private boolean validarCamposLlenos() {
+
+        if (jTextFieldNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre del producto");
+            return false;
+        }
+        if (jTextFieldCodigo.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el codigo del producto");
+            return false;
+        }
+
+        if (jTextFieldMarca.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese la marca del producto");
+            return false;
+        }
+        if (jTextFieldDescripcion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese la descripcion del producto");
+            return false;
+        }
+        if (jTextFieldPrecioCompra.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el precioCompra del producto");
+            return false;
+        }
+        if (jTextFieldPrecioVenta.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el precio de venta del producto");
+            return false;
+        }
+        if (jTextFieldStock.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el stock del producto");
+            return false;
+        }
+        if (jTextFieldUtilidad.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese la utilidad del producto");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validarDatos() {
+        String regexNumeros = "\\d+";
+        String regexFloat = "\\d+(\\.\\d+)?";
+
+        if (!jTextFieldPrecioCompra.getText().matches(regexFloat) || Float.parseFloat(jTextFieldPrecioCompra.getText()) <= 0 || Float.parseFloat(jTextFieldPrecioCompra.getText()) > 999999999) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero mayor a 0 y no mayor a 9999999910, en el precio de compra");
+            return true;
+        }
+
+        if (!jTextFieldPrecioVenta.getText().matches(regexFloat) || Float.parseFloat(jTextFieldPrecioVenta.getText()) <= 0 || Float.parseFloat(jTextFieldPrecioVenta.getText()) > 999999999) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero mayor a 0 y no mayor a 9999999910, en el precio de venta");
+            return true;
+        }
+
+        if (!jTextFieldStock.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldStock.getText()) <= 0 || Integer.parseInt(jTextFieldStock.getText()) > 999999999) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero en el stock  mayor a 0 y no mayor a 999999999");
+            return true;
+        }
+        if (!jTextFieldCodigo.getText().matches(regexNumeros) || Integer.parseInt(jTextFieldCodigo.getText()) <= 0) { //|| Integer.parseInt(jTextFieldCodigo.getText()) > 999999999) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero de 10 digitos maximo");
+            return true;
+        }
+        if (!jTextFieldUtilidad.getText().matches(regexFloat) || Float.parseFloat(jTextFieldUtilidad.getText()) <= 0 || Float.parseFloat(jTextFieldUtilidad.getText()) > 999999999) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero mayor a 0 y no mayor a 9999999910, en el precio de venta");
+            return true;
+        }
+        return false;
+    }
+
+    public void llenarTabla() {
+        productos = this.logica.consultarTodosProductos();
+        if (productos != null) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.jTableProductos.getModel();
+            this.jTableProductos.setRowHeight(30);
+            modeloTabla.setRowCount(0);
+            productos.forEach(producto -> {
+                Object[] fila = new Object[10];
+                fila[0] = producto.getId();
+                fila[1] = producto.getNombre();
+                fila[2] = producto.getMarca();
+                fila[3] = producto.getDescripcion();
+                fila[4] = producto.getCodigo();
+                fila[5] = producto.getCosto();
+                fila[6] = producto.getPrecio();
+                fila[7] = producto.getStock();
+                fila[8] = producto.getUtilidad();
+                fila[9] = producto.getCategoria().getNombre();
+                modeloTabla.addRow(fila);
+            });
+        }
+
+    }
+
+    private void limpiarFormulario() {
+        jTextFieldNombre.setText("");
+        jTextFieldDescripcion.setText("");
+        jTextFieldPrecioCompra.setText("");
+        jTextFieldPrecioVenta.setText("");
+        jTextFieldStock.setText("");
+        jTextFieldCodigo.setText("");
+        jTextFieldMarca.setText("");
+        txtID.setText("");
+        jComboBoxCategorias.setSelectedIndex(0);
+        this.guardarBoton();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
@@ -656,4 +609,5 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
     private javax.swing.JLabel lblRectangulo4;
     private javax.swing.JTextField txtID;
     // End of variables declaration//GEN-END:variables
+
 }

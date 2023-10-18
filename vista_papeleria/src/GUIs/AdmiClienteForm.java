@@ -11,26 +11,22 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AdmiClienteForm extends javax.swing.JFrame {
-
+    private List<Cliente> clientes;
     private static AdmiClienteForm admiClienteForm;
+    private final IFachadaControl logica;
 
     private AdmiClienteForm() {
         initComponents();
         this.logica = new FachadaControl();
-        llenarTabla();
         tbClientes.getTableHeader().setReorderingAllowed(false);
         jTextFieldNombre.setDocument(new JTextFieldLimit(45));
         jTextFieldEmail.setDocument(new JTextFieldLimit(100));
         jTextFieldTelefono.setDocument(new JTextFieldLimit(15));
         jTextFieldRFC.setDocument(new JTextFieldLimit(13));
         setDefaultCloseOperation(AdmiClienteForm.DISPOSE_ON_CLOSE);
-
-        // Agrega un WindowListener para el evento de cierre de ventana
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                // Aquí puedes realizar las acciones necesarias para borrar el formulario
-                // como restablecer los campos del formulario, limpiar los datos, etc.
                 limpiarFormulario();
             }
         });
@@ -110,8 +106,6 @@ public class AdmiClienteForm extends javax.swing.JFrame {
         return true;
     }
 
-    private List<Cliente> clientes;
-
     public  void llenarTabla() {
         clientes = this.logica.consultarTodosClientes();
         if (clientes != null || !clientes.isEmpty()) {
@@ -130,7 +124,6 @@ public class AdmiClienteForm extends javax.swing.JFrame {
         }
 
     }
-    private final IFachadaControl logica;
 
     private void limpiarFormulario() {
         jTextFieldNombre.setText("");
@@ -393,14 +386,9 @@ public class AdmiClienteForm extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void tbClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClientesMouseClicked
-        // TODO add your handling code here:
         int filaSeleccionada = tbClientes.getSelectedRow();
         if (filaSeleccionada != -1) {
             Object id = tbClientes.getValueAt(filaSeleccionada, 0);
-          //  Object nombre = tbClientes.getValueAt(filaSeleccionada, 1);
-           // Object rfc = tbClientes.getValueAt(filaSeleccionada, 2);
-           // Object email = tbClientes.getValueAt(filaSeleccionada, 3);
-           // Object telefono = tbClientes.getValueAt(filaSeleccionada, 4);
             Cliente cliente = this.clientes.get(this.clientes.indexOf(new Cliente((int)id)));
             this.llenarFormulario(cliente);
             if (evt.getClickCount() == 1) {

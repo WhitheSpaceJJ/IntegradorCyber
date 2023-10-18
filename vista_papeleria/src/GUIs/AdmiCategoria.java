@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
 public class AdmiCategoria extends javax.swing.JFrame {
 
     private final IFachadaControl logica;
-
+    private List<Categoria> categorias;
     private static AdmiCategoria admiCategoria;
 
     private AdmiCategoria() {
@@ -21,10 +21,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
         tblCategorias.getTableHeader().setReorderingAllowed(false);
         txtNombre.setDocument(new JTextFieldLimit(50));
         logica = new FachadaControl();
-
-        llenarTabla();
         setDefaultCloseOperation(AdmiCategoria.DISPOSE_ON_CLOSE);
-
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -32,66 +29,6 @@ public class AdmiCategoria extends javax.swing.JFrame {
             }
         });
 
-    }
-
-    public static AdmiCategoria getInstance() {
-        if (admiCategoria == null) {
-            admiCategoria = new AdmiCategoria();
-        }
-        return admiCategoria;
-    }
-
-    private void llenarFormulario(Categoria categoria) {
-        txtNombre.setText(categoria.getNombre());
-        txtID.setText("" + categoria.getId());
-
-    }
-
-    private void editarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
-        btnGuardar.setText("Editar");
-    }
-
-    private void eliminarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png")));
-        btnGuardar.setText("Eliminar");
-    }
-
-    private void guardarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png")));
-        btnGuardar.setText("Guardar");
-    }
-
-    private boolean validarCamposLlenos() {
-        if (txtNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre de la categoria");
-            return false;
-        }
-        return true;
-    }
-
-    private List<Categoria> categorias;
-
-    public void llenarTabla() {
-        categorias = this.logica.consultarTodasCategorias();
-        if (categorias != null || !categorias.isEmpty()) {
-            DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
-            this.tblCategorias.setRowHeight(30);
-            modeloTabla.setRowCount(0);
-            categorias.forEach(categoria -> {
-                Object[] fila = new Object[2];
-                fila[0] = categoria.getId();
-                fila[1] = categoria.getNombre();
-                modeloTabla.addRow(fila);
-            });
-        }
-
-    }
-
-    private void limpiarFormulario() {
-        txtNombre.setText("");
-        txtID.setText("");
-        this.guardarBoton();
     }
 
     @SuppressWarnings("unchecked")
@@ -315,10 +252,67 @@ public class AdmiCategoria extends javax.swing.JFrame {
                 this.eliminarBoton();
             }
         }
-        tblCategorias.clearSelection(); // Esto limpia la selección
+        tblCategorias.clearSelection(); 
     }//GEN-LAST:event_tblCategoriasMouseClicked
+    
+    public static AdmiCategoria getInstance() {
+        if (admiCategoria == null) {
+            admiCategoria = new AdmiCategoria();
+        }
+        return admiCategoria;
+    }
 
+    private void llenarFormulario(Categoria categoria) {
+        txtNombre.setText(categoria.getNombre());
+        txtID.setText("" + categoria.getId());
 
+    }
+
+    private void editarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
+        btnGuardar.setText("Editar");
+    }
+
+    private void eliminarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png")));
+        btnGuardar.setText("Eliminar");
+    }
+
+    private void guardarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png")));
+        btnGuardar.setText("Guardar");
+    }
+
+    private boolean validarCamposLlenos() {
+        if (txtNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre de la categoria");
+            return false;
+        }
+        return true;
+    }
+
+    public void llenarTabla() {
+        categorias = this.logica.consultarTodasCategorias();
+        if (categorias != null || !categorias.isEmpty()) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
+            this.tblCategorias.setRowHeight(30);
+            modeloTabla.setRowCount(0);
+            categorias.forEach(categoria -> {
+                Object[] fila = new Object[2];
+                fila[0] = categoria.getId();
+                fila[1] = categoria.getNombre();
+                modeloTabla.addRow(fila);
+            });
+        }
+
+    }
+
+    private void limpiarFormulario() {
+        txtNombre.setText("");
+        txtID.setText("");
+        this.guardarBoton();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;

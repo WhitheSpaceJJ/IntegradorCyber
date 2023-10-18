@@ -7,8 +7,9 @@ import java.util.List;
 
 public interface IFachadaDAO {
  public Usuario obtenerSesion(Usuario usuario) ;
-
+ Producto consultarCodigo(long codigo);
     public boolean agregarCaja(Caja caja);
+    List<Producto> consultarProductosCoincidencias(Object[] parametros);
 
     public boolean actualizarCaja(Caja caja);
 

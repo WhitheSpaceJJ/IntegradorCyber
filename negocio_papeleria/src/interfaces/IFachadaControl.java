@@ -10,8 +10,9 @@ public interface IFachadaControl {
     public boolean iniciarSesion(Usuario usuario);
 
     public boolean agregarCaja(Caja caja);
-
+ Producto consultarCodigo(long codigo);
     public boolean actualizarCaja(Caja caja);
+    List<Producto> consultarProductosCoincidencias(Object[] parametros);
 
     public boolean cerrarCaja(Caja caja);
 

@@ -5,10 +5,7 @@ import entidades.Usuario;
 import enumeradores.Rol;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.Insets;
 
 import javax.swing.JOptionPane;
 
@@ -20,7 +17,6 @@ public class PrincipalForm extends javax.swing.JFrame {
 
     private PrincipalForm() {
         initComponents();
-        this.usuarioSesion = null;
         this.fachadaControl = new FachadaControl();
         jButtonProductos.setPreferredSize(new Dimension(40, 40));
     }
@@ -496,59 +492,30 @@ public class PrincipalForm extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void MenuAdminUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminUsuarioActionPerformed
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiUsuarioForm.getInstance().llenarTabla();
-                AdmiUsuarioForm.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().usuario();
     }//GEN-LAST:event_MenuAdminUsuarioActionPerformed
 
     private void MenuAdminCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaActionPerformed
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiCategoria.getInstance().llenarTabla();
-                AdmiCategoria.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().categoria();
     }//GEN-LAST:event_MenuAdminCategoriaActionPerformed
 
     private void MenuAdminClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesActionPerformed
         this.setVisible(false);
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiClienteForm.getInstance().llenarTabla();
-                AdmiClienteForm.getInstance().setVisible(true);
-
-            }
-        });
+        Utilidad.getInstance().cliente();
     }//GEN-LAST:event_MenuAdminClientesActionPerformed
 
     private void MenuAdminProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProductoForm.getInstance().llenarTabla();
-                AdmiProductoForm.getInstance().llenarCategorias();
-                AdmiProductoForm.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().producto();
     }//GEN-LAST:event_MenuAdminProductosActionPerformed
 
     private void MenuAdminProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresActionPerformed
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProveedorForm.getInstance().llenarTabla();
-                AdmiProveedorForm.getInstance().setVisible(true);
-            }
-        });
-
+        Utilidad.getInstance().proveedor();
     }//GEN-LAST:event_MenuAdminProveedoresActionPerformed
 
     private void menuCajaNuevoTicket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaNuevoTicket1ActionPerformed
@@ -559,9 +526,9 @@ public class PrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-//                    VentasForm.getInstance().llenarCBoxClientes();
-  //                  VentasForm.getInstance().setVisible(true);
-    //                VentasForm.getInstance().establecerCaja(caja);
+                    VentasForm.getInstance().llenarCBoxClientes();
+                    VentasForm.getInstance().setVisible(true);
+                    VentasForm.getInstance().establecerCaja(caja);
                 }
             });
         } else {
@@ -591,7 +558,7 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCajaAbrirCaja1ActionPerformed
 
     private void menuCajaCierreCaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaCierreCaja1ActionPerformed
-/*
+        /*
         Caja caja =fachadaControl.cajaAbierta();
         if (caja == null) {
             JOptionPane.showMessageDialog(this, "No hay caja abierta");
@@ -603,11 +570,11 @@ public class PrincipalForm extends javax.swing.JFrame {
                 }
             });
         }
-*/
+         */
     }//GEN-LAST:event_menuCajaCierreCaja1ActionPerformed
 
     private void jButtonRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealizarVentaActionPerformed
-     
+
         Caja caja = fachadaControl.cajaAbierta();
         if (caja != null) {
             caja.setUsuario(usuarioSesion);
@@ -615,9 +582,9 @@ public class PrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
-            //        VentasForm.getInstance().llenarCBoxClientes();
-              //      VentasForm.getInstance().setVisible(true);
-                //    VentasForm.getInstance().establecerCaja(caja);
+                    //        VentasForm.getInstance().llenarCBoxClientes();
+                    //      VentasForm.getInstance().setVisible(true);
+                    //    VentasForm.getInstance().establecerCaja(caja);
                 }
             });
         } else {
@@ -627,21 +594,12 @@ public class PrincipalForm extends javax.swing.JFrame {
 
     private void jButtonProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProveedoresActionPerformed
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProveedorForm.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().proveedor();
     }//GEN-LAST:event_jButtonProveedoresActionPerformed
 
     private void jButtonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsuariosActionPerformed
-
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiUsuarioForm.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().usuario();
     }//GEN-LAST:event_jButtonUsuariosActionPerformed
 
     private void MenuAdminMermasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminMermasActionPerformed
@@ -650,8 +608,8 @@ public class PrincipalForm extends javax.swing.JFrame {
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                AdminMermas.getInstance().setVisible(true);
-                AdminMermas.getInstance().establecerSesion(usuarioSesion);
+//                AdminMermas.getInstance().setVisible(true);
+                //              AdminMermas.getInstance().establecerSesion(usuarioSesion);
             }
         });
 
@@ -663,148 +621,69 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-/*
+        /*
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 ReporteVentaForm.instanciaCerrarCaja().setVisible(true);
             }
         });
-*/
+         */
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButtonCatehoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCatehoriasActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiCategoria.getInstance().llenarTabla();
-                AdmiCategoria.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().categoria();
     }//GEN-LAST:event_jButtonCatehoriasActionPerformed
 
     private void jButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProductoForm.getInstance().llenarTabla();
-                AdmiProductoForm.getInstance().llenarCategorias();
-                AdmiProductoForm.getInstance().setVisible(true);
-            }
-        });
-
+        Utilidad.getInstance().producto();
     }//GEN-LAST:event_jButtonProductosActionPerformed
 
     private void jButtonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientesActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiClienteForm.getInstance().llenarTabla();
-                AdmiClienteForm.getInstance().setVisible(true);
-
-            }
-        });
+        Utilidad.getInstance().cliente();
     }//GEN-LAST:event_jButtonClientesActionPerformed
 
     private void MenuAdminCategoriaTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaTecnicoActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiCategoria.getInstance().llenarTabla();
-                AdmiCategoria.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().categoria();
     }//GEN-LAST:event_MenuAdminCategoriaTecnicoActionPerformed
 
     private void MenuAdminClientesTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesTecnicoActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiClienteForm.getInstance().llenarTabla();
-                AdmiClienteForm.getInstance().setVisible(true);
-
-            }
-        });
+        Utilidad.getInstance().cliente();
     }//GEN-LAST:event_MenuAdminClientesTecnicoActionPerformed
 
     private void MenuAdminProductosTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosTecnicoActionPerformed
-        // TODO add your handling code here:}
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProductoForm.getInstance().llenarTabla();
-                AdmiProductoForm.getInstance().llenarCategorias();
-                AdmiProductoForm.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().producto();
     }//GEN-LAST:event_MenuAdminProductosTecnicoActionPerformed
 
     private void MenuAdminProveedoresTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresTecnicoActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProveedorForm.getInstance().llenarTabla();
-                AdmiProveedorForm.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().proveedor();
     }//GEN-LAST:event_MenuAdminProveedoresTecnicoActionPerformed
 
     private void MenuAdminCategoriaVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaVendedorActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiCategoria.getInstance().llenarTabla();
-                AdmiCategoria.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().categoria();
     }//GEN-LAST:event_MenuAdminCategoriaVendedorActionPerformed
 
     private void MenuAdminClientesVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminClientesVendedorActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiClienteForm.getInstance().llenarTabla();
-                AdmiClienteForm.getInstance().setVisible(true);
-
-            }
-        });
+        Utilidad.getInstance().cliente();
     }//GEN-LAST:event_MenuAdminClientesVendedorActionPerformed
 
     private void MenuAdminProveedoresVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProveedoresVendedorActionPerformed
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProveedorForm.getInstance().llenarTabla();
-                AdmiProveedorForm.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().proveedor();
     }//GEN-LAST:event_MenuAdminProveedoresVendedorActionPerformed
 
     private void MenuAdminProductosVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminProductosVendedorActionPerformed
-        // TODO add your handling code here:
-        // TODO add your handling code here:
         this.setVisible(false);
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                AdmiProductoForm.getInstance().llenarTabla();
-                AdmiProductoForm.getInstance().llenarCategorias();
-                AdmiProductoForm.getInstance().setVisible(true);
-            }
-        });
+        Utilidad.getInstance().producto();
     }//GEN-LAST:event_MenuAdminProductosVendedorActionPerformed
 
 
