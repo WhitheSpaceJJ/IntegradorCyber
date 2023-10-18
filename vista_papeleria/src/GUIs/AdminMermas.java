@@ -26,7 +26,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AdminMermas extends javax.swing.JFrame {
 
-//    private IFachadaControl logica;
+
+  private IFachadaControl logica;
 
     /**
      * Creates new form AdminMermas
@@ -44,7 +45,9 @@ public class AdminMermas extends javax.swing.JFrame {
     public void establecerSesion(Usuario usuario) {
         this.usuario = usuario;
     }
-    private static AdminMermas instance;
+
+*/
+        private static AdminMermas instance;
 
     public static AdminMermas getInstance() {
 
@@ -53,7 +56,6 @@ public class AdminMermas extends javax.swing.JFrame {
         }
         return instance;
     }
-*/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

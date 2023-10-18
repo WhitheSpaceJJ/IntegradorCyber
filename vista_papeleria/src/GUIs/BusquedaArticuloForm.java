@@ -15,16 +15,23 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     private IFachadaControl logica;
     private static BusquedaArticuloForm busquedaArticuloForm;
     private static List<Categoria> categorias;
+    private Producto productoBuscado;
+    private int modoBusqueda;
 
     private BusquedaArticuloForm() {
         initComponents();
         this.logica = new FachadaControl();
     }
 
+    public void establecerModoBusqueda(int modo) {
+        modoBusqueda = modo;
+    }
+
     public void llenarCategorias() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
         categorias = new ArrayList<>();
         categorias = logica.consultarTodasCategorias();
+        model.addElement("Ninguno");
         for (int i = 0; i < categorias.size(); i++) {
             Categoria get = categorias.get(i);
             model.addElement(get.getNombre());
@@ -63,11 +70,6 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Busqueda Articulos");
         setResizable(false);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent evt) {
-                formWindowClosing(evt);
-            }
-        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setPreferredSize(new java.awt.Dimension(1100, 650));
@@ -143,7 +145,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
                 btnSeleccionarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 270, 160, -1));
+        jPanel1.add(btnSeleccionar, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 260, 180, 40));
 
         btnBuscar.setBackground(new java.awt.Color(0, 0, 255));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -156,7 +158,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
                 btnBuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 170, 160, -1));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 170, 160, 40));
 
         categoriasC.setEditable(true);
         categoriasC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -188,38 +190,40 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        productosCoinicidentes.clear();
-
         String nombre = txtNombre.getText();
         String marca = txtMarca.getText();
         String descripcion = txtDescripcion.getText();
-        int categoriaID = categorias.get(categoriasC.getSelectedIndex()).getId();
         Object[] objetos = new Object[4];
-        objetos[1] = nombre;
-        objetos[2] = marca;
-        objetos[3] = descripcion;
-        objetos[4] = categoriaID;
-        buscarCoincidencias(objetos);
-
+        objetos[0] = "".equals(nombre) ? null : nombre;
+        objetos[1] = "".equals(marca) ? null : marca;
+        objetos[2] = "".equals(descripcion) ? null : descripcion;
+        if (categoriasC.getSelectedIndex() == 0) {
+            objetos[3] = null;
+        } else {
+            int categoriaID = categorias.get(categoriasC.getSelectedIndex() - 1).getId();
+            objetos[3] = categoriaID;
+        }
+        if (objetos[3] == null && objetos[0] == null && objetos[1] == null && objetos[2] == null) {
+            JOptionPane.showMessageDialog(null, "Es requerido al menos seleccionar un metodo de busqueda", "Advertencia Busqueda", JOptionPane.ERROR_MESSAGE);
+        } else {
+            buscarCoincidencias(objetos);
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         int indice = tblProductos.getSelectedRow();
         if (indice != -1) {
-            VentasForm.getInstance().agregarArtBuscado(productosCoinicidentes.get(indice));
             setVisible(false);
+            if (modoBusqueda == 1) {
+                VentasForm.getInstance().cargarCampos(productoBuscado);
+                VentasForm.getInstance().setVisible(true);
+            }
             dispose();
-            VentasForm.getInstance().setVisible(true);
+
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un artículo, o inicie una busqueda", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
-
-    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        setVisible(false);
-        dispose();
-        VentasForm.getInstance().setVisible(true);
-    }//GEN-LAST:event_formWindowClosing
     public void cargarCoincidencias() {
         if (productosCoinicidentes != null) {
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
@@ -242,20 +246,21 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         modeloTabla.setRowCount(0);
         productosCoinicidentes = new ArrayList<>();
         categorias = new ArrayList<>();
+        productoBuscado = null;
     }
 
     public void buscarCoincidencias(Object[] parametros) {
-        productosCoinicidentes = new ArrayList<>();
         productosCoinicidentes = logica.consultarProductosCoincidencias(parametros);
-
         if (!productosCoinicidentes.isEmpty()) {
             cargarCoincidencias();
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
-
     }
 
+    public Producto buscado() {
+        return productoBuscado;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

@@ -1,6 +1,7 @@
 package implementaciones;
 
 import entidades.Caja;
+import entidades.Usuario;
 import enumeradores.Estado;
 import interfaces.IConexionBD;
 import java.util.List;
@@ -56,16 +57,17 @@ public class CajasDAO implements ICajasDAO {
             return false;
         }
     }
+@Override
+public boolean actualizar(Caja caja) {
+    EntityManager em = conexion.crearConexion();
 
-    @Override
-    public boolean actualizar(Caja caja) {
-        EntityManager em = conexion.crearConexion();
+    try {
+        em.getTransaction().begin();
 
-        try {
-            em.getTransaction().begin();
+        Caja cajaBD = em.find(Caja.class, caja.getId());
 
-            Caja cajaBD = em.find(Caja.class, caja.getId());
-
+        if (cajaBD != null) {
+            // Actualiza los campos de la caja con los valores del objeto caja
             cajaBD.setEstado(caja.getEstado());
             cajaBD.setFechaApertura(caja.getFechaApertura());
             cajaBD.setFechaCierre(caja.getFechaCierre());
@@ -73,15 +75,25 @@ public class CajasDAO implements ICajasDAO {
             cajaBD.setSaldoInicial(caja.getSaldoInicial());
             cajaBD.setTotalGastos(caja.getTotalGastos());
             cajaBD.setTotalIngresos(caja.getTotalIngresos());
-            cajaBD.setUsuario(caja.getUsuario());
+
+            // Asocia el usuario existente al objeto cajaBD
+            cajaBD.setUsuario(em.find(Usuario.class, caja.getUsuario().getId()));
+
+            // Utiliza merge para actualizar la entidad en la base de datos
+            em.merge(cajaBD);
+
             em.getTransaction().commit();
             return true;
-
-        } catch (IllegalStateException ex) {
-            System.err.println("No fue posible actualizar la caja");
+        } else {
+            System.err.println("La caja no existe en la base de datos.");
             return false;
         }
+
+    } catch (IllegalStateException ex) {
+        System.err.println("No fue posible actualizar la caja");
+        return false;
     }
+}
 
     @Override
     public boolean eliminar(int id) {

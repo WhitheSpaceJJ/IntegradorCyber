@@ -12,7 +12,9 @@ public class InicioSesion extends javax.swing.JFrame {
 
     private IFachadaControl control;
     private static InicioSesion instance;
+    private boolean contraseñaVisible = false;
 
+    
     private InicioSesion() {
         initComponents();
         this.control = new FachadaControl();
@@ -20,12 +22,6 @@ public class InicioSesion extends javax.swing.JFrame {
         this.jTextFieldUsuario.setDocument(new JTextFieldLimit(20));
     }
 
-    public static InicioSesion getInstance() {
-        if (instance == null) {
-            instance = new InicioSesion();
-        }
-        return instance;
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -65,7 +61,7 @@ public class InicioSesion extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Iniciar Sesión");
         jPanel1.add(jLabel2);
-        jLabel2.setBounds(460, 20, 180, 50);
+        jLabel2.setBounds(440, 20, 240, 50);
 
         jTextFieldUsuario.setBackground(new java.awt.Color(39, 18, 48));
         jTextFieldUsuario.setColumns(10);
@@ -191,7 +187,6 @@ public class InicioSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonIniciarSesionActionPerformed
 
     private void visibilidadMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_visibilidadMouseClicked
-        // Alternar la visibilidad de la contraseña
         if (!jPasswordFieldContraseña.getText().isEmpty()) {
             contraseñaVisible = !contraseñaVisible;
             char[] contraseña = jPasswordFieldContraseña.getPassword();
@@ -204,15 +199,19 @@ public class InicioSesion extends javax.swing.JFrame {
             }
             jPasswordFieldContraseña.setText(new String(contraseña));
         }
-
     }//GEN-LAST:event_visibilidadMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
         //Metodo para cerrar la caja y todos sus derivados
     }//GEN-LAST:event_formWindowClosing
-    private boolean contraseñaVisible = false;
-
+    
+    public static InicioSesion getInstance() {
+        if (instance == null) {
+            instance = new InicioSesion();
+        }
+        return instance;
+    }
     public void iniciar() {
         if (validarCamposVacios()) {
             return;

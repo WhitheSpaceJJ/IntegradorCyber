@@ -521,16 +521,10 @@ public class PrincipalForm extends javax.swing.JFrame {
     private void menuCajaNuevoTicket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaNuevoTicket1ActionPerformed
         Caja caja = fachadaControl.cajaAbierta();
         if (caja != null) {
-            caja.setUsuario(usuarioSesion);
+            caja.setUsuario(new Usuario(usuarioSesion.getId()));
             fachadaControl.actualizarCaja(caja);
             this.setVisible(false);
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    VentasForm.getInstance().llenarCBoxClientes();
-                    VentasForm.getInstance().setVisible(true);
-                    VentasForm.getInstance().establecerCaja(caja);
-                }
-            });
+             Utilidad.getInstance().venta(caja);
         } else {
             JOptionPane.showMessageDialog(null, "No se ha registrado alguna caja se requiere que abra alguna");
         }
