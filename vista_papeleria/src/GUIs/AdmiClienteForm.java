@@ -32,108 +32,6 @@ public class AdmiClienteForm extends javax.swing.JFrame {
         });
     }
 
-    public static AdmiClienteForm getInstance() {
-        if (admiClienteForm == null) {
-            admiClienteForm = new AdmiClienteForm();
-        }
-        return admiClienteForm;
-    }
-
-    private void editarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
-        btnGuardar.setText("Editar");
-    }
-
-    private void eliminarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png")));
-        btnGuardar.setText("Eliminar");
-    }
-
-    private void guardarBoton() {
-        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png")));
-        btnGuardar.setText("Guardar");
-    }
-
-    private void llenarFormulario(Cliente cliente) {
-        jTextFieldNombre.setText(cliente.getNombre());
-        jTextFieldTelefono.setText(cliente.getTelefono());
-        jTextFieldEmail.setText(cliente.getEmail());
-        jTextFieldRFC.setText(cliente.getRfc());
-        txtID.setText("" + cliente.getId());
-    }
-
-    public boolean validarDatos() {
-
-        if (!jTextFieldNombre.getText().matches("^([A-Za-z]+\\s?)+$")) {
-            JOptionPane.showMessageDialog(null, "El nombre solo puede contener letras mayúsculas y minúsculas, incluyendo espacios entre nombres");
-            return true;
-        }
-
-        if (!jTextFieldRFC.getText().matches("[A-Z]{4}\\d{6}[A-Z0-9]{3}")) {
-            JOptionPane.showMessageDialog(null, "El RFC tiene un formato invalido");
-
-            return true;
-        }
-        if (!jTextFieldEmail.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-            JOptionPane.showMessageDialog(null, "El correo tiene un formato invalido");
-            return true;
-        }
-        if (!jTextFieldTelefono.getText().matches("\\d{10}")) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero de 10 digitos, no ingrese caracteres extraños");
-            return true;
-        }
-        return false;
-    }
-
-    private boolean validarCamposLlenos() {
-
-        if (jTextFieldNombre.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre del cliente");
-            return false;
-        }
-        if (jTextFieldEmail.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el email del cliente");
-            return false;
-        }
-        if (jTextFieldRFC.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el RFC del cliente");
-            return false;
-        }
-        if (jTextFieldTelefono.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el telefono del cliente");
-            return false;
-        }
-        return true;
-    }
-
-    public  void llenarTabla() {
-        clientes = this.logica.consultarTodosClientes();
-        if (clientes != null || !clientes.isEmpty()) {
-            DefaultTableModel modeloTabla = (DefaultTableModel) this.tbClientes.getModel();
-            this.tbClientes.setRowHeight(30);
-            modeloTabla.setRowCount(0);
-            clientes.forEach(cliente -> {
-                Object[] fila = new Object[5];
-                fila[0] = cliente.getId();
-                fila[1] = cliente.getNombre();
-                fila[2] = cliente.getRfc();
-                fila[3] = cliente.getEmail();
-                fila[4] = cliente.getTelefono();
-                modeloTabla.addRow(fila);
-            });
-        }
-
-    }
-
-    private void limpiarFormulario() {
-        jTextFieldNombre.setText("");
-        jTextFieldEmail.setText("");
-        jTextFieldTelefono.setText("");
-        jTextFieldRFC.setText("");
-        txtID.setText("");
-        this.guardarBoton();
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -400,7 +298,108 @@ public class AdmiClienteForm extends javax.swing.JFrame {
         tbClientes.clearSelection(); // Esto limpia la selección
     }//GEN-LAST:event_tbClientesMouseClicked
 
+  public static AdmiClienteForm getInstance() {
+        if (admiClienteForm == null) {
+            admiClienteForm = new AdmiClienteForm();
+        }
+        return admiClienteForm;
+    }
 
+    private void editarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/editar.png")));
+        btnGuardar.setText("Editar");
+    }
+
+    private void eliminarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/eliminar.png")));
+        btnGuardar.setText("Eliminar");
+    }
+
+    private void guardarBoton() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/guardar.png")));
+        btnGuardar.setText("Guardar");
+    }
+
+    private void llenarFormulario(Cliente cliente) {
+        jTextFieldNombre.setText(cliente.getNombre());
+        jTextFieldTelefono.setText(cliente.getTelefono());
+        jTextFieldEmail.setText(cliente.getEmail());
+        jTextFieldRFC.setText(cliente.getRfc());
+        txtID.setText("" + cliente.getId());
+    }
+
+    public boolean validarDatos() {
+
+        if (!jTextFieldNombre.getText().matches("^([A-Za-z]+\\s?)+$")) {
+            JOptionPane.showMessageDialog(null, "El nombre solo puede contener letras mayúsculas y minúsculas, incluyendo espacios entre nombres");
+            return true;
+        }
+
+        if (!jTextFieldRFC.getText().matches("[A-Z]{4}\\d{6}[A-Z0-9]{3}")) {
+            JOptionPane.showMessageDialog(null, "El RFC tiene un formato invalido");
+
+            return true;
+        }
+        if (!jTextFieldEmail.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(null, "El correo tiene un formato invalido");
+            return true;
+        }
+        if (!jTextFieldTelefono.getText().matches("\\d{10}")) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero de 10 digitos, no ingrese caracteres extraños");
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validarCamposLlenos() {
+
+        if (jTextFieldNombre.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el nombre del cliente");
+            return false;
+        }
+        if (jTextFieldEmail.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el email del cliente");
+            return false;
+        }
+        if (jTextFieldRFC.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el RFC del cliente");
+            return false;
+        }
+        if (jTextFieldTelefono.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el telefono del cliente");
+            return false;
+        }
+        return true;
+    }
+
+    public  void llenarTabla() {
+        clientes = this.logica.consultarTodosClientes();
+        if (clientes != null || !clientes.isEmpty()) {
+            DefaultTableModel modeloTabla = (DefaultTableModel) this.tbClientes.getModel();
+            this.tbClientes.setRowHeight(30);
+            modeloTabla.setRowCount(0);
+            clientes.forEach(cliente -> {
+                Object[] fila = new Object[5];
+                fila[0] = cliente.getId();
+                fila[1] = cliente.getNombre();
+                fila[2] = cliente.getRfc();
+                fila[3] = cliente.getEmail();
+                fila[4] = cliente.getTelefono();
+                modeloTabla.addRow(fila);
+            });
+        }
+
+    }
+
+    private void limpiarFormulario() {
+        jTextFieldNombre.setText("");
+        jTextFieldEmail.setText("");
+        jTextFieldTelefono.setText("");
+        jTextFieldRFC.setText("");
+        txtID.setText("");
+        this.guardarBoton();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnGuardar;

@@ -116,12 +116,10 @@ public class ClientesDAO implements IClientesDAO {
             clientes = query.getResultList();
 
             em.getTransaction().commit();
+            return clientes;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar todos los clientes");
             return null;
         }
-
-        return clientes;
-
     }
 }

@@ -2,10 +2,13 @@ package GUIs;
 
 import entidades.Caja;
 import entidades.Usuario;
+import entidades.Venta;
 import enumeradores.Rol;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -14,11 +17,28 @@ public class PrincipalForm extends javax.swing.JFrame {
     private IFachadaControl fachadaControl;
     private static PrincipalForm principalForm;
     private Usuario usuarioSesion;
+    private List<Venta> ventas = new ArrayList<>();
 
     private PrincipalForm() {
         initComponents();
         this.fachadaControl = new FachadaControl();
         jButtonProductos.setPreferredSize(new Dimension(40, 40));
+    }
+
+    public void cargarVenta(Venta venta) {
+        if (ventas.size() == 10) {
+            JOptionPane.showMessageDialog(null, "Se pueden abrir como maximo 10 ventas simultaneas");
+        } else {
+            ventas.add(venta);
+        }
+    }
+
+    public void eliminarVenta(Venta venta) {
+        if (ventas.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "La venta no ha sido cargada previamente, no es posible eliminarla.");
+        } else {
+            ventas.remove(venta);
+        }
     }
 
     public static PrincipalForm getInstance() {
@@ -74,6 +94,10 @@ public class PrincipalForm extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        contadorVentas = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         panelRound6 = new GUIs.PanelRound();
         jLabelTitulo = new javax.swing.JLabel();
@@ -219,14 +243,39 @@ public class PrincipalForm extends javax.swing.JFrame {
         jLayeredPane1.setLayout(jLayeredPane1Layout);
         jLayeredPane1Layout.setHorizontalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         jLayeredPane1Layout.setVerticalGroup(
             jLayeredPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         panelRound1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, -1, -1));
+
+        jButton2.setText("Ver Ventas");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        panelRound1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, 90, 30));
+
+        jButton3.setText("Añadir Venta");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        panelRound1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, -1, -1));
+
+        contadorVentas.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        contadorVentas.setForeground(new java.awt.Color(0, 0, 0));
+        panelRound1.add(contadorVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 40, -1));
+
+        jLabel11.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel11.setText("Ventas en Ejecucion");
+        panelRound1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 180, -1, -1));
 
         panelRound5.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 700, 580));
 
@@ -521,10 +570,10 @@ public class PrincipalForm extends javax.swing.JFrame {
     private void menuCajaNuevoTicket1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaNuevoTicket1ActionPerformed
         Caja caja = fachadaControl.cajaAbierta();
         if (caja != null) {
-            caja.setUsuario(new Usuario(usuarioSesion.getId()));
-            fachadaControl.actualizarCaja(caja);
+            //  caja.setUsuario(new Usuario(usuarioSesion.getId()));
+            // fachadaControl.actualizarCaja(caja);
             this.setVisible(false);
-             Utilidad.getInstance().venta(caja);
+//            Utilidad.getInstance().venta(caja);
         } else {
             JOptionPane.showMessageDialog(null, "No se ha registrado alguna caja se requiere que abra alguna");
         }
@@ -571,8 +620,8 @@ public class PrincipalForm extends javax.swing.JFrame {
 
         Caja caja = fachadaControl.cajaAbierta();
         if (caja != null) {
-            caja.setUsuario(usuarioSesion);
-            fachadaControl.actualizarCaja(caja);
+            //   caja.setUsuario(usuarioSesion);
+            //  fachadaControl.actualizarCaja(caja);
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
@@ -680,6 +729,14 @@ public class PrincipalForm extends javax.swing.JFrame {
         Utilidad.getInstance().producto();
     }//GEN-LAST:event_MenuAdminProductosVendedorActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdmin;
@@ -700,7 +757,10 @@ public class PrincipalForm extends javax.swing.JFrame {
     private javax.swing.JMenu MenuCaja1;
     private javax.swing.JMenu MenuTecnico;
     private javax.swing.JMenu MenuVendedor;
+    private javax.swing.JLabel contadorVentas;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButtonCatehorias;
     private javax.swing.JButton jButtonClientes;
     private javax.swing.JButton jButtonProductos;
@@ -708,6 +768,7 @@ public class PrincipalForm extends javax.swing.JFrame {
     private javax.swing.JButton jButtonRealizarVenta;
     private javax.swing.JButton jButtonUsuarios;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel35;

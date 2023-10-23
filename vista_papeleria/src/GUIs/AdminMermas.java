@@ -4,7 +4,6 @@
  */
 package GUIs;
 
-import GUIs.BusquedaArticuloForm;
 import entidades.Cliente;
 import entidades.DetalleMerma;
 import entidades.Merma;
@@ -24,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author josej
  */
-public class AdminMermas extends javax.swing.JFrame {
+public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
 
 
   private IFachadaControl logica;
@@ -47,6 +46,8 @@ public class AdminMermas extends javax.swing.JFrame {
     }
 
 */
+        @Override
+    public void cargarBusqueda(Producto producto) {}
         private static AdminMermas instance;
 
     public static AdminMermas getInstance() {
@@ -746,4 +747,9 @@ public class AdminMermas extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalMerma;
     private javax.swing.JTextField txtTotalProducto;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void establecerVisibilidad(boolean operacion) {
+        setVisible(operacion);
+    }
 }

@@ -3,6 +3,8 @@ package GUIs;
 import interfaces.*;
 import entidades.*;
 import fachada.FachadaControl;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -13,38 +15,24 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
 
     private List<Producto> productosCoinicidentes;
     private IFachadaControl logica;
-    private static BusquedaArticuloForm busquedaArticuloForm;
-    private static List<Categoria> categorias;
-    private Producto productoBuscado;
-    private int modoBusqueda;
+    private  List<Categoria> categorias;
+   private IBusqueda busqueda;
 
-    private BusquedaArticuloForm() {
+    public BusquedaArticuloForm(IBusqueda busqueda) {
         initComponents();
         this.logica = new FachadaControl();
+        this.categorias=new ArrayList<>();
+        this.busqueda=busqueda;
+        this.productosCoinicidentes=new ArrayList<>();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                setVisible(false);            busqueda.establecerVisibilidad(true);
+
+            }
+        });
     }
 
-    public void establecerModoBusqueda(int modo) {
-        modoBusqueda = modo;
-    }
-
-    public void llenarCategorias() {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        categorias = new ArrayList<>();
-        categorias = logica.consultarTodasCategorias();
-        model.addElement("Ninguno");
-        for (int i = 0; i < categorias.size(); i++) {
-            Categoria get = categorias.get(i);
-            model.addElement(get.getNombre());
-        }
-        categoriasC.setModel(model);
-    }
-
-    public static BusquedaArticuloForm getInstance() {
-        if (busquedaArticuloForm == null) {
-            busquedaArticuloForm = new BusquedaArticuloForm();
-        }
-        return busquedaArticuloForm;
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -67,7 +55,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         lblRectangulo4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Busqueda Articulos");
         setResizable(false);
 
@@ -160,7 +148,6 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         });
         jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 170, 160, 40));
 
-        categoriasC.setEditable(true);
         categoriasC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         categoriasC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "-----------" }));
         categoriasC.setSelectedIndex(-1);
@@ -213,17 +200,25 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         int indice = tblProductos.getSelectedRow();
         if (indice != -1) {
-            setVisible(false);
-            if (modoBusqueda == 1) {
-                VentasForm.getInstance().cargarCampos(productoBuscado);
-                VentasForm.getInstance().setVisible(true);
-            }
-            dispose();
-
+            busqueda.cargarBusqueda(productosCoinicidentes.get(indice));
+            busqueda.establecerVisibilidad(true);
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un artículo, o inicie una busqueda", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
+
+    public void llenarCategorias() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        categorias = new ArrayList<>();
+        categorias = logica.consultarTodasCategorias();
+        model.addElement("Ninguno");
+        for (int i = 0; i < categorias.size(); i++) {
+            Categoria get = categorias.get(i);
+            model.addElement(get.getNombre());
+        }
+        categoriasC.setModel(model);
+    }
+
     public void cargarCoincidencias() {
         if (productosCoinicidentes != null) {
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos.getModel();
@@ -246,7 +241,6 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         modeloTabla.setRowCount(0);
         productosCoinicidentes = new ArrayList<>();
         categorias = new ArrayList<>();
-        productoBuscado = null;
     }
 
     public void buscarCoincidencias(Object[] parametros) {
@@ -258,9 +252,6 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         }
     }
 
-    public Producto buscado() {
-        return productoBuscado;
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;

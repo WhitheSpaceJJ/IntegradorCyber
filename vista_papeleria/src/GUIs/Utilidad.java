@@ -18,32 +18,7 @@ public class Utilidad {
         return utilidad;
     }
     
-    public void busqueda(int modo) {
-        if (modo == 1) {
-            java.awt.EventQueue.invokeLater(() -> {
-                BusquedaArticuloForm.getInstance().resetBusquedas();
-                BusquedaArticuloForm.getInstance().establecerModoBusqueda(1);
-                BusquedaArticuloForm.getInstance().llenarCategorias();
-                BusquedaArticuloForm.getInstance().setVisible(true);
-            });
-        }
-        
-    }
-    
-    public void busquedaMerma() {
-        BusquedaArticuloForm.getInstance().addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                AdminMermas.getInstance().setVisible(true);
-            }
-        });
-        java.awt.EventQueue.invokeLater(() -> {
-            BusquedaArticuloForm.getInstance().resetBusquedas();
-            BusquedaArticuloForm.getInstance().llenarCategorias();
-            BusquedaArticuloForm.getInstance().setVisible(true);
-        });
-    }
-    
+
     public void producto() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -91,13 +66,13 @@ public class Utilidad {
         });
     }
     
-    public void venta(Caja caja) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                VentasForm.getInstance().llenarCBoxClientes();
-                VentasForm.getInstance().setVisible(true);
-                VentasForm.getInstance().establecerCaja(caja);
-            }
-        });
-    }
+//    public void venta(Caja caja) {
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                VentasForm.getInstance().llenarCBoxClientes();
+//                VentasForm.getInstance().setVisible(true);
+//                VentasForm.getInstance().establecerCaja(caja);
+//            }
+//        });
+//    }
 }

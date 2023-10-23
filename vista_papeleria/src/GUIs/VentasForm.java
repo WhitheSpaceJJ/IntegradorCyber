@@ -5,6 +5,8 @@ import entidades.*;
 import fachada.FachadaControl;
 import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class VentasForm extends javax.swing.JFrame {
+public class VentasForm extends javax.swing.JFrame implements IBusqueda{
 
     private Producto articuloBuscado;
     private List<DetalleVenta> detalleV;
@@ -24,9 +26,17 @@ public class VentasForm extends javax.swing.JFrame {
     private Caja caja;
     private List<Producto> productos;
 
-    private VentasForm() {
+    public  VentasForm() {
         initComponents();
         logica = new FachadaControl();
+          addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                setVisible(false);          
+                PrincipalForm.getInstance().setVisible(true);
+
+            }
+        });
     }
 
     @SuppressWarnings("unchecked")
@@ -79,7 +89,7 @@ public class VentasForm extends javax.swing.JFrame {
         lblNumTicket.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblNumTicket.setText("No. Ticket:");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Ventas");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -352,11 +362,16 @@ public class VentasForm extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
+     @Override
+    public void establecerVisibilidad(boolean operacion) {
+         setVisible(operacion);
+    }
+    
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         if (txtCodigoArticulo.getText().equals("")) {
-            this.setVisible(false);
-            Utilidad.getInstance().busqueda(1);
+            establecerVisibilidad(false);
+            BusquedaArticuloForm busquedaArticuloForm=new BusquedaArticuloForm(this);
+            busquedaArticuloForm.setVisible(true);
         } else {
             try {
                 long idProducto = Long.parseLong(txtCodigoArticulo.getText());
@@ -365,7 +380,7 @@ public class VentasForm extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
                     limpiarCampos();
                 } else {
-                    cargarCampos(articuloBuscado);
+                    cargarBusqueda(articuloBuscado);
                 }
 
             } catch (HeadlessException | NumberFormatException e) {
@@ -519,6 +534,7 @@ public class VentasForm extends javax.swing.JFrame {
 
     public void llenarCBoxClientes() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
+        clientes=new ArrayList<>();
         clientes = logica.consultarTodosClientes();
         for (int i = 0; i < clientes.size(); i++) {
             Cliente get = clientes.get(i);
@@ -537,12 +553,7 @@ public class VentasForm extends javax.swing.JFrame {
         }
     }
 
-    public static VentasForm getInstance() {
-        if (ventasForm == null) {
-            ventasForm = new VentasForm();
-        }
-        return ventasForm;
-    }
+
 
     public void establecerCaja(Caja cajaAbierta) {
         cajaTxt.setText("" + cajaAbierta.getId());
@@ -571,10 +582,13 @@ public class VentasForm extends javax.swing.JFrame {
 
     public void agregarArtBuscado(Producto productoS) {
         articuloBuscado = productoS;
-        cargarCampos(articuloBuscado);
+        cargarBusqueda(articuloBuscado);
     }
 
-    public void cargarCampos(Producto productoCargado) {
+    @Override
+    public void cargarBusqueda(Producto producto) {
+        Producto productoCargado=producto;
+//        BusquedaArticuloForm.getInstance().resetBusquedas();
         int indice = productos.indexOf(productoCargado);
         if ((indice == -1)) {
             txtCodigoArticulo.setText(productoCargado.getId() + "");
@@ -585,7 +599,7 @@ public class VentasForm extends javax.swing.JFrame {
             txtTotalProducto.setText(productoCargado.getPrecio() + "");
             txtCantidad.setText("1");
         } else {
-            cargarDetalleVenta();
+           // cargarDetalleVenta();
         }
     }
 
@@ -823,4 +837,6 @@ public class VentasForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtTotalCobrar;
     private javax.swing.JTextField txtTotalProducto;
     // End of variables declaration//GEN-END:variables
+
+   
 }
