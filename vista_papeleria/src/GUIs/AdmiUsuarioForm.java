@@ -320,6 +320,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
     }
 
     private void llenarFormulario(Usuario usuario) {
+        txtID.setText(""+usuario.getId());
         txtNombre.setText(usuario.getNombre());
         txtPassword.setText(usuario.getPassword());
         cmbRoles.setSelectedItem(usuario.getRol().toString());

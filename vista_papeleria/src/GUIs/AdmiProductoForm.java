@@ -458,6 +458,7 @@ public final class AdmiProductoForm extends javax.swing.JFrame {
     }
 
     private void llenarFormulario(Producto producto) {
+        txtID.setText(""+producto.getId());
         jTextFieldNombre.setText(producto.getNombre());
         jTextFieldDescripcion.setText(producto.getDescripcion());
         jTextFieldPrecioCompra.setText(String.valueOf(producto.getCosto()));

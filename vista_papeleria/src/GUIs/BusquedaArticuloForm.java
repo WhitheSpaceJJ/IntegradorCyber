@@ -15,24 +15,23 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
 
     private List<Producto> productosCoinicidentes;
     private IFachadaControl logica;
-    private  List<Categoria> categorias;
-   private IBusqueda busqueda;
+    private List<Categoria> categorias;
+    private IBusqueda busqueda;
 
     public BusquedaArticuloForm(IBusqueda busqueda) {
         initComponents();
         this.logica = new FachadaControl();
-        this.categorias=new ArrayList<>();
-        this.busqueda=busqueda;
-        this.productosCoinicidentes=new ArrayList<>();
+        this.categorias = new ArrayList<>();
+        this.busqueda = busqueda;
+        this.productosCoinicidentes = new ArrayList<>();
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                setVisible(false);            busqueda.establecerVisibilidad(true);
-
+                setVisible(false);
+                busqueda.establecerVisibilidad(true);
             }
         });
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -119,6 +118,11 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblProductos);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(23, 401, 878, 194));
@@ -200,6 +204,7 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
         int indice = tblProductos.getSelectedRow();
         if (indice != -1) {
+            setVisible(false);
             busqueda.cargarBusqueda(productosCoinicidentes.get(indice));
             busqueda.establecerVisibilidad(true);
         } else {
@@ -207,9 +212,23 @@ public class BusquedaArticuloForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
+    private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
+
+        if (evt.getClickCount() == 2) {
+            int indice = tblProductos.getSelectedRow();
+            if (indice != -1) {
+                setVisible(false);
+                busqueda.cargarBusqueda(productosCoinicidentes.get(indice));
+                busqueda.establecerVisibilidad(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Selecciona un artículo, o inicie una busqueda", "Busqueda de articulo", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+
+    }//GEN-LAST:event_tblProductosMouseClicked
+
     public void llenarCategorias() {
         DefaultComboBoxModel model = new DefaultComboBoxModel();
-        categorias = new ArrayList<>();
         categorias = logica.consultarTodasCategorias();
         model.addElement("Ninguno");
         for (int i = 0; i < categorias.size(); i++) {

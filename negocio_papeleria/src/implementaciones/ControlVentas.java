@@ -17,33 +17,32 @@ public class ControlVentas implements IControlVentas {
     public ControlVentas(IFachadaDAO fachadaDAO) {
         this.fachadaDAO = fachadaDAO;
     }
-@Override
+
+    @Override
     public boolean agregar(Venta venta, List<DetalleVenta> detalles) {
-        int cantidad=0;
-        int stock=0;
-        try{
-      this.fachadaDAO.agregarVenta(venta);
-      for (int i = 0; i < detalles.size(); i++) {
+        int cantidad = 0;
+        int stock = 0;
+        try {
+            this.fachadaDAO.agregarVenta(venta);
+            for (int i = 0; i < detalles.size(); i++) {
                 detalles.get(i).setVenta(venta);
-                cantidad=detalles.get(i).getCantidad();
-                stock=(int) detalles.get(i).getProducto().getStock();
-                detalles.get(i).getProducto().setStock(stock-cantidad);
+                cantidad = detalles.get(i).getCantidad();
+                stock = (int) detalles.get(i).getProducto().getStock();
+                detalles.get(i).getProducto().setStock(stock - cantidad);
                 this.fachadaDAO.agregarDetalleVenta(detalles.get(i));
                 this.fachadaDAO.actualizarProducto(detalles.get(i).getProducto());
             }
-      return true;
-        }catch(Exception ex){
-            
+            return true;
+        } catch (Exception ex) {
+
         }
         return false;
     }
-   
 
     @Override
     public Venta consultar(int id) {
         return this.fachadaDAO.consultarVenta(id);
     }
-
 
     @Override
     public List<Venta> buscarEntre(Calendar inicio, Calendar fin) {
@@ -59,7 +58,5 @@ public class ControlVentas implements IControlVentas {
     public List<Venta> consultarTodas() {
         return this.fachadaDAO.consultarTodasVentas();
     }
-
-    
 
 }

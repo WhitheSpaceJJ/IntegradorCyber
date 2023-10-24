@@ -16,27 +16,61 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class VentasForm extends javax.swing.JFrame implements IBusqueda{
+public class VentasForm extends javax.swing.JFrame implements IBusqueda {
 
     private Producto articuloBuscado;
     private List<DetalleVenta> detalleV;
-    private static VentasForm ventasForm;
     private List<Cliente> clientes;
     private IFachadaControl logica;
     private Caja caja;
     private List<Producto> productos;
+    private BusquedaArticuloForm busqueda;
+    private FrmCobro cobro;
 
-    public  VentasForm() {
+    public VentasForm() {
         initComponents();
+        productos = new ArrayList<>();
+        detalleV = new ArrayList<>();
         logica = new FachadaControl();
-          addWindowListener(new WindowAdapter() {
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
-                setVisible(false);          
+                setVisible(false);
                 PrincipalForm.getInstance().setVisible(true);
 
             }
         });
+
+        this.txtCategoria.setEditable(false);
+        //this.txtImporte.setEditable(false);
+        this.txtTotalProducto.setEditable(false);
+        //    this.txtDisponibilidad.setEditable(false);
+        this.txtDescripcion.setEditable(false);
+        //  this.txtTotalCobrar.setEditable(false);
+        this.txtFecha.setEditable(false);
+        //  this.txtNumTicket.setEditable(false);
+        this.txtOperador.setEditable(false);
+        this.cajaTxt.setEditable(false);
+        fechaVenta();
+
+    }
+
+    public void fechaVenta() {
+        Calendar fecha = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String fechaFormateada = dateFormat.format(fecha.getTime());
+        txtFecha.setText(fechaFormateada);
+    }
+
+    public void llenarCBoxClientes() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        clientes = new ArrayList<>();
+        clientes = logica.consultarTodosClientes();
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente get = clientes.get(i);
+            model.addElement(get.getNombre());
+        }
+        clientesC.setModel(model);
     }
 
     @SuppressWarnings("unchecked")
@@ -284,6 +318,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
                 return canEdit [columnIndex];
             }
         });
+        tblProductos.setToolTipText("1 click edtar, 2 click remover");
         tblProductos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblProductosMouseClicked(evt);
@@ -327,18 +362,18 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
                 btnCobrar1ActionPerformed(evt);
             }
         });
-        tblVenta.add(btnCobrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 620, 160, 50));
+        tblVenta.add(btnCobrar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 620, 160, 50));
 
         btnCancelar.setBackground(new java.awt.Color(0, 51, 255));
         btnCancelar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCancelar.setForeground(new java.awt.Color(255, 255, 255));
-        btnCancelar.setText("Cancelar");
+        btnCancelar.setText("Cancelar Venta");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
             }
         });
-        tblVenta.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 620, 150, 50));
+        tblVenta.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 620, 180, 50));
 
         lblRectangulo5.setBackground(new java.awt.Color(204, 204, 255));
         lblRectangulo5.setOpaque(true);
@@ -364,14 +399,20 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
     }// </editor-fold>//GEN-END:initComponents
      @Override
     public void establecerVisibilidad(boolean operacion) {
-         setVisible(operacion);
+        setVisible(operacion);
+        fechaVenta();
+
     }
-    
+
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         if (txtCodigoArticulo.getText().equals("")) {
+            if (busqueda == null) {
+                busqueda = new BusquedaArticuloForm(this);
+            }
             establecerVisibilidad(false);
-            BusquedaArticuloForm busquedaArticuloForm=new BusquedaArticuloForm(this);
-            busquedaArticuloForm.setVisible(true);
+            busqueda.resetBusquedas();
+            busqueda.llenarCategorias();
+            busqueda.setVisible(true);
         } else {
             try {
                 long idProducto = Long.parseLong(txtCodigoArticulo.getText());
@@ -400,10 +441,10 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         int indice = tblProductos.getSelectedRow();
         if (indice != -1) {
-                detalleV.remove(indice);
-                                productos.remove(indice);
-             cargarTabla();
-          actualizarPrecioTotal();
+            detalleV.remove(indice);
+            productos.remove(indice);
+            cargarTabla();
+            actualizarPrecioTotal();
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un artículo, para eliminarlo der la lista", "Eliminacion articulo", JOptionPane.ERROR_MESSAGE);
         }
@@ -416,7 +457,8 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
             txtTotalProducto.setText(total + "");
         }
     }//GEN-LAST:event_txtCantidadKeyReleased
-
+    public void fechaVentA() {
+    }
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         /*
         JOptionPane.showConfirmDialog(this, venta);
@@ -460,15 +502,8 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
     }//GEN-LAST:event_txtImporteKeyTyped
 
     private void btnCobrar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrar1ActionPerformed
-        /*
-        if (detalleV.size() > 0) {
-            List<Venta> ventas = logica.consultarVentas();
-            int numTicket;
-            if (ventas.size() < 1) {
-                numTicket = 0;
-            } else {
-                numTicket = ventas.get(ventas.size() - 1).getId() + 1;
-            }
+        if (!detalleV.isEmpty()) {
+
             Calendar fecha = Calendar.getInstance();
             Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
 
@@ -477,22 +512,20 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
             if (indiceCliente >= 0) {
                 cliente = clientes.get(indiceCliente);
             }
-            venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
-
+            Venta venta = new Venta(
+//                    0,
+                    fecha, totalVenta, cliente, caja);
             venta.setDetalleVentas(detalleV);
 
-            this.setVisible(false);
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    FrmCobro.getInstance().setVisible(true);
-                    FrmCobro.getInstance().establecerVenta(venta);
-                }
-            });
-
+            if (cobro == null) {
+                cobro = new FrmCobro(this);
+            }
+            establecerVisibilidad(false);
+            cobro.establecerVenta(venta);
+            cobro.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "No ha agregado productos");
         }
-         */
     }//GEN-LAST:event_btnCobrar1ActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -501,14 +534,21 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
 
     private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
         // TODO add your handling code here:
+
+        if (evt.getClickCount() == 1) {
             int indice = tblProductos.getSelectedRow();
-        if (indice != -1) {
+            if (indice != -1) {
+                cargarBusqueda(productos.get(indice));
+            }
+        }
+        if (evt.getClickCount() == 2) {
+            int indice = tblProductos.getSelectedRow();
+            if (indice != -1) {
                 detalleV.remove(indice);
                 productos.remove(indice);
-             cargarTabla();
-          actualizarPrecioTotal();
-        } else {
-            JOptionPane.showMessageDialog(null, "Selecciona un artículo, para eliminarlo der la lista", "Eliminacion articulo", JOptionPane.ERROR_MESSAGE);
+                cargarTabla();
+                actualizarPrecioTotal();
+            }
         }
     }//GEN-LAST:event_tblProductosMouseClicked
 
@@ -532,17 +572,6 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
         }
     }
 
-    public void llenarCBoxClientes() {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        clientes=new ArrayList<>();
-        clientes = logica.consultarTodosClientes();
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente get = clientes.get(i);
-            model.addElement(get.getNombre());
-        }
-        clientesC.setModel(model);
-    }
-
     public void adminitirFlotante(java.awt.event.KeyEvent evt) {
         char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9'))
@@ -552,8 +581,6 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
             getToolkit().beep();
         }
     }
-
-
 
     public void establecerCaja(Caja cajaAbierta) {
         cajaTxt.setText("" + cajaAbierta.getId());
@@ -578,6 +605,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
         txtImporte.setText("");
         txtTotalProducto.setText("");
         txtObservaciones.setText("");
+        articuloBuscado = null;
     }
 
     public void agregarArtBuscado(Producto productoS) {
@@ -587,35 +615,96 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
 
     @Override
     public void cargarBusqueda(Producto producto) {
-        Producto productoCargado=producto;
-//        BusquedaArticuloForm.getInstance().resetBusquedas();
-        int indice = productos.indexOf(productoCargado);
+        //Agregar Excepciondes de productos como por asi decirlo Dulcer Variados
+        articuloBuscado = producto;
+        busqueda.resetBusquedas();
+        int indice = productos.indexOf(articuloBuscado);
         if ((indice == -1)) {
-            txtCodigoArticulo.setText(productoCargado.getId() + "");
-            txtDescripcion.setText(productoCargado.getDescripcion());
-            txtCategoria.setText(productoCargado.getCategoria().getNombre());
-            txtDisponibilidad.setText(productoCargado.getStock() + "");
-            txtImporte.setText(productoCargado.getPrecio() + "");
-            txtTotalProducto.setText(productoCargado.getPrecio() + "");
+            txtCodigoArticulo.setText(articuloBuscado.getId() + "");
+            txtDescripcion.setText(articuloBuscado.getDescripcion());
+            txtCategoria.setText(articuloBuscado.getCategoria().getNombre());
+            txtDisponibilidad.setText(articuloBuscado.getStock() + "");
+            txtImporte.setText(articuloBuscado.getPrecio() + "");
+            txtTotalProducto.setText("");
             txtCantidad.setText("1");
         } else {
-           // cargarDetalleVenta();
+            cargarDetalleVenta(detalleV.get(indice));
         }
     }
 
-    public void cargarDetalleVenta() {
+    public void cargarDetalleVenta(DetalleVenta detalleVenta) {
+        //Agregar Excepciondes de productos como por asi decirlo Dulcer Variados
+
+        Producto producto = detalleVenta.getProducto();
+        txtCodigoArticulo.setText(producto.getId() + "");
+        txtDescripcion.setText(producto.getDescripcion());
+        txtCategoria.setText(producto.getCategoria().getNombre());
+        txtDisponibilidad.setText(producto.getStock() + "");
+        txtImporte.setText(producto.getPrecio() + "");
+        txtTotalProducto.setText(detalleVenta.getPrecioVendido() + "");
+        txtCantidad.setText(detalleVenta.getCantidad() + "");
+    }
+
+    private void agregarProductoTabla() {
+        //Agregar Excepciondes de productos como por asi decirlo Dulcer Variados
+
+        if (articuloBuscado == null) {
+            JOptionPane.showMessageDialog(null, "No ha buscado o seleccionado producto");
+        } else {
+            if (validarDatos()) {
+                return;
+            }
+
+            int indice = productos.indexOf(articuloBuscado);
+            if ((indice == -1)) {
+                int cantidad = Integer.parseInt(txtCantidad.getText());
+                String importe = txtImporte.getText();
+                if (!importe.equals("") ) {
+                    float total = Float.parseFloat(importe) * Integer.parseInt(txtCantidad.getText());
+                    txtTotalProducto.setText(total + "");
+                }
+                float totalProducto = Float.parseFloat(txtTotalProducto.getText());
+                if ((cantidad) > articuloBuscado.getStock()) {
+                    String mensaje = "Stock Producto: " + articuloBuscado.getStock();
+                    JOptionPane.showMessageDialog(null, mensaje, "Excede el stock", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    DetalleVenta dv = new DetalleVenta();
+                    dv.setCantidad(cantidad);
+                    dv.setImporte(totalProducto);
+                    dv.setPrecioVendido(Float.parseFloat(txtImporte.getText()));
+                    dv.setProducto(articuloBuscado);
+                    detalleV.add(dv);
+                    productos.add(articuloBuscado);
+                    actualizarPrecioTotal();
+                    cargarTabla();
+                    limpiarCampos();
+                }
+            } else {
+                int cantidad = Integer.parseInt(txtCantidad.getText());
+                float totalProducto = Float.parseFloat(txtTotalProducto.getText());
+                if ((cantidad) > articuloBuscado.getStock()) {
+                    int restante = (int) (articuloBuscado.getStock() - detalleV.get(indice).getCantidad());
+                    String mensaje = "Stock Producto: " + articuloBuscado.getStock() + "\nCantidad actual agregada: " + detalleV.get(indice).getCantidad() + "\nRestante: " + restante;
+                    JOptionPane.showMessageDialog(null, mensaje, "Excede el stock", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    detalleV.get(indice).setCantidad(cantidad);
+                    detalleV.get(indice).setImporte(totalProducto);
+                    actualizarPrecioTotal();
+                    cargarTabla();
+                    limpiarCampos();
+                }
+            }
+        }
+
     }
 
     private void confirmacion() {
 
         int respuesta = JOptionPane.showConfirmDialog(this, "¿Está seguro de que desea cancelar la venta?", "Salir", JOptionPane.YES_NO_OPTION);
         if (respuesta == JOptionPane.YES_OPTION) {
-            //  this.limpiarCamposTodo();
-            //   setVisible(false);
-            //   detalleV.clear();
-            //   cargarTabla();
-            //    dispose();
-            //  PrincipalForm.getInstance().setVisible(true);
+            setVisible(false);
+            PrincipalForm.getInstance().setVisible(true);
+            PrincipalForm.getInstance().eliminarVenta(this);
         }
     }
 
@@ -633,73 +722,6 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
         });
     }
 
-    private void agregarProductoTabla() {
-        if (validarDatos()) {
-            return;
-        }
-       
-
-        if ((txtCodigoArticulo.getText().trim() != "") && (!txtTotalProducto.getText().isEmpty())) {
-            int cantidad = Integer.parseInt(txtCantidad.getText());
-            float totalProducto = Float.parseFloat(txtTotalProducto.getText());
-            Producto productoAgregar = articuloBuscado;
-            boolean repetido = false;
-            if (cantidad <= productoAgregar.getStock()) {
-                for (int i = 0; i < detalleV.size(); i++) {
-                    if (productoAgregar.getId() == detalleV.get(i).getProducto().getId()) {
-                        if (productoAgregar.getStock() < cantidad + detalleV.get(i).getCantidad()) {
-                            int restante = (int) (productoAgregar.getStock() - detalleV.get(i).getCantidad());
-                            repetido = true;
-
-                            String mensaje = "Stock Producto: " + productoAgregar.getStock() + "\nCantidad actual agregada: " + detalleV.get(i).getCantidad() + "\nRestante: " + restante;
-                            JOptionPane.showMessageDialog(null, mensaje, "Excede el stock", JOptionPane.INFORMATION_MESSAGE);
-                            break;
-                        } else if (productoAgregar.getId() == detalleV.get(i).getProducto().getId()) {
-                            detalleV.get(i).setCantidad(detalleV.get(i).getCantidad() + cantidad);
-                            detalleV.get(i).setImporte(detalleV.get(i).getImporte() + totalProducto);
-                            actualizarPrecioTotal();
-                            cargarTabla();
-                            limpiarCampos();
-                            repetido = true;
-                            break;
-                        } else {
-
-                        }
-                    }
-                }
-                if (repetido == false) {
-                    DetalleVenta dv = new DetalleVenta();
-                    dv.setCantidad(cantidad);
-                    dv.setImporte(totalProducto);
-                    dv.setPrecioVendido(Float.parseFloat(txtImporte.getText()));
-                    dv.setProducto(productoAgregar);
-                    detalleV.add(dv);
-                    actualizarPrecioTotal();
-                    cargarTabla();
-                    limpiarCampos();
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "Se ingreso una cantidad mayor al stock");
-
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese producto");
-        }
-    }
-
-    public void limpiarCamposTodo() {
-        txtCantidad.setText("");
-        txtCategoria.setText("");
-        txtCodigoArticulo.setText("");
-        txtDescripcion.setText("");
-        txtDisponibilidad.setText("");
-        txtImporte.setText("");
-        txtTotalCobrar.setText("");
-        txtObservaciones.setText("");
-        txtTotalProducto.setText("");
-        detalleV.clear();
-    }
-
     public boolean validarDatos() {
         String regexNumeros = "\\d+";
 
@@ -710,7 +732,8 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
 
         return false;
     }
-  private void actualizarPrecioTotal() {
+
+    private void actualizarPrecioTotal() {
         float suma = 0;
         for (int i = 0; i < detalleV.size(); i++) {
             DetalleVenta get = detalleV.get(i);
@@ -720,7 +743,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
         txtTotalCobrar.setText(precio + "");
     }
 
-     private float precio;
+    private float precio;
 
     /*
     private FrmCobro frmCobro;
@@ -735,16 +758,6 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
         this.precio = (float) 0.00;
         llenarCBoxClientes();
         llenarCampos();
-        txtCategoria.setEditable(false);
-        //this.txtImporte.setEditable(false);
-        this.txtTotalProducto.setEditable(false);
-        this.txtDisponibilidad.setEditable(false);
-        this.txtDescripcion.setEditable(false);
-        this.txtTotalCobrar.setEditable(false);
-        this.txtFecha.setEditable(false);
-        this.txtNumTicket.setEditable(false);
-        this.txtOperador.setEditable(false);
-        this.cajaTxt.setEditable(false);
 
   
 
@@ -838,5 +851,4 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda{
     private javax.swing.JTextField txtTotalProducto;
     // End of variables declaration//GEN-END:variables
 
-   
 }

@@ -269,9 +269,7 @@ public class AdmiProveedorForm extends javax.swing.JFrame {
                 String webSite = jTextFieldWebSite.getText();
                 String contacto = jTextFieldContacto.getText();
                 int id = Integer.parseInt(this.txtID.getText());
-                Proveedor proveedor = new Proveedor(nombre, direccion, telefono, email, webSite, contacto);
-                proveedor.setId(id);
-                proveedor.setWebsite(webSite);
+                Proveedor proveedor = new Proveedor(id,nombre, direccion, telefono, email, webSite, contacto);
                 boolean seActualizo = logica.actualizarProveedor(proveedor);
                 if (seActualizo) {
                     this.limpiarFormulario();

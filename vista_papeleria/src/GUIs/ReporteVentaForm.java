@@ -65,7 +65,7 @@ public class ReporteVentaForm extends javax.swing.JFrame {
                 Object[] fila = new Object[7];
                 fila[0] = venta.getId().toString();
                 fila[1] = venta.getFecha().get(Calendar.DAY_OF_MONTH)+"/"+venta.getFecha().get(Calendar.MONTH)+"/"+venta.getFecha().get(Calendar.YEAR);
-                fila[2] = venta.getNumTicket();
+                fila[2] =  venta.getId().toString(); //venta.getNumTicket();
                 fila[3] = venta.getTotalventa();  
                 fila[4] = venta.getCaja().getId();
                 fila[5] = venta.getCliente().getId();

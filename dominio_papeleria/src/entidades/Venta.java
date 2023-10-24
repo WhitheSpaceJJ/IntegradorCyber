@@ -29,9 +29,9 @@ public class Venta implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
-    @Column (name = "numTicket", nullable = false)
-    private Integer numTicket;
+//    
+//    @Column (name = "numTicket", nullable = false)
+//    private Integer numTicket;
 
     @Column(name = "fecha", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -58,8 +58,11 @@ public class Venta implements Serializable {
         this.id = id;
     }
 
-    public Venta(Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, Caja caja) {
-        this.numTicket = numTicket;
+    public Venta(
+//            Integer numTicket,
+            
+            Calendar fecha, float totalventa, Cliente cliente, Caja caja) {
+//        this.numTicket = numTicket;
         this.fecha = fecha;
         this.totalventa = totalventa;
         this.cliente = cliente;
@@ -67,8 +70,11 @@ public class Venta implements Serializable {
     }
     
 
-    public Venta(Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
-        this.numTicket = numTicket;
+    public Venta(
+//            Integer numTicket,
+            
+            Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
+//        this.numTicket = numTicket;
         this.fecha = fecha;
         this.totalventa = totalventa;
         this.cliente = cliente;
@@ -76,9 +82,11 @@ public class Venta implements Serializable {
         this.caja = caja;
     }
 
-    public Venta(Integer id, Integer numTicket, Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
+    public Venta(Integer id,
+//            Integer numTicket, 
+            Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
         this.id = id;
-        this.numTicket = numTicket;
+//        this.numTicket = numTicket;
         this.fecha = fecha;
         this.totalventa = totalventa;
         this.cliente = cliente;
@@ -95,13 +103,13 @@ public class Venta implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumTicket() {
-        return numTicket;
-    }
-
-    public void setNumTicket(Integer numTicket) {
-        this.numTicket = numTicket;
-    }
+//    public Integer getNumTicket() {
+//        return numTicket;
+//    }
+//
+//    public void setNumTicket(Integer numTicket) {
+//        this.numTicket = numTicket;
+//    }
 
     public Calendar getFecha() {
         return fecha;
@@ -167,7 +175,10 @@ public class Venta implements Serializable {
 
     @Override
     public String toString() {
-        return "Venta{" + "id=" + id + ", numTicket=" + numTicket + ", fecha=" + fecha + ", totalventa=" + totalventa + ", cliente=" + cliente + ", detalleVentas=" + detalleVentas + ", caja=" + caja + '}';
+        return "Venta{" + "id=" + id + 
+//                ", numTicket=" + numTicket +
+                
+                ", fecha=" + fecha + ", totalventa=" + totalventa + ", cliente=" + cliente + ", detalleVentas=" + detalleVentas + ", caja=" + caja + '}';
     }
 
 

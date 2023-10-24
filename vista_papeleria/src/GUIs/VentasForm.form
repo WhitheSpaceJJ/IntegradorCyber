@@ -528,6 +528,7 @@
                     <Column editable="false" title="Total" type="java.lang.Double"/>
                   </Table>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="1 click edtar, 2 click remover"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblProductosMouseClicked"/>
@@ -640,7 +641,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="480" y="620" width="160" height="50"/>
+              <AbsoluteConstraints x="470" y="620" width="160" height="50"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -655,14 +656,14 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Cancelar"/>
+            <Property name="text" type="java.lang.String" value="Cancelar Venta"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="260" y="620" width="150" height="50"/>
+              <AbsoluteConstraints x="250" y="620" width="180" height="50"/>
             </Constraint>
           </Constraints>
         </Component>

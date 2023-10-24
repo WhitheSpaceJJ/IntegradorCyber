@@ -11,25 +11,29 @@ public class FrmCobro extends javax.swing.JFrame {
 
     private Venta venta;
     public static FrmCobro frmCobro1;
+    private VentasForm ventaForm;
+    private IFachadaControl logica;
 
     public void establecerVenta(Venta venta) {
         this.venta = venta;
         mostrarTicket(this.venta.getDetalleVentas());
     }
 
-    private FrmCobro() {
+    public FrmCobro(VentasForm ventasForm) {
         initComponents();
+        logica = new FachadaControl();
+
         txtCambio.setEditable(false);
+        this.ventaForm = ventasForm;
         this.setLocationRelativeTo(null);
     }
 
-    public static FrmCobro getInstance() {
-        if (frmCobro1 == null) {
-            frmCobro1 = new FrmCobro();
-        }
-        return frmCobro1;
-    }
-
+//    public static FrmCobro getInstance() {
+//        if (frmCobro1 == null) {
+//            frmCobro1 = new FrmCobro();
+//        }
+//        return frmCobro1;
+//    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -157,14 +161,21 @@ public class FrmCobro extends javax.swing.JFrame {
 
     private void btnContinuarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContinuarActionPerformed
 
-        if (validaDatos() == true) {
-
-//            VentasForm.getInstance().registrarTodoVenta();
-
-            venta = null;
-            cerrarFormulario();
+        if (validaDatos()) {
+            List<DetalleVenta> detalles = venta.getDetalleVentas();
+            venta.setDetalleVentas(null);
+            boolean ventaAgregada = logica.agregarVenta(venta, detalles);
+            if (ventaAgregada == true) {
+                JOptionPane.showMessageDialog(null, "La venta "+venta.getId()+" fue agregada exitosamente");
+                setVisible(false);
+                PrincipalForm.getInstance().setVisible(true);
+                PrincipalForm.getInstance().eliminarVenta(ventaForm);
+            }
+////            VentasForm.getInstance().registrarTodoVenta();
+//            venta = null;
+//            cerrarFormulario();
         }
-  //      VentasForm.getInstance().setVisible(true);
+        //      VentasForm.getInstance().setVisible(true);
 
 
     }//GEN-LAST:event_btnContinuarActionPerformed
@@ -186,8 +197,7 @@ public class FrmCobro extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpiar();
         setVisible(false);
-        dispose();
-     //   VentasForm.getInstance().setVisible(true);
+        ventaForm.establecerVisibilidad(true);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtMontoUsuarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMontoUsuarioKeyReleased
@@ -210,11 +220,9 @@ public class FrmCobro extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCambioActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
         limpiar();
         setVisible(false);
-        dispose();
-     //   VentasForm.getInstance().setVisible(true);
+        ventaForm.establecerVisibilidad(true);
     }//GEN-LAST:event_formWindowClosing
 
     public void adminitirFlotante(java.awt.event.KeyEvent evt) {
@@ -243,7 +251,7 @@ public class FrmCobro extends javax.swing.JFrame {
 
             int longitudNombre = d.getProducto().getNombre().length();
             int longitudCantidad = String.valueOf(d.getCantidad()).length();
-            int longitudPrecio = String.valueOf(d.getProducto().getPrecio()).length();
+            //   int longitudPrecio = String.valueOf(d.getProducto().getPrecio()).length();
             int longitudImporte = String.valueOf(d.getImporte()).length();
             espacioNombre = 15;
             espacioCantidad = 20 - longitudNombre;
@@ -266,17 +274,11 @@ public class FrmCobro extends javax.swing.JFrame {
 
     }
 
-    public void cerrarFormulario() {
-        limpiar();
-        venta = null;
-        this.dispose();
-
-    }
-
     public void limpiar() {
         txtMontoUsuario.setText("");
         txtCambio.setText("");
-
+        venta = null;
+        txtTicket.setText("");
     }
 
 
