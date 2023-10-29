@@ -17,7 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class VentasForm extends javax.swing.JFrame implements IBusqueda {
-
+    private float precio;
     private Producto articuloBuscado;
     private List<DetalleVenta> detalleV;
     private List<Cliente> clientes;
@@ -52,26 +52,8 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
         this.txtOperador.setEditable(false);
         this.cajaTxt.setEditable(false);
         fechaVenta();
-
     }
 
-    public void fechaVenta() {
-        Calendar fecha = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        String fechaFormateada = dateFormat.format(fecha.getTime());
-        txtFecha.setText(fechaFormateada);
-    }
-
-    public void llenarCBoxClientes() {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        clientes = new ArrayList<>();
-        clientes = logica.consultarTodosClientes();
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente get = clientes.get(i);
-            model.addElement(get.getNombre());
-        }
-        clientesC.setModel(model);
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -460,15 +442,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
     public void fechaVentA() {
     }
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        /*
-        JOptionPane.showConfirmDialog(this, venta);
-        setVisible(false);
-        detalleV.clear();
-        cargarTabla();
-        
-        dispose();
-        PrincipalForm.getInstance().setVisible(true);*/
-        //   confirmacion();
+
     }//GEN-LAST:event_formWindowClosing
 
     private void txtTotalCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalCobrarActionPerformed
@@ -533,8 +507,6 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
-        // TODO add your handling code here:
-
         if (evt.getClickCount() == 1) {
             int indice = tblProductos.getSelectedRow();
             if (indice != -1) {
@@ -552,6 +524,23 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
         }
     }//GEN-LAST:event_tblProductosMouseClicked
 
+    public void fechaVenta() {
+        Calendar fecha = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String fechaFormateada = dateFormat.format(fecha.getTime());
+        txtFecha.setText(fechaFormateada);
+    }
+
+    public void llenarCBoxClientes() {
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        clientes = new ArrayList<>();
+        clientes = logica.consultarTodosClientes();
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente get = clientes.get(i);
+            model.addElement(get.getNombre());
+        }
+        clientesC.setModel(model);
+    }
     public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
         if (Character.isDigit(car)) {
@@ -743,70 +732,6 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
         txtTotalCobrar.setText(precio + "");
     }
 
-    private float precio;
-
-    /*
-    private FrmCobro frmCobro;
-    Venta venta = null;
-
-    public BusquedaArticuloForm frmBusArt;
-        public static VentasForm frmVentas;
-
-        this.logica = new FachadaControl();
-        //this.productos = new ArrayList<>();
-        this.detalleV = new ArrayList<>();
-        this.precio = (float) 0.00;
-        llenarCBoxClientes();
-        llenarCampos();
-
-  
-
-  
-
-
- 
-
-
-  
-    public void registrarTodoVenta() {
-
-        try {
-            registrarVenta();
-
-        } catch (Exception e) {
-
-        }
-        limpiarCamposTodo();
-        detalleV.clear();
-        cargarTabla();
-    }
-
-    public void registrarVenta() {
-
-        if (detalleV.size() > 0) {
-            List<Venta> ventas = logica.consultarVentas();
-            int numTicket;
-            if (ventas.size() < 1) {
-                numTicket = 0;
-            } else {
-                numTicket = ventas.get(ventas.size() - 1).getId() + 1;
-            }
-            Calendar fecha = Calendar.getInstance();
-            Float totalVenta = Float.valueOf(txtTotalCobrar.getText());
-            int indiceCliente = clientesC.getSelectedIndex();
-            Cliente cliente = clientes.get(indiceCliente);
-            venta = new Venta(numTicket, fecha, totalVenta, cliente, caja);
-            boolean ventaAgregada = logica.agregarVenta(venta, detalleV);
-
-            if (ventaAgregada == true) {
-
-                JOptionPane.showMessageDialog(null, "La venta fue agregada exitosamente");
-                this.limpiarCampos();
-            }
-        }
-
-    }
-     */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

@@ -30,48 +30,6 @@ public class PrincipalForm extends javax.swing.JFrame {
         ventasList.setModel(model);
     }
 
-    public void eliminarVenta(VentasForm venta) {
-        ventasForms.remove(ventasForms.indexOf(venta));
-        model = new DefaultListModel<>();
-        ventasList.setModel(model);
-        if (!ventasForms.isEmpty()) {
-            for (int i = 0; i < ventasForms.size(); i++) {
-                model.addElement("Venta " + (i + 1));
-            }
-        }
-    }
-
-    public static PrincipalForm getInstance() {
-        if (principalForm == null) {
-            principalForm = new PrincipalForm();
-        }
-        return principalForm;
-    }
-
-    public void establecerSession(Usuario usuario) {
-        this.usuarioSesion = usuario;
-        this.jLabelTitulo.setText("Usuario: " + this.usuarioSesion.getNombre() + "\n Rol: " + this.usuarioSesion.getRol());
-
-        if (usuario.getRol() == Rol.ADMINISTRADOR) {
-            this.MenuTecnico.setEnabled(false);
-            this.jButtonUsuarios.setEnabled(true);
-            this.MenuVendedor.setEnabled(false);
-            this.MenuAdmin.setEnabled(true);
-        }
-        if (usuario.getRol() == Rol.TECNICO) {
-            this.jButtonUsuarios.setEnabled(false);
-            this.MenuAdmin.setEnabled(false);
-            this.MenuVendedor.setEnabled(false);
-            this.MenuTecnico.setEnabled(true);
-        }
-        if (usuario.getRol() == Rol.VENDEDOR) {
-            this.jButtonUsuarios.setEnabled(false);
-            this.MenuAdmin.setEnabled(false);
-            this.MenuTecnico.setEnabled(false);
-            this.MenuVendedor.setEnabled(true);
-        }
-    }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -767,6 +725,48 @@ public class PrincipalForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ventasListMouseClicked
 
+
+    public void eliminarVenta(VentasForm venta) {
+        ventasForms.remove(ventasForms.indexOf(venta));
+        model = new DefaultListModel<>();
+        ventasList.setModel(model);
+        if (!ventasForms.isEmpty()) {
+            for (int i = 0; i < ventasForms.size(); i++) {
+                model.addElement("Venta " + (i + 1));
+            }
+        }
+    }
+
+    public static PrincipalForm getInstance() {
+        if (principalForm == null) {
+            principalForm = new PrincipalForm();
+        }
+        return principalForm;
+    }
+
+    public void establecerSession(Usuario usuario) {
+        this.usuarioSesion = usuario;
+        this.jLabelTitulo.setText("Usuario: " + this.usuarioSesion.getNombre() + "\n Rol: " + this.usuarioSesion.getRol());
+
+        if (usuario.getRol() == Rol.ADMINISTRADOR) {
+            this.MenuTecnico.setEnabled(false);
+            this.jButtonUsuarios.setEnabled(true);
+            this.MenuVendedor.setEnabled(false);
+            this.MenuAdmin.setEnabled(true);
+        }
+        if (usuario.getRol() == Rol.TECNICO) {
+            this.jButtonUsuarios.setEnabled(false);
+            this.MenuAdmin.setEnabled(false);
+            this.MenuVendedor.setEnabled(false);
+            this.MenuTecnico.setEnabled(true);
+        }
+        if (usuario.getRol() == Rol.VENDEDOR) {
+            this.jButtonUsuarios.setEnabled(false);
+            this.MenuAdmin.setEnabled(false);
+            this.MenuTecnico.setEnabled(false);
+            this.MenuVendedor.setEnabled(true);
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu MenuAdmin;

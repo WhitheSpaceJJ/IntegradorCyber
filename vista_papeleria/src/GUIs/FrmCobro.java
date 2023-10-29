@@ -14,26 +14,15 @@ public class FrmCobro extends javax.swing.JFrame {
     private VentasForm ventaForm;
     private IFachadaControl logica;
 
-    public void establecerVenta(Venta venta) {
-        this.venta = venta;
-        mostrarTicket(this.venta.getDetalleVentas());
-    }
-
     public FrmCobro(VentasForm ventasForm) {
         initComponents();
         logica = new FachadaControl();
-
         txtCambio.setEditable(false);
         this.ventaForm = ventasForm;
         this.setLocationRelativeTo(null);
     }
 
-//    public static FrmCobro getInstance() {
-//        if (frmCobro1 == null) {
-//            frmCobro1 = new FrmCobro();
-//        }
-//        return frmCobro1;
-//    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -171,28 +160,10 @@ public class FrmCobro extends javax.swing.JFrame {
                 PrincipalForm.getInstance().setVisible(true);
                 PrincipalForm.getInstance().eliminarVenta(ventaForm);
             }
-////            VentasForm.getInstance().registrarTodoVenta();
-//            venta = null;
-//            cerrarFormulario();
         }
-        //      VentasForm.getInstance().setVisible(true);
-
-
     }//GEN-LAST:event_btnContinuarActionPerformed
 
-    public boolean validaDatos() {
-        if ("".equals(txtMontoUsuario.getText().trim())) {
-
-            JOptionPane.showMessageDialog(null, "Campo vacio");
-            return false;
-        } else if (Float.parseFloat(txtMontoUsuario.getText()) < venta.getTotalventa()) {
-
-            JOptionPane.showMessageDialog(null, "Monto ingresado menor al total de la venta");
-            return false;
-        }
-
-        return true;
-    }
+   
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         limpiar();
@@ -225,6 +196,23 @@ public class FrmCobro extends javax.swing.JFrame {
         ventaForm.establecerVisibilidad(true);
     }//GEN-LAST:event_formWindowClosing
 
+    public void establecerVenta(Venta venta) {
+        this.venta = venta;
+        mostrarTicket(this.venta.getDetalleVentas());
+    }
+ public boolean validaDatos() {
+        if ("".equals(txtMontoUsuario.getText().trim())) {
+
+            JOptionPane.showMessageDialog(null, "Campo vacio");
+            return false;
+        } else if (Float.parseFloat(txtMontoUsuario.getText()) < venta.getTotalventa()) {
+
+            JOptionPane.showMessageDialog(null, "Monto ingresado menor al total de la venta");
+            return false;
+        }
+
+        return true;
+    }
     public void adminitirFlotante(java.awt.event.KeyEvent evt) {
         char caracter = evt.getKeyChar();
         if (((caracter < '0') || (caracter > '9'))
