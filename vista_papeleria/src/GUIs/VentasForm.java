@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class VentasForm extends javax.swing.JFrame implements IBusqueda {
+
     private float precio;
     private Producto articuloBuscado;
     private List<DetalleVenta> detalleV;
@@ -53,7 +54,6 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
         this.cajaTxt.setEditable(false);
         fechaVenta();
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -487,10 +487,10 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
                 cliente = clientes.get(indiceCliente);
             }
             Venta venta = new Venta(
-//                    0,
+                    //                    0,
                     fecha, totalVenta, cliente, caja);
             venta.setDetalleVentas(detalleV);
-
+            venta.setHora(Calendar.getInstance().getTime());
             if (cobro == null) {
                 cobro = new FrmCobro(this);
             }
@@ -541,6 +541,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
         }
         clientesC.setModel(model);
     }
+
     public void adminitirSoloNumeros(java.awt.event.KeyEvent evt) {
         char car = evt.getKeyChar();
         if (Character.isDigit(car)) {
@@ -648,7 +649,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
             if ((indice == -1)) {
                 int cantidad = Integer.parseInt(txtCantidad.getText());
                 String importe = txtImporte.getText();
-                if (!importe.equals("") ) {
+                if (!importe.equals("")) {
                     float total = Float.parseFloat(importe) * Integer.parseInt(txtCantidad.getText());
                     txtTotalProducto.setText(total + "");
                 }

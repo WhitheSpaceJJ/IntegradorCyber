@@ -2,8 +2,10 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -22,6 +24,15 @@ import javax.persistence.TemporalType;
 @Table(name = "compras")
 public class Compra implements Serializable {
 
+    @Basic(optional = false)
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    @Basic(optional = false)
+    private int numFactura;
+    @Basic(optional = false)
+    @Temporal(TemporalType.TIME)
+    private Date hora;
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -29,12 +40,6 @@ public class Compra implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "numFactura", nullable = false)
-    private Integer numFactura;
-
-    @Column(name = "fecha", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar fecha;
 
     @Column(name = "totalCompra", nullable = false)
     private float totalCompra;
@@ -51,27 +56,27 @@ public class Compra implements Serializable {
 
     public Compra(Integer numFactura, Calendar fecha, float totalCompra) {
         this.numFactura = numFactura;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalCompra = totalCompra;
     }
 
     public Compra(Integer id, Integer numFactura, Calendar fecha, float totalCompra) {
         this.id = id;
         this.numFactura = numFactura;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalCompra = totalCompra;
     }
 
     public Compra(Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor) {
         this.numFactura = numFactura;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalCompra = totalCompra;
         this.proveedor = proveedor;
     }
 
     public Compra(Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor, List<DetalleCompra> detalleCompras) {
         this.numFactura = numFactura;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalCompra = totalCompra;
         this.proveedor = proveedor;
         this.detalleCompras = detalleCompras;
@@ -80,7 +85,7 @@ public class Compra implements Serializable {
     public Compra(Integer id, Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor) {
         this.id = id;
         this.numFactura = numFactura;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalCompra = totalCompra;
         this.proveedor = proveedor;
     }
@@ -88,12 +93,66 @@ public class Compra implements Serializable {
     public Compra(Integer id, Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor, List<DetalleCompra> detalleCompras) {
         this.id = id;
         this.numFactura = numFactura;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalCompra = totalCompra;
         this.proveedor = proveedor;
         this.detalleCompras = detalleCompras;
     }
 
+    
+    
+    public Compra(Integer numFactura, Calendar fecha,  float totalCompra,Calendar hora) {
+    this.numFactura = numFactura;
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalCompra = totalCompra;
+}
+
+public Compra(Integer id, Integer numFactura, Calendar fecha,  float totalCompra,Calendar hora) {
+    this.id = id;
+    this.numFactura = numFactura;
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalCompra = totalCompra;
+}
+
+public Compra(Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor,Calendar hora) {
+    this.numFactura = numFactura;
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalCompra = totalCompra;
+    this.proveedor = proveedor;
+}
+
+public Compra(Integer numFactura, Calendar fecha,  float totalCompra, Proveedor proveedor, List<DetalleCompra> detalleCompras,Calendar hora) {
+    this.numFactura = numFactura;
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalCompra = totalCompra;
+    this.proveedor = proveedor;
+    this.detalleCompras = detalleCompras;
+}
+
+public Compra(Integer id, Integer numFactura, Calendar fecha,float totalCompra, Proveedor proveedor ,Calendar hora) {
+    this.id = id;
+    this.numFactura = numFactura;
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalCompra = totalCompra;
+    this.proveedor = proveedor;
+}
+
+public Compra(Integer id, Integer numFactura, Calendar fecha, float totalCompra, Proveedor proveedor, List<DetalleCompra> detalleCompras,Calendar hora) {
+    this.id = id;
+    this.numFactura = numFactura;
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalCompra = totalCompra;
+    this.proveedor = proveedor;
+    this.detalleCompras = detalleCompras;
+}
+
+    
     public Integer getId() {
         return id;
     }
@@ -102,21 +161,6 @@ public class Compra implements Serializable {
         this.id = id;
     }
 
-    public Integer getNumFactura() {
-        return numFactura;
-    }
-
-    public void setNumFactura(Integer numFactura) {
-        this.numFactura = numFactura;
-    }
-
-    public Calendar getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Calendar fecha) {
-        this.fecha = fecha;
-    }
 
     public float getTotalCompra() {
         return totalCompra;
@@ -167,6 +211,30 @@ public class Compra implements Serializable {
     @Override
     public String toString() {
         return "Compra{" + "id=" + id + ", numFactura=" + numFactura + ", fecha=" + fecha + ", totalCompra=" + totalCompra + ", proveedor=" + proveedor + ", detalleCompras=" + detalleCompras + '}';
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public int getNumFactura() {
+        return numFactura;
+    }
+
+    public void setNumFactura(int numFactura) {
+        this.numFactura = numFactura;
+    }
+
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
     }
 
         

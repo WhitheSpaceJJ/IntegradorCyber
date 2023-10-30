@@ -295,7 +295,7 @@ public class AdmiUsuarioForm extends javax.swing.JFrame {
 
     public void llenarTabla() {
         usuarios = logica.consultarTodosUsuarios();
-        if (usuarios != null || !usuarios.isEmpty()) {
+        if (usuarios != null ) {
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tblUsuarios.getModel();
             this.tblUsuarios.setRowHeight(30);
             modeloTabla.setRowCount(0);

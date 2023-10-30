@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package GUIs;
 
 import entidades.Cliente;
@@ -10,72 +6,33 @@ import entidades.Usuario;
 import entidades.Venta;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
+import java.awt.event.ItemEvent;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Jarol
- */
 public class ReporteVentaForm extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ReporteVentaForm
-     */
-      private static ReporteVentaForm reporteVenta; 
-      private IFachadaControl logica;
-      private List<Cliente> clientes;
-      
+    private static ReporteVentaForm reporteVenta;
+    private IFachadaControl logica;
+    private List<Cliente> clientes;
+    private List<Venta> ventas;
+    private Venta venta;
+    private List<DetalleVenta> detalles;
+
     public ReporteVentaForm() {
         initComponents();
-         logica = new FachadaControl();
-         ventas = logica.consultarVentas();
-         llenarTabla();
-          llenarCBoxClientes();
-         this.setLocationRelativeTo(null);
+        logica = new FachadaControl();
+        this.setLocationRelativeTo(null);
+        jDateChooserDesde.setEnabled(false);
+        jDateChooserFecha.setEnabled(true);
+        jDateChooserHasta.setEnabled(false);
     }
 
-    public static ReporteVentaForm instanciaCerrarCaja() {
-        if (reporteVenta == null) {
-            reporteVenta = new ReporteVentaForm();
-        }
-        return reporteVenta;
-    }
-    
-    public void llenarCBoxClientes() {
-        DefaultComboBoxModel model = new DefaultComboBoxModel();
-        clientes = logica.consultarTodosClientes();
-        for (int i = 0; i < clientes.size(); i++) {
-            Cliente get = clientes.get(i);
-            model.addElement(get.getNombre());
-        }
-        clientesC.setModel(model);
-    }
-    
-     private List<Venta> ventas;
-       private void llenarTabla() {
-       
-        if (ventas != null || !ventas.isEmpty()) {
-            DefaultTableModel modeloTabla = (DefaultTableModel) this.tablaVentas.getModel();
-            this.tablaVentas.setRowHeight(30);
-            modeloTabla.setRowCount(0);
-            ventas.forEach(venta -> {
-                Object[] fila = new Object[7];
-                fila[0] = venta.getId().toString();
-                fila[1] = venta.getFecha().get(Calendar.DAY_OF_MONTH)+"/"+venta.getFecha().get(Calendar.MONTH)+"/"+venta.getFecha().get(Calendar.YEAR);
-                fila[2] =  venta.getId().toString(); //venta.getNumTicket();
-                fila[3] = venta.getTotalventa();  
-                fila[4] = venta.getCaja().getId();
-                fila[5] = venta.getCliente().getId();
-                 fila[6] = venta.getCliente().getNombre();
-                modeloTabla.addRow(fila);
-            });
-        }
-
-    }
-    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,16 +43,33 @@ public class ReporteVentaForm extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaVentas = new javax.swing.JTable();
+        tblVenta = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jDateChooserHasta = new com.toedter.calendar.JDateChooser();
+        lblCliente2 = new javax.swing.JLabel();
+        jDateChooserDesde = new com.toedter.calendar.JDateChooser();
+        btnTodas = new javax.swing.JButton();
         clientesC = new javax.swing.JComboBox<>();
         lblCliente = new javax.swing.JLabel();
         btnBuscar = new javax.swing.JButton();
-        btnTodas = new javax.swing.JButton();
+        lblCliente1 = new javax.swing.JLabel();
+        jCheckBox = new javax.swing.JCheckBox();
+        lblCliente4 = new javax.swing.JLabel();
+        txtCodigo = new javax.swing.JTextField();
+        jDateChooserFecha = new com.toedter.calendar.JDateChooser();
+        lblCliente7 = new javax.swing.JLabel();
+        lblCliente5 = new javax.swing.JLabel();
+        lblRectangulo4 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaDetalles = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        panelRound1 = new GUIs.PanelRound();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaVentas = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        lblCliente3 = new javax.swing.JLabel();
+        lblCliente6 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(1000, 778));
@@ -107,61 +81,26 @@ public class ReporteVentaForm extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tablaVentas.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
+        tblVenta.setBackground(new java.awt.Color(255, 255, 255));
+        tblVenta.setPreferredSize(new java.awt.Dimension(1000, 750));
+        tblVenta.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-            },
-            new String [] {
-                "Id", "Fecha", "Num Ticket", "Total Venta", "Id Caja", "Id Cliente", "Nombre Cliente"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
-            };
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Detalles");
+        tblVenta.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 100, -1, -1));
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Reportes Ventas");
+        tblVenta.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 340, -1));
+        tblVenta.add(jDateChooserHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 160, -1));
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        tablaVentas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tablaVentasMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(tablaVentas);
-
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 520, 370));
-
-        clientesC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        clientesC.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clientesCActionPerformed(evt);
-            }
-        });
-        jPanel1.add(clientesC, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 140, 200, -1));
-
-        lblCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        lblCliente.setText("Cliente:");
-        jPanel1.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
-
-        btnBuscar.setBackground(new java.awt.Color(0, 0, 255));
-        btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
-        btnBuscar.setText("Buscar");
-        btnBuscar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 255), new java.awt.Color(0, 153, 255), new java.awt.Color(204, 204, 255), java.awt.Color.white));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 110, 30));
+        lblCliente2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente2.setForeground(new java.awt.Color(0, 0, 0));
+        lblCliente2.setText("Rango Fechas");
+        tblVenta.add(lblCliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, -1, 20));
+        tblVenta.add(jDateChooserDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 160, -1));
 
         btnTodas.setBackground(new java.awt.Color(0, 0, 255));
         btnTodas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -173,7 +112,68 @@ public class ReporteVentaForm extends javax.swing.JFrame {
                 btnTodasActionPerformed(evt);
             }
         });
-        jPanel1.add(btnTodas, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 110, 30));
+        tblVenta.add(btnTodas, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 190, 110, 30));
+
+        clientesC.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        clientesC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ninguno" }));
+        clientesC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientesCActionPerformed(evt);
+            }
+        });
+        tblVenta.add(clientesC, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 200, -1));
+
+        lblCliente.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente.setForeground(new java.awt.Color(0, 0, 0));
+        lblCliente.setText("Fecha:");
+        tblVenta.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, 20));
+
+        btnBuscar.setBackground(new java.awt.Color(0, 0, 255));
+        btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, new java.awt.Color(204, 204, 255), new java.awt.Color(0, 153, 255), new java.awt.Color(204, 204, 255), java.awt.Color.white));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        tblVenta.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 250, 110, 30));
+
+        lblCliente1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente1.setForeground(new java.awt.Color(0, 0, 0));
+        lblCliente1.setText("Cliente:");
+        tblVenta.add(lblCliente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
+
+        jCheckBox.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jCheckBoxStateChanged(evt);
+            }
+        });
+        tblVenta.add(jCheckBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 330, -1, -1));
+
+        lblCliente4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente4.setForeground(new java.awt.Color(0, 0, 0));
+        lblCliente4.setText("Fecha Desde:");
+        tblVenta.add(lblCliente4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, -1, 20));
+
+        txtCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tblVenta.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 200, -1));
+        tblVenta.add(jDateChooserFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, 200, -1));
+
+        lblCliente7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente7.setForeground(new java.awt.Color(0, 0, 0));
+        lblCliente7.setText("Fecha Hasta:");
+        tblVenta.add(lblCliente7, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, -1, 20));
+
+        lblCliente5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente5.setForeground(new java.awt.Color(0, 0, 0));
+        lblCliente5.setText("Codigo Producto:");
+        tblVenta.add(lblCliente5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, 20));
+
+        lblRectangulo4.setBackground(new java.awt.Color(204, 204, 255));
+        lblRectangulo4.setOpaque(true);
+        tblVenta.add(lblRectangulo4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 540, 210));
 
         tablaDetalles.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -203,30 +203,66 @@ public class ReporteVentaForm extends javax.swing.JFrame {
         });
         jScrollPane2.setViewportView(tablaDetalles);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 130, 420, 590));
+        tblVenta.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 150, 420, 530));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("Detalles");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 100, -1, -1));
+        tablaVentas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        panelRound1.setBackground(new java.awt.Color(70, 4, 129));
-        panelRound1.setRoundBottomLeft(50);
-        panelRound1.setRoundBottomRight(50);
-        panelRound1.setRoundTopLeft(50);
-        panelRound1.setRoundTopRight(50);
+            },
+            new String [] {
+                "Id", "Fecha", "Num Ticket", "Total Venta", "Id Caja", "Id Cliente", "Nombre Cliente"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
 
-        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
-        panelRound1.setLayout(panelRound1Layout);
-        panelRound1Layout.setHorizontalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
-        );
-        panelRound1Layout.setVerticalGroup(
-            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 100, Short.MAX_VALUE)
-        );
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        jPanel1.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 1000, -1));
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tablaVentas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaVentasMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaVentas);
+
+        tblVenta.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 540, 270));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Total Venta:");
+        tblVenta.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
+
+        lblCliente3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente3.setForeground(new java.awt.Color(0, 0, 0));
+        lblCliente3.setText("Codigo Producto");
+        tblVenta.add(lblCliente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, 20));
+
+        lblCliente6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblCliente6.setForeground(new java.awt.Color(0, 0, 0));
+        lblCliente6.setText("Codigo Producto:");
+        tblVenta.add(lblCliente6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, 20));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel4.setText("Ventas");
+        tblVenta.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel5.setText("Busqueda");
+        tblVenta.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
+
+        jPanel1.add(tblVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,7 +272,7 @@ public class ReporteVentaForm extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 740, Short.MAX_VALUE)
         );
 
         pack();
@@ -247,98 +283,214 @@ public class ReporteVentaForm extends javax.swing.JFrame {
     }//GEN-LAST:event_clientesCActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-       
-       String cliente= clientesC.getSelectedItem().toString();
-       ventas.clear();
-       ventas=logica.consultarVentas();
-       for (int i = ventas.size() - 1; i >= 0; i--) {
-    Venta venta = ventas.get(i);
-    if (!venta.getCliente().getNombre().equals(cliente)) {
-        ventas.remove(i);
-    }
-}
+        //Busqeuda con filtro
+        Object[] parametros = new Object[5];
+        int indice = clientesC.getSelectedIndex();
+        if (indice == 0) {
+            parametros[0] = null;
+        } else {
+            parametros[0] = clientes.get(indice - 1).getId();
+        }
+        if ("".equals(txtCodigo.getText())) {
+            parametros[1] = null;
+        } else {
+            parametros[1] = txtCodigo.getText();
+        }
 
-       
-          llenarTabla();
-       
-       
+        if (jDateChooserFecha.getDate() == null) {
+            parametros[2] = null;
+        } else {
+            Calendar calendarDesde = Calendar.getInstance();
+            calendarDesde.setTime(jDateChooserFecha.getDate());
+            calendarDesde.set(Calendar.HOUR_OF_DAY, 0);
+            calendarDesde.set(Calendar.MINUTE, 0);
+            calendarDesde.set(Calendar.SECOND, 0);
+            calendarDesde.set(Calendar.MILLISECOND, 0);
+            parametros[2] = calendarDesde.getTime();
+        }
+        if (jDateChooserDesde.getDate() == null) {
+            parametros[3] = null;
+        } else {
+
+            Calendar calendarDesde = Calendar.getInstance();
+            calendarDesde.setTime(jDateChooserDesde.getDate());
+            calendarDesde.set(Calendar.HOUR_OF_DAY, 0);
+            calendarDesde.set(Calendar.MINUTE, 0);
+            calendarDesde.set(Calendar.SECOND, 0);
+            calendarDesde.set(Calendar.MILLISECOND, 0);
+            parametros[3] = calendarDesde.getTime();
+
+        }
+        if (jDateChooserHasta.getDate() == null) {
+            parametros[4] = null;
+        } else {
+            Calendar calendarDesde = Calendar.getInstance();
+            calendarDesde.setTime(jDateChooserHasta.getDate());
+            calendarDesde.set(Calendar.HOUR_OF_DAY, 0);
+            calendarDesde.set(Calendar.MINUTE, 0);
+            calendarDesde.set(Calendar.SECOND, 0);
+            calendarDesde.set(Calendar.MILLISECOND, 0);
+            parametros[4] = calendarDesde.getTime();
+        }
+        int count = 0;
+        for (int i = 0; i < parametros.length; i++) {
+            Object parametro = parametros[i];
+            if (parametro == null) {
+                count++;
+            }
+        }
+        if (count == parametros.length) {
+            ventas = logica.consultarVentas();
+            llenarTabla();
+        } else {
+            ventas = logica.consultarVentasCoincidencias(parametros);
+            llenarTabla();
+        }
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnTodasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTodasActionPerformed
         ventas = logica.consultarVentas();
-         llenarTabla();
-        
+        llenarTabla();
+
     }//GEN-LAST:event_btnTodasActionPerformed
-  private List<DetalleVenta> detalles;
-       private void llenarTabladetalles() {
-       
-        if (detalles != null || !detalles.isEmpty()) {
-            DefaultTableModel modeloTabla = (DefaultTableModel) this.tablaDetalles.getModel();
-            this.tablaDetalles.setRowHeight(30);
-            modeloTabla.setRowCount(0);
-            detalles.forEach(venta -> {
-                Object[] fila = new Object[5];
-                fila[0] = venta.getProducto().getId();
-                fila[1] = venta.getProducto().getNombre();
-                fila[2] = venta.getCantidad();
-                fila[3] = venta.getPrecioVendido();  
-                fila[4] = venta.getVenta().getId();
-               
-                modeloTabla.addRow(fila);
-            });
-        }
 
-    }
-       private void limpiarTablaDetalles() {
-    DefaultTableModel modeloTabla = (DefaultTableModel) this.tablaDetalles.getModel();
-    modeloTabla.setRowCount(0);
-}
 
-       
     private void tablaVentasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaVentasMouseClicked
-   limpiarTablaDetalles();
-        int seleccionado=tablaVentas.rowAtPoint(evt.getPoint());
-        String idVenta=tablaVentas.getValueAt(seleccionado,0).toString();
-      //   List<DetalleVenta> detalleVenta;
-        detalles=logica.consultarTodasDetallesVentas();
-    
-     
-       
-       for (int i = 0; i < detalles.size(); i++) {
-    DetalleVenta detalle = detalles.get(i);
-    if (!detalle.getVenta().getId().equals(idVenta)) {
-        detalles.remove(i);
-    }
-}
-       
-      llenarTabladetalles();
+
+        int filaSeleccionada = tablaVentas.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            limpiarTablaDetalles();
+            venta = ventas.get(filaSeleccionada);
+            llenarTabladetalles(venta.getDetalleVentas());
+        }
 
     }//GEN-LAST:event_tablaVentasMouseClicked
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         setVisible(false);
-      
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
-    /**
-     * @param args the command line arguments
-     */
-    
-   
+    private void jCheckBoxStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jCheckBoxStateChanged
+        if (jCheckBox.isSelected()) {
+            jDateChooserDesde.setEnabled(true);
+            jDateChooserHasta.setEnabled(true);
+            jDateChooserFecha.setEnabled(false);
+        } else {
+            jDateChooserDesde.setEnabled(false);
+            jDateChooserFecha.setEnabled(true);
+            jDateChooserHasta.setEnabled(false);
+        }
+    }//GEN-LAST:event_jCheckBoxStateChanged
+
+    public static ReporteVentaForm getInstance() {
+        if (reporteVenta == null) {
+            reporteVenta = new ReporteVentaForm();
+        }
+        return reporteVenta;
+    }
+
+    public void llenarCBoxClientes() {
+        clientes = new ArrayList<>();
+        DefaultComboBoxModel model = new DefaultComboBoxModel();
+        model.addElement("Ninguno");
+        clientes = logica.consultarTodosClientes();
+        for (int i = 0; i < clientes.size(); i++) {
+            Cliente get = clientes.get(i);
+            model.addElement(get.getNombre());
+        }
+        clientesC.setModel(model);
+    }
+
+    private void llenarTabla() {
+        limpiarTablas();
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tablaVentas.getModel();
+        this.tablaVentas.setRowHeight(30);
+        modeloTabla.setRowCount(0);
+        if (ventas != null) {
+            ventas.forEach(venta -> {
+                Object[] fila = new Object[7];
+                fila[0] = venta.getId();
+                fila[1] = venta.getFecha().toString();
+                fila[2] = venta.getId().toString(); //venta.getNumTicket();
+                fila[3] = venta.getTotalventa();
+                fila[4] = venta.getCaja().getId();
+                fila[5] = venta.getCliente().getId();
+                fila[6] = venta.getCliente().getNombre();
+                modeloTabla.addRow(fila);
+            });
+        } else {
+            JOptionPane.showMessageDialog(null, "No existen coincidencias de ventas.");
+        }
+
+    }
+
+    private void llenarTabladetalles(List<DetalleVenta> detallesVentas) {
+        this.detalles = detallesVentas;
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tablaDetalles.getModel();
+        this.tablaDetalles.setRowHeight(30);
+        modeloTabla.setRowCount(0);
+        detalles.forEach(venta -> {
+            Object[] fila = new Object[5];
+            fila[0] = venta.getProducto().getId();
+            fila[1] = venta.getProducto().getNombre();
+            fila[2] = venta.getCantidad();
+            fila[3] = venta.getPrecioVendido();
+            fila[4] = venta.getVenta().getId();
+
+            modeloTabla.addRow(fila);
+        });
+    }
+
+    private void limpiarTablaDetalles() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tablaDetalles.getModel();
+        modeloTabla.setRowCount(0);
+    }
+
+    public void limpiarTablas() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tablaDetalles.getModel();
+        modeloTabla.setRowCount(0);
+        DefaultTableModel modeloTabla2 = (DefaultTableModel) this.tablaVentas.getModel();
+        modeloTabla2.setRowCount(0);
+        llenarCBoxClientes();
+        this.jDateChooserDesde.setDate(null);
+        this.jDateChooserFecha.setDate(null);
+        this.jDateChooserHasta.setDate(null);
+        this.txtCodigo.setText("");
+        this.jCheckBox.setSelected(false);
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnTodas;
     private javax.swing.JComboBox<String> clientesC;
+    private javax.swing.JCheckBox jCheckBox;
+    private com.toedter.calendar.JDateChooser jDateChooserDesde;
+    private com.toedter.calendar.JDateChooser jDateChooserFecha;
+    private com.toedter.calendar.JDateChooser jDateChooserHasta;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCliente;
-    private GUIs.PanelRound panelRound1;
+    private javax.swing.JLabel lblCliente1;
+    private javax.swing.JLabel lblCliente2;
+    private javax.swing.JLabel lblCliente3;
+    private javax.swing.JLabel lblCliente4;
+    private javax.swing.JLabel lblCliente5;
+    private javax.swing.JLabel lblCliente6;
+    private javax.swing.JLabel lblCliente7;
+    private javax.swing.JLabel lblRectangulo4;
     private javax.swing.JTable tablaDetalles;
     private javax.swing.JTable tablaVentas;
+    private javax.swing.JPanel tblVenta;
+    private javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
 }

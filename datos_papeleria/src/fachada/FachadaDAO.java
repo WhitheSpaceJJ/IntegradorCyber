@@ -304,6 +304,20 @@ public class FachadaDAO implements IFachadaDAO {
         }
     }
 
+    public List<Venta> consultarVentasCoincidencias(Object[] parametros) {
+        try {
+            IVentasDAO ventasDAO = fabrica.getVentasDAO();
+                        IProductosDAO productosDAO = fabrica.getProductosDAO();
+            if (parametros[1] != null) {
+                long indice = Integer.parseInt((String) parametros[1]);
+                parametros[1] = productosDAO.consultarCodigo(indice);
+            }
+            return ventasDAO.consultarVentasCoincidencias(parametros);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     @Override
     public List<Venta> buscarVentasEntreFechasPorCliente(Calendar inicio, Calendar fin, Cliente cliente) {
         try {

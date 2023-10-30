@@ -8,7 +8,7 @@ public interface IFachadaControl {
     public Usuario obtenerSesion(Usuario usuario) 
             ;
     public boolean iniciarSesion(Usuario usuario);
-
+List<Venta> consultarVentasCoincidencias(Object[] parametros);
     public boolean agregarCaja(Caja caja);
  Producto consultarCodigo(long codigo);
     public boolean actualizarCaja(Caja caja);

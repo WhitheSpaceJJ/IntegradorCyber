@@ -8,8 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
@@ -23,6 +25,14 @@ import javax.persistence.TemporalType;
 @Table(name = "ventas")
 public class Venta implements Serializable {
 
+    @Basic(optional = false)
+    @Temporal(TemporalType.DATE)
+    private Date fecha;
+    
+    @Basic(optional = false)
+    @Temporal(TemporalType.TIME)
+    private Date hora;
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -32,10 +42,6 @@ public class Venta implements Serializable {
 //    
 //    @Column (name = "numTicket", nullable = false)
 //    private Integer numTicket;
-
-    @Column(name = "fecha", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Calendar fecha;
 
     @Column(name = "totalventa", nullable = false)
     private float totalventa;
@@ -63,7 +69,7 @@ public class Venta implements Serializable {
             
             Calendar fecha, float totalventa, Cliente cliente, Caja caja) {
 //        this.numTicket = numTicket;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalventa = totalventa;
         this.cliente = cliente;
         this.caja = caja;
@@ -75,7 +81,7 @@ public class Venta implements Serializable {
             
             Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
 //        this.numTicket = numTicket;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalventa = totalventa;
         this.cliente = cliente;
         this.detalleVentas = detalleVentas;
@@ -87,13 +93,39 @@ public class Venta implements Serializable {
             Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja) {
         this.id = id;
 //        this.numTicket = numTicket;
-        this.fecha = fecha;
+        this.fecha = fecha.getTime();
         this.totalventa = totalventa;
         this.cliente = cliente;
         this.detalleVentas = detalleVentas;
         this.caja = caja;
     }
 
+public Venta(Calendar fecha, float totalventa, Cliente cliente, Caja caja , Calendar hora) {
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalventa = totalventa;
+    this.cliente = cliente;
+    this.caja = caja;
+}
+
+public Venta(Calendar fecha,  float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja, Calendar hora) {
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalventa = totalventa;
+    this.cliente = cliente;
+    this.detalleVentas = detalleVentas;
+    this.caja = caja;
+}
+
+public Venta(Integer id, Calendar fecha, float totalventa, Cliente cliente, List<DetalleVenta> detalleVentas, Caja caja, Calendar hora) {
+    this.id = id;
+    this.fecha = fecha.getTime();
+    this.hora = hora.getTime();
+    this.totalventa = totalventa;
+    this.cliente = cliente;
+    this.detalleVentas = detalleVentas;
+    this.caja = caja;
+}
 
     public Integer getId() {
         return id;
@@ -103,21 +135,6 @@ public class Venta implements Serializable {
         this.id = id;
     }
 
-//    public Integer getNumTicket() {
-//        return numTicket;
-//    }
-//
-//    public void setNumTicket(Integer numTicket) {
-//        this.numTicket = numTicket;
-//    }
-
-    public Calendar getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(Calendar fecha) {
-        this.fecha = fecha;
-    }
 
     public float getTotalventa() {
         return totalventa;
@@ -179,6 +196,22 @@ public class Venta implements Serializable {
 //                ", numTicket=" + numTicket +
                 
                 ", fecha=" + fecha + ", totalventa=" + totalventa + ", cliente=" + cliente + ", detalleVentas=" + detalleVentas + ", caja=" + caja + '}';
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public Date getHora() {
+        return hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
     }
 
 

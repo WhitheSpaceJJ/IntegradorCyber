@@ -18,6 +18,6 @@ public interface IVentasDAO {
     List<Venta> buscarEntre(Calendar inicio , Calendar fin);   
     
     List<Venta> buscarEntreCliente(Calendar inicio, Calendar fin, Cliente cliente);
-    
+         List<Venta> consultarVentasCoincidencias(Object[] parametros) ;
     
 }

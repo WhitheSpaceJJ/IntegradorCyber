@@ -49,6 +49,16 @@ public class FachadaControl implements IFachadaControl {
     }
 
     @Override
+    public List<Venta> consultarVentasCoincidencias(Object[] parametros) {
+        try {
+            IControlVentas ventasDAO = fabrica.getVentasDAO();
+            return ventasDAO.consultarVentasCoincidencias(parametros);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
     public List<Venta> buscarVentasEntreFechasPorCliente(Calendar inicio, Calendar fin, Cliente cliente) {
         try {
             IControlVentas ventasDAO = fabrica.getVentasDAO();
@@ -167,15 +177,17 @@ public class FachadaControl implements IFachadaControl {
             return null;
         }
     }
+
     @Override
-    public   Producto consultarCodigo(long codigo){
-       try {
+    public Producto consultarCodigo(long codigo) {
+        try {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.consultarCodigo(codigo);
         } catch (Exception e) {
             return null;
         }
-}
+    }
+
     @Override
     public Producto consultarProducto(int id) {
         try {
@@ -238,12 +250,14 @@ public class FachadaControl implements IFachadaControl {
 
     @Override
     public List<Producto> consultarProductosCoincidencias(Object[] parametros) {
-    try {
+        try {
             IControlProductos productosDAO = fabrica.getProductosDAO();
             return productosDAO.consultarProductosCoincidencias(parametros);
         } catch (Exception e) {
             return null;
-        }    }
+        }
+    }
+
     @Override
     public boolean agregarUsuario(Usuario usuario) {
         try {
@@ -644,6 +658,5 @@ public class FachadaControl implements IFachadaControl {
             return null;
         }
     }
-
 
 }

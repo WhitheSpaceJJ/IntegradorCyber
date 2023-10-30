@@ -161,48 +161,47 @@ public class ProductosDAO implements IProductosDAO {
 
     }
 
-   @Override
-public List<Producto> consultarProductosCoincidencias(Object[] parametros) {
-    try {
-        EntityManager em = this.conexion.crearConexion();
-        CriteriaBuilder builder = em.getCriteriaBuilder();
-        CriteriaQuery<Producto> criteria = builder.createQuery(Producto.class);
-        Root<Producto> root = criteria.from(Producto.class);
+    @Override
+    public List<Producto> consultarProductosCoincidencias(Object[] parametros) {
+        try {
+            EntityManager em = this.conexion.crearConexion();
+            CriteriaBuilder builder = em.getCriteriaBuilder();
+            CriteriaQuery<Producto> criteria = builder.createQuery(Producto.class);
+            Root<Producto> root = criteria.from(Producto.class);
 
-        criteria.select(root);
+            criteria.select(root);
 
-        // Parámetros: nombre, descripcion, marca, idCategoria.
-        String nombre = (String) parametros[0];
-        String descripcion = (String) parametros[1];
-        String marca = (String) parametros[2];
-        Integer idCategoria = (Integer) parametros[3];
+            // Parámetros: nombre, descripcion, marca, idCategoria.
+            String nombre = (String) parametros[0];
+            String descripcion = (String) parametros[1];
+            String marca = (String) parametros[2];
+            Integer idCategoria = (Integer) parametros[3];
 
-        Predicate conjuntoCondiciones = builder.disjunction(); // Cambiar a disjunction para OR
+            Predicate conjuntoCondiciones = builder.disjunction(); // Cambiar a disjunction para OR
 
-        if (nombre != null && !nombre.isEmpty()) {
-            conjuntoCondiciones = builder.or(conjuntoCondiciones, builder.like(root.get("nombre"), "%" + nombre + "%"));
+            if (nombre != null && !nombre.isEmpty()) {
+                conjuntoCondiciones = builder.or(conjuntoCondiciones, builder.like(root.get("nombre"), "%" + nombre + "%"));
+            }
+            if (descripcion != null && !descripcion.isEmpty()) {
+                conjuntoCondiciones = builder.or(conjuntoCondiciones, builder.like(root.get("descripcion"), "%" + descripcion + "%"));
+            }
+            if (marca != null && !marca.isEmpty()) {
+                conjuntoCondiciones = builder.or(conjuntoCondiciones, builder.like(root.get("marca"), "%" + marca + "%"));
+            }
+            if (idCategoria != null) {
+                conjuntoCondiciones = builder.or(conjuntoCondiciones, builder.equal(root.get("categoria").get("id"), idCategoria));
+            }
+
+            criteria.where(conjuntoCondiciones);
+
+            TypedQuery<Producto> query = em.createQuery(criteria);
+
+            return query.getResultList();
+        } catch (IllegalStateException ise) {
+            System.err.println("No se pudo consultar los productos por coincidencias");
+            ise.printStackTrace();
+            return null;
         }
-        if (descripcion != null && !descripcion.isEmpty()) {
-            conjuntoCondiciones = builder.or(conjuntoCondiciones, builder.like(root.get("descripcion"), "%" + descripcion + "%"));
-        }
-        if (marca != null && !marca.isEmpty()) {
-            conjuntoCondiciones = builder.or(conjuntoCondiciones, builder.like(root.get("marca"), "%" + marca + "%"));
-        }
-        if (idCategoria != null) {
-            conjuntoCondiciones = builder.or(conjuntoCondiciones, builder.equal(root.get("categoria").get("id"), idCategoria));
-        }
-
-        criteria.where(conjuntoCondiciones);
-
-        TypedQuery<Producto> query = em.createQuery(criteria);
-
-        return query.getResultList();
-    } catch (IllegalStateException ise) {
-        System.err.println("No se pudo consultar los productos por coincidencias");
-        ise.printStackTrace();
-        return null;
     }
-}
-
 
 }

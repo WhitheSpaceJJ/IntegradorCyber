@@ -374,7 +374,7 @@ public class AdmiClienteForm extends javax.swing.JFrame {
 
     public  void llenarTabla() {
         clientes = this.logica.consultarTodosClientes();
-        if (clientes != null || !clientes.isEmpty()) {
+        if (clientes != null ) {
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tbClientes.getModel();
             this.tbClientes.setRowHeight(30);
             modeloTabla.setRowCount(0);

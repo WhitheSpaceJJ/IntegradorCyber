@@ -639,14 +639,13 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        /*
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                ReporteVentaForm.instanciaCerrarCaja().setVisible(true);
+                                ReporteVentaForm.getInstance().limpiarTablas();
+                ReporteVentaForm.getInstance().setVisible(true);
             }
         });
-         */
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jButtonCatehoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCatehoriasActionPerformed
@@ -713,7 +712,7 @@ public class PrincipalForm extends javax.swing.JFrame {
                     this.setVisible(false);
                     VentasForm ventas = (VentasForm) ventasForms.get(filaSeleccionada);
                     ventas.llenarCBoxClientes();
-                           ventas.fechaVenta();
+                    ventas.fechaVenta();
                     ventas.setVisible(true);
                     ventas.establecerCaja(caja);
                 } else {
@@ -724,7 +723,6 @@ public class PrincipalForm extends javax.swing.JFrame {
         ventasList.clearSelection();
 
     }//GEN-LAST:event_ventasListMouseClicked
-
 
     public void eliminarVenta(VentasForm venta) {
         ventasForms.remove(ventasForms.indexOf(venta));

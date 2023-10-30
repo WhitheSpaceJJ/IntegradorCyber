@@ -43,7 +43,9 @@ public class ControlVentas implements IControlVentas {
     public Venta consultar(int id) {
         return this.fachadaDAO.consultarVenta(id);
     }
-
+    public List<Venta> consultarVentasCoincidencias(Object[] parametros){
+                return this.fachadaDAO.consultarVentasCoincidencias(parametros);
+    }
     @Override
     public List<Venta> buscarEntre(Calendar inicio, Calendar fin) {
         return this.fachadaDAO.buscarVentasEntreFechas(inicio, fin);

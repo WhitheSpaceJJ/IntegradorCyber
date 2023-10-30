@@ -12,7 +12,7 @@ public interface IFachadaDAO {
     List<Producto> consultarProductosCoincidencias(Object[] parametros);
 
     public boolean actualizarCaja(Caja caja);
-
+      List<Venta> consultarVentasCoincidencias(Object[] parametros) ;
     public boolean eliminarCaja(int id);
 
     public Caja consultarCaja(int id);

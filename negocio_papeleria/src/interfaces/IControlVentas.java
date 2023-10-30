@@ -17,6 +17,6 @@ public interface IControlVentas {
     List<Venta> buscarEntre(Calendar inicio , Calendar fin);   
     
     List<Venta> buscarEntreCliente(Calendar inicio, Calendar fin, Cliente cliente);
-    
+        public List<Venta> consultarVentasCoincidencias(Object[] parametros);
     
 }

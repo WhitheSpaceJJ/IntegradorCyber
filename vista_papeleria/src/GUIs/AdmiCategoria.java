@@ -293,7 +293,7 @@ public class AdmiCategoria extends javax.swing.JFrame {
 
     public void llenarTabla() {
         categorias = this.logica.consultarTodasCategorias();
-        if (categorias != null || !categorias.isEmpty()) {
+        if (categorias != null) {
             DefaultTableModel modeloTabla = (DefaultTableModel) this.tblCategorias.getModel();
             this.tblCategorias.setRowHeight(30);
             modeloTabla.setRowCount(0);
