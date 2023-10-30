@@ -24,7 +24,7 @@ public class NewMain {
     public static void main(String[] args) {
        Object[] parametros = new Object[5];
         parametros[0] = null;
-        parametros[1] =  null;
+        parametros[1] =  "1212";
 
         // Crear una instancia de Calendar y establecer la fecha y hora
         Calendar calendar = Calendar.getInstance();

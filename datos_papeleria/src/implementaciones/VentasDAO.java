@@ -142,7 +142,6 @@ public class VentasDAO implements IVentasDAO {
             List<Venta> ventas2 = new ArrayList<>();
 
             if (parametros[1] != null && ventas != null) {
-                System.out.println("Venta con objetos");
                 Producto producto = (Producto) parametros[1];
                 for (int i = 0; i < ventas.size(); i++) {
                     Venta get = ventas.get(i);
@@ -161,27 +160,7 @@ public class VentasDAO implements IVentasDAO {
                 return ventas2;
 
             }
-            if (parametros[1] != null && ventas == null) {
-                System.out.println("Venta sin objetos");
-                ventas = consultarTodos();
-                Producto producto = (Producto) parametros[1];
-                for (int i = 0; i < ventas.size(); i++) {
-                    Venta get = ventas.get(i);
-                    List<DetalleVenta> detalles = get.getDetalleVentas();
-                    for (int j = 0; j < detalles.size(); j++) {
-                        DetalleVenta get1 = detalles.get(j);
-                        if (get1.getProducto().getId() == producto.getId()) {
-                            ventas2.add(get);
-                            break;
-                        }
-                    }
-                }
-                if (ventas2.isEmpty()) {
-                    return null;
-                }
-                return ventas2;
-
-            }
+       
             return ventas;
         } catch (IllegalStateException ex) {
             System.err.println("No se pudieron consultar ventas con coincidencias");
