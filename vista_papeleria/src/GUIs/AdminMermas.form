@@ -382,6 +382,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDisponibilidad">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
@@ -394,6 +395,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtNombre">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
@@ -406,6 +408,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtCategoria">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
@@ -435,6 +438,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtDescripcion">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
@@ -447,6 +451,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtTotalProducto">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
@@ -462,6 +467,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtImporte">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
@@ -596,6 +602,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtTotalMerma">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
             </Property>
@@ -650,7 +657,11 @@
                     <Column editable="false" title="Total" type="java.lang.Double"/>
                   </Table>
                 </Property>
+                <Property name="toolTipText" type="java.lang.String" value="1 click edtar, 2 click remover"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblProductos1MouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

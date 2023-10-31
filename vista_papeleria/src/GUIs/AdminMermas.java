@@ -4,6 +4,7 @@
  */
 package GUIs;
 
+import entidades.Caja;
 import entidades.Cliente;
 import entidades.DetalleMerma;
 import entidades.Merma;
@@ -19,44 +20,25 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author josej
- */
-public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
+public class AdminMermas extends javax.swing.JFrame implements IBusqueda {
+    //  private List<DetalleMerma> detallesMermas;
 
+    private Usuario usuario;
+    private static AdminMermas instance;
+    private Caja caja;
+    private Producto articuloBuscado;
+    private IFachadaControl logica;
+    private BusquedaArticuloForm busqueda;
+    private List<DetalleMerma> mermas;
+    private List<Producto> productos;
 
-  private IFachadaControl logica;
-
-    /**
-     * Creates new form AdminMermas
-     */
     private AdminMermas() {
         initComponents();
-     //   this.detallesMermas = new ArrayList<>();
-       // this.logica = new FachadaControl();
-     //   this.listaMermas = new ArrayList<>();
-      //  bloquearCampos();
-    }
-   /*
-    private Usuario usuario;
-
-    public void establecerSesion(Usuario usuario) {
-        this.usuario = usuario;
+        this.logica = new FachadaControl();
+        this.productos = new ArrayList<>();
+        this.mermas = new ArrayList<>();
     }
 
-*/
-        @Override
-    public void cargarBusqueda(Producto producto) {}
-        private static AdminMermas instance;
-
-    public static AdminMermas getInstance() {
-
-        if (instance == null) {
-            instance = new AdminMermas();
-        }
-        return instance;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -270,12 +252,15 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
         lblCliente8.setText("Código Artículo: ");
         tblVenta.add(lblCliente8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, -1, -1));
 
+        txtDisponibilidad.setEditable(false);
         txtDisponibilidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblVenta.add(txtDisponibilidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 170, 50, -1));
 
+        txtNombre.setEditable(false);
         txtNombre.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblVenta.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 170, 280, -1));
 
+        txtCategoria.setEditable(false);
         txtCategoria.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblVenta.add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 140, -1));
 
@@ -295,9 +280,11 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
         });
         tblVenta.add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 170, 180, -1));
 
+        txtDescripcion.setEditable(false);
         txtDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblVenta.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 210, 440, -1));
 
+        txtTotalProducto.setEditable(false);
         txtTotalProducto.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtTotalProducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -306,6 +293,7 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
         });
         tblVenta.add(txtTotalProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 260, 80, -1));
 
+        txtImporte.setEditable(false);
         txtImporte.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         txtImporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -365,6 +353,7 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
         jLabel1.setText("Producto");
         tblVenta.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 120, 216, -1));
 
+        txtTotalMerma.setEditable(false);
         txtTotalMerma.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblVenta.add(txtTotalMerma, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 580, 230, -1));
 
@@ -397,6 +386,12 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblProductos1.setToolTipText("1 click edtar, 2 click remover");
+        tblProductos1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductos1MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tblProductos1);
@@ -450,79 +445,34 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
     private void txtFechaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFechaActionPerformed
 
     }//GEN-LAST:event_txtFechaActionPerformed
-/*
-    public void bloquearCampos() {
-        this.txtNombre.setEnabled(false);
-        this.txtDisponibilidad.setEnabled(false);
-        this.txtDescripcion.setEnabled(false);
-        this.txtCategoria.setEnabled(false);
-        this.txtImporte.setEnabled(false);
-        this.txtTotalMerma.setEnabled(false);
-        this.txtTotalProducto.setEnabled(false);
-    }
-    private Producto articuloBuscado;
-    private List<DetalleMerma> listaMermas;
 
-    public void limpiarCamposTodo() {
-        this.txtNombre.setText("");
-        this.txtDisponibilidad.setText("");
-        this.txtDescripcion.setText("");
-        this.txtCategoria.setText("");
-        this.txtImporte.setText("");
-        this.txtTotalProducto.setText("");
-        this.txtCodigoArticulo.setText("");
-        this.txtCantidad.setText("");
-        this.txtMotivo.setText("");
-    }
-
-    public void cargarCampos(Producto productoCargado) {
-
-        this.txtNombre.setText(productoCargado.getNombre() + "");
-        this.txtDisponibilidad.setText("" + productoCargado.getStock());
-        this.txtDescripcion.setText("" + productoCargado.getDescripcion());
-        this.txtCategoria.setText("" + productoCargado.getCategoria().getNombre());
-        this.txtImporte.setText("" + productoCargado.getPrecio());
-        this.txtTotalProducto.setText("");
-        this.txtCantidad.setText("");
-    }
-    private List<DetalleMerma> detallesMermas;
-
-    public void agregarArtBuscado(Producto productoS) {
-        articuloBuscado = productoS;
-        cargarCampos(articuloBuscado);
-    }
-
-*/
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
-      /*
         if (txtCodigoArticulo.getText().equals("")) {
-            this.setVisible(false);
-            java.awt.EventQueue.invokeLater(() -> {
-            //    BusquedaArticuloForm.getInstance().setVisible(true);
-              //  BusquedaArticuloForm.getInstance().resetBusquedas();
-              //  BusquedaArticuloForm.getInstance().establecerBuscador(1);
-            });
-
+            if (busqueda == null) {
+                busqueda = new BusquedaArticuloForm(this);
+            }
+            establecerVisibilidad(false);
+            busqueda.resetBusquedas();
+            busqueda.llenarCategorias();
+            busqueda.setVisible(true);
         } else {
             try {
-                int idProducto = Integer.parseInt(txtCodigoArticulo.getText());
-                articuloBuscado = logica.consultarProducto(idProducto);
+                long idProducto = Long.parseLong(txtCodigoArticulo.getText());
+                articuloBuscado = logica.consultarCodigo(idProducto);
                 if (articuloBuscado == null) {
-                    JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Merma", JOptionPane.ERROR_MESSAGE);
+                    limpiarCamposTodo();
                 } else {
-                    articuloBuscado = logica.consultarProducto(idProducto);
-                    if (articuloBuscado != null) {
-                        cargarCampos(articuloBuscado);
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No se encontraron coincidencias", "Venta", JOptionPane.ERROR_MESSAGE);
-                    }
+                    cargarBusqueda(articuloBuscado);
                 }
+
             } catch (HeadlessException | NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Para realizar una busqueda directa con el id se requiere que ingrese solo digitos(12,1,2)", "Venta", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Para realizar una busqueda directa con el codigo se requiere que ingrese solo digitos(12,1,2)", "Merma", JOptionPane.ERROR_MESSAGE);
             }
         }
-*/
+
+
     }//GEN-LAST:event_btnBuscarProductoActionPerformed
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
@@ -570,89 +520,82 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
 
 
     private void txtImporteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImporteKeyTyped
-
-//        adminitirFlotante(evt);
+//    adminitirFlotante(evt);
     }//GEN-LAST:event_txtImporteKeyTyped
 
     private void txtCodigoArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoArticuloActionPerformed
 
     }//GEN-LAST:event_txtCodigoArticuloActionPerformed
-    
-    /*
-    private void actualizarPrecioTotal() {
-        float suma = 0;
-        for (int i = 0; i < detallesMermas.size(); i++) {
-            DetalleMerma get = detallesMermas.get(i);
-            suma = suma + get.getImporte();
-        }
-        float precio = suma;
-        this.txtTotalMerma.setText(precio + "");
-    }
-*/
+
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         int indice = tblProductos1.getSelectedRow();
         if (indice != -1) {
-     //       detallesMermas.remove(indice);
-       //     cargarTabla();
-         //   actualizarPrecioTotal();
+            mermas.remove(indice);
+            productos.remove(indice);
+            cargarTabla();
+            actualizarPrecioTotal();
         } else {
             JOptionPane.showMessageDialog(null, "Selecciona un artículo, para eliminarlo der la lista", "Eliminacion articulo", JOptionPane.ERROR_MESSAGE);
         }
+
+
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-      /*
-        String cantidad = txtCantidad.getText();
-        if (!cantidad.equals("") && cantidad.matches("^[1-9]\\d{0,8}$")) {
-            int cantidadInt = Integer.parseInt(cantidad);
-            if (cantidadInt >= 1 && cantidadInt <= 9999999) {
-                DetalleMerma detalleMerma = new DetalleMerma();
-                int cantidadOficial = Integer.parseInt(txtCantidad.getText());
-                float totalProductoOficial = Float.parseFloat(txtTotalProducto.getText());
-                String motivo = this.txtMotivo.getText();
-                detalleMerma.setCantidad(cantidadOficial);
-                detalleMerma.setCosto(articuloBuscado.getCosto());
-                detalleMerma.setImporte(totalProductoOficial);
-                detalleMerma.setProducto(articuloBuscado);
-                detalleMerma.setMotivo(motivo);
-                if (detallesMermas.isEmpty()) {
-                    this.txtTotalMerma.setText(totalProductoOficial + "");
-                } else {
-                    try {
-                        Double totalMerma
-                                = Double.valueOf(this.txtTotalMerma.getText());
-                        this.txtTotalMerma.setText((totalMerma + totalProductoOficial) + "");
-                    } catch (Exception e) {
-                        System.out.println("Error; " + e.getMessage());
-                    }
-                }
-                detallesMermas.add(detalleMerma);
-                cargarTabla();
-                limpiarCamposTodo();
-            } else {
-                JOptionPane.showMessageDialog(null, "", "La cantidad está fuera del rango permitido", JOptionPane.ERROR_MESSAGE);
-            }
+
+        //Agregar Excepciondes de productos como por asi decirlo Dulcer Variados
+        if (articuloBuscado == null) {
+            JOptionPane.showMessageDialog(null, "No ha buscado o seleccionado producto");
         } else {
-            JOptionPane.showMessageDialog(null, "", "Mermas", JOptionPane.ERROR_MESSAGE);
+            if (validarDatos()) {
+                return;
+            }
+
+            int indice = productos.indexOf(articuloBuscado);
+            if ((indice == -1)) {
+                int cantidad = Integer.parseInt(txtCantidad.getText());
+                String importe = txtImporte.getText();
+                if (!importe.equals("")) {
+                    float total = Float.parseFloat(importe) * Integer.parseInt(txtCantidad.getText());
+                    txtTotalProducto.setText(total + "");
+                }
+                float totalProducto = Float.parseFloat(txtTotalProducto.getText());
+                if ((cantidad) > articuloBuscado.getStock()) {
+                    String mensaje = "Stock Producto: " + articuloBuscado.getStock();
+                    JOptionPane.showMessageDialog(null, mensaje, "Excede el stock", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    DetalleMerma dv = new DetalleMerma();
+                    dv.setCantidad(cantidad);
+                    dv.setImporte(totalProducto);
+                    dv.setCosto(Float.parseFloat(txtImporte.getText()));
+                    dv.setProducto(articuloBuscado);
+                    dv.setMotivo(txtMotivo.getText());
+                    mermas.add(dv);
+                    productos.add(articuloBuscado);
+                    actualizarPrecioTotal();
+                    cargarTabla();
+                    limpiarCamposTodo();
+                }
+            } else {
+                int cantidad = Integer.parseInt(txtCantidad.getText());
+                float totalProducto = Float.parseFloat(txtTotalProducto.getText());
+                if ((cantidad) > articuloBuscado.getStock()) {
+                    int restante = (int) (articuloBuscado.getStock() - mermas.get(indice).getCantidad());
+                    String mensaje = "Stock Producto: " + articuloBuscado.getStock() + "\nCantidad actual agregada: " + mermas.get(indice).getCantidad() + "\nRestante: " + restante;
+                    JOptionPane.showMessageDialog(null, mensaje, "Excede el stock", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    mermas.get(indice).setCantidad(cantidad);
+                    mermas.get(indice).setMotivo(txtMotivo.getText());
+                    mermas.get(indice).setImporte(totalProducto);
+                    actualizarPrecioTotal();
+                    cargarTabla();
+                    limpiarCamposTodo();
+                }
+            }
         }
-*/
+
     }//GEN-LAST:event_btnAgregarActionPerformed
-/*
-    public void cargarTabla() {
-       
-        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos1.getModel();
-        modeloTabla.setRowCount(0);
-        detallesMermas.forEach(merma -> {
-            Object[] fila = new Object[5];
-            fila[0] = merma.getProducto().getNombre();
-            fila[1] = merma.getMotivo();
-            fila[2] = merma.getCantidad();
-            fila[3] = merma.getProducto().getPrecio();
-            fila[4] = merma.getImporte();
-            modeloTabla.addRow(fila);
-        });
-    }
-*/
+
     private void txtTotalCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTotalCobrarActionPerformed
 
     }//GEN-LAST:event_txtTotalCobrarActionPerformed
@@ -662,38 +605,175 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
     }//GEN-LAST:event_clientesCActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        // TODO add your handling code here:
         setVisible(false);
         dispose();
         PrincipalForm.getInstance().setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void btnRegistrarMermasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMermasActionPerformed
-/*
-        if (detallesMermas.size() > 0) {
+
+        if (!mermas.isEmpty()) {
+
             Merma merma = new Merma();
             Calendar fecha = Calendar.getInstance();
             Float totalVenta = Float.valueOf(this.txtTotalMerma.getText());
-            Usuario usuario2 = this.usuario;
-            merma.setDetalleMermas(detallesMermas);
+            merma.setDetalleMermas(mermas);
             merma.setFechaMerma(fecha);
-            merma.setUsuario(usuario2);
+            merma.setUsuario(this.usuario);
             merma.setTotalventa(totalVenta);
-            boolean registroExitoso = logica.agregar(merma, detallesMermas);
+            boolean registroExitoso = logica.agregar(merma, mermas);
             if (registroExitoso) {
-                JOptionPane.showMessageDialog(null, "El registro de las mermas fue realizado exitosamente");
-                limpiarCamposTodo();
-                this.listaMermas.clear();
+                 limpiarCamposTodo();
+                this.mermas=new ArrayList<>();
+                this.productos=new ArrayList<>();
                 this.txtTotalMerma.setText("");
                 cargarTabla();
+                JOptionPane.showMessageDialog(null, "El registro de las mermas fue realizado exitosamente");
+               
             } else {
                 JOptionPane.showMessageDialog(null, "El registro de las mermas no fue realizado exitosamente");
             }
         } else {
             JOptionPane.showMessageDialog(null, "No ha agregado productos");
         }
-*/
+
+
     }//GEN-LAST:event_btnRegistrarMermasActionPerformed
+
+    private void tblProductos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductos1MouseClicked
+        // TODO add your handling code here:
+        if (evt.getClickCount() == 1) {
+            int indice = tblProductos1.getSelectedRow();
+            if (indice != -1) {
+                cargarBusqueda(productos.get(indice));
+            }
+        }
+        if (evt.getClickCount() == 2) {
+            int indice = tblProductos1.getSelectedRow();
+            if (indice != -1) {
+                mermas.remove(indice);
+                productos.remove(indice);
+                cargarTabla();
+                actualizarPrecioTotal();
+                limpiarCamposTodo();
+            }
+        }
+
+
+    }//GEN-LAST:event_tblProductos1MouseClicked
+    public boolean validarDatos() {
+        String regexNumeros = "\\d+";
+
+        if (!txtCantidad.getText().matches(regexNumeros) || Integer.parseInt(txtCantidad.getText()) <= 0 || Integer.parseInt(txtCantidad.getText()) > 999999999) {
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese un numero entero mayor a 0 y no mayor a 999999999, en la cantidad a comprar");
+            return true;
+        }
+        if ("".equals(txtMotivo.getText())) {
+            JOptionPane.showMessageDialog(null, "El motivo no puede estar vacio.");
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void establecerVisibilidad(boolean operacion) {
+        setVisible(operacion);
+    }
+
+    /*
+
+     */
+ /*
+
+
+     */
+    public void cargarTabla() {
+        DefaultTableModel modeloTabla = (DefaultTableModel) this.tblProductos1.getModel();
+        modeloTabla.setRowCount(0);
+        for (int i = 0; i < mermas.size(); i++) {
+            DetalleMerma merma = mermas.get(i);
+            Object[] fila = new Object[5];
+            fila[0] = merma.getProducto().getNombre();
+            fila[1] = merma.getMotivo();
+            fila[2] = merma.getCantidad();
+            fila[3] = merma.getProducto().getPrecio();
+            fila[4] = merma.getImporte();
+            modeloTabla.addRow(fila);
+        }
+    }
+
+    public void establecerSesion(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public void establecerCaja(Caja cajaAbierta) {
+        this.caja = cajaAbierta;
+    }
+
+    @Override
+    public void cargarBusqueda(Producto producto) {
+        //Agregar Excepciondes de productos como por asi decirlo Dulcer Variados
+        articuloBuscado = producto;
+        busqueda.resetBusquedas();
+        int indice = productos.indexOf(articuloBuscado);
+        if ((indice == -1)) {
+            txtCodigoArticulo.setText(articuloBuscado.getCodigo() + "");
+            txtNombre.setText(articuloBuscado.getNombre());
+            txtDisponibilidad.setText(articuloBuscado.getStock() + "");
+            txtDescripcion.setText(articuloBuscado.getDescripcion());
+            txtCategoria.setText(articuloBuscado.getCategoria().getNombre());
+            txtImporte.setText(articuloBuscado.getPrecio() + "");
+            txtTotalProducto.setText("");
+            txtCantidad.setText("1");
+        } else {
+            cargarDetalleMerma(mermas.get(indice));
+        }
+    }
+
+    public void cargarDetalleMerma(DetalleMerma merma) {
+        Producto producto = merma.getProducto();
+        txtCodigoArticulo.setText(producto.getCodigo() + "");
+        txtDescripcion.setText(producto.getDescripcion());
+        txtCategoria.setText(producto.getCategoria().getNombre());
+        txtDisponibilidad.setText(producto.getStock() + "");
+        txtImporte.setText(producto.getPrecio() + "");
+        txtNombre.setText(producto.getNombre());
+        txtTotalProducto.setText(merma.getImporte() + "");
+        txtCantidad.setText(merma.getCantidad() + "");
+    }
+
+    public static AdminMermas getInstance() {
+
+        if (instance == null) {
+            instance = new AdminMermas();
+        }
+        return instance;
+    }
+
+    public void limpiarCamposTodo() {
+        this.txtNombre.setText("");
+        this.txtDisponibilidad.setText("");
+        this.txtDescripcion.setText("");
+        this.txtCategoria.setText("");
+        this.txtImporte.setText("");
+        this.txtTotalProducto.setText("");
+        this.txtCodigoArticulo.setText("");
+        this.txtCantidad.setText("");
+        this.txtMotivo.setText("");
+        articuloBuscado = null;
+
+    }
+
+    private void actualizarPrecioTotal() {
+        float suma = 0;
+        for (int i = 0; i < mermas.size(); i++) {
+            DetalleMerma get = mermas.get(i);
+            suma = suma + get.getImporte();
+        }
+        float precio = suma;
+        this.txtTotalMerma.setText(precio + "");
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
@@ -748,8 +828,4 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda{
     private javax.swing.JTextField txtTotalProducto;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void establecerVisibilidad(boolean operacion) {
-        setVisible(operacion);
-    }
 }

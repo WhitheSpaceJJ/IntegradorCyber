@@ -379,12 +379,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-     @Override
-    public void establecerVisibilidad(boolean operacion) {
-        setVisible(operacion);
-        fechaVenta();
-
-    }
+ 
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         if (txtCodigoArticulo.getText().equals("")) {
@@ -523,7 +518,12 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
             }
         }
     }//GEN-LAST:event_tblProductosMouseClicked
+    @Override
+    public void establecerVisibilidad(boolean operacion) {
+        setVisible(operacion);
+        fechaVenta();
 
+    }
     public void fechaVenta() {
         Calendar fecha = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");

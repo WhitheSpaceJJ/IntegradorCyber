@@ -626,8 +626,9 @@ public class PrincipalForm extends javax.swing.JFrame {
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-//                AdminMermas.getInstance().setVisible(true);
-                //              AdminMermas.getInstance().establecerSesion(usuarioSesion);
+      AdminMermas.getInstance().setVisible(true);
+//                     AdminMermas.getInstance().establecerCaja(caj);
+               AdminMermas.getInstance().establecerSesion(usuarioSesion);
             }
         });
 

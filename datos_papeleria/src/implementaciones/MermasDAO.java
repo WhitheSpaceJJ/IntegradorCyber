@@ -28,7 +28,7 @@ public class MermasDAO implements IMermaDAO {
         try {
 
             em.getTransaction().begin();
-            em.persist(merma);
+            em.merge(merma);
             em.getTransaction().commit();
 
             return true;

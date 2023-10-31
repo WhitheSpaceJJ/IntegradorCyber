@@ -46,18 +46,18 @@ public class ReporteVentaForm extends javax.swing.JFrame {
         tblVenta = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jDateChooserHasta = new com.toedter.calendar.JDateChooser();
         lblCliente2 = new javax.swing.JLabel();
-        jDateChooserDesde = new com.toedter.calendar.JDateChooser();
         btnTodas = new javax.swing.JButton();
         clientesC = new javax.swing.JComboBox<>();
         lblCliente = new javax.swing.JLabel();
+        jDateChooserDesde = new com.toedter.calendar.JDateChooser();
+        jDateChooserHasta = new com.toedter.calendar.JDateChooser();
+        jDateChooserFecha = new com.toedter.calendar.JDateChooser();
         btnBuscar = new javax.swing.JButton();
         lblCliente1 = new javax.swing.JLabel();
         jCheckBox = new javax.swing.JCheckBox();
         lblCliente4 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
-        jDateChooserFecha = new com.toedter.calendar.JDateChooser();
         lblCliente7 = new javax.swing.JLabel();
         lblCliente5 = new javax.swing.JLabel();
         lblRectangulo4 = new javax.swing.JLabel();
@@ -94,13 +94,11 @@ public class ReporteVentaForm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Reportes Ventas");
         tblVenta.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 340, -1));
-        tblVenta.add(jDateChooserHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 160, -1));
 
         lblCliente2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCliente2.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente2.setText("Rango Fechas");
         tblVenta.add(lblCliente2, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 290, -1, 20));
-        tblVenta.add(jDateChooserDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 160, -1));
 
         btnTodas.setBackground(new java.awt.Color(0, 0, 255));
         btnTodas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -127,6 +125,9 @@ public class ReporteVentaForm extends javax.swing.JFrame {
         lblCliente.setForeground(new java.awt.Color(0, 0, 0));
         lblCliente.setText("Fecha:");
         tblVenta.add(lblCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, 20));
+        tblVenta.add(jDateChooserDesde, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 320, 180, -1));
+        tblVenta.add(jDateChooserHasta, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 320, 170, -1));
+        tblVenta.add(jDateChooserFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, 200, -1));
 
         btnBuscar.setBackground(new java.awt.Color(0, 0, 255));
         btnBuscar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -159,7 +160,6 @@ public class ReporteVentaForm extends javax.swing.JFrame {
 
         txtCodigo.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tblVenta.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, 200, -1));
-        tblVenta.add(jDateChooserFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 250, 200, -1));
 
         lblCliente7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblCliente7.setForeground(new java.awt.Color(0, 0, 0));
