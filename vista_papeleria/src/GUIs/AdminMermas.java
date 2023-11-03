@@ -617,9 +617,9 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda {
             Merma merma = new Merma();
             Calendar fecha = Calendar.getInstance();
             Float totalVenta = Float.valueOf(this.txtTotalMerma.getText());
-            merma.setDetalleMermas(mermas);
+//            merma.setDetalleMermas(mermas);
             merma.setFechaMerma(fecha);
-            merma.setUsuario(this.usuario);
+            merma.setUsuario(logica.obtenerSesion(usuario));
             merma.setTotalventa(totalVenta);
             boolean registroExitoso = logica.agregar(merma, mermas);
             if (registroExitoso) {
@@ -714,7 +714,6 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda {
     public void cargarBusqueda(Producto producto) {
         //Agregar Excepciondes de productos como por asi decirlo Dulcer Variados
         articuloBuscado = producto;
-        busqueda.resetBusquedas();
         int indice = productos.indexOf(articuloBuscado);
         if ((indice == -1)) {
             txtCodigoArticulo.setText(articuloBuscado.getCodigo() + "");
@@ -738,6 +737,7 @@ public class AdminMermas extends javax.swing.JFrame implements IBusqueda {
         txtDisponibilidad.setText(producto.getStock() + "");
         txtImporte.setText(producto.getPrecio() + "");
         txtNombre.setText(producto.getNombre());
+        txtMotivo.setText(merma.getMotivo());
         txtTotalProducto.setText(merma.getImporte() + "");
         txtCantidad.setText(merma.getCantidad() + "");
     }

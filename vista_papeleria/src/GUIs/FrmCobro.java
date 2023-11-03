@@ -154,6 +154,7 @@ public class FrmCobro extends javax.swing.JFrame {
             List<DetalleVenta> detalles = venta.getDetalleVentas();
             venta.setDetalleVentas(null);
             boolean ventaAgregada = logica.agregarVenta(venta, detalles);
+            ventaForm.actualizarCaja(venta.getTotalventa());
             if (ventaAgregada == true) {
                 JOptionPane.showMessageDialog(null, "La venta "+venta.getId()+" fue agregada exitosamente");
                 setVisible(false);

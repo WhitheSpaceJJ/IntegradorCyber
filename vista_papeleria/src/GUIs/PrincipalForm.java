@@ -34,6 +34,16 @@ public class PrincipalForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        MenuTecnico = new javax.swing.JMenu();
+        MenuAdminCategoriaTecnico = new javax.swing.JMenuItem();
+        MenuAdminClientesTecnico = new javax.swing.JMenuItem();
+        MenuAdminProductosTecnico = new javax.swing.JMenuItem();
+        MenuAdminProveedoresTecnico = new javax.swing.JMenuItem();
+        MenuVendedor = new javax.swing.JMenu();
+        MenuAdminCategoriaVendedor = new javax.swing.JMenuItem();
+        MenuAdminClientesVendedor = new javax.swing.JMenuItem();
+        MenuAdminProductosVendedor = new javax.swing.JMenuItem();
+        MenuAdminProveedoresVendedor = new javax.swing.JMenuItem();
         pnlPrincipal = new javax.swing.JPanel();
         panelRound5 = new GUIs.PanelRound();
         panelRound1 = new GUIs.PanelRound();
@@ -76,16 +86,84 @@ public class PrincipalForm extends javax.swing.JFrame {
         MenuAdminProveedores = new javax.swing.JMenuItem();
         MenuAdminUsuario = new javax.swing.JMenuItem();
         MenuAdminMermas = new javax.swing.JMenuItem();
-        MenuTecnico = new javax.swing.JMenu();
-        MenuAdminCategoriaTecnico = new javax.swing.JMenuItem();
-        MenuAdminClientesTecnico = new javax.swing.JMenuItem();
-        MenuAdminProductosTecnico = new javax.swing.JMenuItem();
-        MenuAdminProveedoresTecnico = new javax.swing.JMenuItem();
-        MenuVendedor = new javax.swing.JMenu();
-        MenuAdminCategoriaVendedor = new javax.swing.JMenuItem();
-        MenuAdminClientesVendedor = new javax.swing.JMenuItem();
-        MenuAdminProductosVendedor = new javax.swing.JMenuItem();
-        MenuAdminProveedoresVendedor = new javax.swing.JMenuItem();
+
+        MenuTecnico.setText("Tecnico");
+        MenuTecnico.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+
+        MenuAdminCategoriaTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminCategoriaTecnico.setText("Categorias");
+        MenuAdminCategoriaTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminCategoriaTecnicoActionPerformed(evt);
+            }
+        });
+        MenuTecnico.add(MenuAdminCategoriaTecnico);
+
+        MenuAdminClientesTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminClientesTecnico.setText("Clientes");
+        MenuAdminClientesTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminClientesTecnicoActionPerformed(evt);
+            }
+        });
+        MenuTecnico.add(MenuAdminClientesTecnico);
+
+        MenuAdminProductosTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminProductosTecnico.setText("Productos");
+        MenuAdminProductosTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProductosTecnicoActionPerformed(evt);
+            }
+        });
+        MenuTecnico.add(MenuAdminProductosTecnico);
+
+        MenuAdminProveedoresTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminProveedoresTecnico.setText("Proveedores");
+        MenuAdminProveedoresTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProveedoresTecnicoActionPerformed(evt);
+            }
+        });
+        MenuTecnico.add(MenuAdminProveedoresTecnico);
+
+        MenuVendedor.setText("Vendedor");
+        MenuVendedor.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
+
+        MenuAdminCategoriaVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminCategoriaVendedor.setText("Categorias");
+        MenuAdminCategoriaVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminCategoriaVendedorActionPerformed(evt);
+            }
+        });
+        MenuVendedor.add(MenuAdminCategoriaVendedor);
+
+        MenuAdminClientesVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminClientesVendedor.setText("Clientes");
+        MenuAdminClientesVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminClientesVendedorActionPerformed(evt);
+            }
+        });
+        MenuVendedor.add(MenuAdminClientesVendedor);
+
+        MenuAdminProductosVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminProductosVendedor.setText("Productos");
+        MenuAdminProductosVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProductosVendedorActionPerformed(evt);
+            }
+        });
+        MenuVendedor.add(MenuAdminProductosVendedor);
+
+        MenuAdminProveedoresVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
+        MenuAdminProveedoresVendedor.setText("Proveedores");
+        MenuAdminProveedoresVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuAdminProveedoresVendedorActionPerformed(evt);
+            }
+        });
+        MenuVendedor.add(MenuAdminProveedoresVendedor);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administración");
@@ -394,88 +472,6 @@ public class PrincipalForm extends javax.swing.JFrame {
 
         jMenuBar1.add(MenuAdmin);
 
-        MenuTecnico.setText("Tecnico");
-        MenuTecnico.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-
-        MenuAdminCategoriaTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminCategoriaTecnico.setText("Categorias");
-        MenuAdminCategoriaTecnico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminCategoriaTecnicoActionPerformed(evt);
-            }
-        });
-        MenuTecnico.add(MenuAdminCategoriaTecnico);
-
-        MenuAdminClientesTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminClientesTecnico.setText("Clientes");
-        MenuAdminClientesTecnico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminClientesTecnicoActionPerformed(evt);
-            }
-        });
-        MenuTecnico.add(MenuAdminClientesTecnico);
-
-        MenuAdminProductosTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminProductosTecnico.setText("Productos");
-        MenuAdminProductosTecnico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminProductosTecnicoActionPerformed(evt);
-            }
-        });
-        MenuTecnico.add(MenuAdminProductosTecnico);
-
-        MenuAdminProveedoresTecnico.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminProveedoresTecnico.setText("Proveedores");
-        MenuAdminProveedoresTecnico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminProveedoresTecnicoActionPerformed(evt);
-            }
-        });
-        MenuTecnico.add(MenuAdminProveedoresTecnico);
-
-        jMenuBar1.add(MenuTecnico);
-
-        MenuVendedor.setText("Vendedor");
-        MenuVendedor.setFont(new java.awt.Font("Arial Black", 1, 14)); // NOI18N
-
-        MenuAdminCategoriaVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminCategoriaVendedor.setText("Categorias");
-        MenuAdminCategoriaVendedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminCategoriaVendedorActionPerformed(evt);
-            }
-        });
-        MenuVendedor.add(MenuAdminCategoriaVendedor);
-
-        MenuAdminClientesVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminClientesVendedor.setText("Clientes");
-        MenuAdminClientesVendedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminClientesVendedorActionPerformed(evt);
-            }
-        });
-        MenuVendedor.add(MenuAdminClientesVendedor);
-
-        MenuAdminProductosVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminProductosVendedor.setText("Productos");
-        MenuAdminProductosVendedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminProductosVendedorActionPerformed(evt);
-            }
-        });
-        MenuVendedor.add(MenuAdminProductosVendedor);
-
-        MenuAdminProveedoresVendedor.setFont(new java.awt.Font("Arial Black", 1, 12)); // NOI18N
-        MenuAdminProveedoresVendedor.setText("Proveedores");
-        MenuAdminProveedoresVendedor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                MenuAdminProveedoresVendedorActionPerformed(evt);
-            }
-        });
-        MenuVendedor.add(MenuAdminProveedoresVendedor);
-
-        jMenuBar1.add(MenuVendedor);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -573,7 +569,6 @@ public class PrincipalForm extends javax.swing.JFrame {
     }//GEN-LAST:event_menuCajaAbrirCaja1ActionPerformed
 
     private void menuCajaCierreCaja1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuCajaCierreCaja1ActionPerformed
-        /*
         Caja caja =fachadaControl.cajaAbierta();
         if (caja == null) {
             JOptionPane.showMessageDialog(this, "No hay caja abierta");
@@ -585,7 +580,6 @@ public class PrincipalForm extends javax.swing.JFrame {
                 }
             });
         }
-         */
     }//GEN-LAST:event_menuCajaCierreCaja1ActionPerformed
 
     private void jButtonRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealizarVentaActionPerformed
@@ -626,9 +620,12 @@ public class PrincipalForm extends javax.swing.JFrame {
         this.setVisible(false);
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-      AdminMermas.getInstance().setVisible(true);
 //                     AdminMermas.getInstance().establecerCaja(caj);
                AdminMermas.getInstance().establecerSesion(usuarioSesion);
+                 AdminMermas.getInstance().limpiarCamposTodo();
+                  AdminMermas.getInstance().cargarTabla();
+                     AdminMermas.getInstance().setVisible(true);
+
             }
         });
 
@@ -753,12 +750,12 @@ public class PrincipalForm extends javax.swing.JFrame {
             this.MenuVendedor.setEnabled(false);
             this.MenuAdmin.setEnabled(true);
         }
-        if (usuario.getRol() == Rol.TECNICO) {
-            this.jButtonUsuarios.setEnabled(false);
-            this.MenuAdmin.setEnabled(false);
-            this.MenuVendedor.setEnabled(false);
-            this.MenuTecnico.setEnabled(true);
-        }
+//        if (usuario.getRol() == Rol.TECNICO) {
+//            this.jButtonUsuarios.setEnabled(false);
+//            this.MenuAdmin.setEnabled(false);
+//            this.MenuVendedor.setEnabled(false);
+//            this.MenuTecnico.setEnabled(true);
+//        }
         if (usuario.getRol() == Rol.VENDEDOR) {
             this.jButtonUsuarios.setEnabled(false);
             this.MenuAdmin.setEnabled(false);

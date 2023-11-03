@@ -81,7 +81,6 @@ public class InicioSesion extends javax.swing.JFrame {
         jPasswordFieldContraseña.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jPasswordFieldContraseña.setForeground(new java.awt.Color(153, 153, 255));
         jPasswordFieldContraseña.setBorder(null);
-        jPasswordFieldContraseña.setEchoChar('*');
         jPanel1.add(jPasswordFieldContraseña);
         jPasswordFieldContraseña.setBounds(450, 240, 240, 40);
 
@@ -103,7 +102,7 @@ public class InicioSesion extends javax.swing.JFrame {
         jButtonIniciarSesion.setBounds(480, 420, 140, 40);
 
         cmbRoles.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cmbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "VENDEDOR", "TECNICO" }));
+        cmbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "VENDEDOR" }));
         cmbRoles.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 cmbRolesKeyPressed(evt);

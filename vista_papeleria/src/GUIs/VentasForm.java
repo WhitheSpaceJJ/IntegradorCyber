@@ -379,7 +379,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
- 
+
 
     private void btnBuscarProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProductoActionPerformed
         if (txtCodigoArticulo.getText().equals("")) {
@@ -455,7 +455,15 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
     private void txtImporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImporteActionPerformed
 
     }//GEN-LAST:event_txtImporteActionPerformed
-
+    public void actualizarCaja(float ingresos2) {
+        Float ingresos = this.caja.getTotalIngresos();
+        if (ingresos == null) {
+            this.caja.setTotalIngresos(ingresos2);
+        } else {
+            this.caja.setTotalIngresos(ingresos2 + ingresos);
+        }
+        this.logica.actualizarCaja(caja);
+    }
     private void txtImporteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtImporteKeyReleased
         String importe = txtImporte.getText();
         if (!importe.equals("") && importe.matches("^[0-9]*\\.?[0-9]$")) {
@@ -524,6 +532,7 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
         fechaVenta();
 
     }
+
     public void fechaVenta() {
         Calendar fecha = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
@@ -607,7 +616,6 @@ public class VentasForm extends javax.swing.JFrame implements IBusqueda {
     public void cargarBusqueda(Producto producto) {
         //Agregar Excepciondes de productos como por asi decirlo Dulcer Variados
         articuloBuscado = producto;
-        busqueda.resetBusquedas();
         int indice = productos.indexOf(articuloBuscado);
         if ((indice == -1)) {
             txtCodigoArticulo.setText(articuloBuscado.getId() + "");

@@ -307,7 +307,7 @@ public class FachadaDAO implements IFachadaDAO {
     public List<Venta> consultarVentasCoincidencias(Object[] parametros) {
         try {
             IVentasDAO ventasDAO = fabrica.getVentasDAO();
-                        IProductosDAO productosDAO = fabrica.getProductosDAO();
+            IProductosDAO productosDAO = fabrica.getProductosDAO();
             if (parametros[1] != null) {
                 long indice = Integer.parseInt((String) parametros[1]);
                 parametros[1] = productosDAO.consultarCodigo(indice);
@@ -582,28 +582,7 @@ public class FachadaDAO implements IFachadaDAO {
     public boolean agregarMerma(Merma merma) {
         try {
             IMermaDAO mermasDAO = fabrica.getMermasDAO();
-            List<DetalleMerma> mermas = merma.getDetalleMermas();
-            merma.setDetalleMermas(null);
-            boolean agregoMerma = mermasDAO.agregar(merma);
-            if (agregoMerma) {
-                Merma merma2 = mermasDAO.consultarUltimaMerma();
-                for (int i = 0; i < mermas.size(); i++) {
-                    DetalleMerma get = mermas.get(i);
-                    get.setMerma(merma2);
-                    boolean detalle = agregarDetalleMerma(get);
-                    if (!detalle) {
-                        return false;
-                    } else {
-                        Producto producto = this.consultarProducto(get.getId());
-                        producto.setStock(producto.getStock() - get.getCantidad());
-                        boolean productoAc = this.actualizarProducto(producto);
-                        if (!productoAc) {
-                            return false;
-                        }
-                    }
-                }
-            }
-            return true;
+            return mermasDAO.agregar(merma);
         } catch (Exception e) {
             return false;
         }

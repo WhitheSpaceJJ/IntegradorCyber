@@ -593,7 +593,26 @@ public class FachadaControl implements IFachadaControl {
     public boolean agregar(Merma merma, List<DetalleMerma> detalles) {
         try {
             IControlMerma mermasDAO = fabrica.getMermaDAO();
-            return mermasDAO.agregar(merma, detalles);
+                        IControlDetalleMerma control=fabrica.getDetalleMermaDAO();
+                        IControlProductos productoControl=fabrica.getProductosDAO();
+
+            if (mermasDAO.agregar(merma, detalles)) {
+                List<DetalleMerma> mermas = detalles;
+                for (int i = 0; i < mermas.size(); i++) {
+                    DetalleMerma get = mermas.get(i);
+                    //Causa que me agregue dos mermas y se vaya al carajo
+                    get.setMerma(merma);
+                    boolean detalle = control.agregar(get);
+                    if (detalle) {
+                        Producto producto = this.consultarProducto(get.getId());
+                        producto.setStock(producto.getStock() - get.getCantidad());
+                        productoControl.actualizar(producto);
+                    }
+                }
+                return true;
+            }
+
+            return false;
         } catch (Exception e) {
             return false;
         }

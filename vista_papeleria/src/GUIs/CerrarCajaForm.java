@@ -34,7 +34,6 @@ public class CerrarCajaForm extends javax.swing.JFrame {
         this.logica = new FachadaControl();
         txtOperador.setEditable(false);
         txtFecha.setEditable(false);
-        llenarCampos();
     }
 
     /**
@@ -203,15 +202,13 @@ public class CerrarCajaForm extends javax.swing.JFrame {
         this.txtFecha.setText(fechaFormateada);
     }
 
-    public void establecerCaja(Caja cajaAbierta) {
-    }
-    
+ 
     private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
         if (validarDatos()) {
             return;
         }
         float saldoCierre;
-        Caja c = new Caja();
+        Caja c =null;
         c = logica.consultarCajaAbierta();
         if (c != null) {
             saldoCierre = Float.parseFloat(txtSaldoCierre.getText().trim());
@@ -232,7 +229,7 @@ public class CerrarCajaForm extends javax.swing.JFrame {
     public boolean validarDatos() {
         String regexFloat = "\\d+(\\.\\d+)?";
         if (!txtSaldoCierre.getText().matches(regexFloat) || Float.parseFloat(txtSaldoCierre.getText()) <= 0 || Float.parseFloat(txtSaldoCierre.getText()) > 999999999) {
-            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el saldo de cierre");
+            JOptionPane.showMessageDialog(null, "Se requiere que ingrese el saldo de , y que sea correcto");
             return true;
         }
         return false;
