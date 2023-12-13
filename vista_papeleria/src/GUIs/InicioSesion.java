@@ -6,6 +6,7 @@ import enumeradores.Rol;
 import fachada.FachadaControl;
 import interfaces.IFachadaControl;
 import java.awt.event.KeyEvent;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class InicioSesion extends javax.swing.JFrame {
@@ -190,7 +191,6 @@ public class InicioSesion extends javax.swing.JFrame {
             contraseñaVisible = !contraseñaVisible;
             char[] contraseña = jPasswordFieldContraseña.getPassword();
             if (contraseñaVisible) {
-                jPasswordFieldContraseña.setEchoChar((char) 0); // Mostrar la contraseña
                 visibilidad.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/desbloquear.png")));
             } else {
                 jPasswordFieldContraseña.setEchoChar('*'); // Ocultar la contraseña con *
