@@ -1,28 +1,22 @@
 package GUIs;
-import interfaces.*;
-import entidades.*;
-import fachada.FachadaControl;
-import java.awt.HeadlessException;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import javax.swing.*;
+
 
 public class Temporizador extends javax.swing.JFrame {
     
     private Timer temporizador;
     private DefaultTableModel tableModel;
-
+    private static String rutaArchivo;
     
     public Temporizador() {
         initComponents();
@@ -32,6 +26,7 @@ public class Temporizador extends javax.swing.JFrame {
         tableModel.addColumn("Minutos");
         // Asignar el modelo a la JTable
         jTableTiempo.setModel(tableModel);
+        cargarTablaDesdeArchivo(rutaArchivo);
     }
 
     /**
@@ -168,18 +163,27 @@ public class Temporizador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
-        int seleccion =jTableTiempo.getSelectedRow();
-        DefaultTableModel model =(DefaultTableModel)jTableTiempo.getModel();
-        model.removeRow(seleccion);
-        
+        int seleccion = jTableTiempo.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel) jTableTiempo.getModel();
+
+        if (seleccion != -1) { // Verificar si hay una fila seleccionada
+            String nombre = (String) model.getValueAt(seleccion, 0); // Obtener el nombre de la fila seleccionada
+            model.removeRow(seleccion); // Eliminar la fila seleccionada
+            eliminarFilaPorNombre(jTableTiempo, nombre); // Llamar al método para eliminar la fila por nombre
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona una fila para quitar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         DefaultTableModel model =(DefaultTableModel)jTableTiempo.getModel();
-        String hr=jComboBoxHoras.getSelectedItem().toString();
-        String min=jComboBoxMin.getSelectedItem().toString();
-        model.addRow(new Object[]{txtNombre.getText(),hr,min});
-        Temporizador.iniciarTemporizador(Integer.parseInt(hr), Integer.parseInt(min), txtNombre.getText(), jTableTiempo, Temporizador.this);
+    String hr = jComboBoxHoras.getSelectedItem().toString();
+    String min = jComboBoxMin.getSelectedItem().toString();
+    model.addRow(new Object[]{txtNombre.getText(), hr, min});
+    // Llamada a iniciarTemporizador, ya estás haciendo esto
+    Temporizador.iniciarTemporizador(Integer.parseInt(hr), Integer.parseInt(min), txtNombre.getText(), jTableTiempo, Temporizador.this);
+    // Llamada a guardarTablaEnArchivo para guardar la información
+    Temporizador.guardarTablaEnArchivo(rutaArchivo, Temporizador.this);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -190,32 +194,36 @@ public class Temporizador extends javax.swing.JFrame {
          }
     }//GEN-LAST:event_btnCancelarActionPerformed
    
-    // Método para iniciar el temporizador con horas y minutos como entrada
+   // Método para iniciar el temporizador con horas y minutos como entrada
     public static void iniciarTemporizador(int horas, int minutos, String nombre, JTable tabla, Temporizador temporizadorFrame) {
         // Calcular el tiempo total en milisegundos
         long tiempoTotal = (horas * 60 * 60 * 1000) + (minutos * 60 * 1000);
-        // Almacenar la información del temporizador en el Map
-        
         // Crear un temporizador con el tiempo total
         Timer temporizador = new Timer(1000, new ActionListener() {
             long tiempoRestante = tiempoTotal;
+
             @Override
             public void actionPerformed(ActionEvent e) {
+                guardarTablaEnArchivo(rutaArchivo, temporizadorFrame);
                 // Actualiza la tabla
-                actualizarInformacion(tabla,nombre,tiempoRestante);
-                //Verifica si algun usuario fue eliminado
-                tiempoRestante= verificarTabla(nombre, tabla, tiempoRestante);
+                actualizarInformacion(tabla, nombre, tiempoRestante);
+                // Verifica si algún usuario fue eliminado
+                tiempoRestante = verificarTabla(nombre, tabla, tiempoRestante);
                 // Reducir el tiempo restante en cada iteración
                 tiempoRestante -= 1000;
-                System.out.println("tiempoRestante :"+tiempoRestante);
-                if(tiempoRestante == 599000){
-                    JOptionPane.showMessageDialog(temporizadorFrame.getRootPane(), "Le quedan menos de 10 minutos a: " + nombre);
+                // Guardar la información en el archivo de texto
+                guardarTablaEnArchivo(rutaArchivo, temporizadorFrame);
+                System.out.println("tiempoRestante :" + tiempoRestante);
+                if (tiempoRestante == 599000) {
+                    JOptionPane.showMessageDialog(temporizadorFrame.getRootPane(),
+                            "Le quedan menos de 10 minutos a: " + nombre);
                 }
                 // Verificar si el temporizador ha llegado a cero
                 if (tiempoRestante <= 0) {
                     ((Timer) e.getSource()).stop(); // Detener el temporizador
-                    eliminarFilaPorNombre(tabla,nombre); //Se elimina de la fila terminando el tiempo
-                    JOptionPane.showMessageDialog(temporizadorFrame.getRootPane(), "Se le acabo el tiempo a: c" + nombre);
+                    eliminarFilaPorNombre(tabla, nombre); // Se elimina de la fila terminando el tiempo
+                    eliminarArchivo(rutaArchivo, temporizadorFrame);
+                    JOptionPane.showMessageDialog(temporizadorFrame.getRootPane(), "Se le acabo el tiempo a: " + nombre);
                     System.out.println("Temporizador finalizado");
                 }
             }
@@ -223,7 +231,7 @@ public class Temporizador extends javax.swing.JFrame {
         // Iniciar el temporizador
         temporizador.start();
     }
-   
+    
     // Método para convertir milisegundos a horas y minutos
     private static String convertirMilisegundosAHM(long milisegundos) {
         long minutos = milisegundos / (60 * 1000);
@@ -273,6 +281,7 @@ public class Temporizador extends javax.swing.JFrame {
             return 0;
         }
 
+        
      
       public static void eliminarFilaPorNombre(JTable tabla, String nombreBuscado) {
         DefaultTableModel modelo = (DefaultTableModel) tabla.getModel();
@@ -291,6 +300,71 @@ public class Temporizador extends javax.swing.JFrame {
             }
         }
     }
+      
+    // Método para guardar la información en el archivo
+    public static void guardarTablaEnArchivo(String nombreArchivo, Temporizador temporizadorInstance) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo))) {
+            DefaultTableModel modelo = (DefaultTableModel) temporizadorInstance.jTableTiempo.getModel();
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                String nombre = (String) modelo.getValueAt(i, 0);
+                int horas = Integer.parseInt(modelo.getValueAt(i, 1).toString());
+                int minutos = Integer.parseInt(modelo.getValueAt(i, 2).toString());
+                writer.println(nombre + "," + horas + "," + minutos);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+      
+   public void cargarTablaDesdeArchivo(String rutaArchivo) {
+        File archivo = new File(rutaArchivo);
+        // Verificar si el archivo existe
+        if (archivo.exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+                DefaultTableModel modelo = (DefaultTableModel) jTableTiempo.getModel();
+                String linea;
+                while ((linea = reader.readLine()) != null) {
+                    String[] datos = linea.split(",");
+                    String nombre = datos[0];
+                    int horas = Integer.parseInt(datos[1]);
+                    int minutos = Integer.parseInt(datos[2]);
+                    modelo.addRow(new Object[]{nombre, horas, minutos});
+                    iniciarTemporizador(horas, minutos, nombre, jTableTiempo, this);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            // Si el archivo no existe, crear un archivo vacío
+            try {
+                archivo.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+   
+   
+   public static void eliminarArchivo(String nombreArchivo,Temporizador temporizadorInstance) {
+    try (PrintWriter writer = new PrintWriter(new FileWriter(nombreArchivo))) {
+            DefaultTableModel modelo = (DefaultTableModel) temporizadorInstance.jTableTiempo.getModel();
+            
+            for (int i = 0; i < modelo.getRowCount(); i++) {
+                String nombre = (String) modelo.getValueAt(i, 0);
+                int horas = 0;
+                int minutos = 0;
+                writer.println(nombre + "," + horas + "," + minutos);
+                System.out.println("Archivo eliminado: " + nombreArchivo);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+}
+
+   public static String obtenerRutaDocumento(String nombreArchivo) {
+    String carpetaDocumentos = System.getProperty("user.home") + File.separator + "Documents";
+    return carpetaDocumentos + File.separator + nombreArchivo;
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCancelar;
