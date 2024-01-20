@@ -63,6 +63,10 @@ public class PrincipalForm extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLayeredPane1 = new javax.swing.JLayeredPane();
         contadorVentas = new javax.swing.JLabel();
+        jButtonDetalleCompra = new javax.swing.JButton();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jButtonTIempoUso = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         panelRound6 = new GUIs.PanelRound();
         jLabelTitulo = new javax.swing.JLabel();
@@ -187,88 +191,88 @@ public class PrincipalForm extends javax.swing.JFrame {
         panelRound1.setRoundTopRight(50);
         panelRound1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButtonCatehorias.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonCatehorias.setText("Categorias");
         jButtonCatehorias.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonCatehorias.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonCatehorias.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonCatehoriasActionPerformed(evt);
             }
         });
-        panelRound1.add(jButtonCatehorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 400, 220, 84));
+        panelRound1.add(jButtonCatehorias, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, 220, 40));
 
-        jButtonClientes.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonClientes.setText("Clientes");
         jButtonClientes.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonClientes.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonClientesActionPerformed(evt);
             }
         });
-        panelRound1.add(jButtonClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 410, 220, 84));
+        panelRound1.add(jButtonClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, 220, 40));
 
-        jButtonProductos.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonProductos.setText("Productos");
         jButtonProductos.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonProductos.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonProductosActionPerformed(evt);
             }
         });
-        panelRound1.add(jButtonProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 220, 80));
+        panelRound1.add(jButtonProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 220, 40));
 
-        jButtonProveedores.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonProveedores.setText("Proveedores");
         jButtonProveedores.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonProveedores.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonProveedores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonProveedoresActionPerformed(evt);
             }
         });
-        panelRound1.add(jButtonProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 220, 80));
+        panelRound1.add(jButtonProveedores, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 360, 220, 40));
 
-        jButtonRealizarVenta.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonRealizarVenta.setText("Realizar Venta");
         jButtonRealizarVenta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonRealizarVenta.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonRealizarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRealizarVentaActionPerformed(evt);
             }
         });
-        panelRound1.add(jButtonRealizarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, 220, 84));
+        panelRound1.add(jButtonRealizarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, 220, 40));
 
-        jButtonUsuarios.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonUsuarios.setText("Usuarios");
         jButtonUsuarios.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonUsuarios.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
         jButtonUsuarios.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonUsuariosActionPerformed(evt);
             }
         });
-        panelRound1.add(jButtonUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 240, 220, 84));
+        panelRound1.add(jButtonUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 220, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-proveedor-48.png"))); // NOI18N
-        panelRound1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 30, 50, 48));
+        panelRound1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 310, 50, 48));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-recibo-48.png"))); // NOI18N
         jLabel3.setText("jLabel2");
-        panelRound1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 62, 48));
+        panelRound1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 62, 48));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-usuarios-48.png"))); // NOI18N
         jLabel4.setText("jLabel2");
-        panelRound1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 200, 62, 48));
+        panelRound1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 40, 62, 48));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-categorizar-48.png"))); // NOI18N
         jLabel5.setText("jLabel2");
-        panelRound1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 350, 62, 48));
+        panelRound1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 62, 48));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-clientes-48.png"))); // NOI18N
         jLabel6.setText("jLabel2");
-        panelRound1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 370, 62, 48));
+        panelRound1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 320, 62, 48));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-agregar-a-carrito-de-compras-48.png"))); // NOI18N
         jLabel7.setText("jLabel2");
-        panelRound1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 62, -1));
+        panelRound1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, 62, -1));
 
         jLabel8.setText("jLabel2");
         panelRound1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(162, 76, 62, 48));
@@ -290,8 +294,35 @@ public class PrincipalForm extends javax.swing.JFrame {
         panelRound1.add(jLayeredPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 80, -1, -1));
 
         contadorVentas.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        contadorVentas.setForeground(new java.awt.Color(0, 0, 0));
         panelRound1.add(contadorVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 40, -1));
+
+        jButtonDetalleCompra.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jButtonDetalleCompra.setText("Detalle Compra");
+        jButtonDetalleCompra.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonDetalleCompra.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDetalleCompraActionPerformed(evt);
+            }
+        });
+        panelRound1.add(jButtonDetalleCompra, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 170, 220, 40));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-usuarios-48.png"))); // NOI18N
+        jLabel10.setText("jLabel2");
+        panelRound1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 130, 62, 48));
+
+        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-usuarios-48.png"))); // NOI18N
+        jLabel13.setText("jLabel2");
+        panelRound1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 230, 62, 48));
+
+        jButtonTIempoUso.setFont(new java.awt.Font("Arial Black", 1, 18)); // NOI18N
+        jButtonTIempoUso.setText("Tiempo");
+        jButtonTIempoUso.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jButtonTIempoUso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonTIempoUsoActionPerformed(evt);
+            }
+        });
+        panelRound1.add(jButtonTIempoUso, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 220, 40));
 
         panelRound5.add(panelRound1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 700, 580));
 
@@ -357,13 +388,11 @@ public class PrincipalForm extends javax.swing.JFrame {
         jScrollPane1.setBounds(20, 250, 120, 320);
 
         jLabel11.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 0, 0));
         jLabel11.setText("Ventas en");
         pnlPrincipal.add(jLabel11);
         jLabel11.setBounds(40, 160, 163, 50);
 
         jLabel12.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 0, 0));
         jLabel12.setText("ejecucion");
         pnlPrincipal.add(jLabel12);
         jLabel12.setBounds(40, 200, 100, 50);
@@ -560,6 +589,7 @@ public class PrincipalForm extends javax.swing.JFrame {
             this.setVisible(false);
             java.awt.EventQueue.invokeLater(new Runnable() {
                 public void run() {
+                    
                     AbrirCajaForm.instanciaAbrirCaja().setVisible(true);
                 }
             });
@@ -581,38 +611,6 @@ public class PrincipalForm extends javax.swing.JFrame {
             });
         }
     }//GEN-LAST:event_menuCajaCierreCaja1ActionPerformed
-
-    private void jButtonRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealizarVentaActionPerformed
-
-        Caja caja = fachadaControl.cajaAbierta();
-        if (caja != null) {
-            //   caja.setUsuario(usuarioSesion);
-            //  fachadaControl.actualizarCaja(caja);
-            if (ventasForms.size() == 10) {
-                JOptionPane.showMessageDialog(null, "Se pueden abrir como maximo 10 ventas simultaneas");
-            } else {
-                this.setVisible(false);
-                VentasForm venta = new VentasForm();
-                ventasForms.add(venta);
-                model.addElement("Venta " + ventasForms.size());
-                venta.llenarCBoxClientes();
-                venta.setVisible(true);
-                venta.establecerCaja(caja);
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se ha registrado alguna caja se requiere que abra alguna");
-        }
-    }//GEN-LAST:event_jButtonRealizarVentaActionPerformed
-
-    private void jButtonProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProveedoresActionPerformed
-        this.setVisible(false);
-        Utilidad.getInstance().proveedor();
-    }//GEN-LAST:event_jButtonProveedoresActionPerformed
-
-    private void jButtonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsuariosActionPerformed
-        this.setVisible(false);
-        Utilidad.getInstance().usuario();
-    }//GEN-LAST:event_jButtonUsuariosActionPerformed
 
     private void MenuAdminMermasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminMermasActionPerformed
         // TODO add your handling code here:
@@ -645,21 +643,6 @@ public class PrincipalForm extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_jMenuItem2ActionPerformed
-
-    private void jButtonCatehoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCatehoriasActionPerformed
-        this.setVisible(false);
-        Utilidad.getInstance().categoria();
-    }//GEN-LAST:event_jButtonCatehoriasActionPerformed
-
-    private void jButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosActionPerformed
-        this.setVisible(false);
-        Utilidad.getInstance().producto();
-    }//GEN-LAST:event_jButtonProductosActionPerformed
-
-    private void jButtonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientesActionPerformed
-        this.setVisible(false);
-        Utilidad.getInstance().cliente();
-    }//GEN-LAST:event_jButtonClientesActionPerformed
 
     private void MenuAdminCategoriaTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuAdminCategoriaTecnicoActionPerformed
         this.setVisible(false);
@@ -722,6 +705,65 @@ public class PrincipalForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_ventasListMouseClicked
 
+    private void jButtonTIempoUsoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTIempoUsoActionPerformed
+          this.setVisible(false);
+          Temporizador tempo = new Temporizador();
+          tempo.setVisible(true);
+    }//GEN-LAST:event_jButtonTIempoUsoActionPerformed
+
+    private void jButtonDetalleCompraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDetalleCompraActionPerformed
+        this.setVisible(false);
+          DetalleCompraForm Detalles = new DetalleCompraForm();
+          Detalles.setVisible(true);
+    }//GEN-LAST:event_jButtonDetalleCompraActionPerformed
+
+    private void jButtonUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUsuariosActionPerformed
+        this.setVisible(false);
+        Utilidad.getInstance().usuario();
+    }//GEN-LAST:event_jButtonUsuariosActionPerformed
+
+    private void jButtonRealizarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRealizarVentaActionPerformed
+
+        Caja caja = fachadaControl.cajaAbierta();
+        if (caja != null) {
+            //   caja.setUsuario(usuarioSesion);
+            //  fachadaControl.actualizarCaja(caja);
+            if (ventasForms.size() == 10) {
+                JOptionPane.showMessageDialog(null, "Se pueden abrir como maximo 10 ventas simultaneas");
+            } else {
+                this.setVisible(false);
+                VentasForm venta = new VentasForm();
+                ventasForms.add(venta);
+                model.addElement("Venta " + ventasForms.size());
+                venta.llenarCBoxClientes();
+                venta.setVisible(true);
+                venta.establecerCaja(caja);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se ha registrado alguna caja se requiere que abra alguna");
+        }
+    }//GEN-LAST:event_jButtonRealizarVentaActionPerformed
+
+    private void jButtonProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProveedoresActionPerformed
+        this.setVisible(false);
+        Utilidad.getInstance().proveedor();
+    }//GEN-LAST:event_jButtonProveedoresActionPerformed
+
+    private void jButtonProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProductosActionPerformed
+        this.setVisible(false);
+        Utilidad.getInstance().producto();
+    }//GEN-LAST:event_jButtonProductosActionPerformed
+
+    private void jButtonClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonClientesActionPerformed
+        this.setVisible(false);
+        Utilidad.getInstance().cliente();
+    }//GEN-LAST:event_jButtonClientesActionPerformed
+
+    private void jButtonCatehoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCatehoriasActionPerformed
+        this.setVisible(false);
+        Utilidad.getInstance().categoria();
+    }//GEN-LAST:event_jButtonCatehoriasActionPerformed
+
     public void eliminarVenta(VentasForm venta) {
         ventasForms.remove(ventasForms.indexOf(venta));
         model = new DefaultListModel<>();
@@ -743,12 +785,13 @@ public class PrincipalForm extends javax.swing.JFrame {
     public void establecerSession(Usuario usuario) {
         this.usuarioSesion = usuario;
         this.jLabelTitulo.setText("Usuario: " + this.usuarioSesion.getNombre() + "\n Rol: " + this.usuarioSesion.getRol());
-
+        
         if (usuario.getRol() == Rol.ADMINISTRADOR) {
             this.MenuTecnico.setEnabled(false);
             this.jButtonUsuarios.setEnabled(true);
             this.MenuVendedor.setEnabled(false);
             this.MenuAdmin.setEnabled(true);
+               
         }
 //        if (usuario.getRol() == Rol.TECNICO) {
 //            this.jButtonUsuarios.setEnabled(false);
@@ -787,13 +830,17 @@ public class PrincipalForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonCatehorias;
     private javax.swing.JButton jButtonClientes;
+    private javax.swing.JButton jButtonDetalleCompra;
     private javax.swing.JButton jButtonProductos;
     private javax.swing.JButton jButtonProveedores;
     private javax.swing.JButton jButtonRealizarVenta;
+    private javax.swing.JButton jButtonTIempoUso;
     private javax.swing.JButton jButtonUsuarios;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel35;
