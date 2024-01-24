@@ -1,6 +1,7 @@
 package GUIs;
 
 import GUIs.utils.JTextFieldLimit;
+import entidades.Caja;
 import entidades.Usuario;
 import enumeradores.Rol;
 import fachada.FachadaControl;
@@ -15,14 +16,12 @@ public class InicioSesion extends javax.swing.JFrame {
     private static InicioSesion instance;
     private boolean contraseñaVisible = false;
 
-    
     private InicioSesion() {
         initComponents();
         this.control = new FachadaControl();
         this.jTextFieldUsuario.setDocument(new JTextFieldLimit(45));
         this.jTextFieldUsuario.setDocument(new JTextFieldLimit(20));
     }
-
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -204,13 +203,14 @@ public class InicioSesion extends javax.swing.JFrame {
         // TODO add your handling code here:
         //Metodo para cerrar la caja y todos sus derivados
     }//GEN-LAST:event_formWindowClosing
-    
+
     public static InicioSesion getInstance() {
         if (instance == null) {
             instance = new InicioSesion();
         }
         return instance;
     }
+
     public void iniciar() {
         if (validarCamposVacios()) {
             return;
@@ -222,14 +222,31 @@ public class InicioSesion extends javax.swing.JFrame {
         Usuario usuario = new Usuario(usuarioNombre, contrasena, rol);
         boolean esta = this.control.iniciarSesion(usuario);
         if (esta) {
-            this.limpiarCampos();
-            this.setVisible(false);
-            java.awt.EventQueue.invokeLater(new Runnable() {
-                public void run() {
-                    PrincipalForm.getInstance().establecerSession(usuario);
-                    PrincipalForm.getInstance().setVisible(true);
+            Caja caja = this.control.cajaAbierta();
+            if (caja == null) {
+                this.limpiarCampos();
+                this.setVisible(false);
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        PrincipalForm.getInstance().establecerSession(usuario);
+                        PrincipalForm.getInstance().setVisible(true);
+                    }
+                });
+            } else {
+                if (caja.getUsuario().equals(usuario)) {
+                    this.limpiarCampos();
+                    this.setVisible(false);
+                    java.awt.EventQueue.invokeLater(new Runnable() {
+                        public void run() {
+                            PrincipalForm.getInstance().establecerSession(usuario);
+                            PrincipalForm.getInstance().setVisible(true);
+                        }
+                    });
+                } else {
+                    //Mensaje Usuario Crear un mensaje de que otro usuario dejeo otro usuario dejo la caja abierta
                 }
-            });
+
+            }
         } else {
             JOptionPane.showMessageDialog(null, "No se ha determinado la existencia de un usuario");
         }
